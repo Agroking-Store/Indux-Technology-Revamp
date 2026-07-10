@@ -1,0 +1,17 @@
+{
+  "name": "indux_technology",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js","scripts": {
+  "dev:backend": "npm run dev --prefix backend",
+  "dev:frontend": "npm run dev --prefix frontend",
+  "dev:admin": "npm run dev --prefix admin",
+  "dev": "concurrently -n BACKEND,FRONTEND,ADMIN -c blue,green,magenta \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run dev:admin\""
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^10.0.3"
+  }
+}
