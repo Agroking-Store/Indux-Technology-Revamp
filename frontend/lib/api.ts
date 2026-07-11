@@ -69,4 +69,33 @@ export const getBlogBySlug = async (slug: string): Promise<Blog> => {
   return blog;
 };
 
+// ===== Job Application Types & API =====
+export interface JobApplicationInput {
+  careerId: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  experience: string;
+  coverLetter?: string;
+  resume: File; // Native File object from upload input
+}
+
+export const submitApplication = async (input: JobApplicationInput): Promise<any> => {
+  const formData = new FormData();
+  formData.append('careerId', input.careerId);
+  formData.append('fullName', input.fullName);
+  formData.append('email', input.email);
+  formData.append('phone', input.phone);
+  formData.append('experience', input.experience);
+  if (input.coverLetter) {
+    formData.append('coverLetter', input.coverLetter);
+  }
+  formData.append('resume', input.resume);
+
+  const res = await api.post('/applications', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return res.data;
+};
+
 export default api;
