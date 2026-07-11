@@ -75,7 +75,7 @@ export default function Navbar() {
 	return (
 		<>
 			{/* Top Contact Bar */}
-			<div className="w-full bg-slate-900 text-slate-300 py-3 md:py-4 hidden md:block">
+			<div className="w-full bg-slate-900 text-slate-300 py-2 md:py-2 hidden md:block">
 				<div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 text-sm font-medium">
 					<div className="flex items-center gap-8">
 						<a href="tel:+919876543210" className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
