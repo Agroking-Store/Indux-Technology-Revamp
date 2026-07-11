@@ -125,7 +125,7 @@ export default function Navbar() {
 					<NavLink href="/products" title="Products" pathname={pathname} />
 					<DropdownMenu data={servicesData} pathname={pathname} />
 					<DropdownMenu data={companyData} pathname={pathname} />
-					<NavLink href="/contact" title="Contact Us" pathname={pathname} />
+					<NavLink href="/contact-us" title="Contact Us" pathname={pathname} />
 				</nav>
 
 				{/* Right Section & Mobile Menu */}
