@@ -26,7 +26,7 @@ const allLinks = [
 
 export default function Footer() {
   return (
-    <footer className="relative mt-24 bg-[#0B1121] text-slate-300 pt-20 pb-8 border-t border-slate-800 overflow-hidden">
+    <footer className="relative bg-[#0B1121] text-slate-300 pt-20 pb-8 border-t border-slate-800 overflow-hidden">
       
       {/* Background Aesthetic */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-[#0B1121] to-[#0B1121] pointer-events-none" />
@@ -149,14 +149,8 @@ export default function Footer() {
           <p className="text-slate-500 text-sm text-center md:flex-1">
             Copyright &copy; {new Date().getFullYear()} <span className="text-slate-300 font-semibold">Indux Technology</span>. All Rights Reserved.
           </p>
-          
-          {/* Right: Scroll to top */}
-          <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="p-3 bg-slate-800/80 hover:bg-blue-600 text-white rounded-full transition-all cursor-pointer hover:-translate-y-1 flex items-center gap-2"
-          >
-            <ArrowRight className="size-4 -rotate-90" />
-          </button>
+          {/* Right: Empty spacer for balance */}
+          <div className="hidden md:block w-[100px]"></div>
         </div>
       </div>
     </footer>
