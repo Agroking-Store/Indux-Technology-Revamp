@@ -30,7 +30,7 @@ export default function RootLayout({
       lang="en"
       className={`${roboto.variable} ${geistMono.variable} h-full antialiased font-sans`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col font-sans">
         <Navbar />
         <main className="flex-grow">
           {children}

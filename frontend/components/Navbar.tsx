@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { 
 	Grid2x2PlusIcon, 
@@ -112,12 +113,7 @@ export default function Navbar() {
 				
 				{/* Logo */}
 				<Link href="/" className="flex items-center gap-2 cursor-pointer group">
-					<div className="bg-blue-600 p-1.5 rounded-lg shadow-sm group-hover:scale-105 transition-transform duration-300">
-						<Grid2x2PlusIcon className="size-6 text-white" />
-					</div>
-					<p className="font-sans text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900">
-						Indux<span className="text-blue-600">.</span>
-					</p>
+					<Image src="/brandlogo.jpg" alt="Indux Technology" width={80} height={24} className="object-contain rounded-md shadow-sm" priority />
 				</Link>
 
 				{/* Desktop Menu */}
@@ -125,7 +121,7 @@ export default function Navbar() {
 					<NavLink href="/products" title="Products" pathname={pathname} />
 					<DropdownMenu data={servicesData} pathname={pathname} />
 					<DropdownMenu data={companyData} pathname={pathname} />
-					<NavLink href="/contact-us" title="Contact Us" pathname={pathname} />
+					<NavLink href="/contact" title="Contact Us" pathname={pathname} />
 				</nav>
 
 				{/* Right Section & Mobile Menu */}
