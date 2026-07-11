@@ -327,7 +327,7 @@ function MobileNav({ pathname }: { pathname: string }) {
 					<SheetClose render={<Link href="/products" className="block text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors" />}>
 						Products
 					</SheetClose>
-					<SheetClose render={<Link href="/contact" className="block text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors" />}>
+					<SheetClose render={<Link href="/contact-us" className="block text-2xl font-bold text-slate-900 hover:text-slate-600 transition-colors" />}>
 						Contact Us
 					</SheetClose>
 				</div>
