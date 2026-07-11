@@ -9,6 +9,7 @@ import ApiError from "./utils/ApiError";
 
 import authRoutes from "./routes/auth.routes";
 import blogRoutes from "./routes/blog.routes";
+import leadRoutes from "./routes/leads.routes";
 import careerRoutes from "./routes/career.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
 import applicationRoutes from "./routes/application.routes";
@@ -41,6 +42,7 @@ app.use("/api/v1/dashboard", dashboardRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/blogs", blogRoutes);
 app.use("/api/v1/careers", careerRoutes);
+app.use("/api/v1/leads", leadRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
 app.use("/api/v1/applications", applicationRoutes);
 

@@ -8,7 +8,8 @@ import {
   FileText, 
   Briefcase, 
   Inbox,
-  LogOut 
+
+  LogOut,
 } from 'lucide-react';
 
 export const Sidebar = () => {
@@ -20,6 +21,7 @@ export const Sidebar = () => {
     { href: '/blogs', label: 'Blogs', icon: FileText },
     { href: '/careers', label: 'Careers', icon: Briefcase },
     { href: '/applications', label: 'Applications', icon: Inbox },
+    { href: '/leads', label: 'Leads', icon: Inbox },
   ];
 
   return (
