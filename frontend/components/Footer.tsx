@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Mail, Phone, MapPin, Grid2x2PlusIcon, ArrowRight, Send } from 'lucide-react';
 import { InstagramLogoIcon, LinkedInLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
@@ -40,7 +39,12 @@ export default function Footer() {
           {/* Left Section: Brand & Links */}
           <div className="flex flex-col gap-6">
             <Link href="/" className="flex items-center gap-2 cursor-pointer group w-max">
-              <Image src="/brandlogo.jpg" alt="Indux Technology" width={90} height={26} className="object-contain rounded-md shadow-sm" priority />
+              <div className="bg-blue-600 p-1.5 rounded-lg shadow-sm group-hover:scale-105 transition-transform duration-300">
+                <Grid2x2PlusIcon className="size-6 text-white" />
+              </div>
+              <p className="font-sans text-3xl font-extrabold tracking-tight text-white">
+                Indux<span className="text-blue-600">.</span>
+              </p>
             </Link>
             
             <p className="text-slate-400 leading-relaxed text-sm">
