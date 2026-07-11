@@ -141,25 +141,10 @@
   }
   body {
     @apply bg-background text-foreground;
-<<<<<<< HEAD
-    
-    /* Prevent browser font blurriness */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-=======
->>>>>>> 6361a57 (Merge conflixts solve 2)
   }
   html {
     @apply font-sans;
   }
-<<<<<<< HEAD
-  
-  /* Force hardware accelerated inputs to maintain sub-pixel rendering focus alignment */
-  input, textarea, select {
-    transform: translate3d(0, 0, 0);
-  }
-=======
->>>>>>> 6361a57 (Merge conflixts solve 2)
 }
 
 ::view-transition-old(root), ::view-transition-new(root) {
