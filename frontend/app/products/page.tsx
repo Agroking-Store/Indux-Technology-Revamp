@@ -16,7 +16,6 @@ import {
   Package
 } from "lucide-react";
 
-// --- Project Data ---
 const projects = [
   {
     id: 1,
