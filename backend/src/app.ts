@@ -3,6 +3,12 @@ import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import dns from "node:dns";
+import { env } from "./config/env";
+import ApiError from "./utils/ApiError";
+import authRoutes from "./routes/auth.routes";
+import blogRoutes from "./routes/blog.routes";
+import careerRoutes from "./routes/career.routes";
+import dashboardRoutes from "./routes/dashboard.routes";
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const app: Application = express();
@@ -10,7 +16,7 @@ const app: Application = express();
 // Core middleware
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL || "", process.env.ADMIN_URL || ""],
+    origin: [env.CLIENT_URL, env.ADMIN_URL],
     credentials: true,
   })
 );
@@ -20,21 +26,37 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Health check route
-app.get("/api/v1/health", (req: Request, res: Response) => {
+app.get("/api/v1/health", (_req: Request, res: Response) => {
   res.status(200).json({ status: "ok", message: "Server is running" });
 });
 
+// ---- Feature routes will be mounted here in later phases ----
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/blogs", blogRoutes);
+app.use("/api/v1/careers", careerRoutes);
+app.use("/api/v1/dashboard", dashboardRoutes);
+
 // 404 handler (for unmatched routes)
-app.use((req: Request, res: Response) => {
-  res.status(404).json({ message: "Route not found" });
+app.use((_req: Request, res: Response) => {
+  res.status(404).json({ success: false, message: "Route not found" });
 });
 
-// Global error handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(err.statusCode || 500).json({
-    message: err.message || "Internal Server Error",
-  });
+// Global error handler (recognizes our ApiError, falls back gracefully otherwise)
+app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  if (env.NODE_ENV !== "test") {
+    console.error(err);
+  }
+
+  if (err instanceof ApiError) {
+    return res.status(err.statusCode).json({
+      success: false,
+      message: err.message,
+      errors: err.errors,
+    });
+  }
+
+  const message = err instanceof Error ? err.message : "Internal Server Error";
+  return res.status(500).json({ success: false, message });
 });
 
 export default app;
