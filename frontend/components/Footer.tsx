@@ -17,7 +17,7 @@ const allLinks = [
   { name: 'Products', href: '/products' },
   { name: 'Blogs', href: '/blogs' },
   { name: 'About Us', href: '/about' },
-  { name: 'Contact Us', href: '/contact' },
+  { name: 'Contact Us', href: '/contact-us' },
    { name: 'Careers', href: '/career' },
   { name: 'Privacy Policy', href: '#' },
   { name: 'Terms of Service', href: '#' },
