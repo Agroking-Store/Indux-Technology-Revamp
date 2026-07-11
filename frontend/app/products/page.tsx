@@ -7,9 +7,6 @@ import {
   ShieldCheck,
   Activity,
   ArrowRight,
-  Sparkles,
-  Sprout,
-  BarChart3,
   Settings,
   Heart,
   Plus,
@@ -59,8 +56,8 @@ const cardContentVariants: Variants = {
     transition: {
       duration: 0.8,
       ease: "easeOut",
-      staggerChildren: 0.15, // Delay between each text element appearing
-      delayChildren: 0.2, // Wait a bit before starting the text animation
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
     },
   },
 };
@@ -245,15 +242,6 @@ export default function ProductsZigzagShowcase() {
                     </div>
 
                     {/* Button */}
-                    {/* <motion.div variants={textItemVariants}>
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className={`flex items-center gap-2 rounded-lg px-6 py-3 font-semibold text-white transition-colors ${theme.bg} ${theme.buttonHover}`}
-                      >
-                        Explore Details <ArrowRight className="h-4 w-4" />
-                      </motion.button>
-                    </motion.div> */}
                     <motion.div variants={textItemVariants}>
                       <Link href={`/products/${project.id}`}>
                         <motion.button

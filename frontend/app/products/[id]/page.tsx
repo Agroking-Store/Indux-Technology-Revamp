@@ -2,15 +2,8 @@ import { projects } from "@/lib/products-data";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  CheckCircle2,
-  ShieldCheck,
-  Settings,
-  Activity,
-} from "lucide-react";
+import { ArrowLeft, CheckCircle2, Settings, Activity } from "lucide-react";
 
-// This is a Server Component
 export default async function ProductDetails({
   params,
 }: {
@@ -18,7 +11,6 @@ export default async function ProductDetails({
 }) {
   const { id } = await params;
 
-  // Find the product that matches the URL ID
   const project = projects.find((p) => p.id.toString() === id);
 
   if (!project) {
@@ -27,7 +19,6 @@ export default async function ProductDetails({
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900">
-      {/* Header / Back Navigation */}
       <div className="bg-slate-50 border-b border-slate-200 py-4">
         <div className="mx-auto max-w-7xl px-6">
           <Link
@@ -41,7 +32,6 @@ export default async function ProductDetails({
 
       <main className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          {/* Left Side: Visuals */}
           <div className="space-y-8">
             <div className="relative aspect-video overflow-hidden rounded-3xl shadow-2xl">
               <Image
@@ -64,7 +54,6 @@ export default async function ProductDetails({
             </div>
           </div>
 
-          {/* Right Side: Information */}
           <div className="flex flex-col">
             <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-slate-900 mb-6">
               {project.title}
@@ -74,7 +63,6 @@ export default async function ProductDetails({
               {project.description}
             </p>
 
-            {/* Features List */}
             <div className="mb-12">
               <h3 className="flex items-center gap-2 text-xl font-bold mb-6">
                 <Settings className="text-blue-600" /> Key Features
@@ -97,7 +85,6 @@ export default async function ProductDetails({
               </ul>
             </div>
 
-            {/* CTA Section */}
             <div className="p-8 bg-blue-600 rounded-[2rem] text-white shadow-xl">
               <div className="flex items-center gap-4 mb-4">
                 <Activity size={32} className="text-blue-200" />
