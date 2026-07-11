@@ -27,7 +27,9 @@ const slideInRight: Variants = {
     transition: { duration: 0.8, ease: "easeOut" as const } 
   },
 };
+const handleSubmit=async()=>{
 
+}
 export default function PremiumContact() {
   return (
     <div className="min-h-screen bg-[#fafbfc] font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-900">
