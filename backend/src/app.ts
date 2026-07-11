@@ -3,12 +3,15 @@ import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import dns from "node:dns";
+
 import { env } from "./config/env";
 import ApiError from "./utils/ApiError";
+
 import authRoutes from "./routes/auth.routes";
 import blogRoutes from "./routes/blog.routes";
 import careerRoutes from "./routes/career.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
+import applicationRoutes from "./routes/application.routes";
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const app: Application = express();
@@ -35,6 +38,11 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/blogs", blogRoutes);
 app.use("/api/v1/careers", careerRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/blogs", blogRoutes);
+app.use("/api/v1/careers", careerRoutes);
+app.use("/api/v1/dashboard", dashboardRoutes);
+app.use("/api/v1/applications", applicationRoutes);
 
 // 404 handler (for unmatched routes)
 app.use((_req: Request, res: Response) => {
