@@ -1,7 +1,9 @@
 "use client";
-import React from "react";
+
+import React, { useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { Phone, Mail, Send, Building2, MapPin } from "lucide-react";
+
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -27,10 +29,44 @@ const slideInRight: Variants = {
     transition: { duration: 0.8, ease: "easeOut" as const } 
   },
 };
-const handleSubmit=async()=>{
 
-}
 export default function PremiumContact() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [notification, setNotification] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("loading");
+    setNotification("");
+    const form = e.currentTarget; 
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("http://localhost:5000/api/v1/leads/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        setNotification("Your message has been sent successfully!");        
+        form.reset(); 
+      } else {
+        setStatus("error");
+        setNotification("Failed to send the message. Please try again.");
+      }
+    } catch (error) {
+      console.error("Form Submission Error:", error); 
+      
+      setStatus("error");
+      setNotification("An error occurred. Please check your connection and try again.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#fafbfc] font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-900">
       <div className="mx-auto max-w-[90rem] px-6 py-20 lg:px-12 lg:py-32">
@@ -61,6 +97,7 @@ export default function PremiumContact() {
             <motion.p variants={fadeUp} className="mb-12 max-w-lg text-lg font-medium leading-relaxed text-slate-600">
               Whether you have a groundbreaking idea, need enterprise architecture, or just want to chat about the future of tech—we're ready when you are.
             </motion.p>
+            
             <motion.div variants={staggerContainer} className="mb-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
               <motion.div variants={fadeUp} className="group flex flex-col gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/5 transition-colors group-hover:bg-blue-50 group-hover:ring-blue-100">
@@ -82,9 +119,10 @@ export default function PremiumContact() {
                 </div>
               </motion.div>
             </motion.div>
+            
             <motion.div variants={fadeUp} className="relative h-[300px] w-full overflow-hidden rounded-[2rem] bg-slate-200 shadow-inner ring-1 ring-slate-900/5">
               <iframe
-                src="https://maps.google.com/maps?q=Indux Technology&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=Indux+Technology&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -103,6 +141,7 @@ export default function PremiumContact() {
               </div>
             </motion.div>
           </motion.div>
+          
           <motion.div
             variants={slideInRight}
             initial="hidden"
@@ -115,23 +154,25 @@ export default function PremiumContact() {
                 <p className="mt-2 text-slate-500">Fill out the form below and our team will get back to you within 24 hours.</p>
               </div>
 
-              <form className="flex flex-col gap-6">                
+              <form onSubmit={handleSubmit} className="flex flex-col gap-6">                
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="firstName" className="text-xs font-bold uppercase tracking-wider text-slate-500">First Name *</label>
+                    <label htmlFor="first_name" className="text-xs font-bold uppercase tracking-wider text-slate-500">First Name *</label>
                     <input
                       type="text"
-                      id="firstName"
+                      id="first_name"
+                      name="first_name"
                       placeholder="John"
                       className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
                       required
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="lastName" className="text-xs font-bold uppercase tracking-wider text-slate-500">Last Name</label>
+                    <label htmlFor="last_name" className="text-xs font-bold uppercase tracking-wider text-slate-500">Last Name</label>
                     <input
                       type="text"
-                      id="lastName"
+                      id="last_name"
+                      name="last_name"
                       placeholder="Doe"
                       className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
                     />
@@ -139,12 +180,13 @@ export default function PremiumContact() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="company" className="text-xs font-bold uppercase tracking-wider text-slate-500">Company Name</label>
+                  <label htmlFor="company_name" className="text-xs font-bold uppercase tracking-wider text-slate-500">Company Name</label>
                   <div className="relative">
                     <Building2 className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
                     <input
                       type="text"
-                      id="company"
+                      id="company_name"
+                      name="company_name"
                       placeholder="Indux Technology"
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-12 pr-4 text-sm text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
                     />
@@ -157,47 +199,68 @@ export default function PremiumContact() {
                     <input
                       type="email"
                       id="email"
+                      name="email"
                       placeholder="john@example.com"
                       className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
                       required
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-slate-500">Mobile No</label>
+                    <label htmlFor="mobile_no" className="text-xs font-bold uppercase tracking-wider text-slate-500">Mobile No</label>
                     <input
                       type="tel"
-                      id="phone"
+                      id="mobile_no"
+                      name="mobile_no"
                       placeholder="+91 00000 00000"
                       className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
+                      required
                     />
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="message" className="text-xs font-bold uppercase tracking-wider text-slate-500">Project Details *</label>
+                  <label htmlFor="project_description" className="text-xs font-bold uppercase tracking-wider text-slate-500">Project Details *</label>
                   <textarea
-                    id="message"
+                    id="project_description"
+                    name="project_description"
                     rows={4}
                     placeholder="Tell us about your requirements..."
                     className="resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
                     required
                   ></textarea>
                 </div>
+
+                {notification && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`rounded-xl px-4 py-3 text-sm font-semibold ${
+                      status === "success"
+                        ? "bg-emerald-50 text-emerald-600"
+                        : "bg-red-50 text-red-600"
+                    }`}
+                  >
+                    {notification}
+                  </motion.div>
+                )}
+
                 <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <motion.button
                     type="submit"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="group flex h-14 w-full flex-1 items-center justify-center gap-2 rounded-full bg-slate-950 px-8 font-bold text-white shadow-xl shadow-slate-900/20 transition-all hover:bg-blue-600 sm:w-auto"
+                    disabled={status === "loading"}
+                    whileHover={{ scale: status === "loading" ? 1 : 1.02 }}
+                    whileTap={{ scale: status === "loading" ? 1 : 0.98 }}
+                    className="group flex h-14 w-full flex-1 items-center justify-center gap-2 rounded-full bg-slate-950 px-8 font-bold text-white shadow-xl shadow-slate-900/20 transition-all hover:bg-blue-600 disabled:opacity-70 disabled:hover:bg-slate-950 sm:w-auto"
                   >
-                    Send Message
-                    <Send className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+                    {status === "loading" ? "Sending..." : "Send Message"}
+                    {status !== "loading" && <Send className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />}
                   </motion.button>
                   <motion.button
                     type="reset"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="flex h-14 w-full items-center justify-center rounded-full border-2 border-slate-200 bg-white px-8 font-bold text-slate-600 transition-all hover:border-slate-300 hover:bg-slate-50 sm:w-auto"
+                    disabled={status === "loading"}
+                    whileHover={{ scale: status === "loading" ? 1 : 1.02 }}
+                    whileTap={{ scale: status === "loading" ? 1 : 0.98 }}
+                    className="flex h-14 w-full items-center justify-center rounded-full border-2 border-slate-200 bg-white px-8 font-bold text-slate-600 transition-all hover:border-slate-300 hover:bg-slate-50 disabled:opacity-70 sm:w-auto"
                   >
                     Clear
                   </motion.button>
