@@ -19,7 +19,7 @@ const allLinks = [
   { name: 'Blogs', href: '/blogs' },
   { name: 'About Us', href: '/about' },
   { name: 'Contact Us', href: '/contact' },
-   { name: 'Careers', href: '/career' },
+  { name: 'Careers', href: '/careers' },
   { name: 'Privacy Policy', href: '#' },
   { name: 'Terms of Service', href: '#' },
 ];
