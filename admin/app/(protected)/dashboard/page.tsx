@@ -7,6 +7,7 @@ import Link from 'next/link';
 interface DashboardStats {
   blogs: { total: number; published: number; draft: number };
   careers: { total: number; active: number; closed: number };
+  leads?: { total: number; new: number; contacted: number };
 }
 
 export default function DashboardPage() {
@@ -57,6 +58,16 @@ export default function DashboardPage() {
           <div className="flex gap-4 mt-2 text-sm">
             <span className="text-green-600">Active: {stats?.careers.active || 0}</span>
             <span className="text-red-600">Closed: {stats?.careers.closed || 0}</span>
+          </div>
+        </div>
+
+        {/* Leads Stats Card */}
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h3 className="text-sm font-medium text-gray-500">Total Leads</h3>
+          <p className="text-3xl font-bold text-gray-800">{stats?.leads?.total || 0}</p>
+          <div className="flex gap-4 mt-2 text-sm">
+            <span className="text-blue-600">New: {stats?.leads?.new || 0}</span>
+            <span className="text-yellow-600">Contacted: {stats?.leads?.contacted || 0}</span>
           </div>
         </div>
 

@@ -98,4 +98,18 @@ export const submitApplication = async (input: JobApplicationInput): Promise<any
   return res.data;
 };
 
+// ===== Lead/Contact Types & API =====
+export interface LeadInput {
+  name: string;
+  email: string;
+  phone: string;
+  service: string;
+  message: string;
+}
+
+export const submitLead = async (input: LeadInput): Promise<any> => {
+  const res = await api.post('/leads', input);
+  return res.data;
+};
+
 export default api;
