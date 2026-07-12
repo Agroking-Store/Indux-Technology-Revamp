@@ -1,7 +1,7 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 
 export interface IJobApplication extends Document {
-  careerId: Schema.Types.ObjectId;
+  careerId: Types.ObjectId | string;
   fullName: string;
   email: string;
   phone: string;
