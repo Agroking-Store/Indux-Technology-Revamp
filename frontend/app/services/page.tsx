@@ -124,22 +124,21 @@ export default function ServicesPage() {
                     </div>
 
                     <div className="flex flex-col items-center gap-8 py-12">
-                        {/* Row 1: CRM & ERP */}
+                        {/* Row 1: CRM Solutions */}
                         <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 w-full mb-20 md:-left-24 relative">
                             <div className="relative shrink-0">
                                 <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">01</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="CRM & ERP Solutions" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/crm-erp.webp" />
+                                    <img alt="CRM Solutions" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/crm.webp" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">CRM & ERP Solutions</h3>
+                                <h3 className="text-3xl font-bold text-foreground mb-4">CRM Solutions</h3>
                                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Streamline your business processes with integrated management systems designed for efficiency and scalability. Our solutions empower your team with real-time data and automated workflows for better decision making.
+                                    Streamline your customer relationships and sales pipelines. Our CRM solutions empower your team with real-time data, automated workflows, and comprehensive insights for better decision making.
                                 </p>
                                 <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start">
-                                    <Link href="/services/crm" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">CRM</Link>
-                                    <Link href="/services/erp" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">ERP</Link>
+                                    <Link href="/services/crm" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
                                 </div>
                             </div>
                         </div>
@@ -196,7 +195,7 @@ export default function ServicesPage() {
                         </div>
 
                         {/* Row 5: Business Automation */}
-                        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 w-full relative">
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 w-full mb-20 relative">
                             <div className="relative shrink-0">
                                 <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">05</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
@@ -209,6 +208,23 @@ export default function ServicesPage() {
                                     Optimizing workflows and reducing manual tasks through smart automation technology tailored to your needs. We identify bottlenecks and implement efficient systems that free up your team for higher-value work.
                                 </p>
                                 <Link href="/services/business-automation" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
+                            </div>
+                        </div>
+
+                        {/* Row 6: ERP Systems */}
+                        <div className="flex flex-col md:flex-row-reverse items-center justify-center gap-12 md:gap-20 w-full relative">
+                            <div className="relative shrink-0">
+                                <span className="absolute -right-24 md:-right-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">06</span>
+                                <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+                                    <img alt="ERP Systems" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/erp.avif" />
+                                </div>
+                            </div>
+                            <div className="max-w-md text-center md:text-right relative z-10">
+                                <h3 className="text-3xl font-bold text-foreground mb-4">ERP Systems</h3>
+                                <p className="text-muted-foreground mb-6 leading-relaxed">
+                                    Integrate core business processes with centralized management systems designed for efficiency and scalability. Our ERP solutions optimize resources and synchronize your entire operation.
+                                </p>
+                                <Link href="/services/erp" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
                             </div>
                         </div>
                     </div>
