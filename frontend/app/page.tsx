@@ -18,6 +18,26 @@ import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import PhoneInput from "react-phone-number-input/input";
+import { isValidPhoneNumber, getCountries, getCountryCallingCode } from "react-phone-number-input";
+import flags from "react-phone-number-input/flags";
+import en from "react-phone-number-input/locale/en.json";
+import "react-phone-number-input/style.css";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -30,8 +50,7 @@ import {
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
   email: z.string().email("Please enter a valid email address."),
-  phone: z.string().min(10, "Please enter a valid phone number."),
-  service: z.string().min(1, "Please select a service."),
+  phone: z.string().min(1, "Phone number is required").refine((val) => val && isValidPhoneNumber(val), { message: "Invalid phone number" }),
   message: z.string().min(10, "Message must be at least 10 characters."),
 });
 
@@ -41,11 +60,11 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 const reviews = [
   { name: "Paras Bora", rating: 5, body: "Laxman is very good at his work. I use the crm software he has developed for us. Reaping good benefits and is cost effective as well", img: "https://i.pravatar.cc/150?u=10" },
   { name: "Subhangi Solunke", rating: 5, body: "Great experience with Indux Technology. They understood my needs and delivered perfectly. Professional team with smooth collaboration.", img: "https://i.pravatar.cc/150?u=20" },
-  { name: "Komal Gupta", rating: 5, body: "Had a great experience working with Indux Technology. The team is professional, responsive, and delivers quality work on time.", img: "https://i.pravatar.cc/150?u=30" },
+  { name: "Nikhil Sharma Eventpreneur", rating: 5, body: "Laxman has great knowledge about his industry and has been super productive with this delivery. Wishing you many success ahead.", img: "https://i.pravatar.cc/150?u=30" },
   { name: "Aditya Chakre", rating: 5, body: "Just wanted to share my experience with Indux Technology. I used them for a CRM project and it was a really good experience. The project turned out great!", img: "https://i.pravatar.cc/150?u=40" },
   { name: "Aditya Shastri1817", rating: 5, body: "Indux Technology played a key role in our digital transformation journey. From strategy to execution, they provided end-to-end solutions including development and marketing.", img: "https://i.pravatar.cc/150?u=50" },
-  { name: "Manorath Rastogi", rating: 5, body: "Indux Technology delivered our project on time with excellent quality and professionalism. Great support, reliable service, and truly value for money highly recommended.", img: "https://i.pravatar.cc/150?u=60" },
-  { name: "Sunaina", rating: 5, body: "Great experience with Indux Technology. Professional team, timely delivery, and excellent communication. Highly recommended for reliable and quality work!", img: "https://i.pravatar.cc/150?u=70" },
+  { name: "Satish Mundalik", rating: 5, body: "Laxman is a master of CRM — creating strong connections, building trust, and maintaining lasting relationships. He believes every contact is valuable and every follow-up creates new opportunities.", img: "https://i.pravatar.cc/150?u=60" },
+  { name: "Priyanka V Memories Worldwide", rating: 5, body: "Give very genuine and correct solutions of your problems thru their CRM software", img: "https://i.pravatar.cc/150?u=70" },
   { name: "atif pervez", rating: 5, body: "Indux Technology delivered a reliable IT solution with a professional and responsive team. A smooth experience and a dependable development partner.", img: "https://i.pravatar.cc/150?u=80" },
 ];
 const firstRow = reviews.slice(0, reviews.length / 2);
@@ -128,6 +147,8 @@ export default function Home() {
 
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [blogsLoading, setBlogsLoading] = useState(true);
+  const [countryOpen, setCountryOpen] = useState(false);
+  const [country, setCountry] = useState<any>("IN");
 
   useEffect(() => {
     getBlogs()
@@ -155,14 +176,13 @@ export default function Home() {
       name: "",
       email: "",
       phone: "",
-      service: "",
       message: "",
     },
   });
 
   const onSubmit = async (data: ContactFormValues) => {
     try {
-      await submitLead(data);
+      await submitLead({ ...data, service: "General Inquiry" });
       toast.success("Message sent successfully!", {
         description: "We'll get back to you as soon as possible.",
       });
@@ -1013,35 +1033,78 @@ export default function Home() {
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="flex flex-col gap-2">
-                      <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Phone *</Label>
-                      <Input {...register("phone")} type="tel" placeholder="+1 (555) 000-0000" className="h-14 px-4 bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus-visible:ring-blue-500 rounded-xl shadow-sm text-base" />
-                      {errors.phone && <p className="text-red-500 text-xs ml-1">{errors.phone.message}</p>}
-                    </div>
-                    <div className="flex flex-col gap-2 relative">
-                      <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Service Interested In *</Label>
-                      <Controller
-                        control={control}
-                        name="service"
-                        render={({ field }) => (
-                          <Select onValueChange={field.onChange} value={field.value}>
-                            <SelectTrigger className="h-14 px-4 bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:ring-blue-500 rounded-xl shadow-sm text-base">
-                              <SelectValue placeholder="Select Service" />
-                            </SelectTrigger>
-                            <SelectContent alignItemWithTrigger={false} sideOffset={8} className="rounded-xl">
-                              <SelectItem className="py-3 px-4 cursor-pointer" value="crm">CRM Solutions</SelectItem>
-                              <SelectItem className="py-3 px-4 cursor-pointer" value="erp">ERP Systems</SelectItem>
-                              <SelectItem className="py-3 px-4 cursor-pointer" value="webd">Web Development</SelectItem>
-                              <SelectItem className="py-3 px-4 cursor-pointer" value="mobileapp">Mobile Apps</SelectItem>
-                              <SelectItem className="py-3 px-4 cursor-pointer" value="ai">AI Chatbots</SelectItem>
-                              <SelectItem className="py-3 px-4 cursor-pointer" value="automation">Business Automation</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        )}
-                      />
-                      {errors.service && <p className="text-red-500 text-xs ml-1">{errors.service.message}</p>}
-                    </div>
+                  <div className="flex flex-col gap-2">
+                    <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Phone *</Label>
+                    <Controller
+                      name="phone"
+                      control={control}
+                      render={({ field }) => {
+                        const FlagComponent = country ? (flags as any)[country] : null;
+                        return (
+                          <div className="flex h-14 w-full rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm focus-within:ring-2 focus-within:ring-blue-500 transition-colors relative overflow-hidden items-center">
+                            <Popover open={countryOpen} onOpenChange={setCountryOpen}>
+                              <PopoverTrigger className="flex items-center justify-center px-4 h-full bg-slate-100/50 dark:bg-slate-800/80 border-r border-slate-200 dark:border-slate-700 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 transition-colors shrink-0 outline-none cursor-pointer">
+                                {FlagComponent ? (
+                                  <FlagComponent title={country} className="w-6 h-5 rounded-sm object-cover" />
+                                ) : (
+                                  <div className="w-6 h-5 bg-slate-200 dark:bg-slate-700 rounded-sm" />
+                                )}
+                                <ChevronsUpDown className="w-4 h-4 text-slate-500 opacity-70 ml-2" />
+                              </PopoverTrigger>
+                              <PopoverContent className="w-[300px] p-0" align="start">
+                                <Command>
+                                  <CommandInput placeholder="Search country..." className="h-9" />
+                                  <CommandList className="max-h-64 overflow-y-auto">
+                                    <CommandEmpty>No country found.</CommandEmpty>
+                                    <CommandGroup>
+                                      {getCountries().map((c) => {
+                                        const ItemFlag = (flags as any)[c];
+                                        return (
+                                          <CommandItem
+                                            key={c}
+                                            value={`${(en as any)[c]} ${c}`}
+                                            onSelect={() => {
+                                              setCountry(c);
+                                              setCountryOpen(false);
+                                            }}
+                                            className="cursor-pointer flex items-center gap-2"
+                                          >
+                                            {ItemFlag && <ItemFlag title={c} className="w-5 h-4 rounded-sm object-cover shrink-0" />}
+                                            <span className="flex-1 truncate">{(en as any)[c]}</span>
+                                            <span className="text-slate-500">+{getCountryCallingCode(c)}</span>
+                                            <Check
+                                              className={cn(
+                                                "ml-2 h-4 w-4 shrink-0",
+                                                country === c ? "opacity-100" : "opacity-0"
+                                              )}
+                                            />
+                                          </CommandItem>
+                                        );
+                                      })}
+                                    </CommandGroup>
+                                  </CommandList>
+                                </Command>
+                              </PopoverContent>
+                            </Popover>
+                            
+                            <span className="pl-4 pr-1 text-base text-slate-500 dark:text-slate-400 select-none">
+                              +{country ? getCountryCallingCode(country) : ""}
+                            </span>
+                            
+                            <PhoneInput
+                              {...field}
+                              id="phone"
+                              country={country}
+                              onCountryChange={setCountry}
+                              placeholder="98765 43210"
+                              maxLength={16}
+                              className="flex-1 pr-4 py-2 bg-transparent outline-none text-base placeholder:text-slate-400 dark:placeholder:text-slate-500 min-w-0 h-full"
+                            />
+                          </div>
+                        );
+                      }}
+                    />
+                    {errors.phone && <p className="text-red-500 text-xs ml-1">{errors.phone.message}</p>}
                   </div>
 
                   <div className="flex flex-col gap-2">

@@ -37,6 +37,7 @@ const FacebookLogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 import { Button } from '@/components/ui/button';
+import { GetQuoteModal } from './GetQuoteModal';
 import {
 	Sheet,
 	SheetClose,
@@ -130,10 +131,7 @@ export default function Navbar() {
 				{/* Right Section & Mobile Menu */}
 				<div className="flex items-center gap-4">
 					<AnimatedThemeToggler className="hidden sm:flex size-12 items-center justify-center rounded-full bg-slate-100/80 dark:bg-slate-900 text-slate-600 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-850 hover:text-blue-600 transition-colors cursor-pointer border border-slate-200 dark:border-slate-800" />
-					
-					<Button className="hidden sm:inline-flex bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold px-8 py-6 rounded-full shadow-lg shadow-blue-500/30 text-lg transition-all hover:scale-105 hover:shadow-blue-500/50 active:scale-95 cursor-pointer border-t border-white/20">
-						Get Quote
-					</Button>
+					<GetQuoteModal />
 					
 					<MobileNav pathname={pathname} />
 				</div>
