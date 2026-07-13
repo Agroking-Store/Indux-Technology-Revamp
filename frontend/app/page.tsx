@@ -37,14 +37,14 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 // Review data
 const reviews = [
-  { name: "John Doe", username: "@johndoe", body: "Indux Technology completely transformed our IT infrastructure. Highly recommended!", img: "https://i.pravatar.cc/150?u=10" },
-  { name: "Jane Smith", username: "@janesmith", body: "The CRM they built for us increased our sales by 40%. Truly amazing work.", img: "https://i.pravatar.cc/150?u=20" },
-  { name: "Alex Johnson", username: "@alexj", body: "Their agile delivery and transparent reporting kept us in the loop at every stage.", img: "https://i.pravatar.cc/150?u=30" },
-  { name: "Sarah Williams", username: "@sarahw", body: "Very professional team. They migrated our legacy systems to the cloud flawlessly.", img: "https://i.pravatar.cc/150?u=40" },
-  { name: "Michael Brown", username: "@mikeb", body: "We've seen a massive ROI after launching the E-commerce app they designed for us.", img: "https://i.pravatar.cc/150?u=50" },
-  { name: "Emily Davis", username: "@emilyd", body: "Their UI/UX team is top-notch. The new design is beautiful and highly functional.", img: "https://i.pravatar.cc/150?u=60" },
-  { name: "David Wilson", username: "@davidw", body: "Great communication, on-time delivery, and clean code. What else could you ask for?", img: "https://i.pravatar.cc/150?u=70" },
-  { name: "Jessica Taylor", username: "@jessicat", body: "They understood our complex business logic and delivered an elegant SaaS solution.", img: "https://i.pravatar.cc/150?u=80" },
+  { name: "Paras Bora", rating: 5, body: "Laxman is very good at his work. I use the crm software he has developed for us. Reaping good benefits and is cost effective as well", img: "https://i.pravatar.cc/150?u=10" },
+  { name: "Subhangi Solunke", rating: 5, body: "Great experience with Indux Technology. They understood my needs and delivered perfectly. Professional team with smooth collaboration.", img: "https://i.pravatar.cc/150?u=20" },
+  { name: "Komal Gupta", rating: 5, body: "Had a great experience working with Indux Technology. The team is professional, responsive, and delivers quality work on time.", img: "https://i.pravatar.cc/150?u=30" },
+  { name: "Aditya Chakre", rating: 5, body: "Just wanted to share my experience with Indux Technology. I used them for a CRM project and it was a really good experience. The project turned out great!", img: "https://i.pravatar.cc/150?u=40" },
+  { name: "Aditya Shastri1817", rating: 5, body: "Indux Technology played a key role in our digital transformation journey. From strategy to execution, they provided end-to-end solutions including development and marketing.", img: "https://i.pravatar.cc/150?u=50" },
+  { name: "Manorath Rastogi", rating: 5, body: "Indux Technology delivered our project on time with excellent quality and professionalism. Great support, reliable service, and truly value for money highly recommended.", img: "https://i.pravatar.cc/150?u=60" },
+  { name: "Sunaina", rating: 5, body: "Great experience with Indux Technology. Professional team, timely delivery, and excellent communication. Highly recommended for reliable and quality work!", img: "https://i.pravatar.cc/150?u=70" },
+  { name: "atif pervez", rating: 5, body: "Indux Technology delivered a reliable IT solution with a professional and responsive team. A smooth experience and a dependable development partner.", img: "https://i.pravatar.cc/150?u=80" },
 ];
 const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);
@@ -52,14 +52,18 @@ const secondRow = reviews.slice(reviews.length / 2);
 const ReviewCard = ({
   img,
   name,
-  username,
+  rating,
   body,
 }: {
   img: string;
   name: string;
-  username: string;
+  rating: number;
   body: string;
 }) => {
+  const initials = name.split(" ").map((n) => n[0]).join("").substring(0, 2).toUpperCase();
+  const colors = ["bg-red-500", "bg-blue-600", "bg-green-600", "bg-yellow-600", "bg-purple-600", "bg-pink-600", "bg-indigo-600", "bg-teal-600", "bg-orange-600"];
+  const bgColor = colors[name.length % colors.length];
+
   return (
     <figure
       className={
@@ -67,12 +71,18 @@ const ReviewCard = ({
       }
     >
       <div className="flex flex-row items-center gap-3">
-        <Image className="rounded-full" width={40} height={40} alt="" src={img} />
-        <div className="flex flex-col">
-          <figcaption className="text-base font-bold dark:text-white">
+        <div className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-bold text-[15px] ${bgColor} shadow-sm border border-white/10`}>
+          {initials}
+        </div>
+        <div className="flex flex-col gap-1">
+          <figcaption className="text-base font-bold dark:text-white leading-none">
             {name}
           </figcaption>
-          <p className="text-xs font-medium text-slate-500 dark:text-slate-400">{username}</p>
+          <div className="flex gap-0.5">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star key={i} className={`w-3.5 h-3.5 ${i < rating ? 'fill-yellow-400 text-yellow-400' : 'fill-slate-200 text-slate-200 dark:fill-slate-700 dark:text-slate-700'}`} />
+            ))}
+          </div>
         </div>
       </div>
       <blockquote className="mt-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{body}</blockquote>
@@ -85,7 +95,7 @@ export default function Home() {
   const { scrollYProgress } = useScroll({
     target: processRef,
   });
-  const xTransform = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  const xTransform = useTransform(scrollYProgress, (pos) => `calc(-${pos * 100}% + ${pos * 100}vw)`);
 
   const {
     register,
@@ -799,24 +809,35 @@ export default function Home() {
                     <svg className="w-24 h-24 text-white transform translate-x-2 -translate-y-2" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
                   </div>
                   <div className="relative z-10">
-                    <div className="text-5xl md:text-6xl font-extrabold text-white mb-2">4.9</div>
+                    <div className="text-5xl md:text-6xl font-extrabold text-white mb-2">5.0</div>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="flex gap-1">
                         {[1,2,3,4,5].map((i) => (
                           <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                         ))}
                       </div>
-                      <p className="text-blue-200 font-medium text-sm tracking-wide">(40+ Reviews)</p>
+                      <p className="text-blue-200 font-medium text-sm tracking-wide">(30+ Reviews)</p>
                     </div>
                     <p className="text-white text-base md:text-lg font-medium mb-6 leading-relaxed max-w-[90%]">
                       Customer experiences that speak for themselves.
                     </p>
                     
-                    <div className="flex -space-x-3">
-                      <img className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=1" alt="avatar" />
-                      <img className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=2" alt="avatar" />
-                      <img className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=3" alt="avatar" />
-                      <div className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] bg-blue-600 flex items-center justify-center text-white font-bold text-xs z-10">+37</div>
+                    <div className="flex items-center justify-between mt-2">
+                      <div className="flex -space-x-3">
+                        <img className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=1" alt="avatar" />
+                        <img className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=2" alt="avatar" />
+                        <img className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=3" alt="avatar" />
+                        <div className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] bg-blue-600 flex items-center justify-center text-white font-bold text-xs z-10">+37</div>
+                      </div>
+                      
+                      <a 
+                        href="https://www.google.com/search?sca_esv=590eb0aa4b74244e&hl=en-IN&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_8rvk6vr8yfTYT7skK3V3XFwpaMdTntxaRkoVitZ5oNvuSsJBuUECr7oGrWVEL7WbYUpLvB-GYmK1MIbvIMdk3etA_Thu6PRaHoPCDFquLsgpBZ0Hg%3D%3D&q=INDUX+TECHNOLOGY+Reviews&sa=X&ved=2ahUKEwjY9OHo7s6VAxVhzjgGHS8-DSYQ0bkNegQIJxAI&biw=1536&bih=730&dpr=1.25" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-2 bg-white/10 hover:bg-white text-white hover:text-[#0f2e4a] text-sm font-bold py-2.5 px-5 rounded-full transition-all duration-300 backdrop-blur-sm border border-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                      >
+                        Write Review <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -825,13 +846,13 @@ export default function Home() {
               {/* Right Side: Marquee Reviews (Shifted downwards) */}
               <div className="w-full lg:w-7/12 relative mt-12 lg:mt-24 flex flex-col gap-4 sm:gap-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
                 <Marquee pauseOnHover className="[--duration:40s]">
-                  {firstRow.map((review) => (
-                    <ReviewCard key={review.username} {...review} />
+                  {firstRow.map((review, index) => (
+                    <ReviewCard key={review.name + index} {...review} />
                   ))}
                 </Marquee>
                 <Marquee reverse pauseOnHover className="[--duration:45s] hidden sm:flex">
-                  {secondRow.map((review) => (
-                    <ReviewCard key={review.username} {...review} />
+                  {secondRow.map((review, index) => (
+                    <ReviewCard key={review.name + index} {...review} />
                   ))}
                 </Marquee>
               </div>

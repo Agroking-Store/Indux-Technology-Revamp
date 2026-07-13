@@ -4,7 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Mail, Phone, MapPin, Grid2x2PlusIcon, ArrowRight, Send } from 'lucide-react';
-import { InstagramLogoIcon, LinkedInLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
+import { InstagramLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
+import { FaXTwitter, FaWhatsapp } from "react-icons/fa6";
 import { Button } from '@/components/ui/button';
 
 const FacebookLogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -20,8 +21,8 @@ const allLinks = [
   { name: 'About Us', href: '/about' },
   { name: 'Contact Us', href: '/contact-us' },
    { name: 'Careers', href: '/career' },
-  { name: 'Privacy Policy', href: '#' },
-  { name: 'Terms of Service', href: '#' },
+  { name: 'Privacy Policy', href: '/privacy-policy' },
+  { name: 'Terms of Service', href: '/terms-of-service' },
 ];
 
 export default function Footer() {
@@ -40,7 +41,7 @@ export default function Footer() {
           {/* Left Section: Brand & Links */}
           <div className="flex flex-col gap-6">
             <Link href="/" className="flex items-center gap-2 cursor-pointer group w-max">
-              <Image src="/brandlogo.jpg" alt="Indux Technology" width={90} height={26} className="object-contain rounded-md shadow-sm" priority />
+              <Image src="/induxtechnologylogo_white.png" alt="Indux Technology" width={140} height={40} className="object-contain" priority />
             </Link>
             
             <p className="text-slate-400 leading-relaxed text-sm">
@@ -131,17 +132,20 @@ export default function Footer() {
           
           {/* Left: Social Icons */}
           <div className="flex items-center gap-3">
-            <a href="#" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
+            <a href="https://www.facebook.com/885831577953764/" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
               <FacebookLogoIcon className="size-4" />
             </a>
-            <a href="#" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
-              <TwitterLogoIcon className="size-4" />
+            <a href="https://x.com/induxtechnology" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
+              <FaXTwitter className="size-4" />
             </a>
-            <a href="#" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
+            <a href="https://www.linkedin.com/company/indux-technology/" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
               <LinkedInLogoIcon className="size-4" />
             </a>
-            <a href="#" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
+            <a href="https://www.instagram.com/indux.technology" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
               <InstagramLogoIcon className="size-4" />
+            </a>
+            <a href="https://wa.me/918421538753" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-[#25D366] hover:text-white transition-all cursor-pointer hover:-translate-y-1">
+              <FaWhatsapp className="size-4" />
             </a>
           </div>
 
