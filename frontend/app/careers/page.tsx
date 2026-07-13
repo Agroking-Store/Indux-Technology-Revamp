@@ -70,7 +70,6 @@ export default function CareersPage() {
                   Build your engineering career with industry professionals who care about robust software and helping clients scale their digital infrastructure.
                 </p>
                 <Button
-                  asChild
                   className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer w-max flex items-center gap-2"
                 >
                   <a href="#open-positions">
@@ -323,7 +322,6 @@ export default function CareersPage() {
                 We are always looking for exceptional software engineers, designers, and project managers. Get in touch with us directly.
               </p>
               <Button
-                asChild
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wider text-xs uppercase transition-all duration-300 shadow-lg shadow-blue-700/20 hover:scale-105 active:scale-95"
               >
                 <Link href="/contact-us">
