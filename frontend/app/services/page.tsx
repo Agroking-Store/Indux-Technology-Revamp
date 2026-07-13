@@ -137,7 +137,10 @@ export default function ServicesPage() {
                                 <p className="text-muted-foreground mb-6 leading-relaxed">
                                     Streamline your business processes with integrated management systems designed for efficiency and scalability. Our solutions empower your team with real-time data and automated workflows for better decision making.
                                 </p>
-                                <Link href="/services/crm-erp" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
+                                <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start">
+                                    <Link href="/services/crm" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">CRM</Link>
+                                    <Link href="/services/erp" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">ERP</Link>
+                                </div>
                             </div>
                         </div>
 

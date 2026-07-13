@@ -50,6 +50,7 @@ import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 
 const servicesData = {
 	title: 'Services',
+	href: '/services',
 	main: [
 		{ title: 'CRM Solutions', desc: 'Manage customer relationships', href: '/services/crm', icon: Users },
 		{ title: 'ERP Systems', desc: 'Enterprise resource planning', href: '/services/erp', icon: Layers },
@@ -167,7 +168,7 @@ function NavLink({ href, title, pathname }: { href: string, title: string, pathn
 	);
 }
 
-function DropdownMenu({ data, pathname }: { data: { title: string; main: any[]; side?: any[] }, pathname: string }) {
+function DropdownMenu({ data, pathname }: { data: { title: string; href?: string; main: any[]; side?: any[] }, pathname: string }) {
 	const [isHovered, setIsHovered] = useState(false);
 
 	return (
@@ -176,15 +177,27 @@ function DropdownMenu({ data, pathname }: { data: { title: string; main: any[]; 
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
-			<div className="flex items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors">
-				{data.title}
-				<motion.div
-					animate={{ rotate: isHovered ? 180 : 0 }}
-					transition={{ duration: 0.2 }}
-				>
-					<ChevronDown className="size-4" />
-				</motion.div>
-			</div>
+			{data.href ? (
+				<Link href={data.href} className="flex items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors">
+					{data.title}
+					<motion.div
+						animate={{ rotate: isHovered ? 180 : 0 }}
+						transition={{ duration: 0.2 }}
+					>
+						<ChevronDown className="size-4" />
+					</motion.div>
+				</Link>
+			) : (
+				<div className="flex items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors">
+					{data.title}
+					<motion.div
+						animate={{ rotate: isHovered ? 180 : 0 }}
+						transition={{ duration: 0.2 }}
+					>
+						<ChevronDown className="size-4" />
+					</motion.div>
+				</div>
+			)}
 			{/* Aesthetic Bottom Hover Line */}
 			<motion.span
 				className="absolute bottom-[28px] left-0 w-full h-[3px] rounded-full bg-blue-600 origin-left"
@@ -296,13 +309,14 @@ function MobileNav({ pathname }: { pathname: string }) {
 					
 					{/* Services Accordion */}
 					<div>
-						<button 
-							onClick={() => toggleSection('services')}
-							className="flex items-center justify-between w-full text-2xl font-bold text-slate-900 dark:text-white mb-2"
-						>
-							Services
-							<ChevronDown className={cn("size-6 transition-transform", openSection === 'services' && "rotate-180")} />
-						</button>
+						<div className="flex items-center justify-between w-full mb-2">
+							<SheetClose render={<Link href="/services" className="text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors" />}>
+								Services
+							</SheetClose>
+							<button onClick={() => toggleSection('services')} className="p-2 -mr-2">
+								<ChevronDown className={cn("size-6 text-slate-900 dark:text-white transition-transform", openSection === 'services' && "rotate-180")} />
+							</button>
+						</div>
 						{openSection === 'services' && (
 							<div className="flex flex-col gap-4 mt-4 ml-4 border-l-2 dark:border-slate-800 pl-4">
 								{servicesData.main.map((item) => (
