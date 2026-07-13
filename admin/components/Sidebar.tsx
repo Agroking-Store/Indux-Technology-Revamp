@@ -9,6 +9,7 @@ import {
   Briefcase, 
   Inbox,
   MessageSquare,
+  Calendar,
   LogOut 
 } from 'lucide-react';
 
@@ -22,6 +23,7 @@ export const Sidebar = () => {
     { href: '/careers', label: 'Careers', icon: Briefcase },
     { href: '/applications', label: 'Applications', icon: Inbox },
     { href: '/leads', label: 'Leads', icon: MessageSquare },
+    { href: '/events', label: 'Events', icon: Calendar },
   ];
 
   return (
