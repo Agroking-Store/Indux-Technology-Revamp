@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import Lead from "../models/Lead";
 import ApiError from "../utils/ApiError";
 import { createLeadSchema, updateLeadStatusSchema } from "../validators/lead.validator";
+import { sendEmail } from "../utils/sendEmail";
 
 // @desc    Submit a new contact lead (Public)
 // @route   POST /api/v1/leads
@@ -14,6 +15,27 @@ export const createLead = async (
   try {
     const validatedData = createLeadSchema.parse(req.body);
     const lead = await Lead.create(validatedData);
+
+    // Send auto-reply email
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <h2 style="color: #0284c7;">Thank you for contacting us!</h2>
+        <p>Hi ${validatedData.name},</p>
+        <p>We have successfully received your message. Our team at Indux Technology is reviewing your inquiry and will get back to you shortly.</p>
+        <p><strong>Your Message:</strong><br/>
+        <i>"${validatedData.message}"</i></p>
+        <br/>
+        <p>Best Regards,<br/><strong>The Indux Technology Team</strong></p>
+      </div>
+    `;
+
+    // Fire and forget (or await if you want to block on email send)
+    sendEmail({
+      to: validatedData.email,
+      subject: "We've received your inquiry - Indux Technology",
+      html: emailHtml,
+    }).catch(err => console.error("Email error:", err));
+
     res.status(201).json({
       success: true,
       message: "Lead submitted successfully",

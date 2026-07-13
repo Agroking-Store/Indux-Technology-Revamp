@@ -13,6 +13,7 @@ import careerRoutes from "./routes/career.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
 import applicationRoutes from "./routes/application.routes";
 import leadRoutes from "./routes/lead.routes";
+import quoteRoutes from "./routes/quote.routes";
 import eventRoutes from "./routes/event.routes";
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
@@ -42,6 +43,7 @@ app.use("/api/v1/careers", careerRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
 app.use("/api/v1/applications", applicationRoutes);
 app.use("/api/v1/leads", leadRoutes);
+app.use("/api/v1/quotes", quoteRoutes);
 app.use("/api/v1/events", eventRoutes);
 
 // 404 handler (for unmatched routes)

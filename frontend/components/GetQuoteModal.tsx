@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { SuccessModal } from "@/components/SuccessModal";
 import {
   Command,
   CommandEmpty,
@@ -71,7 +72,7 @@ type FormValues = z.infer<typeof formSchema>;
 export function GetQuoteModal({ children }: { children?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [serviceOpen, setServiceOpen] = useState(false);
   const [countryOpen, setCountryOpen] = useState(false);
   const [country, setCountry] = useState<any>("IN");
@@ -100,7 +101,9 @@ export function GetQuoteModal({ children }: { children?: React.ReactNode }) {
     await new Promise((resolve) => setTimeout(resolve, 1500));
     console.log("Quote Request Submitted:", data);
     setIsSubmitting(false);
-    setIsSuccess(true);
+    setOpen(false);
+    setShowSuccess(true);
+    reset();
   };
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -109,13 +112,19 @@ export function GetQuoteModal({ children }: { children?: React.ReactNode }) {
       // Reset after a short delay so the closing animation finishes first
       setTimeout(() => {
         reset();
-        setIsSuccess(false);
       }, 300);
     }
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <>
+      <SuccessModal 
+        open={showSuccess} 
+        onOpenChange={setShowSuccess}
+        title="Quote Request Sent!"
+        description="Thanks for telling us about your project. We'll send you a proposal very soon."
+      />
+      <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger 
         className={children ? "" : "hidden sm:inline-flex bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-6 py-2.5 rounded-full shadow-md shadow-blue-500/20 text-sm transition-all hover:scale-105 hover:shadow-blue-500/40 active:scale-95 cursor-pointer border-t border-white/20 items-center justify-center"}
       >
@@ -126,30 +135,13 @@ export function GetQuoteModal({ children }: { children?: React.ReactNode }) {
         {/* Fancy Header Gradient */}
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 z-10"></div>
         
-        {isSuccess ? (
-          <div className="p-10 flex flex-col items-center justify-center text-center space-y-4 min-h-[450px]">
-            <div className="w-20 h-20 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-2 shadow-sm border border-green-100 dark:border-green-900/30">
-              <CheckCircle2 className="w-10 h-10 text-green-500" />
-            </div>
-            <DialogTitle className="text-2xl font-bold text-slate-900 dark:text-white">Request Received!</DialogTitle>
-            <DialogDescription className="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-sm mx-auto">
-              Thank you for reaching out. Our team will review your requirements and get back to you shortly.
+        <div className="p-8 pb-10">
+          <DialogHeader className="mb-6">
+            <DialogTitle className="text-2xl font-bold text-slate-900 dark:text-white text-left">Get a Free Quote</DialogTitle>
+            <DialogDescription className="text-slate-500 dark:text-slate-400 text-left">
+              Tell us about your project and we'll get back to you with a proposal.
             </DialogDescription>
-            <Button 
-              onClick={() => handleOpenChange(false)}
-              className="mt-6 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-full px-8 hover:scale-105 transition-transform cursor-pointer"
-            >
-              Close Window
-            </Button>
-          </div>
-        ) : (
-          <div className="p-8 pb-10">
-            <DialogHeader className="mb-6">
-              <DialogTitle className="text-2xl font-bold text-slate-900 dark:text-white text-left">Get a Free Quote</DialogTitle>
-              <DialogDescription className="text-slate-500 dark:text-slate-400 text-left">
-                Tell us about your project and we'll get back to you with a proposal.
-              </DialogDescription>
-            </DialogHeader>
+          </DialogHeader>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               <div className="grid grid-cols-2 gap-4">
@@ -331,8 +323,8 @@ export function GetQuoteModal({ children }: { children?: React.ReactNode }) {
               </div>
             </form>
           </div>
-        )}
       </DialogContent>
     </Dialog>
+    </>
   );
 }
