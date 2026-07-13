@@ -1,193 +1,247 @@
-import { Sparkles, Sprout, ShieldCheck, BarChart3 } from "lucide-react";
+import {
+  Sparkles,
+  Sprout,
+  ShieldCheck,
+  BarChart3,
+  Building2,
+  CreditCard,
+  Scale,
+  Users,
+  LucideIcon,
+  Zap,
+} from "lucide-react";
 
-export const projects = [
+export interface Project {
+  id: number;
+  title: string;
+  category: string;
+  shortDescription: string;
+  fullDescription: string;
+  themeColor: "blue" | "emerald" | "cyan" | "indigo";
+  icon: LucideIcon;
+  image: string;
+  features: string[];
+  benefits: string[];
+}
+
+export const projects: Project[] = [
   {
     id: 1,
     title: "Indux CRM",
-    category: "CRM Platform",
-    description:
-      "Engineered a highly scalable generative styling engine leveraging computer vision to recommend highly personalized outfits in real-time.",
+    category: "Business Intelligence",
+    shortDescription:
+      "Empower your business with a centralized CRM system to manage leads and automate workflows.",
+    fullDescription:
+      "Indux CRM helps you track leads, improve customer engagement, and boost overall productivity. It centralizes all customer information in one secure platform, allowing you to monitor sales performance with powerful reports and analytics. Spend less time managing data and more time growing your business with our smart dashboard and automated task scheduling.",
     themeColor: "blue",
     icon: Sparkles,
-    image:
-      "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1200&auto=format&fit=crop",
+    image: "/induxcrm.png",
     features: [
-      "Lead & Pipeline Management",
-      "Automated Email Sequences",
-      "Real-time Sales Analytics",
+      "Lead Management & Sales Pipeline",
+      "Automated Workflows & Task Scheduling",
+      "Real-time Analytics & Insights",
+      "Secure Cloud Access",
     ],
     benefits: [
-      "Increase sales conversion rates",
-      "Reduce manual data entry",
-      "Enhance customer relationships",
+      "Improve Sales Productivity",
+      "Reduce Manual Work",
+      "Faster Lead Conversion",
+      "Better Customer Relationships",
     ],
   },
   {
     id: 2,
     title: "Bill Tea",
-    category: "Enterprise System",
-    description:
-      "Developed a deep learning diagnostic tool utilizing Convolutional Neural Networks (CNNs) to analyze crop health from anonymous uploads.",
+    category: "Retail Management",
+    shortDescription:
+      "Simplifying Retail Business Management with GST-compliant billing and real-time inventory.",
+    fullDescription:
+      "BillTea combines every essential retail operation into one easy-to-use platform. Managing billing, inventory, and quotations shouldn't slow your business down. From hardware stores to interior dealers, BillTea helps reduce errors, automate calculations, and provides smart business insights through powerful reporting.",
     themeColor: "emerald",
     icon: Sprout,
-    image:
-      "https://images.unsplash.com/photo-1530836369250-ef71a3f5e481?q=80&w=1200&auto=format&fit=crop",
+    image: "/billtea.jpg",
     features: [
-      "CNN / PyTorch Architecture",
-      "Anonymous Upload Engines",
-      "Computer Vision Integration",
+      "GST-Compliant Invoice Management",
+      "Real-time Inventory Tracking",
+      "Quotation & Purchase Management",
+      "Payment Tracking & Reminders",
     ],
     benefits: [
-      "Real-time crop health analysis",
-      "Early disease detection",
-      "Increased agricultural yield",
+      "Significantly Faster Billing",
+      "Fewer Calculation Errors",
+      "Secure Data Protection",
+      "Better Inventory Control",
     ],
   },
   {
     id: 3,
     title: "JEM Soft",
-    category: "LIC Software",
-    description:
-      "Architected a secure symptom matrix system that communicates with remote servers utilizing advanced CKKS Homomorphic Encryption.",
+    category: "Insurance ERP",
+    shortDescription:
+      "A centralized Insurance Management System designed for LIC agents and financial advisors.",
+    fullDescription:
+      "JEM Soft consolidates scattered agent workflows into a single web-based platform. Designed for LIC agents and investment professionals, it supports the complete policy lifecycle, commission tracking, and pre-sales presentations. It replaces manual registers and spreadsheets with a role-based secure system.",
     themeColor: "indigo",
     icon: ShieldCheck,
-    image:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop",
+    image: "/jemsoft.png",
     features: [
-      "Homomorphic Encryption (CKKS)",
-      "Secure Patient Data Flow",
-      "Remote Server Communication",
+      "Complete Policy Lifecycle Management",
+      "LIC Pre-Sales & Presentation Tools",
+      "Commission Tracking & Reports",
+      "Consolidated Customer View",
     ],
     benefits: [
-      "Zero-knowledge data protection",
-      "HIPAA & GDPR Compliance",
-      "Uncompromised computational power",
+      "Eliminate Data Silos",
+      "Role-based Secure Access",
+      "Faster Decision Making",
+      "Scalable Multi-branch Support",
     ],
   },
   {
     id: 4,
     title: "Sales Automation",
-    category: "AI Tool",
-    description:
-      "Built a complex raw material tracking and interactive statistics dashboard designed for high-stakes industrial operations.",
+    category: "AI Marketing",
+    shortDescription:
+      "Automate customer leads, follow-up emails, and WhatsApp communication from one place.",
+    fullDescription:
+      "Reduce manual work by automatically sending personalized follow-up sequences. This platform manages leads throughout the sales process, tracks email engagement, and enables seamless WhatsApp Business communication with optional AI assistance to answer customer questions 24/7.",
     themeColor: "cyan",
-    icon: BarChart3,
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    icon: Zap,
+    image: "/salesautomation.png",
     features: [
-      "Predictive Sales Forecasting",
-      "Dynamic Lead Scoring",
-      "Automated Follow-ups",
+      "Automated 48-hour Email Sequences",
+      "WhatsApp Business AI Assistant",
+      "Campaign & Lead Management",
+      "Email Tracking & Analytics",
     ],
     benefits: [
-      "Shorter sales cycles",
-      "Higher closing percentages",
-      "Elimination of busywork",
+      "Shorter Sales Cycles",
+      "Improved Engagement Rates",
+      "Elimination of Busywork",
+      "24/7 Customer Interaction",
     ],
   },
   {
     id: 5,
     title: "Indux ERP",
-    category: "Operations",
-    description:
-      "Built a comprehensive Enterprise Resource Planning suite that unifies finance, supply chain, and human resources into one ecosystem.",
+    category: "Enterprise Operations",
+    shortDescription:
+      "Streamline core business processes from finance to operations in one unified platform.",
+    fullDescription:
+      "Indux ERP integrates all business operations including finance, inventory, HR, and sales. It enables data-driven decision-making through real-time reporting and GST-ready modules. Built for scalability, it connects every department while maintaining enterprise-grade security and role-based access.",
     themeColor: "blue",
     icon: BarChart3,
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
+    image: "/indux_erp.jpg",
     features: [
-      "Unified Supply Chain Tracking",
-      "Financial Ledger Automation",
-      "Multi-department Sync",
+      "Integrated Finance & Accounting",
+      "Inventory & Supply Chain Optimization",
+      "GST Ready & Custom Reports",
+      "Approval & Document Management",
     ],
     benefits: [
-      "Streamlined business operations",
-      "Real-time resource visibility",
-      "Reduced operational overhead",
+      "Optimized Resource Usage",
+      "Improved Operational Efficiency",
+      "Enterprise-grade Data Security",
+      "Multi-user Access Control",
     ],
   },
   {
     id: 6,
     title: "HRMS Suite",
     category: "Human Resources",
-    description:
-      "Advanced human capital management platform with predictive attrition modeling and automated payroll workflows.",
+    shortDescription:
+      "A digital platform to manage your entire workforce—from hiring to exit—in one place.",
+    fullDescription:
+      "The HRMS digitalizes every HR process, eliminating paperwork and providing dedicated role-based workspaces. From recruitment and payroll generation to attendance and appraisals, it provides a complete digital document locker and automated approval workflows for modern organizations.",
     themeColor: "emerald",
-    icon: BarChart3,
-    image:
-      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop",
+    icon: Users,
+    image: "/hrms.png",
     features: [
-      "Predictive Attrition AI",
-      "Automated Payroll Processing",
-      "Employee Self-Service Portal",
+      "Recruitment & Exit Management",
+      "Payroll & Payslip Generation",
+      "Attendance & Shift Management",
+      "Audit Logs & Compliance Tracking",
     ],
     benefits: [
-      "Improved employee retention",
-      "Zero payroll calculation errors",
-      "Reduced HR workload",
+      "Zero Calculation Errors",
+      "Reduced HR Workload",
+      "Centralized Document Storage",
+      "Transparent Appraisals",
     ],
   },
   {
     id: 7,
     title: "Indux Properties",
     category: "Real Estate",
-    description:
-      "Next-generation property management software featuring virtual tours, automated tenant screening, and lease lifecycle tracking.",
+    shortDescription:
+      "Intelligent property management for landlords and real estate agencies.",
+    fullDescription:
+      "Indux Properties simplifies the management of residential and commercial portfolios. Track tenant history, manage maintenance requests, and automate rent collection. Our platform provides digital lease signing and automated vacancy marketing to ensure your investment is always performing at its peak.",
     themeColor: "indigo",
-    icon: BarChart3,
+    icon: Building2,
     image:
       "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
     features: [
-      "Virtual Tour Hosting",
-      "Automated Tenant Screening",
       "Digital Lease Management",
+      "Automated Rent Collection",
+      "Maintenance Request Portal",
+      "Tenant Screening & History",
     ],
     benefits: [
-      "Faster property turnarounds",
-      "Higher quality tenants",
-      "Paperless legal workflows",
+      "Increased Occupancy Rates",
+      "Reduced Administrative Overhead",
+      "Legal Compliance Management",
+      "Better Landlord-Tenant Relations",
     ],
   },
   {
     id: 8,
     title: "Card 360",
     category: "Fintech",
-    description:
-      "Secure payment gateway and card management system equipped with real-time fraud detection algorithms.",
+    shortDescription:
+      "Secure card management and digital payment gateway for modern finance.",
+    fullDescription:
+      "Card 360 offers a bank-grade infrastructure for managing corporate cards and digital transactions. Monitor spending in real-time, set granular card limits, and benefit from advanced fraud detection algorithms. It bridges the gap between traditional banking and digital-first financial management.",
     themeColor: "cyan",
-    icon: ShieldCheck,
+    icon: CreditCard,
     image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1200&auto=format&fit=crop",
     features: [
-      "Real-time Fraud Detection",
-      "Multi-currency Processing",
-      "API Payment Gateway",
+      "Real-time Spend Tracking",
+      "Instant Card Issuance",
+      "Advanced Fraud Prevention",
+      "Multi-currency Support",
     ],
     benefits: [
-      "Bank-grade security",
-      "Global payment acceptance",
-      "Reduced chargeback rates",
+      "Complete Financial Control",
+      "Reduced Chargeback Risks",
+      "Streamlined Expense Filing",
+      "Secure Transaction Processing",
     ],
   },
   {
     id: 9,
     title: "Dnyaypath",
     category: "Legal ERP",
-    description:
-      "Specialized legal practice management system designed to automate case tracking and secure client communications.",
+    shortDescription:
+      "Comprehensive legal practice management for advocates and law firms.",
+    fullDescription:
+      "Dnyaypath is designed specifically for the legal fraternity to automate case tracking and client communications. Securely store case documents in an encrypted vault, manage billable hours, and ensure you never miss a hearing date with our automated judicial calendar synchronization.",
     themeColor: "blue",
-    icon: BarChart3,
+    icon: Scale,
     image:
-      "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=1200&auto=format&fit=crop",
     features: [
       "Automated Case Tracking",
-      "Secure Client Portals",
-      "Billable Hour Logging",
+      "Encrypted Document Vault",
+      "Billable Hour Management",
+      "Judicial Calendar Sync",
     ],
     benefits: [
-      "Flawless case organization",
-      "Enhanced attorney-client trust",
-      "Accurate legal billing",
+      "Never Miss a Hearing",
+      "Organized Client Records",
+      "Transparent Legal Billing",
+      "Secure Confidential Storage",
     ],
   },
 ];
