@@ -22,82 +22,19 @@ import { NumberTicker } from "@/components/ui/number-ticker";
 import { LineShadowText } from "@/components/ui/line-shadow-text";
 import { Marquee } from "@/components/ui/marquee";
 import { ConfettiButton } from "@/components/ui/confetti";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-// Contact form schema
-const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters."),
-  email: z.string().email("Please enter a valid email address."),
-  phone: z.string().min(10, "Please enter a valid phone number."),
-  service: z.string().min(1, "Please select a service."),
-  message: z.string().min(10, "Message must be at least 10 characters."),
-});
-
-type ContactFormValues = z.infer<typeof contactSchema>;
+import { ContactForm } from "@/components/ContactForm";
+import { GetQuoteModal } from "@/components/GetQuoteModal";
 
 // Review data
 const reviews = [
-  {
-    name: "John Doe",
-    username: "@johndoe",
-    body: "Indux Technology completely transformed our IT infrastructure. Highly recommended!",
-    img: "https://i.pravatar.cc/150?u=10",
-  },
-  {
-    name: "Jane Smith",
-    username: "@janesmith",
-    body: "The CRM they built for us increased our sales by 40%. Truly amazing work.",
-    img: "https://i.pravatar.cc/150?u=20",
-  },
-  {
-    name: "Alex Johnson",
-    username: "@alexj",
-    body: "Their agile delivery and transparent reporting kept us in the loop at every stage.",
-    img: "https://i.pravatar.cc/150?u=30",
-  },
-  {
-    name: "Sarah Williams",
-    username: "@sarahw",
-    body: "Very professional team. They migrated our legacy systems to the cloud flawlessly.",
-    img: "https://i.pravatar.cc/150?u=40",
-  },
-  {
-    name: "Michael Brown",
-    username: "@mikeb",
-    body: "We've seen a massive ROI after launching the E-commerce app they designed for us.",
-    img: "https://i.pravatar.cc/150?u=50",
-  },
-  {
-    name: "Emily Davis",
-    username: "@emilyd",
-    body: "Their UI/UX team is top-notch. The new design is beautiful and highly functional.",
-    img: "https://i.pravatar.cc/150?u=60",
-  },
-  {
-    name: "David Wilson",
-    username: "@davidw",
-    body: "Great communication, on-time delivery, and clean code. What else could you ask for?",
-    img: "https://i.pravatar.cc/150?u=70",
-  },
-  {
-    name: "Jessica Taylor",
-    username: "@jessicat",
-    body: "They understood our complex business logic and delivered an elegant SaaS solution.",
-    img: "https://i.pravatar.cc/150?u=80",
-  },
+  { name: "Paras Bora", rating: 5, body: "Laxman is very good at his work. I use the crm software he has developed for us. Reaping good benefits and is cost effective as well", img: "https://i.pravatar.cc/150?u=10" },
+  { name: "Subhangi Solunke", rating: 5, body: "Great experience with Indux Technology. They understood my needs and delivered perfectly. Professional team with smooth collaboration.", img: "https://i.pravatar.cc/150?u=20" },
+  { name: "Nikhil Sharma Eventpreneur", rating: 5, body: "Laxman has great knowledge about his industry and has been super productive with this delivery. Wishing you many success ahead.", img: "https://i.pravatar.cc/150?u=30" },
+  { name: "Aditya Chakre", rating: 5, body: "Just wanted to share my experience with Indux Technology. I used them for a CRM project and it was a really good experience. The project turned out great!", img: "https://i.pravatar.cc/150?u=40" },
+  { name: "Aditya Shastri1817", rating: 5, body: "Indux Technology played a key role in our digital transformation journey. From strategy to execution, they provided end-to-end solutions including development and marketing.", img: "https://i.pravatar.cc/150?u=50" },
+  { name: "Satish Mundalik", rating: 5, body: "Laxman is a master of CRM — creating strong connections, building trust, and maintaining lasting relationships. He believes every contact is valuable and every follow-up creates new opportunities.", img: "https://i.pravatar.cc/150?u=60" },
+  { name: "Priyanka V Memories Worldwide", rating: 5, body: "Give very genuine and correct solutions of your problems thru their CRM software", img: "https://i.pravatar.cc/150?u=70" },
+  { name: "atif pervez", rating: 5, body: "Indux Technology delivered a reliable IT solution with a professional and responsive team. A smooth experience and a dependable development partner.", img: "https://i.pravatar.cc/150?u=80" },
 ];
 const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);
@@ -105,14 +42,18 @@ const secondRow = reviews.slice(reviews.length / 2);
 const ReviewCard = ({
   img,
   name,
-  username,
+  rating,
   body,
 }: {
   img: string;
   name: string;
-  username: string;
+  rating: number;
   body: string;
 }) => {
+  const initials = name.split(" ").map((n) => n[0]).join("").substring(0, 2).toUpperCase();
+  const colors = ["bg-red-500", "bg-blue-600", "bg-green-600", "bg-yellow-600", "bg-purple-600", "bg-pink-600", "bg-indigo-600", "bg-teal-600", "bg-orange-600"];
+  const bgColor = colors[name.length % colors.length];
+
   return (
     <figure
       className={
@@ -120,20 +61,25 @@ const ReviewCard = ({
       }
     >
       <div className="flex flex-row items-center gap-3">
-        <Image
-          className="rounded-full"
-          width={40}
-          height={40}
-          alt=""
-          src={img}
-        />
+        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold text-white shadow-sm ${bgColor}`}>
+          {initials}
+        </div>
         <div className="flex flex-col">
           <figcaption className="text-base font-bold dark:text-white">
             {name}
           </figcaption>
-          <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
-            {username}
-          </p>
+          <div className="flex items-center gap-0.5 mt-0.5">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                className={`w-3.5 h-3.5 ${
+                  i < rating
+                    ? "text-yellow-400 fill-yellow-400"
+                    : "text-slate-200 dark:text-slate-700"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
       <blockquote className="mt-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -181,7 +127,7 @@ export default function Home() {
   const { scrollYProgress } = useScroll({
     target: processRef,
   });
-  const xTransform = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  const xTransform = useTransform(scrollYProgress, (pos) => `calc(-${pos * 100}% + ${pos * 100}vw)`);
 
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [blogsLoading, setBlogsLoading] = useState(true);
@@ -199,39 +145,6 @@ export default function Home() {
   }, []);
 
   const displayedBlogs = blogs.length > 0 ? blogs : fallbackBlogs;
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<ContactFormValues>({
-    resolver: zodResolver(contactSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      service: "",
-      message: "",
-    },
-  });
-
-  const onSubmit = async (data: ContactFormValues) => {
-    try {
-      await submitLead(data);
-      toast.success("Message sent successfully!", {
-        description: "We'll get back to you as soon as possible.",
-      });
-      reset();
-    } catch (err: any) {
-      console.error("Error submitting lead:", err);
-      toast.error(
-        err.response?.data?.message ||
-          "Failed to submit message. Please try again.",
-      );
-    }
-  };
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
@@ -272,15 +185,17 @@ export default function Home() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center gap-6 mt-6">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center gap-2">
-                    Get Free Quote <ArrowRight className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="link"
-                    className="font-semibold text-slate-800 dark:text-slate-200 hover:text-slate-600 dark:hover:text-slate-400 underline underline-offset-4 decoration-2 decoration-slate-300 dark:decoration-slate-700 hover:decoration-slate-800 dark:hover:decoration-slate-500 transition-all cursor-pointer"
+                  <GetQuoteModal>
+                    <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center gap-2">
+                      Get Free Quote <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </GetQuoteModal>
+                  <Link
+                    href="/services"
+                    className="inline-flex items-center justify-center text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-slate-600 dark:hover:text-slate-400 underline underline-offset-4 decoration-2 decoration-slate-300 dark:decoration-slate-700 hover:decoration-slate-800 dark:hover:decoration-slate-500 transition-all cursor-pointer"
                   >
                     Our Services
-                  </Button>
+                  </Link>
                 </div>
               </motion.div>
 
@@ -477,10 +392,10 @@ export default function Home() {
                 </div>
 
                 <div className="mt-8">
-                  <Button className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-6 rounded-full font-bold tracking-wider text-xs uppercase transition-all shadow-lg shadow-blue-700/20 group">
-                    GET A QUOTE{" "}
+                  <Link href="/contact-us" className="inline-flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white px-8 py-6 rounded-full font-bold tracking-wider text-xs uppercase cursor-pointer transition-all shadow-lg shadow-blue-700/20 group">
+                    Connect With Us{" "}
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  </Link>
                 </div>
               </motion.div>
             </div>
@@ -559,7 +474,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <Button className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 px-6 py-6 rounded-full font-semibold transition-all group shadow-sm">
+                <Button className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 px-6 py-6 rounded-full font-semibold transition-all group shadow-sm cursor-pointer">
                   View All Services{" "}
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -702,10 +617,10 @@ export default function Home() {
                   your company.
                 </p>
 
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wide text-sm uppercase transition-all shadow-lg shadow-blue-600/20 group">
+                <Link href="/contact-us" className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wide text-sm uppercase transition-all shadow-lg shadow-blue-600/20 group cursor-pointer">
                   Consult with our experts{" "}
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
+                </Link>
               </div>
 
               {/* Right Side: Scrollable Cards */}
@@ -955,9 +870,9 @@ export default function Home() {
 
             {/* View All Button */}
             <div className="mt-16 text-center">
-              <Button className="bg-[#0f2e4a] hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wide transition-all shadow-lg shadow-[#0f2e4a]/20">
+              <Link href="/products" className="inline-flex items-center justify-center bg-[#0f2e4a] hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wide transition-all shadow-lg shadow-[#0f2e4a]/20 cursor-pointer">
                 View All Work
-              </Button>
+              </Link>
             </div>
           </div>
         </section>
@@ -991,9 +906,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <div className="relative z-10">
-                    <div className="text-5xl md:text-6xl font-extrabold text-white mb-2">
-                      4.9
-                    </div>
+                    <div className="text-5xl md:text-6xl font-extrabold text-white mb-2">5.0</div>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="flex gap-1">
                         {[1, 2, 3, 4, 5].map((i) => (
@@ -1003,33 +916,28 @@ export default function Home() {
                           />
                         ))}
                       </div>
-                      <p className="text-blue-200 font-medium text-sm tracking-wide">
-                        (40+ Reviews)
-                      </p>
+                      <p className="text-blue-200 font-medium text-sm tracking-wide">(30+ Reviews)</p>
                     </div>
                     <p className="text-white text-base md:text-lg font-medium mb-6 leading-relaxed max-w-[90%]">
                       Customer experiences that speak for themselves.
                     </p>
-
-                    <div className="flex -space-x-3">
-                      <img
-                        className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
-                        src="https://i.pravatar.cc/150?u=1"
-                        alt="avatar"
-                      />
-                      <img
-                        className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
-                        src="https://i.pravatar.cc/150?u=2"
-                        alt="avatar"
-                      />
-                      <img
-                        className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
-                        src="https://i.pravatar.cc/150?u=3"
-                        alt="avatar"
-                      />
-                      <div className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] bg-blue-600 flex items-center justify-center text-white font-bold text-xs z-10">
-                        +37
+                    
+                    <div className="flex items-center justify-between mt-2">
+                      <div className="flex -space-x-3">
+                        <img className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=1" alt="avatar" />
+                        <img className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=2" alt="avatar" />
+                        <img className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=3" alt="avatar" />
+                        <div className="w-10 h-10 rounded-full border-2 border-[#0f2e4a] bg-blue-600 flex items-center justify-center text-white font-bold text-xs z-10">+37</div>
                       </div>
+                      
+                      <a 
+                        href="https://www.google.com/search?sca_esv=590eb0aa4b74244e&hl=en-IN&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_8rvk6vr8yfTYT7skK3V3XFwpaMdTntxaRkoVitZ5oNvuSsJBuUECr7oGrWVEL7WbYUpLvB-GYmK1MIbvIMdk3etA_Thu6PRaHoPCDFquLsgpBZ0Hg%3D%3D&q=INDUX+TECHNOLOGY+Reviews&sa=X&ved=2ahUKEwjY9OHo7s6VAxVhzjgGHS8-DSYQ0bkNegQIJxAI&biw=1536&bih=730&dpr=1.25" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-2 bg-white/10 hover:bg-white text-white hover:text-[#0f2e4a] text-sm font-bold py-2.5 px-5 rounded-full transition-all duration-300 backdrop-blur-sm border border-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                      >
+                        Write Review <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -1038,17 +946,13 @@ export default function Home() {
               {/* Right Side: Marquee Reviews (Shifted downwards) */}
               <div className="w-full lg:w-7/12 relative mt-12 lg:mt-24 flex flex-col gap-4 sm:gap-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
                 <Marquee pauseOnHover className="[--duration:40s]">
-                  {firstRow.map((review) => (
-                    <ReviewCard key={review.username} {...review} />
+                  {firstRow.map((review, index) => (
+                    <ReviewCard key={review.name + index} {...review} />
                   ))}
                 </Marquee>
-                <Marquee
-                  reverse
-                  pauseOnHover
-                  className="[--duration:45s] hidden sm:flex"
-                >
-                  {secondRow.map((review) => (
-                    <ReviewCard key={review.username} {...review} />
+                <Marquee reverse pauseOnHover className="[--duration:45s] hidden sm:flex">
+                  {secondRow.map((review, index) => (
+                    <ReviewCard key={review.name + index} {...review} />
                   ))}
                 </Marquee>
               </div>
@@ -1077,7 +981,7 @@ export default function Home() {
               </div>
               <Link
                 href="/blogs"
-                className="bg-white text-[#0f2e4a] hover:bg-slate-100 rounded-full px-8 py-6 font-bold transition-all w-fit group inline-flex items-center justify-center"
+                className="bg-white text-[#0f2e4a] hover:bg-slate-100 rounded-full px-8 py-6 font-bold transition-all w-fit group inline-flex items-center justify-center cursor-pointer"
               >
                 View All Blogs{" "}
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -1089,7 +993,7 @@ export default function Home() {
               {displayedBlogs.map((blog, idx) => (
                 <div
                   key={blog._id || idx}
-                  className="bg-[#153a5c] rounded-3xl overflow-hidden group border border-white/5 hover:border-blue-400/30 transition-all flex flex-col shadow-xl"
+                  className="bg-[#153a5c] rounded-3xl overflow-hidden group border border-white/5 hover:border-blue-400/30 transition-all flex flex-col shadow-xl cursor-pointer"
                 >
                   {/* Image Container with padding like the reference */}
                   <div className="w-full h-56 md:h-64 overflow-hidden relative p-3">
@@ -1147,161 +1051,15 @@ export default function Home() {
                 Contact Us
               </div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                Get Your Free{" "}
-                <span className="text-blue-600">Quote Today!</span>
+                Let's Get in{" "}
+                <span className="text-blue-600">Touch</span>
               </h2>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
               {/* Left Side: Form */}
               <div className="w-full lg:w-1/2">
-                <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  className="flex flex-col gap-6"
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="flex flex-col gap-2">
-                      <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                        Your Name *
-                      </Label>
-                      <Input
-                        {...register("name")}
-                        placeholder="John Doe"
-                        className="h-14 px-4 bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus-visible:ring-blue-500 rounded-xl shadow-sm text-base"
-                      />
-                      {errors.name && (
-                        <p className="text-red-500 text-xs ml-1">
-                          {errors.name.message}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                        Email *
-                      </Label>
-                      <Input
-                        {...register("email")}
-                        type="email"
-                        placeholder="hello@example.com"
-                        className="h-14 px-4 bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus-visible:ring-blue-500 rounded-xl shadow-sm text-base"
-                      />
-                      {errors.email && (
-                        <p className="text-red-500 text-xs ml-1">
-                          {errors.email.message}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="flex flex-col gap-2">
-                      <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                        Phone *
-                      </Label>
-                      <Input
-                        {...register("phone")}
-                        type="tel"
-                        placeholder="+1 (555) 000-0000"
-                        className="h-14 px-4 bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus-visible:ring-blue-500 rounded-xl shadow-sm text-base"
-                      />
-                      {errors.phone && (
-                        <p className="text-red-500 text-xs ml-1">
-                          {errors.phone.message}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex flex-col gap-2 relative">
-                      <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                        Service Interested In *
-                      </Label>
-                      <Controller
-                        control={control}
-                        name="service"
-                        render={({ field }) => (
-                          <Select
-                            onValueChange={field.onChange}
-                            value={field.value}
-                          >
-                            <SelectTrigger className="h-14 px-4 bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:ring-blue-500 rounded-xl shadow-sm text-base">
-                              <SelectValue placeholder="Select Service" />
-                            </SelectTrigger>
-                            <SelectContent
-                              alignItemWithTrigger={false}
-                              sideOffset={8}
-                              className="rounded-xl"
-                            >
-                              <SelectItem
-                                className="py-3 px-4 cursor-pointer"
-                                value="crm"
-                              >
-                                CRM Solutions
-                              </SelectItem>
-                              <SelectItem
-                                className="py-3 px-4 cursor-pointer"
-                                value="erp"
-                              >
-                                ERP Systems
-                              </SelectItem>
-                              <SelectItem
-                                className="py-3 px-4 cursor-pointer"
-                                value="webd"
-                              >
-                                Web Development
-                              </SelectItem>
-                              <SelectItem
-                                className="py-3 px-4 cursor-pointer"
-                                value="mobileapp"
-                              >
-                                Mobile Apps
-                              </SelectItem>
-                              <SelectItem
-                                className="py-3 px-4 cursor-pointer"
-                                value="ai"
-                              >
-                                AI Chatbots
-                              </SelectItem>
-                              <SelectItem
-                                className="py-3 px-4 cursor-pointer"
-                                value="automation"
-                              >
-                                Business Automation
-                              </SelectItem>
-                            </SelectContent>
-                          </Select>
-                        )}
-                      />
-                      {errors.service && (
-                        <p className="text-red-500 text-xs ml-1">
-                          {errors.service.message}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                      Your Message *
-                    </Label>
-                    <Textarea
-                      {...register("message")}
-                      placeholder="Tell us about your project goals..."
-                      className="min-h-[150px] max-h-[300px] [field-sizing:fixed] overflow-y-auto p-4 bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus-visible:ring-blue-500 rounded-xl shadow-sm text-base resize-y"
-                    ></Textarea>
-                    {errors.message && (
-                      <p className="text-red-500 text-xs ml-1">
-                        {errors.message.message}
-                      </p>
-                    )}
-                  </div>
-
-                  <ConfettiButton
-                    type="submit"
-                    className="w-fit bg-[#0f2e4a] hover:bg-blue-600 text-white rounded-full px-10 py-7 font-bold tracking-wide text-base transition-all shadow-xl shadow-blue-900/20 mt-4 group"
-                  >
-                    Send Message{" "}
-                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </ConfettiButton>
-                </form>
+                <ContactForm />
               </div>
 
               {/* Right Side: Image with Magic sparkles */}

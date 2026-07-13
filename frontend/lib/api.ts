@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 // 🔍 DEBUG: Check if the env variable is loaded correctly in the browser console
-console.log('🔍 Frontend API URL:', process.env.NEXT_PUBLIC_API_URL);
+console.log('🔍 Frontend API URL:', process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api/v1');
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api/v1',
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -103,12 +103,26 @@ export interface LeadInput {
   name: string;
   email: string;
   phone: string;
-  service: string;
   message: string;
 }
 
 export const submitLead = async (input: LeadInput): Promise<any> => {
   const res = await api.post('/leads', input);
+  return res.data;
+};
+
+// ===== Quote Types & API =====
+export interface QuoteInput {
+  name: string;
+  email: string;
+  phone: string;
+  companyName?: string;
+  serviceInterest: string;
+  message: string;
+}
+
+export const submitQuote = async (input: QuoteInput): Promise<any> => {
+  const res = await api.post('/quotes', input);
   return res.data;
 };
 
