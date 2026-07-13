@@ -7,6 +7,8 @@ import Link from 'next/link';
 interface DashboardStats {
   blogs: { total: number; published: number; draft: number };
   careers: { total: number; active: number; closed: number };
+  leads?: { total: number; new: number; contacted: number };
+  events?: { total: number; upcoming: number };
 }
 
 export default function DashboardPage() {
@@ -60,6 +62,27 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* Leads Stats Card */}
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h3 className="text-sm font-medium text-gray-500">Total Leads</h3>
+          <p className="text-3xl font-bold text-gray-800">{stats?.leads?.total || 0}</p>
+          <div className="flex gap-4 mt-2 text-sm">
+            <span className="text-blue-600">New: {stats?.leads?.new || 0}</span>
+            <span className="text-yellow-600">Contacted: {stats?.leads?.contacted || 0}</span>
+          </div>
+        </div>
+
+        {/* Events Stats Card */}
+        {stats?.events && (
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-sm font-medium text-gray-500">Total Events</h3>
+            <p className="text-3xl font-bold text-gray-800">{stats.events.total || 0}</p>
+            <div className="flex gap-4 mt-2 text-sm">
+              <span className="text-blue-600">Upcoming: {stats.events.upcoming || 0}</span>
+            </div>
+          </div>
+        )}
+
         {/* Quick Actions Card */}
         <div className="bg-white p-6 rounded-lg shadow flex flex-col justify-center">
           <h3 className="text-sm font-medium text-gray-500 mb-2">Quick Actions</h3>
@@ -75,6 +98,12 @@ export default function DashboardPage() {
               className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
             >
               + Add Job
+            </Link>
+            <Link
+              href="/events/create"
+              className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+            >
+              + Add Event
             </Link>
           </div>
         </div>

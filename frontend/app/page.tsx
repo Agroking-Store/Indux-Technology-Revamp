@@ -3,7 +3,9 @@
 import Image from "next/image";
 import { ArrowRight, Play, Trophy, Check, Users, ClipboardCheck, LineChart, Code2, ArrowUpRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
+import Link from "next/link";
+import { getBlogs, submitLead, Blog } from "@/lib/api";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { LineShadowText } from "@/components/ui/line-shadow-text";
@@ -90,12 +92,56 @@ const ReviewCard = ({
   );
 };
 
+const fallbackBlogs = [
+  {
+    _id: "fallback-1",
+    title: "The Ultimate Guide to Cloud Migration Strategy in 2026",
+    category: "Cloud Computing",
+    shortDescription: "Discover how moving your legacy systems to the cloud can improve scalability, reduce costs, and accelerate innovation.",
+    featuredImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800",
+    slug: "#",
+  },
+  {
+    _id: "fallback-2",
+    title: "Top 5 Cybersecurity Threats Every Business Must Know",
+    category: "Cybersecurity",
+    shortDescription: "A comprehensive look at the emerging cyber threats in the modern digital landscape and how to protect your enterprise data.",
+    featuredImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800",
+    slug: "#",
+  },
+  {
+    _id: "fallback-3",
+    title: "How AI is Revolutionizing Custom Enterprise Software",
+    category: "AI & Machine Learning",
+    shortDescription: "Learn how integrating machine learning and AI into your business applications can automate workflows and drive unprecedented growth.",
+    featuredImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800",
+    slug: "#",
+  }
+];
+
 export default function Home() {
   const processRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: processRef,
   });
   const xTransform = useTransform(scrollYProgress, (pos) => `calc(-${pos * 100}% + ${pos * 100}vw)`);
+
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [blogsLoading, setBlogsLoading] = useState(true);
+
+  useEffect(() => {
+    getBlogs()
+      .then((data) => {
+        const published = data.filter((b) => b.status === "Published");
+        setBlogs(published.slice(0, 3));
+      })
+      .catch((err) => {
+        console.error("Error fetching blogs:", err);
+      })
+      .finally(() => setBlogsLoading(false));
+  }, []);
+
+  const displayedBlogs = blogs.length > 0 ? blogs : fallbackBlogs;
 
   const {
     register,
@@ -114,12 +160,19 @@ export default function Home() {
     },
   });
 
-  const onSubmit = (data: ContactFormValues) => {
-    console.log(data);
-    toast.success("Message sent successfully!", {
-      description: "We'll get back to you as soon as possible.",
-    });
-    reset();
+  const onSubmit = async (data: ContactFormValues) => {
+    try {
+      await submitLead(data);
+      toast.success("Message sent successfully!", {
+        description: "We'll get back to you as soon as possible.",
+      });
+      reset();
+    } catch (err: any) {
+      console.error("Error submitting lead:", err);
+      toast.error(
+        err.response?.data?.message || "Failed to submit message. Please try again."
+      );
+    }
   };
 
   return (
@@ -880,39 +933,20 @@ export default function Home() {
                   Our Latest <br className="hidden md:block" /> News & Blogs
                 </h2>
               </div>
-              <Button className="bg-white text-[#0f2e4a] hover:bg-slate-100 rounded-full px-8 py-6 font-bold transition-all w-fit group">
+              <Link href="/blogs" className="bg-white text-[#0f2e4a] hover:bg-slate-100 rounded-full px-8 py-6 font-bold transition-all w-fit group inline-flex items-center justify-center">
                 View All Blogs <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              </Link>
             </div>
 
             {/* Blog Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "The Ultimate Guide to Cloud Migration Strategy in 2026",
-                  category: "Cloud Computing",
-                  desc: "Discover how moving your legacy systems to the cloud can improve scalability, reduce costs, and accelerate innovation.",
-                  img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800",
-                },
-                {
-                  title: "Top 5 Cybersecurity Threats Every Business Must Know",
-                  category: "Cybersecurity",
-                  desc: "A comprehensive look at the emerging cyber threats in the modern digital landscape and how to protect your enterprise data.",
-                  img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800",
-                },
-                {
-                  title: "How AI is Revolutionizing Custom Enterprise Software",
-                  category: "AI & Machine Learning",
-                  desc: "Learn how integrating machine learning and AI into your business applications can automate workflows and drive unprecedented growth.",
-                  img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800",
-                }
-              ].map((blog, idx) => (
-                <div key={idx} className="bg-[#153a5c] rounded-3xl overflow-hidden group border border-white/5 hover:border-blue-400/30 transition-all flex flex-col shadow-xl">
+              {displayedBlogs.map((blog, idx) => (
+                <div key={blog._id || idx} className="bg-[#153a5c] rounded-3xl overflow-hidden group border border-white/5 hover:border-blue-400/30 transition-all flex flex-col shadow-xl">
                   {/* Image Container with padding like the reference */}
                   <div className="w-full h-56 md:h-64 overflow-hidden relative p-3">
-                    <div className="w-full h-full relative rounded-2xl overflow-hidden">
+                    <div className="w-full h-full relative rounded-2xl overflow-hidden bg-slate-800">
                       <Image 
-                        src={blog.img} 
+                        src={blog.featuredImage || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800"} 
                         alt={blog.title} 
                         fill
                         className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-in-out"
@@ -927,16 +961,16 @@ export default function Home() {
                         {blog.category}
                       </span>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-white mb-4 leading-snug group-hover:text-blue-300 transition-colors">
+                    <h3 className="text-xl md:text-2xl font-bold text-white mb-4 leading-snug group-hover:text-blue-300 transition-colors line-clamp-2">
                       {blog.title}
                     </h3>
-                    <p className="text-blue-100/70 text-sm md:text-base leading-relaxed mb-8 flex-1">
-                      {blog.desc}
+                    <p className="text-blue-100/70 text-sm md:text-base leading-relaxed mb-8 flex-1 line-clamp-3">
+                      {blog.shortDescription}
                     </p>
                     <div className="mt-auto">
-                      <a href="#" className="inline-flex items-center text-blue-400 font-bold text-sm hover:text-blue-300 transition-colors group/link cursor-pointer">
+                      <Link href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`} className="inline-flex items-center text-blue-400 font-bold text-sm hover:text-blue-300 transition-colors group/link cursor-pointer">
                         Read More <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>

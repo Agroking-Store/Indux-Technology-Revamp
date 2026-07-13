@@ -30,5 +30,8 @@ const uploadResumeInstance = multer({
 // Middleware for single image upload (field name: "featuredImage")
 export const uploadBlogImage = uploadImageInstance.single("featuredImage");
 
+// Middleware for single event image upload (field name: "image")
+export const uploadEventImage = uploadImageInstance.single("image");
+
 // Middleware for single PDF resume upload (field name: "resume")
 export const uploadResume = uploadResumeInstance.single("resume");

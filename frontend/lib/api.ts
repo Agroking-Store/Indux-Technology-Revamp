@@ -98,4 +98,45 @@ export const submitApplication = async (input: JobApplicationInput): Promise<any
   return res.data;
 };
 
+// ===== Lead/Contact Types & API =====
+export interface LeadInput {
+  name: string;
+  email: string;
+  phone: string;
+  service: string;
+  message: string;
+}
+
+export const submitLead = async (input: LeadInput): Promise<any> => {
+  const res = await api.post('/leads', input);
+  return res.data;
+};
+
+// ===== Event Types & API =====
+export interface Event {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+  content: string;
+  date: string;
+  location: string;
+  image: string;
+  status: 'Draft' | 'Published';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const getEvents = async (): Promise<Event[]> => {
+  const res = await api.get('/events');
+  return res.data.data;
+};
+
+export const getEventBySlug = async (slug: string): Promise<Event> => {
+  const events = await getEvents();
+  const event = events.find(e => e.slug === slug);
+  if (!event) throw new Error('Event not found');
+  return event;
+};
+
 export default api;

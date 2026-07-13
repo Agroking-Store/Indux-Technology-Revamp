@@ -25,7 +25,8 @@ import {
 	Briefcase,
 	Phone,
 	Mail,
-	MapPin
+	MapPin,
+	Calendar
 } from 'lucide-react';
 import { InstagramLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
 import { FaXTwitter, FaWhatsapp } from "react-icons/fa6";
@@ -52,12 +53,12 @@ const servicesData = {
 		{ title: 'CRM Solutions', desc: 'Manage customer relationships', href: '/services/crm', icon: Users },
 		{ title: 'ERP Systems', desc: 'Enterprise resource planning', href: '/services/erp', icon: Layers },
 		{ title: 'Web Development', desc: 'Modern and fast web apps', href: '/services/web-dev', icon: Globe },
-	],
-	side: [
+	
 		{ title: 'Mobile App Dev', href: '/services/mobile-dev', icon: Smartphone },
-		{ title: 'AI Chatbots', href: '/services/ai-chatbots', icon: Bot },
+		{ title: 'AI Solutions', href: '/services/ai-chatbots', icon: Bot },
 		{ title: 'Business Automation', href: '/services/automation', icon: Zap },
-	]
+	],
+	side: []
 };
 
 const companyData = {
@@ -66,6 +67,7 @@ const companyData = {
 		{ title: 'About Us', desc: 'Our mission and vision', href: '/about', icon: Info },
 		{ title: 'Blogs', desc: 'Latest news and articles', href: '/blogs', icon: BookOpen },
 		{ title: 'Careers', desc: 'Join our growing team', href: '/careers', icon: Briefcase },
+		{ title: 'Events', desc: 'Join our upcoming events', href: '/events', icon: Calendar },
 	],
 	side: []
 };
@@ -122,7 +124,7 @@ export default function Navbar() {
 					<NavLink href="/products" title="Products" pathname={pathname} />
 					<DropdownMenu data={servicesData} pathname={pathname} />
 					<DropdownMenu data={companyData} pathname={pathname} />
-					<NavLink href="/contact" title="Contact Us" pathname={pathname} />
+					<NavLink href="/contact-us" title="Contact Us" pathname={pathname} />
 				</nav>
 
 				{/* Right Section & Mobile Menu */}
@@ -167,7 +169,7 @@ function NavLink({ href, title, pathname }: { href: string, title: string, pathn
 	);
 }
 
-function DropdownMenu({ data, pathname }: { data: typeof servicesData, pathname: string }) {
+function DropdownMenu({ data, pathname }: { data: { title: string; main: any[]; side?: any[] }, pathname: string }) {
 	const [isHovered, setIsHovered] = useState(false);
 
 	return (
@@ -197,7 +199,12 @@ function DropdownMenu({ data, pathname }: { data: typeof servicesData, pathname:
 			<AnimatePresence>
 				{isHovered && (
 					<motion.div 
-						className={cn("absolute top-[80px] left-1/2 -translate-x-1/2 pt-2", data.side && data.side.length > 0 ? "w-[900px]" : "w-[750px]")}
+						className={cn(
+							"absolute top-[80px] left-1/2 -translate-x-1/2 pt-2",
+							data.side && data.side.length > 0 
+								? "w-[900px]" 
+								: (data.main.length === 4 ? "w-[1000px]" : "w-[750px]")
+						)}
 						initial={{ opacity: 0, y: 10, scale: 0.98 }}
 						animate={{ opacity: 1, y: 0, scale: 1 }}
 						exit={{ opacity: 0, y: 10, scale: 0.98 }}
@@ -205,53 +212,56 @@ function DropdownMenu({ data, pathname }: { data: typeof servicesData, pathname:
 					>
 						<div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-6 flex gap-6">
 					
-					{/* Left Side: 3 Horizontal Grid Cards */}
-					<div className="flex-1 grid grid-cols-3 gap-4">
-						{data.main.map((item, idx) => (
-							<Link 
-								key={idx} 
-								href={item.href || '#'} 
-								className="relative flex flex-col justify-between p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-blue-200 dark:hover:border-blue-900 hover:bg-blue-50/10 transition-all group/card overflow-hidden min-h-[220px]"
-							>
-								{/* Grid Background Pattern */}
-								<div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-20 group-hover/card:opacity-100 transition-opacity duration-300" />
-								
-								<div className="relative z-10 text-slate-700 dark:text-slate-305 group-hover/card:text-blue-600 transition-colors">
-									<item.icon className="size-7 stroke-[1.5]" />
-								</div>
-								<div className="relative z-10 mt-8">
-									<h4 className="font-bold text-slate-900 dark:text-white text-lg group-hover/card:text-blue-700 dark:group-hover/card:text-blue-400 transition-colors">{item.title}</h4>
-									<p className="text-slate-500 dark:text-slate-400 text-sm mt-2 leading-relaxed">{item.desc}</p>
-								</div>
-							</Link>
-						))}
-					</div>
-
-					{/* Right Side: Vertical List with Hover Effects */}
-					{data.side && data.side.length > 0 && (
-						<div className="w-64 flex flex-col justify-center border-l dark:border-slate-800 pl-6 gap-1">
-							{data.side.map((item, idx) => (
-								<Link 
-									key={idx} 
-									href={item.href} 
-									className="text-base font-medium text-slate-600 dark:text-slate-300 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 rounded-xl p-3 transition-all flex items-center justify-between group/link"
-								>
-									<div className="flex items-center gap-3">
-										<div className="text-slate-400 group-hover/link:text-blue-600 transition-colors">
-											<item.icon className="size-5 stroke-[1.5]" />
+							{/* Left Side: Horizontal Grid Cards */}
+							<div className={cn(
+								"flex-1 grid gap-4",
+								data.main.length === 4 ? "grid-cols-4" : "grid-cols-3"
+							)}>
+								{data.main.map((item, idx) => (
+									<Link 
+										key={idx} 
+										href={item.href || '#'} 
+										className="relative flex flex-col justify-between p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-blue-200 dark:hover:border-blue-900 hover:bg-blue-50/10 transition-all group/card overflow-hidden min-h-[220px]"
+									>
+										{/* Grid Background Pattern */}
+										<div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-20 group-hover/card:opacity-100 transition-opacity duration-300" />
+										
+										<div className="relative z-10 text-slate-700 dark:text-slate-305 group-hover/card:text-blue-600 transition-colors">
+											<item.icon className="size-7 stroke-[1.5]" />
 										</div>
-										{item.title}
-									</div>
-									<span className="text-slate-400 opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300">
-										→
-									</span>
-								</Link>
-							))}
-						</div>
-					)}
+										<div className="relative z-10 mt-8 text-left">
+											<h4 className="font-bold text-slate-900 dark:text-white text-lg group-hover/card:text-blue-700 dark:group-hover/card:text-blue-400 transition-colors">{item.title}</h4>
+											<p className="text-slate-500 dark:text-slate-400 text-sm mt-2 leading-relaxed">{item.desc}</p>
+										</div>
+									</Link>
+								))}
+							</div>
 
-				</div>
-			</motion.div>
+							{/* Right Side: Vertical List with Hover Effects */}
+							{data.side && data.side.length > 0 && (
+								<div className="w-64 flex flex-col justify-center border-l dark:border-slate-800 pl-6 gap-1">
+									{data.side.map((item, idx) => (
+										<Link 
+											key={idx} 
+											href={item.href} 
+											className="text-base font-medium text-slate-600 dark:text-slate-300 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 rounded-xl p-3 transition-all flex items-center justify-between group/link"
+										>
+											<div className="flex items-center gap-3">
+												<div className="text-slate-400 group-hover/link:text-blue-600 transition-colors">
+													<item.icon className="size-5 stroke-[1.5]" />
+												</div>
+												{item.title}
+											</div>
+											<span className="text-slate-400 opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300">
+												→
+											</span>
+										</Link>
+									))}
+								</div>
+							)}
+
+						</div>
+					</motion.div>
 				)}
 			</AnimatePresence>
 		</div>
@@ -299,9 +309,6 @@ function MobileNav({ pathname }: { pathname: string }) {
 							<div className="flex flex-col gap-4 mt-4 ml-4 border-l-2 dark:border-slate-800 pl-4">
 								{servicesData.main.map((item) => (
 									<Link key={item.title} href={item.href || '#'} className="text-lg font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">{item.title}</Link>
-								))}
-								{servicesData.side.map((item) => (
-									<Link key={item.title} href={item.href} className="text-lg font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">{item.title}</Link>
 								))}
 							</div>
 						)}

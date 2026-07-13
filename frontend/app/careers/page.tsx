@@ -69,14 +69,12 @@ export default function CareersPage() {
                 <p className="text-lg text-slate-505 dark:text-slate-400 leading-relaxed mt-2">
                   Build your engineering career with industry professionals who care about robust software and helping clients scale their digital infrastructure.
                 </p>
-                <Button
-                  asChild
-                  className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer w-max flex items-center gap-2"
+                <a
+                  href="#open-positions"
+                  className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer w-max inline-flex items-center gap-2"
                 >
-                  <a href="#open-positions">
-                    View Open Positions <ArrowRight className="w-4 h-4" />
-                  </a>
-                </Button>
+                  View Open Positions <ArrowRight className="w-4 h-4" />
+                </a>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -115,7 +113,7 @@ export default function CareersPage() {
               className="grid grid-cols-3 gap-8 md:divide-x divide-blue-800/40 dark:divide-slate-800"
             >
               {[
-                { value: 1800, label: 'Trusted Clients', suffix: '+' },
+                { value: 50, label: 'Trusted Clients', suffix: '+' },
                 { value: 98, label: 'Retention Rate', suffix: '%' },
                 { value: 24, label: 'Systems Monitoring', suffix: '/7' },
               ].map((stat, idx) => (
@@ -322,14 +320,12 @@ export default function CareersPage() {
               <p className="text-blue-100/70 text-sm leading-relaxed mt-3 mb-8 max-w-md mx-auto">
                 We are always looking for exceptional software engineers, designers, and project managers. Get in touch with us directly.
               </p>
-              <Button
-                asChild
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wider text-xs uppercase transition-all duration-300 shadow-lg shadow-blue-700/20 hover:scale-105 active:scale-95"
+              <Link
+                href="/contact-us"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wider text-xs uppercase transition-all duration-300 shadow-lg shadow-blue-700/20 hover:scale-105 active:scale-95 inline-flex items-center justify-center"
               >
-                <Link href="/contact-us">
-                  Get in Touch
-                </Link>
-              </Button>
+                Get in Touch
+              </Link>
             </motion.div>
           </div>
         </section>
