@@ -21,7 +21,7 @@ export const Sidebar = () => {
     { href: '/blogs', label: 'Blogs', icon: FileText },
     { href: '/careers', label: 'Careers', icon: Briefcase },
     { href: '/applications', label: 'Applications', icon: Inbox },
-    { href: '/leads', label: 'Leads', icon: Inbox },
+    { href: '/leads', label: 'Leads', icon: Briefcase },
   ];
 
   return (

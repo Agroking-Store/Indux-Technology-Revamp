@@ -19,7 +19,7 @@ export const createLead = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllLeads = async (req: Request, res: Response) => {
+export const getAllLeads = async ( res: Response) => {
   try {
     const leads = await Lead.find({ is_deleted: false })
       .populate("assigned_to", "first_name last_name email")
