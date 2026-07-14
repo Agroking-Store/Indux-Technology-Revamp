@@ -3,6 +3,7 @@ import Quote from "../models/Quote";
 import ApiError from "../utils/ApiError";
 import { createQuoteSchema, updateQuoteStatusSchema } from "../validators/quote.validator";
 import { sendEmail } from "../utils/sendEmail";
+import { getQuoteEmailTemplate } from "../utils/emailTemplates";
 
 // @desc    Submit a new quote request (Public)
 // @route   POST /api/v1/quotes
@@ -17,16 +18,7 @@ export const createQuote = async (
     const quote = await Quote.create(validatedData);
 
     // Send auto-reply email
-    const emailHtml = `
-      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-        <h2 style="color: #0284c7;">We received your Quote Request!</h2>
-        <p>Hi ${validatedData.name},</p>
-        <p>Thank you for requesting a quote for <strong>${validatedData.serviceInterest}</strong>.</p>
-        <p>Our team at Indux Technology is reviewing your requirements and will get back to you with a proposal shortly.</p>
-        <br/>
-        <p>Best Regards,<br/><strong>The Indux Technology Team</strong></p>
-      </div>
-    `;
+    const emailHtml = getQuoteEmailTemplate(validatedData.name, validatedData.serviceInterest, validatedData.companyName);
 
     sendEmail({
       to: validatedData.workEmail,

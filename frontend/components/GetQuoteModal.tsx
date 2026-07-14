@@ -39,6 +39,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { toast } from "sonner";
+import { submitQuote } from "@/lib/api";
 
 const services = [
   { value: "product_engineering", label: "Product Engineering" },
@@ -97,13 +98,30 @@ export function GetQuoteModal({ children }: { children?: React.ReactNode }) {
 
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log("Quote Request Submitted:", data);
-    setIsSubmitting(false);
-    setOpen(false);
-    setShowSuccess(true);
-    reset();
+    try {
+      const countryCode = `+${getCountryCallingCode(country)}`;
+      const phoneWithCode = data.phone.startsWith('+') ? data.phone : `${countryCode} ${data.phone}`;
+      
+      await submitQuote({
+        name: data.name,
+        workEmail: data.workEmail,
+        phone: phoneWithCode,
+        companyName: data.companyName,
+        serviceInterest: data.serviceInterest,
+        message: data.message,
+      });
+
+      setOpen(false);
+      setShowSuccess(true);
+      reset();
+    } catch (err: any) {
+      console.error("Error submitting quote:", err);
+      toast.error(
+        err.response?.data?.message || "Failed to submit request. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -126,7 +144,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactNode }) {
       />
       <Dialog open={open} onOpenChange={handleOpenChange}>
       {children ? (
-        <DialogTrigger render={children} />
+        <DialogTrigger render={children as React.ReactElement} />
       ) : (
         <DialogTrigger className="hidden sm:inline-flex bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-6 py-2.5 rounded-full shadow-md shadow-blue-500/20 text-sm transition-all hover:scale-105 hover:shadow-blue-500/40 active:scale-95 cursor-pointer border-t border-white/20 items-center justify-center">
           Get Quote
