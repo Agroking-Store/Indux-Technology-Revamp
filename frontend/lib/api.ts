@@ -1,11 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 
 // 🔍 DEBUG: Check if the env variable is loaded correctly in the browser console
-console.log('🔍 Frontend API URL:', process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api/v1');
+console.log(
+  "🔍 Frontend API URL:",
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1",
+);
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api/v1',
-  headers: { 'Content-Type': 'application/json' },
+  baseURL:
+    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1",
+  headers: { "Content-Type": "application/json" },
 });
 
 // ===== Career Types & API =====
@@ -15,7 +19,7 @@ export interface Career {
   slug: string;
   department: string;
   location: string;
-  employmentType: 'Full Time' | 'Internship';
+  employmentType: "Full Time" | "Internship";
   experience: string;
   openings: number;
   description: string;
@@ -24,7 +28,7 @@ export interface Career {
   benefits?: string[];
   skills: string[];
   salary?: string;
-  status: 'Active' | 'Closed';
+  status: "Active" | "Closed";
   formFields?: FormField[];
   lastDate: string;
   createdAt: string;
@@ -32,7 +36,7 @@ export interface Career {
 }
 
 export const getCareers = async (): Promise<Career[]> => {
-  const res = await api.get('/careers?status=Active');
+  const res = await api.get("/careers?status=Active");
   return res.data.data.careers;
 };
 
@@ -53,7 +57,7 @@ export interface Blog {
   category: string;
   tags: string[];
   author: string;
-  status: 'Draft' | 'Published';
+  status: "Draft" | "Published";
   seoTitle?: string;
   seoDescription?: string;
   createdAt: string;
@@ -61,7 +65,7 @@ export interface Blog {
 }
 
 export const getBlogs = async (): Promise<Blog[]> => {
-  const res = await api.get('/blogs?limit=100');
+  const res = await api.get("/blogs?limit=100");
   return res.data.data.blogs;
 };
 
@@ -91,26 +95,28 @@ export interface JobApplicationInput {
   resume: File; // Native File object from upload input
 }
 
-export const submitApplication = async (input: JobApplicationInput): Promise<any> => {
+export const submitApplication = async (
+  input: JobApplicationInput,
+): Promise<any> => {
   const formData = new FormData();
-  formData.append('jobId', input.jobId || input.careerId || '');
-  formData.append('candidateName', input.candidateName || input.fullName || '');
-  formData.append('email', input.email);
-  formData.append('phone', input.phone);
-  formData.append('experience', input.experience);
-  
-  if (input.coverLetter) formData.append('coverLetter', input.coverLetter);
-  if (input.portfolio) formData.append('portfolio', input.portfolio);
-  if (input.linkedin) formData.append('linkedin', input.linkedin);
-  if (input.github) formData.append('github', input.github);
-  if (input.noticePeriod) formData.append('noticePeriod', input.noticePeriod);
-  if (input.expectedCTC) formData.append('expectedCTC', input.expectedCTC);
-  if (input.answers) formData.append('answers', JSON.stringify(input.answers));
-  
-  formData.append('resume', input.resume);
+  formData.append("jobId", input.jobId || input.careerId || "");
+  formData.append("candidateName", input.candidateName || input.fullName || "");
+  formData.append("email", input.email);
+  formData.append("phone", input.phone);
+  formData.append("experience", input.experience);
 
-  const res = await api.post('/applications', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
+  if (input.coverLetter) formData.append("coverLetter", input.coverLetter);
+  if (input.portfolio) formData.append("portfolio", input.portfolio);
+  if (input.linkedin) formData.append("linkedin", input.linkedin);
+  if (input.github) formData.append("github", input.github);
+  if (input.noticePeriod) formData.append("noticePeriod", input.noticePeriod);
+  if (input.expectedCTC) formData.append("expectedCTC", input.expectedCTC);
+  if (input.answers) formData.append("answers", JSON.stringify(input.answers));
+
+  formData.append("resume", input.resume);
+
+  const res = await api.post("/applications", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
   });
   return res.data;
 };
@@ -124,7 +130,7 @@ export interface LeadInput {
 }
 
 export const submitLead = async (input: LeadInput): Promise<any> => {
-  const res = await api.post('/leads', input);
+  const res = await api.post("/leads", input);
   return res.data;
 };
 
@@ -139,7 +145,7 @@ export interface QuoteInput {
 }
 
 export const submitQuote = async (input: QuoteInput): Promise<any> => {
-  const res = await api.post('/quotes', input);
+  const res = await api.post("/quotes", input);
   return res.data;
 };
 
@@ -147,7 +153,18 @@ export const submitQuote = async (input: QuoteInput): Promise<any> => {
 export interface FormField {
   name: string;
   label: string;
-  type: 'text' | 'email' | 'phone' | 'number' | 'textarea' | 'select' | 'radio' | 'checkbox' | 'date' | 'url' | 'file';
+  type:
+    | "text"
+    | "email"
+    | "phone"
+    | "number"
+    | "textarea"
+    | "select"
+    | "radio"
+    | "checkbox"
+    | "date"
+    | "url"
+    | "file";
   required: boolean;
   placeholder?: string;
   defaultValue?: string;
@@ -187,7 +204,7 @@ export interface Event {
   registrationDeadline: string;
   organizer: string;
   location: string;
-  status: 'Draft' | 'Published';
+  status: "Draft" | "Published";
   formFields: FormField[];
   speakers?: Speaker[];
   schedule?: ScheduleItem[];
@@ -210,7 +227,7 @@ export interface EventRegistrationInput {
 }
 
 export const getEvents = async (): Promise<Event[]> => {
-  const res = await api.get('/events');
+  const res = await api.get("/events");
   return res.data.data;
 };
 
@@ -219,21 +236,33 @@ export const getEventBySlug = async (slug: string): Promise<Event> => {
   return res.data.data;
 };
 
-export const registerForEvent = async (input: EventRegistrationInput): Promise<any> => {
+export const registerForEvent = async (
+  input: EventRegistrationInput,
+): Promise<any> => {
   const formData = new FormData();
-  formData.append('eventId', input.eventId);
-  formData.append('name', input.name);
-  formData.append('email', input.email);
-  formData.append('phone', input.phone);
-  formData.append('answers', JSON.stringify(input.answers));
+  formData.append("eventId", input.eventId);
+  formData.append("name", input.name);
+  formData.append("email", input.email);
+  formData.append("phone", input.phone);
+  formData.append("answers", JSON.stringify(input.answers));
   if (input.file) {
-    formData.append('file', input.file);
+    formData.append("file", input.file);
   }
 
-  const res = await api.post('/event-registrations', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
+  const res = await api.post("/event-registrations", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
   });
   return res.data;
+};
+
+export const getVisitorCount = async (): Promise<number> => {
+  try {
+    const res = await api.get("/visitors");
+    return res.data.count;
+  } catch (error) {
+    console.error("Error fetching visitor count:", error);
+    return 0;
+  }
 };
 
 export default api;

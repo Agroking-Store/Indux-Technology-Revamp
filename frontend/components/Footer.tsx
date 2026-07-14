@@ -1,58 +1,95 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Mail, Phone, MapPin, Grid2x2PlusIcon, ArrowRight, Send } from 'lucide-react';
-import { InstagramLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Mail, Phone, MapPin, ArrowRight, Send, Users } from "lucide-react";
+import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { FaXTwitter, FaWhatsapp } from "react-icons/fa6";
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
+import { getVisitorCount } from "@/lib/api";
+import { NumberTicker } from "@/components/ui/number-ticker";
 
 const FacebookLogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
   </svg>
 );
 
 const allLinks = [
-  { name: 'Services', href: '/services' },
-  { name: 'Products', href: '/products' },
-  { name: 'Blogs', href: '/blogs' },
-  { name: 'About Us', href: '/about' },
-  { name: 'Contact Us', href: '/contact-us' },
-   { name: 'Careers', href: '/career' },
-  { name: 'Privacy Policy', href: '/privacy-policy' },
-  { name: 'Terms of Service', href: '/terms-of-service' },
+  { name: "Services", href: "/services" },
+  { name: "Products", href: "/products" },
+  { name: "Blogs", href: "/blogs" },
+  { name: "About Us", href: "/about" },
+  { name: "Contact Us", href: "/contact-us" },
+  { name: "Careers", href: "/career" },
+  { name: "Privacy Policy", href: "/privacy-policy" },
+  { name: "Terms of Service", href: "/terms-of-service" },
 ];
 
 export default function Footer() {
+  const [visitorCount, setVisitorCount] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchCount = async () => {
+      try {
+        const data = await getVisitorCount();
+        setVisitorCount(data);
+      } catch (error) {
+        console.error("Failed to load visitor count:", error);
+      }
+    };
+    fetchCount();
+  }, []);
+
   return (
     <footer className="relative bg-[#0B1121] text-slate-300 pt-20 pb-8 border-t border-slate-800 overflow-hidden">
-      
       {/* Background Aesthetic */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-[#0B1121] to-[#0B1121] pointer-events-none" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f60a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f60a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 mb-16">
-          
           {/* Left Section: Brand & Links */}
           <div className="flex flex-col gap-6">
-            <Link href="/" className="flex items-center gap-2 cursor-pointer group w-max">
-              <Image src="/induxtechnologylogo_white.png" alt="Indux Technology" width={140} height={40} className="object-contain" priority />
+            <Link
+              href="/"
+              className="flex items-center gap-2 cursor-pointer group w-max"
+            >
+              <Image
+                src="/induxtechnologylogo_white.png"
+                alt="Indux Technology"
+                width={140}
+                height={40}
+                className="object-contain"
+                priority
+              />
             </Link>
-            
+
             <p className="text-slate-400 leading-relaxed text-sm">
-              Empowering businesses with cutting-edge IT solutions, from CRM and ERP systems to modern web and mobile applications.
+              Empowering businesses with cutting-edge IT solutions, from CRM and
+              ERP systems to modern web and mobile applications.
             </p>
 
             <div className="mt-2">
               <ul className="grid grid-cols-2 gap-y-3 gap-x-4">
                 {allLinks.map((link) => (
                   <li key={link.name}>
-                    <Link href={link.href} className="text-slate-400 hover:text-blue-400 transition-all hover:translate-x-1 inline-flex items-center gap-2 group cursor-pointer text-sm">
+                    <Link
+                      href={link.href}
+                      className="text-slate-400 hover:text-blue-400 transition-all hover:translate-x-1 inline-flex items-center gap-2 group cursor-pointer text-sm"
+                    >
                       <ArrowRight className="size-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                       {link.name}
                     </Link>
@@ -64,35 +101,49 @@ export default function Footer() {
 
           {/* Middle Section: Contact Info */}
           <div className="flex flex-col gap-6">
-            <h4 className="text-white font-bold text-xl tracking-wide">Contact Us</h4>
-            
+            <h4 className="text-white font-bold text-xl tracking-wide">
+              Contact Us
+            </h4>
+
             <div className="flex flex-col gap-5 mt-2">
-              <a href="mailto:connect@induxtechnology.com" className="flex items-center gap-4 text-slate-300 hover:text-blue-400 transition-colors group cursor-pointer w-max">
+              <a
+                href="mailto:connect@induxtechnology.com"
+                className="flex items-center gap-4 text-slate-300 hover:text-blue-400 transition-colors group cursor-pointer w-max"
+              >
                 <div className="p-3 rounded-2xl bg-slate-800/50 group-hover:bg-blue-900/40 transition-colors border border-slate-700/50">
                   <Mail className="size-5 text-blue-400" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Email</span>
+                  <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-0.5">
+                    Email
+                  </span>
                   <span>connect@induxtechnology.com</span>
                 </div>
               </a>
-              
-              <a href="tel:+918421538753" className="flex items-center gap-4 text-slate-300 hover:text-blue-400 transition-colors group cursor-pointer w-max">
+
+              <a
+                href="tel:+918421538753"
+                className="flex items-center gap-4 text-slate-300 hover:text-blue-400 transition-colors group cursor-pointer w-max"
+              >
                 <div className="p-3 rounded-2xl bg-slate-800/50 group-hover:bg-blue-900/40 transition-colors border border-slate-700/50">
                   <Phone className="size-5 text-blue-400" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Phone</span>
+                  <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-0.5">
+                    Phone
+                  </span>
                   <span>+91 84215 38753</span>
                 </div>
               </a>
-              
+
               <div className="flex items-start gap-4 text-slate-300 group">
                 <div className="p-3 rounded-2xl bg-slate-800/50 border border-slate-700/50 mt-1">
                   <MapPin className="size-5 text-blue-400" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Address</span>
+                  <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-0.5">
+                    Address
+                  </span>
                   <span className="leading-relaxed text-sm max-w-[200px]">
                     S. No. 05, Geeta Paradise, Opp. Zensar, Kharadi, Pune, India
                   </span>
@@ -103,19 +154,22 @@ export default function Footer() {
 
           {/* Right Section: Small Newsletter Box */}
           <div className="flex flex-col gap-6">
-            <h4 className="text-white font-bold text-xl tracking-wide">Stay Updated</h4>
-            
+            <h4 className="text-white font-bold text-xl tracking-wide">
+              Stay Updated
+            </h4>
+
             <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 shadow-xl relative overflow-hidden group">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-indigo-500 opacity-70 group-hover:opacity-100 transition-opacity" />
-              
+
               <p className="text-slate-400 text-sm mb-4">
-                Subscribe to our newsletter for the latest tech news and updates.
+                Subscribe to our newsletter for the latest tech news and
+                updates.
               </p>
-              
+
               <div className="flex flex-col gap-3">
-                <input 
-                  type="email" 
-                  placeholder="Your Email Address" 
+                <input
+                  type="email"
+                  placeholder="Your Email Address"
                   className="w-full bg-slate-950/50 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-slate-500"
                 />
                 <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 rounded-xl font-medium shadow-lg shadow-blue-600/20 transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2">
@@ -124,36 +178,91 @@ export default function Footer() {
               </div>
             </div>
           </div>
-
         </div>
 
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
-          
           {/* Left: Social Icons */}
           <div className="flex items-center gap-3">
-            <a href="https://www.facebook.com/885831577953764/" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
+            <a
+              href="https://www.facebook.com/885831577953764/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+            >
               <FacebookLogoIcon className="size-4" />
             </a>
-            <a href="https://x.com/induxtechnology" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
+            <a
+              href="https://x.com/induxtechnology"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+            >
               <FaXTwitter className="size-4" />
             </a>
-            <a href="https://www.linkedin.com/company/indux-technology/" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
+            <a
+              href="https://www.linkedin.com/company/indux-technology/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+            >
               <LinkedInLogoIcon className="size-4" />
             </a>
-            <a href="https://www.instagram.com/indux.technology" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1">
+            <a
+              href="https://www.instagram.com/indux.technology"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+            >
               <InstagramLogoIcon className="size-4" />
             </a>
-            <a href="https://wa.me/918421538753" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-[#25D366] hover:text-white transition-all cursor-pointer hover:-translate-y-1">
+            <a
+              href="https://wa.me/918421538753"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-[#25D366] hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+            >
               <FaWhatsapp className="size-4" />
             </a>
           </div>
 
           {/* Middle: Copyright */}
           <p className="text-slate-500 text-sm text-center md:flex-1">
-            Copyright &copy; {new Date().getFullYear()} <span className="text-slate-300 font-semibold">Indux Technology</span>. All Rights Reserved.
+            Copyright &copy; {new Date().getFullYear()}{" "}
+            <span className="text-slate-300 font-semibold">
+              Indux Technology
+            </span>
+            . All Rights Reserved.
           </p>
-          {/* Right: Empty spacer for balance */}
+
+          {/* Right: Visitor Counter Section */}
+          <div className="flex items-center gap-4 bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-2xl shadow-inner">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <Users className="size-4 text-slate-400" />
+            </div>
+
+            <div className="flex flex-col items-start leading-none">
+              <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-0.5">
+                Total Visits
+              </span>
+              <div className="text-blue-400 font-mono font-bold text-lg tracking-tighter">
+                {visitorCount > 0 ? (
+                  <NumberTicker
+                    value={visitorCount}
+                    className="text-blue-400 dark:text-blue-400"
+                  />
+                ) : (
+                  "..."
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Spacer for layout balance */}
           <div className="hidden md:block w-[100px]"></div>
         </div>
       </div>
