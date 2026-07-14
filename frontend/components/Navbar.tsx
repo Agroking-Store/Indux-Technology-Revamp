@@ -117,8 +117,8 @@ export default function Navbar() {
 				
 				{/* Logo */}
 				<Link href="/" className="flex items-center gap-2 cursor-pointer group">
-					<Image src="/induxtechnologylogo_blue.png" alt="Indux Technology" width={130} height={36} className="object-contain dark:hidden" priority />
-					<Image src="/induxtechnologylogo_white.png" alt="Indux Technology" width={130} height={36} className="object-contain hidden dark:block" priority />
+					<Image src="/induxtechnologylogo_blue.png" alt="Indux Technology" width={130} height={36} style={{ height: 'auto' }} className="object-contain dark:hidden" priority />
+					<Image src="/induxtechnologylogo_white.png" alt="Indux Technology" width={130} height={36} style={{ height: 'auto' }} className="object-contain hidden dark:block" priority />
 				</Link>
 
 				{/* Desktop Menu */}

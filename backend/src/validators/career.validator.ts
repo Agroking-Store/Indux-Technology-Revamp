@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const createCareerSchema = z.object({
   title: z.string().trim().min(1, "Job title is required"),
+  slug: z.string().trim().optional(),
   department: z.string().trim().min(1, "Department is required"),
   location: z.string().trim().min(1, "Location is required"),
   employmentType: z.enum(["Full Time", "Internship"]),
@@ -10,9 +11,11 @@ export const createCareerSchema = z.object({
   description: z.string().min(1, "Description is required"),
   responsibilities: z.array(z.string().trim()).default([]),
   requirements: z.array(z.string().trim()).default([]),
+  benefits: z.array(z.string().trim()).default([]),
   skills: z.array(z.string().trim()).default([]),
   salary: z.string().trim().optional(),
   status: z.enum(["Active", "Closed"]).default("Active"),
+  formFields: z.array(z.any()).default([]),
   lastDate: z.coerce.date({ message: "Please provide a valid date" }),
 });
 

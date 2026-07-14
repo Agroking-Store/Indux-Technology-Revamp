@@ -12,6 +12,7 @@ const api = axios.create({
 export interface Career {
   _id: string;
   title: string;
+  slug: string;
   department: string;
   location: string;
   employmentType: 'Full Time' | 'Internship';
@@ -20,16 +21,18 @@ export interface Career {
   description: string;
   responsibilities: string[];
   requirements: string[];
+  benefits?: string[];
   skills: string[];
   salary?: string;
   status: 'Active' | 'Closed';
+  formFields?: FormField[];
   lastDate: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export const getCareers = async (): Promise<Career[]> => {
-  const res = await api.get('/careers');
+  const res = await api.get('/careers?status=Active');
   return res.data.data.careers;
 };
 
@@ -58,38 +61,52 @@ export interface Blog {
 }
 
 export const getBlogs = async (): Promise<Blog[]> => {
-  const res = await api.get('/blogs');
+  const res = await api.get('/blogs?limit=100');
   return res.data.data.blogs;
 };
 
 export const getBlogBySlug = async (slug: string): Promise<Blog> => {
-  const blogs = await getBlogs();
-  const blog = blogs.find(b => b.slug === slug);
-  if (!blog) throw new Error('Blog not found');
-  return blog;
+  // Call the single-blog endpoint directly — returns full document
+  // (content, featuredImage, etc.) without needing to fetch all blogs first.
+  const res = await api.get(`/blogs/${slug}`);
+  return res.data.data;
 };
 
 // ===== Job Application Types & API =====
 export interface JobApplicationInput {
-  careerId: string;
-  fullName: string;
+  careerId?: string;
+  jobId?: string;
+  fullName?: string;
+  candidateName?: string;
   email: string;
   phone: string;
   experience: string;
   coverLetter?: string;
+  portfolio?: string;
+  linkedin?: string;
+  github?: string;
+  noticePeriod?: string;
+  expectedCTC?: string;
+  answers?: Record<string, any>;
   resume: File; // Native File object from upload input
 }
 
 export const submitApplication = async (input: JobApplicationInput): Promise<any> => {
   const formData = new FormData();
-  formData.append('careerId', input.careerId);
-  formData.append('fullName', input.fullName);
+  formData.append('jobId', input.jobId || input.careerId || '');
+  formData.append('candidateName', input.candidateName || input.fullName || '');
   formData.append('email', input.email);
   formData.append('phone', input.phone);
   formData.append('experience', input.experience);
-  if (input.coverLetter) {
-    formData.append('coverLetter', input.coverLetter);
-  }
+  
+  if (input.coverLetter) formData.append('coverLetter', input.coverLetter);
+  if (input.portfolio) formData.append('portfolio', input.portfolio);
+  if (input.linkedin) formData.append('linkedin', input.linkedin);
+  if (input.github) formData.append('github', input.github);
+  if (input.noticePeriod) formData.append('noticePeriod', input.noticePeriod);
+  if (input.expectedCTC) formData.append('expectedCTC', input.expectedCTC);
+  if (input.answers) formData.append('answers', JSON.stringify(input.answers));
+  
   formData.append('resume', input.resume);
 
   const res = await api.post('/applications', formData, {
@@ -127,18 +144,69 @@ export const submitQuote = async (input: QuoteInput): Promise<any> => {
 };
 
 // ===== Event Types & API =====
+export interface FormField {
+  name: string;
+  label: string;
+  type: 'text' | 'email' | 'phone' | 'number' | 'textarea' | 'select' | 'radio' | 'checkbox' | 'date' | 'url' | 'file';
+  required: boolean;
+  placeholder?: string;
+  defaultValue?: string;
+  options?: string[];
+}
+
+export interface Speaker {
+  name: string;
+  role: string;
+  company?: string;
+  avatar?: string;
+}
+
+export interface ScheduleItem {
+  time: string;
+  title: string;
+  description?: string;
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 export interface Event {
   _id: string;
   title: string;
   slug: string;
+  type: string;
+  category: string;
+  coverImage: string;
+  bannerImage: string;
+  shortDescription: string;
   description: string;
-  content: string;
-  date: string;
+  startDate: string;
+  endDate: string;
+  registrationDeadline: string;
+  organizer: string;
   location: string;
-  image: string;
   status: 'Draft' | 'Published';
+  formFields: FormField[];
+  speakers?: Speaker[];
+  schedule?: ScheduleItem[];
+  faqs?: FaqItem[];
   createdAt: string;
   updatedAt: string;
+  // Fallbacks
+  image?: string;
+  date?: string;
+  content?: string;
+}
+
+export interface EventRegistrationInput {
+  eventId: string;
+  name: string;
+  email: string;
+  phone: string;
+  answers: Record<string, any>;
+  file?: File;
 }
 
 export const getEvents = async (): Promise<Event[]> => {
@@ -147,10 +215,25 @@ export const getEvents = async (): Promise<Event[]> => {
 };
 
 export const getEventBySlug = async (slug: string): Promise<Event> => {
-  const events = await getEvents();
-  const event = events.find(e => e.slug === slug);
-  if (!event) throw new Error('Event not found');
-  return event;
+  const res = await api.get(`/events/${slug}`);
+  return res.data.data;
+};
+
+export const registerForEvent = async (input: EventRegistrationInput): Promise<any> => {
+  const formData = new FormData();
+  formData.append('eventId', input.eventId);
+  formData.append('name', input.name);
+  formData.append('email', input.email);
+  formData.append('phone', input.phone);
+  formData.append('answers', JSON.stringify(input.answers));
+  if (input.file) {
+    formData.append('file', input.file);
+  }
+
+  const res = await api.post('/event-registrations', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return res.data;
 };
 
 export default api;

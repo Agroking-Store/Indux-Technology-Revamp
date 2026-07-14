@@ -5,6 +5,7 @@ export type CareerStatus = "Active" | "Closed";
 
 export interface ICareer extends Document {
   title: string;
+  slug: string;
   department: string;
   location: string;
   employmentType: EmploymentType;
@@ -13,9 +14,11 @@ export interface ICareer extends Document {
   description: string; // rich text
   responsibilities: string[];
   requirements: string[];
+  benefits: string[];
   skills: string[];
   salary?: string;
   status: CareerStatus;
+  formFields: any[];
   lastDate: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -27,6 +30,14 @@ const CareerSchema = new Schema<ICareer>(
       type: String,
       required: [true, "Job title is required"],
       trim: true,
+    },
+    slug: {
+      type: String,
+      unique: true,
+      sparse: true,
+      lowercase: true,
+      trim: true,
+      index: true,
     },
     department: {
       type: String,
@@ -68,6 +79,10 @@ const CareerSchema = new Schema<ICareer>(
       type: [String],
       default: [],
     },
+    benefits: {
+      type: [String],
+      default: [],
+    },
     skills: {
       type: [String],
       default: [],
@@ -84,6 +99,7 @@ const CareerSchema = new Schema<ICareer>(
       },
       default: "Active",
     },
+    formFields: [Schema.Types.Mixed],
     lastDate: {
       type: Date,
       required: [true, "Last date to apply is required"],

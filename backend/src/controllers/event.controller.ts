@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import Event from "../models/Event";
+import EventRegistration from "../models/EventRegistration";
 import { createEventSchema, updateEventSchema, updateEventStatusSchema } from "../validators/event.validator";
 import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
 import asyncHandler from "../utils/asyncHandler";
 import { AuthRequest } from "../middlewares/auth";
+import { uploadToCloudinary, deleteFromCloudinary } from "../services/cloudinary";
 
 // Helper to generate slug if not provided
 const generateSlugFromTitle = (title: string): string => {
@@ -18,13 +20,22 @@ const generateSlugFromTitle = (title: string): string => {
 // CREATE EVENT
 // ============================
 export const createEvent = asyncHandler(async (req: AuthRequest, res: Response) => {
-  const file = req.file;
-  if (!file) {
+  const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
+  const coverImageFile = files?.["coverImage"]?.[0];
+  const bannerImageFile = files?.["bannerImage"]?.[0];
+
+  if (!coverImageFile) {
     throw ApiError.badRequest("Cover image is required");
   }
+  if (!bannerImageFile) {
+    throw ApiError.badRequest("Banner image is required");
+  }
 
-  // Convert image buffer to Base64 Data URL
-  const image = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+  // Upload images to Cloudinary (store URL in MongoDB — avoids 16MB BSON limit)
+  const [coverUpload, bannerUpload] = await Promise.all([
+    uploadToCloudinary(coverImageFile.buffer, coverImageFile.mimetype, "indux/events/cover"),
+    uploadToCloudinary(bannerImageFile.buffer, bannerImageFile.mimetype, "indux/events/banner"),
+  ]);
 
   // Clean up empty form fields so they pass Zod validation
   if (req.body.slug === "") delete req.body.slug;
@@ -38,22 +49,31 @@ export const createEvent = asyncHandler(async (req: AuthRequest, res: Response) 
   // Check unique slug
   const existingEvent = await Event.findOne({ slug: finalSlug });
   if (existingEvent) {
+    // Clean up uploaded images if slug conflicts
+    await Promise.all([deleteFromCloudinary(coverUpload.publicId), deleteFromCloudinary(bannerUpload.publicId)]);
     throw ApiError.conflict("Slug already exists");
   }
 
-  // Create
+  // Create — store only Cloudinary URLs, not raw base64
   const event = await Event.create({
     title,
     slug: finalSlug,
     ...rest,
-    image,
+    coverImage: coverUpload.url,
+    bannerImage: bannerUpload.url,
+    coverImagePublicId: coverUpload.publicId,
+    bannerImagePublicId: bannerUpload.publicId,
+    // Backward compatibility fields
+    image: coverUpload.url,
+    date: rest.startDate,
+    content: rest.description,
   });
 
   res.status(201).json(new ApiResponse(201, event, "Event created successfully"));
 });
 
 // ============================
-// GET ALL EVENTS (with optional status filter)
+// GET ALL EVENTS (with optional status filter & registrations count)
 // ============================
 export const getEvents = asyncHandler(async (req: Request, res: Response) => {
   const status = req.query.status as string; // optional: Draft, Published
@@ -63,22 +83,48 @@ export const getEvents = asyncHandler(async (req: Request, res: Response) => {
     filter.status = status;
   }
 
-  // Find all events and sort by date (closest/upcoming first)
-  const events = await Event.find(filter).sort({ date: 1 });
+  // Find all events and sort by startDate (closest/upcoming first)
+  const events = await Event.find(filter).sort({ startDate: 1 });
 
-  res.status(200).json(new ApiResponse(200, events, "Events fetched successfully"));
+  // Add registrationsCount dynamically
+  const eventsWithCount = await Promise.all(
+    events.map(async (event) => {
+      const registrationsCount = await EventRegistration.countDocuments({ eventId: event._id });
+      return {
+        ...event.toObject(),
+        registrationsCount,
+      };
+    })
+  );
+
+  res.status(200).json(new ApiResponse(200, eventsWithCount, "Events fetched successfully"));
 });
 
 // ============================
-// GET SINGLE EVENT
+// GET SINGLE EVENT BY ID OR SLUG
 // ============================
 export const getEventById = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const event = await Event.findById(id);
+  
+  // Find by ID or by Slug
+  let event;
+  if (typeof id === "string" && /^[0-9a-fA-F]{24}$/.test(id)) {
+    event = await Event.findById(id);
+  } else {
+    event = await Event.findOne({ slug: id });
+  }
+
   if (!event) {
     throw ApiError.notFound("Event not found");
   }
-  res.status(200).json(new ApiResponse(200, event, "Event fetched successfully"));
+
+  const registrationsCount = await EventRegistration.countDocuments({ eventId: event._id });
+  const eventData = {
+    ...event.toObject(),
+    registrationsCount,
+  };
+
+  res.status(200).json(new ApiResponse(200, eventData, "Event fetched successfully"));
 });
 
 // ============================
@@ -109,9 +155,29 @@ export const updateEvent = asyncHandler(async (req: AuthRequest, res: Response) 
     }
   }
 
-  let image = event.image;
-  if (req.file) {
-    image = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
+  // Upload new images to Cloudinary if provided
+  const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
+  const coverImageFile = files?.["coverImage"]?.[0];
+  const bannerImageFile = files?.["bannerImage"]?.[0];
+
+  let coverImageUrl = event.coverImage;
+  let coverImagePublicId = (event as any).coverImagePublicId;
+  let bannerImageUrl = event.bannerImage;
+  let bannerImagePublicId = (event as any).bannerImagePublicId;
+
+  if (coverImageFile) {
+    // Delete old Cloudinary image
+    if (coverImagePublicId) await deleteFromCloudinary(coverImagePublicId);
+    const upload = await uploadToCloudinary(coverImageFile.buffer, coverImageFile.mimetype, "indux/events/cover");
+    coverImageUrl = upload.url;
+    coverImagePublicId = upload.publicId;
+  }
+
+  if (bannerImageFile) {
+    if (bannerImagePublicId) await deleteFromCloudinary(bannerImagePublicId);
+    const upload = await uploadToCloudinary(bannerImageFile.buffer, bannerImageFile.mimetype, "indux/events/banner");
+    bannerImageUrl = upload.url;
+    bannerImagePublicId = upload.publicId;
   }
 
   const updatedEvent = await Event.findByIdAndUpdate(
@@ -120,7 +186,14 @@ export const updateEvent = asyncHandler(async (req: AuthRequest, res: Response) 
       ...(title && { title }),
       ...(finalSlug && { slug: finalSlug }),
       ...rest,
-      image,
+      coverImage: coverImageUrl,
+      bannerImage: bannerImageUrl,
+      coverImagePublicId,
+      bannerImagePublicId,
+      // Update legacy fields
+      image: coverImageUrl,
+      date: rest.startDate || event.startDate,
+      content: rest.description || event.description,
     },
     { new: true, runValidators: true }
   );
@@ -137,8 +210,20 @@ export const deleteEvent = asyncHandler(async (req: AuthRequest, res: Response) 
   if (!event) {
     throw ApiError.notFound("Event not found");
   }
+
+  // Clean up Cloudinary images
+  const coverPublicId = (event as any).coverImagePublicId;
+  const bannerPublicId = (event as any).bannerImagePublicId;
+  await Promise.all([
+    coverPublicId ? deleteFromCloudinary(coverPublicId) : Promise.resolve(),
+    bannerPublicId ? deleteFromCloudinary(bannerPublicId) : Promise.resolve(),
+  ]);
+
+  // Delete all registrations for this event
+  await EventRegistration.deleteMany({ eventId: event._id });
   await event.deleteOne();
-  res.status(200).json(new ApiResponse(200, null, "Event deleted successfully"));
+
+  res.status(200).json(new ApiResponse(200, null, "Event and its registrations deleted successfully"));
 });
 
 // ============================

@@ -2,17 +2,48 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 
 export type EventStatus = "Draft" | "Published";
 
+export interface IFormField {
+  name: string;
+  label: string;
+  type: "text" | "email" | "phone" | "number" | "textarea" | "select" | "radio" | "checkbox" | "date" | "url" | "file";
+  required: boolean;
+  placeholder?: string;
+  defaultValue?: string;
+  options?: string[];
+  validation?: {
+    pattern?: string;
+    min?: number;
+    max?: number;
+  };
+}
+
 export interface IEvent extends Document {
   title: string;
   slug: string;
+  type: string; // Webinar, Hackathon, Workshop, Meetup, Bootcamp, etc.
+  category: string;
+  coverImage: string;
+  bannerImage: string;
+  coverImagePublicId?: string; // Cloudinary public_id for deletion
+  bannerImagePublicId?: string; // Cloudinary public_id for deletion
+  shortDescription: string;
   description: string;
-  content: string;
-  date: Date;
+  startDate: Date;
+  endDate: Date;
+  registrationDeadline: Date;
+  organizer: string;
   location: string;
-  image: string; // Base64 or Cloudinary URL
   status: EventStatus;
+  formFields: IFormField[];
+  speakers?: Array<{ name: string; role: string; company?: string; avatar?: string }>;
+  schedule?: Array<{ time: string; title: string; description?: string }>;
+  faqs?: Array<{ question: string; answer: string }>;
   createdAt: Date;
   updatedAt: Date;
+  // Backward compatibility
+  image?: string;
+  date?: Date;
+  content?: string;
 }
 
 const EventSchema = new Schema<IEvent>(
@@ -30,27 +61,60 @@ const EventSchema = new Schema<IEvent>(
       trim: true,
       index: true,
     },
-    description: {
+    type: {
       type: String,
-      required: [true, "Description is required"],
+      required: [true, "Event type is required"],
+      default: "Workshop",
       trim: true,
     },
-    content: {
+    category: {
       type: String,
-      required: [true, "Content is required"],
+      required: [true, "Category is required"],
+      default: "Technology",
+      trim: true,
     },
-    date: {
+    coverImage: {
+      type: String,
+      required: [true, "Cover image is required"],
+    },
+    coverImagePublicId: { type: String }, // Cloudinary public_id
+    bannerImage: {
+      type: String,
+      required: [true, "Banner image is required"],
+    },
+    bannerImagePublicId: { type: String }, // Cloudinary public_id
+    shortDescription: {
+      type: String,
+      required: [true, "Short description is required"],
+      trim: true,
+    },
+    description: {
+      type: String,
+      required: [true, "Full description is required"],
+      trim: true,
+    },
+    startDate: {
       type: Date,
-      required: [true, "Date is required"],
+      required: [true, "Start date is required"],
+    },
+    endDate: {
+      type: Date,
+      required: [true, "End date is required"],
+    },
+    registrationDeadline: {
+      type: Date,
+      required: [true, "Registration deadline is required"],
+    },
+    organizer: {
+      type: String,
+      required: [true, "Organizer is required"],
+      default: "Indux Technology",
+      trim: true,
     },
     location: {
       type: String,
-      required: [true, "Location is required"],
+      required: [true, "Location / venue is required"],
       trim: true,
-    },
-    image: {
-      type: String,
-      required: [true, "Image is required"],
     },
     status: {
       type: String,
@@ -60,12 +124,60 @@ const EventSchema = new Schema<IEvent>(
       },
       default: "Draft",
     },
+    formFields: [Schema.Types.Mixed],
+    speakers: {
+      type: [
+        {
+          name: String,
+          role: String,
+          company: String,
+          avatar: String,
+        },
+      ],
+      default: [],
+    },
+    schedule: {
+      type: [
+        {
+          time: String,
+          title: String,
+          description: String,
+        },
+      ],
+      default: [],
+    },
+    faqs: {
+      type: [
+        {
+          question: String,
+          answer: String,
+        },
+      ],
+      default: [],
+    },
+    // Backward compatibility fields
+    image: { type: String },
+    date: { type: Date },
+    content: { type: String },
   },
   { timestamps: true }
 );
 
+// Pre-save hook to populate backward-compatible fields automatically
+EventSchema.pre("save", function (this: IEvent) {
+  if (this.coverImage && !this.image) {
+    this.image = this.coverImage;
+  }
+  if (this.startDate && !this.date) {
+    this.date = this.startDate;
+  }
+  if (this.description && !this.content) {
+    this.content = this.description;
+  }
+});
+
 // Index for date-based queries (upcoming vs past) and status
-EventSchema.index({ status: 1, date: 1 });
+EventSchema.index({ status: 1, startDate: 1 });
 
 const Event: Model<IEvent> = mongoose.model<IEvent>("Event", EventSchema);
 
