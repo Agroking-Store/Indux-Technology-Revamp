@@ -131,7 +131,7 @@ export const submitLead = async (input: LeadInput): Promise<any> => {
 // ===== Quote Types & API =====
 export interface QuoteInput {
   name: string;
-  email: string;
+  workEmail: string;
   phone: string;
   companyName?: string;
   serviceInterest: string;
