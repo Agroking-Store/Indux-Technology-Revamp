@@ -101,9 +101,7 @@ export default function EditBlogPage() {
         formData.append('featuredImage', imageFile);
       }
 
-      await api.put(`/blogs/${id}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      await api.put(`/blogs/${id}`, formData);
 
       toast.success('Article updated successfully');
       router.push('/blogs');

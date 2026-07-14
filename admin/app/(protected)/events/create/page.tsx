@@ -215,9 +215,7 @@ export default function CreateEventPage() {
       formData.append('schedule', JSON.stringify(schedule.filter(s => s.title)));
       formData.append('faqs', JSON.stringify(faqs.filter(f => f.question)));
 
-      await api.post('/events', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      await api.post('/events', formData);
 
       toast.success('Event created successfully');
       router.push('/events');

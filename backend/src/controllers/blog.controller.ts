@@ -5,6 +5,7 @@ import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
 import asyncHandler from "../utils/asyncHandler";
 import { AuthRequest } from "../middlewares/auth";
+import { uploadToCloudinary, deleteFromCloudinary } from "../services/cloudinary";
 
 // Helper to generate slug if not provided
 const generateSlugFromTitle = (title: string): string => {
@@ -24,8 +25,9 @@ export const createBlog = asyncHandler(async (req: AuthRequest, res: Response) =
     throw ApiError.badRequest("Featured image is required");
   }
 
-  // Convert image buffer to Base64 Data URL
-  const featuredImage = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+  // Upload image to Cloudinary (store URL in MongoDB — avoids bloating
+  // documents/queries with raw base64 data)
+  const upload = await uploadToCloudinary(file.buffer, file.mimetype, "indux/blogs/featured");
 
   // Parse tags if it's sent as a JSON string (from multipart form-data)
   if (typeof req.body.tags === 'string') {
@@ -51,15 +53,18 @@ export const createBlog = asyncHandler(async (req: AuthRequest, res: Response) =
   // Check if slug already exists
   const existingBlog = await Blog.findOne({ slug: finalSlug });
   if (existingBlog) {
+    // Clean up uploaded image if slug conflicts
+    await deleteFromCloudinary(upload.publicId);
     throw ApiError.conflict("Slug already exists");
   }
 
-  // Create blog
+  // Create blog — store only the Cloudinary URL, not raw base64
   const blog = await Blog.create({
     title,
     slug: finalSlug,
     ...rest,
-    featuredImage,
+    featuredImage: upload.url,
+    featuredImagePublicId: upload.publicId,
     // Author can come from logged-in admin
     author: req.admin?.name || "Admin",
   });
@@ -82,11 +87,11 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
 
   const total = await Blog.countDocuments(filter);
   const blogs = await Blog.find(filter)
-    // Exclude heavy fields not needed for the list view.
-    // 'content' is rich HTML (can be 100s of KB) and 'featuredImage'
-    // is a raw base64 Data URL (can be MBs). Only fetch them on
-    // the single-blog detail/edit endpoints.
-    .select("-content -featuredImage -seoTitle -seoDescription -featuredImagePublicId")
+    // Exclude heavy fields not needed for the list view. 'content' is
+    // rich HTML (can be 100s of KB). 'featuredImage' is now just a
+    // Cloudinary URL (a short string), so it's safe and necessary to
+    // include here — the frontend list/card views render it directly.
+    .select("-content -seoTitle -seoDescription -featuredImagePublicId")
     .sort({ createdAt: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
@@ -108,7 +113,15 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
 // ============================
 export const getBlogById = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const blog = await Blog.findById(id);
+
+  // Find by ID or by Slug
+  let blog;
+  if (typeof id === "string" && /^[0-9a-fA-F]{24}$/.test(id)) {
+    blog = await Blog.findById(id);
+  } else {
+    blog = await Blog.findOne({ slug: id });
+  }
+
   if (!blog) {
     throw ApiError.notFound("Blog not found");
   }
@@ -159,9 +172,16 @@ export const updateBlog = asyncHandler(async (req: AuthRequest, res: Response) =
 
   // Handle featured image upload (if new file uploaded)
   let featuredImage = blog.featuredImage;
+  let featuredImagePublicId = blog.featuredImagePublicId;
 
   if (req.file) {
-    featuredImage = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
+    // Delete old Cloudinary image before uploading the new one
+    if (featuredImagePublicId) {
+      await deleteFromCloudinary(featuredImagePublicId);
+    }
+    const upload = await uploadToCloudinary(req.file.buffer, req.file.mimetype, "indux/blogs/featured");
+    featuredImage = upload.url;
+    featuredImagePublicId = upload.publicId;
   }
 
   // Update
@@ -172,6 +192,7 @@ export const updateBlog = asyncHandler(async (req: AuthRequest, res: Response) =
       ...(finalSlug && { slug: finalSlug }),
       ...rest,
       featuredImage,
+      featuredImagePublicId,
     },
     { new: true, runValidators: true }
   );
@@ -189,7 +210,11 @@ export const deleteBlog = asyncHandler(async (req: AuthRequest, res: Response) =
     throw ApiError.notFound("Blog not found");
   }
 
-  // Since we save in MongoDB, we don't need to delete anything from Cloudinary
+  // Clean up the Cloudinary image
+  if (blog.featuredImagePublicId) {
+    await deleteFromCloudinary(blog.featuredImagePublicId);
+  }
+
   await blog.deleteOne();
   res.status(200).json(new ApiResponse(200, null, "Blog deleted successfully"));
 });
