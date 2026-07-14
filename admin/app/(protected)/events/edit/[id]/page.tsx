@@ -261,9 +261,7 @@ export default function EditEventPage() {
       formData.append('schedule', JSON.stringify(schedule.filter(s => s.title)));
       formData.append('faqs', JSON.stringify(faqs.filter(f => f.question)));
 
-      await api.put(`/events/${id}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      await api.put(`/events/${id}`, formData);
 
       toast.success('Event updated successfully');
       router.push('/events');

@@ -69,9 +69,7 @@ export default function CreateBlogPage() {
 
       formData.append('featuredImage', imageFile);
 
-      await api.post('/blogs', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      await api.post('/blogs', formData);
 
       toast.success('Article created successfully');
       router.push('/blogs');
