@@ -6,7 +6,7 @@ import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
 import asyncHandler from "../utils/asyncHandler";
 import { AuthRequest } from "../middlewares/auth";
-import { uploadToCloudinary, deleteFromCloudinary } from "../services/cloudinary";
+import { deleteFromCloudinary } from "../services/cloudinary";
 
 // Helper to generate slug if not provided
 const generateSlugFromTitle = (title: string): string => {
@@ -20,51 +20,29 @@ const generateSlugFromTitle = (title: string): string => {
 // CREATE EVENT
 // ============================
 export const createEvent = asyncHandler(async (req: AuthRequest, res: Response) => {
-  const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
-  const coverImageFile = files?.["coverImage"]?.[0];
-  const bannerImageFile = files?.["bannerImage"]?.[0];
-
-  if (!coverImageFile) {
-    throw ApiError.badRequest("Cover image is required");
-  }
-  if (!bannerImageFile) {
-    throw ApiError.badRequest("Banner image is required");
-  }
-
-  // Upload images to Cloudinary (store URL in MongoDB — avoids 16MB BSON limit)
-  const [coverUpload, bannerUpload] = await Promise.all([
-    uploadToCloudinary(coverImageFile.buffer, coverImageFile.mimetype, "indux/events/cover"),
-    uploadToCloudinary(bannerImageFile.buffer, bannerImageFile.mimetype, "indux/events/banner"),
-  ]);
-
   // Clean up empty form fields so they pass Zod validation
   if (req.body.slug === "") delete req.body.slug;
 
-  // Validate body
+  // Validate body (coverImage/bannerImage are pasted URLs, not uploaded files)
   const validatedData = createEventSchema.parse(req.body);
-  const { title, slug, ...rest } = validatedData;
+  const { title, slug, coverImage, bannerImage, ...rest } = validatedData;
 
   const finalSlug = slug || generateSlugFromTitle(title);
 
   // Check unique slug
   const existingEvent = await Event.findOne({ slug: finalSlug });
   if (existingEvent) {
-    // Clean up uploaded images if slug conflicts
-    await Promise.all([deleteFromCloudinary(coverUpload.publicId), deleteFromCloudinary(bannerUpload.publicId)]);
     throw ApiError.conflict("Slug already exists");
   }
 
-  // Create — store only Cloudinary URLs, not raw base64
   const event = await Event.create({
     title,
     slug: finalSlug,
     ...rest,
-    coverImage: coverUpload.url,
-    bannerImage: bannerUpload.url,
-    coverImagePublicId: coverUpload.publicId,
-    bannerImagePublicId: bannerUpload.publicId,
+    coverImage,
+    bannerImage,
     // Backward compatibility fields
-    image: coverUpload.url,
+    image: coverImage,
     date: rest.startDate,
     content: rest.description,
   });
@@ -155,41 +133,19 @@ export const updateEvent = asyncHandler(async (req: AuthRequest, res: Response) 
     }
   }
 
-  // Upload new images to Cloudinary if provided
-  const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
-  const coverImageFile = files?.["coverImage"]?.[0];
-  const bannerImageFile = files?.["bannerImage"]?.[0];
-
-  let coverImageUrl = event.coverImage;
-  let coverImagePublicId = (event as any).coverImagePublicId;
-  let bannerImageUrl = event.bannerImage;
-  let bannerImagePublicId = (event as any).bannerImagePublicId;
-
-  if (coverImageFile) {
-    // Delete old Cloudinary image
-    if (coverImagePublicId) await deleteFromCloudinary(coverImagePublicId);
-    const upload = await uploadToCloudinary(coverImageFile.buffer, coverImageFile.mimetype, "indux/events/cover");
-    coverImageUrl = upload.url;
-    coverImagePublicId = upload.publicId;
-  }
-
-  if (bannerImageFile) {
-    if (bannerImagePublicId) await deleteFromCloudinary(bannerImagePublicId);
-    const upload = await uploadToCloudinary(bannerImageFile.buffer, bannerImageFile.mimetype, "indux/events/banner");
-    bannerImageUrl = upload.url;
-    bannerImagePublicId = upload.publicId;
-  }
+  // coverImage/bannerImage are pasted URLs — use the new one if provided, else keep existing
+  const coverImageUrl = rest.coverImage || event.coverImage;
+  const bannerImageUrl = rest.bannerImage || event.bannerImage;
+  const { coverImage: _ci, bannerImage: _bi, ...restWithoutImages } = rest;
 
   const updatedEvent = await Event.findByIdAndUpdate(
     id,
     {
       ...(title && { title }),
       ...(finalSlug && { slug: finalSlug }),
-      ...rest,
+      ...restWithoutImages,
       coverImage: coverImageUrl,
       bannerImage: bannerImageUrl,
-      coverImagePublicId,
-      bannerImagePublicId,
       // Update legacy fields
       image: coverImageUrl,
       date: rest.startDate || event.startDate,

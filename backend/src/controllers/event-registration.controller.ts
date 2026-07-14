@@ -52,8 +52,11 @@ export const createRegistration = asyncHandler(async (req: Request, res: Respons
     }
   }
 
-  // Validate custom required fields
+  // Validate custom required fields (skip base fields — their values live in
+  // the top-level name/email/phone params, not in `answers`)
   for (const field of event.formFields) {
+    if (field.name === "name" || field.name === "email" || field.name === "phone") continue;
+
     const val = answersObj[field.name];
     if (field.required) {
       const isEmpty = val === undefined || val === null || val === "" || (Array.isArray(val) && val.length === 0);

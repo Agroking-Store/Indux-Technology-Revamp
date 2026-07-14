@@ -22,9 +22,23 @@ const eventSchema = z.object({
   organizer: z.string().min(1, 'Organizer is required'),
   location: z.string().min(1, 'Location/Venue is required'),
   status: z.enum(['Draft', 'Published']),
+  coverImage: z.string().min(1, 'Cover image is required'),
+  bannerImage: z.string().min(1, 'Banner image is required'),
 });
 
 type EventFormData = z.infer<typeof eventSchema>;
+
+// Data URIs stored directly in MongoDB — keep images modest in size
+// (base64 inflates size ~33%, and MongoDB documents cap at 16MB total)
+const RECOMMENDED_MAX_IMAGE_SIZE = 3 * 1024 * 1024; // 3MB
+
+const fileToBase64 = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 
 interface FormFieldBuilder {
   name: string;
@@ -57,10 +71,10 @@ interface FaqBuilder {
 export default function EditEventPage() {
   const { id } = useParams() as { id: string };
   const router = useRouter();
-  const [coverImage, setCoverImage] = useState<File | null>(null);
-  const [bannerImage, setBannerImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
+  const [coverPreview, setCoverPreview] = useState<string>('');
+  const [bannerPreview, setBannerPreview] = useState<string>('');
 
   // Dynamic Builders States
   const [formFields, setFormFields] = useState<FormFieldBuilder[]>([]);
@@ -72,6 +86,7 @@ export default function EditEventPage() {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<EventFormData>({
     resolver: zodResolver(eventSchema),
@@ -87,6 +102,8 @@ export default function EditEventPage() {
       registrationDeadline: '',
       organizer: 'Indux Technology',
       location: '',
+      coverImage: '',
+      bannerImage: '',
     },
   });
 
@@ -116,6 +133,8 @@ export default function EditEventPage() {
           organizer: event.organizer || 'Indux Technology',
           location: event.location || '',
           status: event.status || 'Draft',
+          coverImage: event.coverImage || '',
+          bannerImage: event.bannerImage || '',
         });
 
         if (event.formFields && event.formFields.length > 0) {
@@ -136,6 +155,8 @@ export default function EditEventPage() {
         setSpeakers(event.speakers || []);
         setSchedule(event.schedule || []);
         setFaqs(event.faqs || []);
+        setCoverPreview(event.coverImage || '');
+        setBannerPreview(event.bannerImage || '');
       } catch (error) {
         // Handled
       } finally {
@@ -215,18 +236,36 @@ export default function EditEventPage() {
     setFaqs(updated);
   };
 
-  const onSubmit = async (data: EventFormData) => {
-    // Client-side file size check (20MB limit)
-    const MAX_SIZE = 20 * 1024 * 1024;
-    if (coverImage && coverImage.size > MAX_SIZE) {
-      toast.error('Cover image must be under 20MB. Please compress or resize it.');
-      return;
-    }
-    if (bannerImage && bannerImage.size > MAX_SIZE) {
-      toast.error('Banner image must be under 20MB. Please compress or resize it.');
+  // Image Upload Helpers — convert to base64 and store directly (no external host)
+  const handleImageSelect = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: 'coverImage' | 'bannerImage',
+    setPreview: (val: string) => void
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file.');
       return;
     }
 
+    if (file.size > RECOMMENDED_MAX_IMAGE_SIZE) {
+      toast.warning(
+        `That image is ${(file.size / (1024 * 1024)).toFixed(1)}MB — large images can hit MongoDB's document size limit. Consider compressing it first.`
+      );
+    }
+
+    try {
+      const base64 = await fileToBase64(file);
+      setValue(field, base64, { shouldValidate: true });
+      setPreview(base64);
+    } catch {
+      toast.error('Failed to read the selected image.');
+    }
+  };
+
+  const onSubmit = async (data: EventFormData) => {
     const names = formFields.map(f => f.name.trim());
     const uniqueNames = new Set(names);
     if (names.some(n => !n)) {
@@ -240,28 +279,20 @@ export default function EditEventPage() {
 
     setLoading(true);
     try {
-      const formData = new FormData();
-
-      Object.entries(data).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          formData.append(key, String(value));
-        }
-      });
-
-      if (coverImage) formData.append('coverImage', coverImage);
-      if (bannerImage) formData.append('bannerImage', bannerImage);
-
       const parsedFormFields = formFields.map(({ optionsStr, ...rest }) => ({
         ...rest,
         options: optionsStr ? optionsStr.split(',').map(s => s.trim()).filter(Boolean) : undefined,
       }));
 
-      formData.append('formFields', JSON.stringify(parsedFormFields));
-      formData.append('speakers', JSON.stringify(speakers.filter(s => s.name)));
-      formData.append('schedule', JSON.stringify(schedule.filter(s => s.title)));
-      formData.append('faqs', JSON.stringify(faqs.filter(f => f.question)));
+      const payload = {
+        ...data,
+        formFields: parsedFormFields,
+        speakers: speakers.filter(s => s.name),
+        schedule: schedule.filter(s => s.title),
+        faqs: faqs.filter(f => f.question),
+      };
 
-      await api.put(`/events/${id}`, formData);
+      await api.put(`/events/${id}`, payload);
 
       toast.success('Event updated successfully');
       router.push('/events');
@@ -737,9 +768,14 @@ export default function EditEventPage() {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => setCoverImage(e.target.files?.[0] || null)}
+                onChange={(e) => handleImageSelect(e, 'coverImage', setCoverPreview)}
                 className="mt-1 w-full text-xs"
               />
+              <input type="hidden" {...register('coverImage')} />
+              {coverPreview && (
+                <img src={coverPreview} alt="Cover preview" className="mt-2 w-full h-32 object-cover rounded-lg border" />
+              )}
+              {errors.coverImage && <p className="text-red-500 text-xs mt-1">{errors.coverImage.message}</p>}
             </div>
 
             <div>
@@ -747,9 +783,14 @@ export default function EditEventPage() {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => setBannerImage(e.target.files?.[0] || null)}
+                onChange={(e) => handleImageSelect(e, 'bannerImage', setBannerPreview)}
                 className="mt-1 w-full text-xs"
               />
+              <input type="hidden" {...register('bannerImage')} />
+              {bannerPreview && (
+                <img src={bannerPreview} alt="Banner preview" className="mt-2 w-full h-24 object-cover rounded-lg border" />
+              )}
+              {errors.bannerImage && <p className="text-red-500 text-xs mt-1">{errors.bannerImage.message}</p>}
             </div>
           </div>
 
