@@ -5,7 +5,7 @@ import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
 import asyncHandler from "../utils/asyncHandler";
 import { AuthRequest } from "../middlewares/auth";
-import { uploadToCloudinary, deleteFromCloudinary } from "../services/cloudinary";
+import { deleteFromCloudinary } from "../services/cloudinary";
 
 // Helper to generate slug if not provided
 const generateSlugFromTitle = (title: string): string => {
@@ -19,17 +19,7 @@ const generateSlugFromTitle = (title: string): string => {
 // CREATE BLOG
 // ============================
 export const createBlog = asyncHandler(async (req: AuthRequest, res: Response) => {
-  // Multer stores the file in req.file.buffer when using memoryStorage
-  const file = req.file;
-  if (!file) {
-    throw ApiError.badRequest("Featured image is required");
-  }
-
-  // Upload image to Cloudinary (store URL in MongoDB — avoids bloating
-  // documents/queries with raw base64 data)
-  const upload = await uploadToCloudinary(file.buffer, file.mimetype, "indux/blogs/featured");
-
-  // Parse tags if it's sent as a JSON string (from multipart form-data)
+  // Parse tags if it's sent as a JSON string
   if (typeof req.body.tags === 'string') {
     try {
       req.body.tags = JSON.parse(req.body.tags);
@@ -43,7 +33,7 @@ export const createBlog = asyncHandler(async (req: AuthRequest, res: Response) =
   if (req.body.seoTitle === "") delete req.body.seoTitle;
   if (req.body.seoDescription === "") delete req.body.seoDescription;
 
-  // Validate body (exclude featuredImage as it's from file upload)
+  // Validate body (featuredImage is a base64 data URI or URL string)
   const validatedData = createBlogSchema.parse(req.body);
   const { title, slug, ...rest } = validatedData;
 
@@ -53,18 +43,13 @@ export const createBlog = asyncHandler(async (req: AuthRequest, res: Response) =
   // Check if slug already exists
   const existingBlog = await Blog.findOne({ slug: finalSlug });
   if (existingBlog) {
-    // Clean up uploaded image if slug conflicts
-    await deleteFromCloudinary(upload.publicId);
     throw ApiError.conflict("Slug already exists");
   }
 
-  // Create blog — store only the Cloudinary URL, not raw base64
   const blog = await Blog.create({
     title,
     slug: finalSlug,
     ...rest,
-    featuredImage: upload.url,
-    featuredImagePublicId: upload.publicId,
     // Author can come from logged-in admin
     author: req.admin?.name || "Admin",
   });
@@ -170,19 +155,9 @@ export const updateBlog = asyncHandler(async (req: AuthRequest, res: Response) =
     }
   }
 
-  // Handle featured image upload (if new file uploaded)
-  let featuredImage = blog.featuredImage;
-  let featuredImagePublicId = blog.featuredImagePublicId;
-
-  if (req.file) {
-    // Delete old Cloudinary image before uploading the new one
-    if (featuredImagePublicId) {
-      await deleteFromCloudinary(featuredImagePublicId);
-    }
-    const upload = await uploadToCloudinary(req.file.buffer, req.file.mimetype, "indux/blogs/featured");
-    featuredImage = upload.url;
-    featuredImagePublicId = upload.publicId;
-  }
+  // featuredImage is a pasted/base64 string — use the new one if provided, else keep existing
+  const featuredImage = rest.featuredImage || blog.featuredImage;
+  const { featuredImage: _fi, ...restWithoutImage } = rest;
 
   // Update
   const updatedBlog = await Blog.findByIdAndUpdate(
@@ -190,9 +165,8 @@ export const updateBlog = asyncHandler(async (req: AuthRequest, res: Response) =
     {
       ...(title && { title }),
       ...(finalSlug && { slug: finalSlug }),
-      ...rest,
+      ...restWithoutImage,
       featuredImage,
-      featuredImagePublicId,
     },
     { new: true, runValidators: true }
   );
