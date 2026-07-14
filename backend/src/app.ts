@@ -16,6 +16,7 @@ import leadRoutes from "./routes/lead.routes";
 import quoteRoutes from "./routes/quote.routes";
 import eventRoutes from "./routes/event.routes";
 import eventRegistrationRoutes from "./routes/event-registration.routes";
+import visitorRoutes from "./routes/visitor.routes";
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const app: Application = express();
@@ -25,11 +26,11 @@ app.use(
   cors({
     origin: [env.CLIENT_URL, env.ADMIN_URL],
     credentials: true,
-  })
+  }),
 );
 app.use(helmet());
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());
 
 // Health check route
@@ -47,6 +48,7 @@ app.use("/api/v1/leads", leadRoutes);
 app.use("/api/v1/quotes", quoteRoutes);
 app.use("/api/v1/events", eventRoutes);
 app.use("/api/v1/event-registrations", eventRegistrationRoutes);
+app.use("/api/v1/visitors", visitorRoutes);
 
 // 404 handler (for unmatched routes)
 app.use((_req: Request, res: Response) => {
