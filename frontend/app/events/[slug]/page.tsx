@@ -183,7 +183,7 @@ export default function EventDetailsPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <div className="relative h-[300px] md:h-[420px] rounded-3xl overflow-hidden shadow-xl border border-slate-200/40 dark:border-slate-800">
           <img
-            src={event.bannerImage || event.coverImage || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=80'}
+            src={event.bannerImage || event.coverImage || '/images/unsplash/img-b14cd5d5.jpg'}
             alt={event.title}
             className="w-full h-full object-cover"
           />

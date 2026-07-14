@@ -9,23 +9,23 @@ import { Button } from '@/components/ui/button';
 import { NumberTicker } from '@/components/ui/number-ticker';
 
 const heroImage =
-  'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80'; // team meeting around a table
+  '/images/unsplash/img-48235d4d.jpg'; // team meeting around a table
 
 const galleryImages = [
   {
-    src: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80',
+    src: '/images/unsplash/img-f5258efe.jpg',
     alt: 'Team collaborating at a desk',
   },
   {
-    src: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80',
+    src: '/images/unsplash/img-c5464143.jpg',
     alt: 'Team celebrating a win together',
   },
   {
-    src: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=600&q=80',
+    src: '/images/unsplash/img-fbe10b87.jpg',
     alt: 'Handshake during an interview',
   },
   {
-    src: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=600&q=80',
+    src: '/images/unsplash/img-75eb484d.jpg',
     alt: 'Casual team discussion',
   },
 ];

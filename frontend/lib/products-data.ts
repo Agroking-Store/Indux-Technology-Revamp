@@ -180,7 +180,7 @@ export const projects: Project[] = [
     themeColor: "indigo",
     icon: Building2,
     image:
-      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
+      "/images/unsplash/img-f91f9eed.jpg",
     features: [
       "Digital Lease Management",
       "Automated Rent Collection",
@@ -205,7 +205,7 @@ export const projects: Project[] = [
     themeColor: "cyan",
     icon: CreditCard,
     image:
-      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1200&auto=format&fit=crop",
+      "/images/unsplash/img-1a772fb8.jpg",
     features: [
       "Real-time Spend Tracking",
       "Instant Card Issuance",
@@ -230,7 +230,7 @@ export const projects: Project[] = [
     themeColor: "blue",
     icon: Scale,
     image:
-      "https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=1200&auto=format&fit=crop",
+      "/images/unsplash/img-01c6a0f0.jpg",
     features: [
       "Automated Case Tracking",
       "Encrypted Document Vault",

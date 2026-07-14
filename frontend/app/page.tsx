@@ -97,7 +97,7 @@ const fallbackBlogs = [
     shortDescription:
       "Discover how moving your legacy systems to the cloud can improve scalability, reduce costs, and accelerate innovation.",
     featuredImage:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800",
+      "/images/unsplash/img-62ae3366.jpg",
     slug: "#",
   },
   {
@@ -107,7 +107,7 @@ const fallbackBlogs = [
     shortDescription:
       "A comprehensive look at the emerging cyber threats in the modern digital landscape and how to protect your enterprise data.",
     featuredImage:
-      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800",
+      "/images/unsplash/img-ca777973.jpg",
     slug: "#",
   },
   {
@@ -117,7 +117,7 @@ const fallbackBlogs = [
     shortDescription:
       "Learn how integrating machine learning and AI into your business applications can automate workflows and drive unprecedented growth.",
     featuredImage:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800",
+      "/images/unsplash/img-fbc3450c.jpg",
     slug: "#",
   },
 ];
@@ -244,7 +244,7 @@ export default function Home() {
                   {/* Left Tall Image */}
                   <div className="col-span-5 row-span-10 row-start-2 bg-slate-300 rounded-[2rem] rounded-tl-xl overflow-hidden relative shadow-lg">
                     <Image
-                      src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop"
+                      src="/images/unsplash/img-f787f12c.jpg"
                       alt="Team working"
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
@@ -255,7 +255,7 @@ export default function Home() {
                   {/* Right Top Image */}
                   <div className="col-span-7 row-span-4 bg-slate-300 rounded-[2rem] rounded-tr-xl overflow-hidden relative shadow-lg">
                     <Image
-                      src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1000&auto=format&fit=crop"
+                      src="/images/unsplash/img-4dddf9a5.jpg"
                       alt="Discussion"
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
@@ -266,7 +266,7 @@ export default function Home() {
                   {/* Right Middle Image */}
                   <div className="col-span-7 row-span-4 bg-slate-300 rounded-2xl overflow-hidden relative shadow-lg">
                     <Image
-                      src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000&auto=format&fit=crop"
+                      src="/images/unsplash/img-9040528a.jpg"
                       alt="Meeting"
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
@@ -277,7 +277,7 @@ export default function Home() {
                   {/* Right Bottom Image */}
                   <div className="col-span-7 row-span-4 bg-slate-300 rounded-[2rem] rounded-br-xl overflow-hidden relative shadow-lg">
                     <Image
-                      src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop"
+                      src="/images/unsplash/img-931d0d20.jpg"
                       alt="Collaboration"
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
@@ -305,7 +305,7 @@ export default function Home() {
                 {/* Back Image (Tall) */}
                 <div className="absolute top-0 left-0 w-3/4 h-[85%] bg-slate-200 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-md">
                   <Image
-                    src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1000&auto=format&fit=crop"
+                    src="/images/unsplash/img-4dddf9a5.jpg"
                     alt="Team Discussion"
                     fill
                     sizes="(max-width: 768px) 75vw, 35vw"
@@ -316,7 +316,7 @@ export default function Home() {
                 {/* Front Image (Square, bottom right) */}
                 <div className="absolute bottom-0 right-0 w-[65%] h-[60%] bg-slate-200 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white dark:border-slate-950">
                   <Image
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop"
+                    src="/images/unsplash/img-51707ed2.jpg"
                     alt="IT Professional"
                     fill
                     sizes="(max-width: 768px) 65vw, 30vw"
@@ -500,7 +500,7 @@ export default function Home() {
                 <div className="p-4 h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
-                      src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000&auto=format&fit=crop"
+                      src="/images/unsplash/img-3516b3f9.jpg"
                       alt="CRM Solutions"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
@@ -548,7 +548,7 @@ export default function Home() {
                 <div className="p-4 h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
-                      src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?q=80&w=1000&auto=format&fit=crop"
+                      src="/images/unsplash/img-8afc3801.jpg"
                       alt="Manufacturing ERP"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
@@ -569,7 +569,7 @@ export default function Home() {
                 <div className="p-4 h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
-                      src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop"
+                      src="/images/unsplash/img-1bd55875.jpg"
                       alt="Sales Automation"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
@@ -1011,7 +1011,7 @@ export default function Home() {
                       <Image
                         src={
                           blog.featuredImage ||
-                          "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800"
+                          "/images/unsplash/img-62ae3366.jpg"
                         }
                         alt={blog.title}
                         fill
@@ -1077,7 +1077,7 @@ export default function Home() {
               <div className="w-full lg:w-1/2 relative mt-12 lg:mt-0">
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/5] md:aspect-[4/3] lg:aspect-square">
                   <Image
-                    src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1000"
+                    src="/images/unsplash/img-48a7747e.jpg"
                     alt="Contact Us Team"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"

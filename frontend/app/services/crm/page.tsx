@@ -193,7 +193,7 @@ export default function CRMServicePage() {
                   </div>
                   {/* Illustration Image */}
                   <img
-                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+                    src="/images/unsplash/img-4a096fc5.jpg"
                     alt="CRM Dashboard Mockup"
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
                   />
@@ -428,7 +428,7 @@ export default function CRMServicePage() {
               className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl shadow-blue-500/5 bg-slate-900"
             >
               <Image
-                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+                src="/images/unsplash/img-bbad54bc.jpg"
                 alt="CRM Data Dashboard"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"

@@ -60,10 +60,10 @@ export default function AboutPage() {
             className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
           >
             {[
-              "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80",
-              "https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?auto=format&fit=crop&w=600&q=80",
-              "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80",
-              "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80"
+              "/images/unsplash/img-419ff117.jpg",
+              "/images/unsplash/img-0f92163a.jpg",
+              "/images/unsplash/img-f5258efe.jpg",
+              "/images/unsplash/img-29d85ac4.jpg"
             ].map((imgSrc, index) => (
               <motion.div 
                 key={imgSrc} 
@@ -187,11 +187,11 @@ export default function AboutPage() {
           >
             {/* Image 1 (Back/Top Left) */}
             <div className="absolute top-0 left-0 w-[65%] h-[70%] rounded-3xl overflow-hidden shadow-2xl z-10 border-4 border-white dark:border-slate-950">
-              <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Team Collaboration" fill className="object-cover" unoptimized />
+              <Image src="/images/unsplash/img-9799f8ae.jpg" alt="Team Collaboration" fill className="object-cover" unoptimized />
             </div>
             {/* Image 2 (Front/Bottom Right) */}
             <div className="absolute bottom-0 right-0 w-[65%] h-[70%] rounded-3xl overflow-hidden shadow-2xl z-20 border-4 border-white dark:border-slate-950">
-              <Image src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="Mission Execution" fill className="object-cover" unoptimized />
+              <Image src="/images/unsplash/img-b27e33a3.jpg" alt="Mission Execution" fill className="object-cover" unoptimized />
             </div>
             {/* Decorative dot pattern */}
             <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-[radial-gradient(#3b82f6_2px,transparent_2px)] [background-size:12px_12px] opacity-30 z-0"></div>
@@ -271,11 +271,11 @@ export default function AboutPage() {
           >
             {/* Image 1 (Back/Top Right) */}
             <div className="absolute top-0 right-0 w-[65%] h-[70%] rounded-3xl overflow-hidden shadow-2xl z-10 border-4 border-slate-50 dark:border-slate-900">
-              <Image src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=80" alt="Innovation" fill className="object-cover" unoptimized />
+              <Image src="/images/unsplash/img-5b65630e.jpg" alt="Innovation" fill className="object-cover" unoptimized />
             </div>
             {/* Image 2 (Front/Bottom Left) */}
             <div className="absolute bottom-0 left-0 w-[65%] h-[70%] rounded-3xl overflow-hidden shadow-2xl z-20 border-4 border-slate-50 dark:border-slate-900">
-              <Image src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" alt="Global Reach" fill className="object-cover" unoptimized />
+              <Image src="/images/unsplash/img-0ffac912.jpg" alt="Global Reach" fill className="object-cover" unoptimized />
             </div>
             {/* Decorative dot pattern */}
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[radial-gradient(#6366f1_2px,transparent_2px)] [background-size:12px_12px] opacity-30 z-0"></div>

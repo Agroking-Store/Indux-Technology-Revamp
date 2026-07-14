@@ -206,7 +206,7 @@ export default function WebDevServicePage() {
                   </div>
                   {/* Illustration Image */}
                   <img
-                    src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80"
+                    src="/images/unsplash/img-09ddb758.jpg"
                     alt="Web Application Mockup"
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
                   />
@@ -441,7 +441,7 @@ export default function WebDevServicePage() {
               className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl shadow-blue-500/5 bg-slate-900"
             >
               <Image
-                src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"
+                src="/images/unsplash/img-325f90ce.jpg"
                 alt="Web Development Code"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"
