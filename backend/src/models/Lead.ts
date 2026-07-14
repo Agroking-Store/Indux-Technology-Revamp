@@ -6,6 +6,7 @@ export interface ILead extends Document {
   phone: string;
   companyName?: string;
   service?: string;
+  source?: "Get Quote" | "Contact Us";
   message: string;
   status: "New" | "Contacted" | "Closed";
   createdAt: Date;
@@ -19,6 +20,7 @@ const LeadSchema: Schema = new Schema(
     phone: { type: String, required: true },
     companyName: { type: String, required: false },
     service: { type: String, required: false },
+    source: { type: String, enum: ["Get Quote", "Contact Us"], default: "Contact Us" },
     message: { type: String, required: true },
     status: {
       type: String,

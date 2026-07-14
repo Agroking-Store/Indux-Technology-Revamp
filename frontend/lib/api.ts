@@ -128,6 +128,7 @@ export interface LeadInput {
   phone: string;
   companyName?: string;
   service?: string;
+  source?: "Get Quote" | "Contact Us";
   message: string;
 }
 

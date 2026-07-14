@@ -23,7 +23,8 @@ interface Lead {
   email: string;
   phone: string;
   companyName?: string;
-  service: string;
+  service?: string;
+  source?: 'Get Quote' | 'Contact Us';
   message: string;
   status: 'New' | 'Contacted' | 'Closed';
   createdAt: string;
@@ -90,7 +91,7 @@ export default function LeadsPage() {
       (l.service || '').toLowerCase().includes(search.toLowerCase());
       
     const matchesStatus = statusFilter === 'All' || l.status === statusFilter;
-    const matchesQuoteOnly = !showOnlyQuotes || (l.service && l.service.trim() !== '');
+    const matchesQuoteOnly = !showOnlyQuotes || l.source === 'Get Quote';
     
     return matchesSearch && matchesStatus && matchesQuoteOnly;
   });
@@ -230,7 +231,7 @@ export default function LeadsPage() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-slate-100 text-slate-700 text-xs font-bold border capitalize">
                         <Tag size={12} className="text-slate-400" />
-                        {lead.service}
+                        {lead.service || "-"}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(lead.status)}</td>
@@ -290,7 +291,11 @@ export default function LeadsPage() {
                 </div>
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Service Interest</label>
-                  <p className="text-sm font-semibold capitalize text-slate-700">{selectedLead.service}</p>
+                  <p className="text-sm font-semibold capitalize text-slate-700">{selectedLead.service || "-"}</p>
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Source</label>
+                  <p className="text-sm font-semibold text-slate-800">{selectedLead.source || "-"}</p>
                 </div>
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Email</label>

@@ -6,6 +6,7 @@ export const createLeadSchema = z.object({
   phone: z.string().min(10, "Please enter a valid phone number"),
   companyName: z.string().optional(),
   service: z.string().optional(),
+  source: z.enum(["Get Quote", "Contact Us"]).optional(),
   message: z.string().min(10, "Message must be at least 10 characters"),
 });
 

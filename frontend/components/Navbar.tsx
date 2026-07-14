@@ -149,7 +149,8 @@ const LanguageSwitcher = () => {
     }
   }, []);
 
-  const changeLanguage = (langCode: string) => {
+  const changeLanguage = (langCode: string | null) => {
+    if (!langCode) return;
     document.cookie = `googtrans=/en/${langCode}; path=/`;
     document.cookie = `googtrans=/en/${langCode}; domain=.${window.location.hostname}; path=/`;
 

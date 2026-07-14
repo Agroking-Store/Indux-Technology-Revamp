@@ -67,7 +67,7 @@ export function ContactForm() {
   const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     try {
-      await submitLead({ ...data });
+      await submitLead({ ...data, source: "Contact Us" });
       setShowSuccess(true);
       reset();
     } catch (err: any) {
@@ -191,7 +191,7 @@ export function ContactForm() {
                 <PhoneInput
                   {...field}
                   id="contact-phone"
-                  country={country}
+                  country={field.value && field.value.toString().startsWith('+') ? undefined : country}
                   placeholder="98765 43210"
                   maxLength={16}
                   className="flex-1 pr-4 py-2 bg-transparent outline-none text-base placeholder:text-slate-400 dark:placeholder:text-slate-500 min-w-0 h-full"
