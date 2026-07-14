@@ -6,7 +6,7 @@ const router = Router();
 
 router.get(
   "/",
-  asyncHandler(async (req: Request, res: Response) => {
+  asyncHandler(async (_req: Request, res: Response) => {
     let visitor = await Visitor.findOne();
 
     if (!visitor) {
