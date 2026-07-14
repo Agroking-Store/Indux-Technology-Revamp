@@ -20,18 +20,32 @@ const blogSchema = z.object({
   status: z.enum(['Draft', 'Published']),
   seoTitle: z.string().optional(),
   seoDescription: z.string().optional(),
+  featuredImage: z.string().min(1, 'Featured image is required'),
 });
 
 type BlogFormData = z.infer<typeof blogSchema>;
 
+// Data URIs stored directly in MongoDB — keep images modest in size
+// (base64 inflates size ~33%, and MongoDB documents cap at 16MB total)
+const RECOMMENDED_MAX_IMAGE_SIZE = 3 * 1024 * 1024; // 3MB
+
+const fileToBase64 = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
 export default function CreateBlogPage() {
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<BlogFormData>({
     resolver: zodResolver(blogSchema),
@@ -45,31 +59,41 @@ export default function CreateBlogPage() {
       author: 'Indux Team',
       seoTitle: '',
       seoDescription: '',
+      featuredImage: '',
     },
   });
 
-  const onSubmit = async (data: BlogFormData) => {
-    if (!imageFile) {
-      toast.error('Please select a featured image.');
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file.');
       return;
     }
 
+    if (file.size > RECOMMENDED_MAX_IMAGE_SIZE) {
+      toast.warning(
+        `That image is ${(file.size / (1024 * 1024)).toFixed(1)}MB — large images can hit MongoDB's document size limit. Consider compressing it first.`
+      );
+    }
+
+    try {
+      const base64 = await fileToBase64(file);
+      setValue('featuredImage', base64, { shouldValidate: true });
+      setImagePreview(base64);
+    } catch {
+      toast.error('Failed to read the selected image.');
+    }
+  };
+
+  const onSubmit = async (data: BlogFormData) => {
     setLoading(true);
     try {
-      const formData = new FormData();
+      const tagsArray = data.tags ? data.tags.split(',').map((t) => t.trim()).filter(Boolean) : [];
+      const payload = { ...data, tags: tagsArray };
 
-      Object.entries(data).forEach(([key, value]) => {
-        if (key === 'tags' && value) {
-          const tagsArray = value.split(',').map((t) => t.trim()).filter(Boolean);
-          formData.append(key, JSON.stringify(tagsArray));
-        } else if (value !== undefined && value !== null) {
-          formData.append(key, String(value));
-        }
-      });
-
-      formData.append('featuredImage', imageFile);
-
-      await api.post('/blogs', formData);
+      await api.post('/blogs', payload);
 
       toast.success('Article created successfully');
       router.push('/blogs');
@@ -236,14 +260,14 @@ export default function CreateBlogPage() {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                onChange={handleImageSelect}
                 className="mt-1 w-full text-xs"
               />
-              {imageFile && (
-                <div className="mt-2 text-[10px] text-emerald-600 font-bold bg-emerald-50 p-1.5 rounded-lg border border-emerald-100">
-                  ✓ Selected: {imageFile.name}
-                </div>
+              <input type="hidden" {...register('featuredImage')} />
+              {imagePreview && (
+                <img src={imagePreview} alt="Featured image preview" className="mt-2 w-full h-32 object-cover rounded-lg border" />
               )}
+              {errors.featuredImage && <p className="text-red-500 text-xs mt-1">{errors.featuredImage.message}</p>}
             </div>
           </div>
 
