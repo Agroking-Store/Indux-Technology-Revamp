@@ -206,7 +206,7 @@ export default function AiSolutionsServicePage() {
                   </div>
                   {/* Illustration Image */}
                   <img
-                    src="/images/unsplash/img-1dfc46ab.jpg"
+                    src="/images/unsplash/img-1dfc46ab.webp"
                     alt="AI Solutions Mockup"
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
                   />
@@ -441,7 +441,7 @@ export default function AiSolutionsServicePage() {
               className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl shadow-blue-500/5 bg-slate-900"
             >
               <Image
-                src="/images/unsplash/img-45690b6c.jpg"
+                src="/images/unsplash/img-45690b6c.webp"
                 alt="AI Development Coding screen"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"

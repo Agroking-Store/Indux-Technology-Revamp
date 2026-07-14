@@ -266,7 +266,7 @@ export default function Navbar() {
             className="flex items-center gap-2 cursor-pointer group"
           >
             <Image
-              src="/induxtechnologylogo_blue.png"
+              src="/induxtechnologylogo_blue.webp"
               alt="Indux Technology"
               width={130}
               height={36}
@@ -275,7 +275,7 @@ export default function Navbar() {
               priority
             />
             <Image
-              src="/induxtechnologylogo_white.png"
+              src="/induxtechnologylogo_white.webp"
               alt="Indux Technology"
               width={130}
               height={36}

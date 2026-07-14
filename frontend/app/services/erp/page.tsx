@@ -194,7 +194,7 @@ export default function ERPServicePage() {
                   </div>
                   {/* Illustration Image */}
                   <img
-                    src="/images/unsplash/img-0fc06b38.jpg"
+                    src="/images/unsplash/img-0fc06b38.webp"
                     alt="ERP Dashboard Analytics"
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
                   />
@@ -429,7 +429,7 @@ export default function ERPServicePage() {
               className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl shadow-blue-500/5 bg-slate-900"
             >
               <Image
-                src="/images/unsplash/img-354f8fd9.jpg"
+                src="/images/unsplash/img-354f8fd9.webp"
                 alt="ERP Data Analytics"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"

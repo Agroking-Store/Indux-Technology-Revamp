@@ -97,7 +97,7 @@ const fallbackBlogs = [
     shortDescription:
       "Discover how moving your legacy systems to the cloud can improve scalability, reduce costs, and accelerate innovation.",
     featuredImage:
-      "/images/unsplash/img-62ae3366.jpg",
+      "/images/unsplash/img-62ae3366.webp",
     slug: "#",
   },
   {
@@ -107,7 +107,7 @@ const fallbackBlogs = [
     shortDescription:
       "A comprehensive look at the emerging cyber threats in the modern digital landscape and how to protect your enterprise data.",
     featuredImage:
-      "/images/unsplash/img-ca777973.jpg",
+      "/images/unsplash/img-ca777973.webp",
     slug: "#",
   },
   {
@@ -117,7 +117,7 @@ const fallbackBlogs = [
     shortDescription:
       "Learn how integrating machine learning and AI into your business applications can automate workflows and drive unprecedented growth.",
     featuredImage:
-      "/images/unsplash/img-fbc3450c.jpg",
+      "/images/unsplash/img-fbc3450c.webp",
     slug: "#",
   },
 ];
@@ -244,7 +244,7 @@ export default function Home() {
                   {/* Left Tall Image */}
                   <div className="col-span-5 row-span-10 row-start-2 bg-slate-300 rounded-[2rem] rounded-tl-xl overflow-hidden relative shadow-lg">
                     <Image
-                      src="/images/unsplash/img-f787f12c.jpg"
+                      src="/images/unsplash/img-f787f12c.webp"
                       alt="Team working"
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
@@ -255,7 +255,7 @@ export default function Home() {
                   {/* Right Top Image */}
                   <div className="col-span-7 row-span-4 bg-slate-300 rounded-[2rem] rounded-tr-xl overflow-hidden relative shadow-lg">
                     <Image
-                      src="/images/unsplash/img-4dddf9a5.jpg"
+                      src="/images/unsplash/img-4dddf9a5.webp"
                       alt="Discussion"
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
@@ -266,7 +266,7 @@ export default function Home() {
                   {/* Right Middle Image */}
                   <div className="col-span-7 row-span-4 bg-slate-300 rounded-2xl overflow-hidden relative shadow-lg">
                     <Image
-                      src="/images/unsplash/img-9040528a.jpg"
+                      src="/images/unsplash/img-9040528a.webp"
                       alt="Meeting"
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
@@ -277,7 +277,7 @@ export default function Home() {
                   {/* Right Bottom Image */}
                   <div className="col-span-7 row-span-4 bg-slate-300 rounded-[2rem] rounded-br-xl overflow-hidden relative shadow-lg">
                     <Image
-                      src="/images/unsplash/img-931d0d20.jpg"
+                      src="/images/unsplash/img-931d0d20.webp"
                       alt="Collaboration"
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
@@ -305,7 +305,7 @@ export default function Home() {
                 {/* Back Image (Tall) */}
                 <div className="absolute top-0 left-0 w-3/4 h-[85%] bg-slate-200 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-md">
                   <Image
-                    src="/images/unsplash/img-4dddf9a5.jpg"
+                    src="/images/unsplash/img-4dddf9a5.webp"
                     alt="Team Discussion"
                     fill
                     sizes="(max-width: 768px) 75vw, 35vw"
@@ -316,7 +316,7 @@ export default function Home() {
                 {/* Front Image (Square, bottom right) */}
                 <div className="absolute bottom-0 right-0 w-[65%] h-[60%] bg-slate-200 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white dark:border-slate-950">
                   <Image
-                    src="/images/unsplash/img-51707ed2.jpg"
+                    src="/images/unsplash/img-51707ed2.webp"
                     alt="IT Professional"
                     fill
                     sizes="(max-width: 768px) 65vw, 30vw"
@@ -500,7 +500,7 @@ export default function Home() {
                 <div className="p-4 h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
-                      src="/images/unsplash/img-3516b3f9.jpg"
+                      src="/images/unsplash/img-3516b3f9.webp"
                       alt="CRM Solutions"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
@@ -548,7 +548,7 @@ export default function Home() {
                 <div className="p-4 h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
-                      src="/images/unsplash/img-8afc3801.jpg"
+                      src="/images/unsplash/img-8afc3801.webp"
                       alt="Manufacturing ERP"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
@@ -569,7 +569,7 @@ export default function Home() {
                 <div className="p-4 h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
-                      src="/images/unsplash/img-1bd55875.jpg"
+                      src="/images/unsplash/img-1bd55875.webp"
                       alt="Sales Automation"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
@@ -816,22 +816,22 @@ export default function Home() {
                 {
                   title: "Indux CRM",
                   category: "Business Intelligence",
-                  img: "/induxcrm.png",
+                  img: "/induxcrm.webp",
                 },
                 {
                   title: "HRMS",
                   category: "Human Resources",
-                  img: "/hrms.png",
+                  img: "/hrms.webp",
                 },
                 {
                   title: "Jemsoft",
                   category: "Insurance ERP",
-                  img: "/jemsoft.png",
+                  img: "/jemsoft.webp",
                 },
                 {
                   title: "InduxERP",
                   category: "Enterprise Software",
-                  img: "/indux_erp.jpg",
+                  img: "/indux_erp.webp",
                 },
               ].map((project, idx) => (
                 <motion.div
@@ -1011,7 +1011,7 @@ export default function Home() {
                       <Image
                         src={
                           blog.featuredImage ||
-                          "/images/unsplash/img-62ae3366.jpg"
+                          "/images/unsplash/img-62ae3366.webp"
                         }
                         alt={blog.title}
                         fill
@@ -1077,7 +1077,7 @@ export default function Home() {
               <div className="w-full lg:w-1/2 relative mt-12 lg:mt-0">
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/5] md:aspect-[4/3] lg:aspect-square">
                   <Image
-                    src="/images/unsplash/img-48a7747e.jpg"
+                    src="/images/unsplash/img-48a7747e.webp"
                     alt="Contact Us Team"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"

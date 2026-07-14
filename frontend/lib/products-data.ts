@@ -35,7 +35,7 @@ export const projects: Project[] = [
       "Indux CRM helps you track leads, improve customer engagement, and boost overall productivity. It centralizes all customer information in one secure platform, allowing you to monitor sales performance with powerful reports and analytics. Spend less time managing data and more time growing your business with our smart dashboard and automated task scheduling.",
     themeColor: "blue",
     icon: Sparkles,
-    image: "/induxcrm.png",
+    image: "/induxcrm.webp",
     features: [
       "Lead Management & Sales Pipeline",
       "Automated Workflows & Task Scheduling",
@@ -59,7 +59,7 @@ export const projects: Project[] = [
       "BillTea combines every essential retail operation into one easy-to-use platform. Managing billing, inventory, and quotations shouldn't slow your business down. From hardware stores to interior dealers, BillTea helps reduce errors, automate calculations, and provides smart business insights through powerful reporting.",
     themeColor: "emerald",
     icon: Sprout,
-    image: "/billtea.jpg",
+    image: "/billtea.webp",
     features: [
       "GST-Compliant Invoice Management",
       "Real-time Inventory Tracking",
@@ -83,7 +83,7 @@ export const projects: Project[] = [
       "JEM Soft consolidates scattered agent workflows into a single web-based platform. Designed for LIC agents and investment professionals, it supports the complete policy lifecycle, commission tracking, and pre-sales presentations. It replaces manual registers and spreadsheets with a role-based secure system.",
     themeColor: "indigo",
     icon: ShieldCheck,
-    image: "/jemsoft.png",
+    image: "/jemsoft.webp",
     features: [
       "Complete Policy Lifecycle Management",
       "LIC Pre-Sales & Presentation Tools",
@@ -107,7 +107,7 @@ export const projects: Project[] = [
       "Reduce manual work by automatically sending personalized follow-up sequences. This platform manages leads throughout the sales process, tracks email engagement, and enables seamless WhatsApp Business communication with optional AI assistance to answer customer questions 24/7.",
     themeColor: "cyan",
     icon: Zap,
-    image: "/salesautomation.png",
+    image: "/salesautomation.webp",
     features: [
       "Automated 48-hour Email Sequences",
       "WhatsApp Business AI Assistant",
@@ -131,7 +131,7 @@ export const projects: Project[] = [
       "Indux ERP integrates all business operations including finance, inventory, HR, and sales. It enables data-driven decision-making through real-time reporting and GST-ready modules. Built for scalability, it connects every department while maintaining enterprise-grade security and role-based access.",
     themeColor: "blue",
     icon: BarChart3,
-    image: "/indux_erp.jpg",
+    image: "/indux_erp.webp",
     features: [
       "Integrated Finance & Accounting",
       "Inventory & Supply Chain Optimization",
@@ -155,7 +155,7 @@ export const projects: Project[] = [
       "The HRMS digitalizes every HR process, eliminating paperwork and providing dedicated role-based workspaces. From recruitment and payroll generation to attendance and appraisals, it provides a complete digital document locker and automated approval workflows for modern organizations.",
     themeColor: "emerald",
     icon: Users,
-    image: "/hrms.png",
+    image: "/hrms.webp",
     features: [
       "Recruitment & Exit Management",
       "Payroll & Payslip Generation",
@@ -180,7 +180,7 @@ export const projects: Project[] = [
     themeColor: "indigo",
     icon: Building2,
     image:
-      "/images/unsplash/img-f91f9eed.jpg",
+      "/images/unsplash/img-f91f9eed.webp",
     features: [
       "Digital Lease Management",
       "Automated Rent Collection",
@@ -205,7 +205,7 @@ export const projects: Project[] = [
     themeColor: "cyan",
     icon: CreditCard,
     image:
-      "/images/unsplash/img-1a772fb8.jpg",
+      "/images/unsplash/img-1a772fb8.webp",
     features: [
       "Real-time Spend Tracking",
       "Instant Card Issuance",
@@ -230,7 +230,7 @@ export const projects: Project[] = [
     themeColor: "blue",
     icon: Scale,
     image:
-      "/images/unsplash/img-01c6a0f0.jpg",
+      "/images/unsplash/img-01c6a0f0.webp",
     features: [
       "Automated Case Tracking",
       "Encrypted Document Vault",

@@ -47,7 +47,7 @@ const industries = [
     description: "Deploying deep learning tools and convolutional neural networks for autonomous crop health analysis. We turn raw visual data into actionable agricultural insights.",
     themeColor: "emerald",
     icon: Leaf,
-    image: "/images/unsplash/img-bda4a087.jpg", 
+    image: "/images/unsplash/img-bda4a087.webp", 
     features: [
       "Convolutional Neural Networks (CNN)",
       "PyTorch & Flask Architecture",
@@ -70,7 +70,7 @@ const industries = [
     description: "Architecting complex raw material tracking and interactive statistics dashboards. We streamline supply chains and automate compliance for high-stakes industrial operations.",
     themeColor: "cyan",
     icon: Factory,
-    image: "/images/unsplash/img-75d2593c.jpg", 
+    image: "/images/unsplash/img-75d2593c.webp", 
     features: [
       "Complex PostgreSQL Tracking",
       "Interactive BI Dashboards",
@@ -93,7 +93,7 @@ const industries = [
     description: "Building scalable generative styling engines that leverage computer vision to recommend highly personalized outfits, driving next-generation retail experiences.",
     themeColor: "indigo",
     icon: ShoppingBag,
-    image: "/images/unsplash/img-0d90699c.jpg", 
+    image: "/images/unsplash/img-0d90699c.webp", 
     features: [
       "Generative AI Styling Engines",
       "Real-time Computer Vision",

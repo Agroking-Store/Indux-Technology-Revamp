@@ -9,9 +9,9 @@ import { Button } from '@/components/ui/button';
 
 // Fallback high-quality internet image URLs
 const fallbackImages = [
-  '/images/unsplash/img-3be447cf.jpg', // MacBook with code
-  '/images/unsplash/img-0f36d5cf.jpg', // Tech server room
-  '/images/unsplash/img-8f08504f.jpg', // Laptop workspace
+  '/images/unsplash/img-3be447cf.webp', // MacBook with code
+  '/images/unsplash/img-0f36d5cf.webp', // Tech server room
+  '/images/unsplash/img-8f08504f.webp', // Laptop workspace
 ];
 
 function formatDate(dateStr: string) {

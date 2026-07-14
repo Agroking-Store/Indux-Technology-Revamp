@@ -148,7 +148,7 @@ export default function ServicesPage() {
                             <div className="relative shrink-0">
                                 <span className="absolute -right-24 md:-right-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">02</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="Web Development" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/web-dev.jpg" />
+                                    <img alt="Web Development" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/web-dev.webp" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-right relative z-10">
@@ -165,7 +165,7 @@ export default function ServicesPage() {
                             <div className="relative shrink-0">
                                 <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">03</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="Mobile Apps" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/mobile-app.jpeg" />
+                                    <img alt="Mobile Apps" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/mobile-app.webp" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">
@@ -199,7 +199,7 @@ export default function ServicesPage() {
                             <div className="relative shrink-0">
                                 <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">05</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="Business Automation" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/business-automation.png" />
+                                    <img alt="Business Automation" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/business-automation.webp" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">

@@ -201,7 +201,7 @@ export default function BusinessAutomationServicePage() {
                   </div>
                   {/* Illustration Image */}
                   <img
-                    src="/images/unsplash/img-f53fe912.jpg"
+                    src="/images/unsplash/img-f53fe912.webp"
                     alt="Automation Workflow Mockup"
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
                   />
@@ -436,7 +436,7 @@ export default function BusinessAutomationServicePage() {
               className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl shadow-blue-500/5 bg-slate-900"
             >
               <Image
-                src="/images/unsplash/img-467d7612.jpg"
+                src="/images/unsplash/img-467d7612.webp"
                 alt="Automated Robotics or script dashboards"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"

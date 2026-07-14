@@ -8,8 +8,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // High-quality fallback event image URLs
 const fallbackEventImages = [
-  '/images/unsplash/img-e25f1ef3.jpg',
-  '/images/unsplash/img-56f59048.jpg',
+  '/images/unsplash/img-e25f1ef3.webp',
+  '/images/unsplash/img-56f59048.webp',
   'https://images.unsplash.com/photo-1591115765373-5209768f73e7?auto=format&fit=crop&w=800&q=80',
 ];
 

@@ -68,7 +68,7 @@ export default function Footer() {
               className="flex items-center gap-2 cursor-pointer group w-max"
             >
               <Image
-                src="/induxtechnologylogo_white.png"
+                src="/induxtechnologylogo_white.webp"
                 alt="Indux Technology"
                 width={140}
                 height={40}
