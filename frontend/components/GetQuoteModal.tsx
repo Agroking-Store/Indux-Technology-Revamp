@@ -11,6 +11,7 @@ import { isValidPhoneNumber, getCountries, getCountryCallingCode } from "react-p
 import flags from "react-phone-number-input/flags";
 import en from "react-phone-number-input/locale/en.json";
 import "react-phone-number-input/style.css";
+import { submitLead } from "@/lib/api";
 
 import {
   Dialog,
@@ -70,7 +71,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-export function GetQuoteModal({ children }: { children?: React.ReactNode }) {
+export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -110,7 +111,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactNode }) {
         serviceInterest: data.serviceInterest,
         message: data.message,
       });
-
+      console.log("Quote Request Submitted:", data);
       setOpen(false);
       setShowSuccess(true);
       reset();

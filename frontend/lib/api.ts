@@ -126,6 +126,8 @@ export interface LeadInput {
   name: string;
   email: string;
   phone: string;
+  companyName?: string;
+  service?: string;
   message: string;
 }
 

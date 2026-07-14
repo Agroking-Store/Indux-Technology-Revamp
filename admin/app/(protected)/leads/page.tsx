@@ -22,6 +22,7 @@ interface Lead {
   name: string;
   email: string;
   phone: string;
+  companyName?: string;
   service: string;
   message: string;
   status: 'New' | 'Contacted' | 'Closed';
@@ -33,6 +34,7 @@ export default function LeadsPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('All');
+  const [showOnlyQuotes, setShowOnlyQuotes] = useState(false);
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
   const fetchLeads = async () => {
@@ -88,8 +90,9 @@ export default function LeadsPage() {
       (l.service || '').toLowerCase().includes(search.toLowerCase());
       
     const matchesStatus = statusFilter === 'All' || l.status === statusFilter;
+    const matchesQuoteOnly = !showOnlyQuotes || (l.service && l.service.trim() !== '');
     
-    return matchesSearch && matchesStatus;
+    return matchesSearch && matchesStatus && matchesQuoteOnly;
   });
 
   const getStatusBadge = (status: 'New' | 'Contacted' | 'Closed') => {
@@ -141,19 +144,32 @@ export default function LeadsPage() {
           />
         </div>
 
-        {/* Filter Dropdown */}
-        <div className="flex items-center gap-3 w-full md:w-auto">
-          <Filter className="text-slate-400" size={18} />
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full md:w-48 px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-indigo-500 bg-white"
+        {/* Filters Right Side */}
+        <div className="flex items-center gap-3 w-full md:w-auto flex-wrap sm:flex-nowrap">
+          <button
+            onClick={() => setShowOnlyQuotes(!showOnlyQuotes)}
+            className={`px-4 py-2 rounded-xl text-sm font-semibold border transition-colors whitespace-nowrap ${
+              showOnlyQuotes 
+                ? 'bg-indigo-50 text-indigo-700 border-indigo-200' 
+                : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+            }`}
           >
-            <option value="All">All Statuses</option>
-            <option value="New">New</option>
-            <option value="Contacted">Contacted</option>
-            <option value="Closed">Closed</option>
-          </select>
+            Quotes Only
+          </button>
+          
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <Filter className="text-slate-400 hidden sm:block" size={18} />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="w-full sm:w-40 px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-indigo-500 bg-white"
+            >
+              <option value="All">All Statuses</option>
+              <option value="New">New</option>
+              <option value="Contacted">Contacted</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
         </div>
 
       </div>
@@ -193,7 +209,12 @@ export default function LeadsPage() {
                         year: 'numeric'
                       })}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap font-bold text-slate-800">{lead.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="font-bold text-slate-800">{lead.name}</div>
+                      {lead.companyName && (
+                        <div className="text-xs text-slate-500 font-medium mt-0.5">{lead.companyName}</div>
+                      )}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex flex-col gap-1 text-xs">
                         <span className="flex items-center gap-1.5 text-slate-600 font-medium">
@@ -262,6 +283,10 @@ export default function LeadsPage() {
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Name</label>
                   <p className="text-sm font-semibold text-slate-800">{selectedLead.name}</p>
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Company</label>
+                  <p className="text-sm font-semibold text-slate-800">{selectedLead.companyName || "-"}</p>
                 </div>
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Service Interest</label>
