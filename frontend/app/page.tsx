@@ -247,6 +247,7 @@ export default function Home() {
                       src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop"
                       alt="Team working"
                       fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
@@ -257,6 +258,7 @@ export default function Home() {
                       src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1000&auto=format&fit=crop"
                       alt="Discussion"
                       fill
+                      sizes="(max-width: 768px) 100vw, 40vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
@@ -267,6 +269,7 @@ export default function Home() {
                       src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000&auto=format&fit=crop"
                       alt="Meeting"
                       fill
+                      sizes="(max-width: 768px) 100vw, 40vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
@@ -277,6 +280,7 @@ export default function Home() {
                       src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop"
                       alt="Collaboration"
                       fill
+                      sizes="(max-width: 768px) 100vw, 40vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
@@ -304,6 +308,7 @@ export default function Home() {
                     src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1000&auto=format&fit=crop"
                     alt="Team Discussion"
                     fill
+                    sizes="(max-width: 768px) 75vw, 35vw"
                     className="object-cover"
                   />
                 </div>
@@ -314,6 +319,7 @@ export default function Home() {
                     src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop"
                     alt="IT Professional"
                     fill
+                    sizes="(max-width: 768px) 65vw, 30vw"
                     className="object-cover"
                   />
                 </div>
@@ -497,6 +503,7 @@ export default function Home() {
                       src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000&auto=format&fit=crop"
                       alt="CRM Solutions"
                       fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                     />
                   </div>
@@ -544,6 +551,7 @@ export default function Home() {
                       src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?q=80&w=1000&auto=format&fit=crop"
                       alt="Manufacturing ERP"
                       fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                     />
                   </div>
@@ -564,6 +572,7 @@ export default function Home() {
                       src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop"
                       alt="Sales Automation"
                       fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                     />
                   </div>
@@ -840,6 +849,7 @@ export default function Home() {
                         src={project.img}
                         alt={project.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                       />
                     </div>
@@ -1005,6 +1015,7 @@ export default function Home() {
                         }
                         alt={blog.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
                         className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-in-out"
                       />
                     </div>
@@ -1069,6 +1080,7 @@ export default function Home() {
                     src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1000"
                     alt="Contact Us Team"
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
                   />
                 </div>

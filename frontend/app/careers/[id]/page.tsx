@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { getCareerById, submitApplication, Career } from '@/lib/api';
-import { ArrowLeft, Briefcase, MapPin, DollarSign, Users, Upload, CheckCircle2, Loader2, FileText, ChevronRight } from 'lucide-react';
+import { getCareerById, submitApplication, Career, FormField } from '@/lib/api';
+import { ArrowLeft, Briefcase, MapPin, DollarSign, Users, Upload, CheckCircle2, Loader2, FileText, ChevronRight, Link2, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
@@ -24,7 +24,15 @@ export default function CareerDetailPage() {
   const [phone, setPhone] = useState('');
   const [experience, setExperience] = useState('');
   const [coverLetter, setCoverLetter] = useState('');
+  const [portfolio, setPortfolio] = useState('');
+  const [linkedin, setLinkedin] = useState('');
+  const [github, setGithub] = useState('');
+  const [noticePeriod, setNoticePeriod] = useState('');
+  const [expectedCTC, setExpectedCTC] = useState('');
   const [resumeFile, setResumeFile] = useState<File | null>(null);
+  
+  // Custom Answers State
+  const [answers, setAnswers] = useState<Record<string, any>>({});
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
@@ -34,6 +42,21 @@ export default function CareerDetailPage() {
       .catch(console.error)
       .finally(() => setLoading(false));
   }, [id]);
+
+  const handleAnswerChange = (fieldName: string, value: any) => {
+    setAnswers((prev) => ({ ...prev, [fieldName]: value }));
+  };
+
+  const handleCheckboxGroupChange = (fieldName: string, option: string, checked: boolean) => {
+    const currentList = Array.isArray(answers[fieldName]) ? [...answers[fieldName]] : [];
+    if (checked) {
+      currentList.push(option);
+    } else {
+      const idx = currentList.indexOf(option);
+      if (idx > -1) currentList.splice(idx, 1);
+    }
+    handleAnswerChange(fieldName, currentList);
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -61,6 +84,19 @@ export default function CareerDetailPage() {
       return;
     }
 
+    // Custom form builder validation
+    if (career?.formFields) {
+      for (const field of career.formFields) {
+        if (field.name === 'name' || field.name === 'email' || field.name === 'phone') continue;
+        const val = answers[field.name];
+        const hasValue = val !== undefined && val !== null && val !== '' && !(Array.isArray(val) && val.length === 0);
+        if (field.required && !hasValue) {
+          setErrorMsg(`"${field.label}" is a required question.`);
+          return;
+        }
+      }
+    }
+
     setSubmitting(true);
     setErrorMsg('');
 
@@ -72,6 +108,12 @@ export default function CareerDetailPage() {
         phone,
         experience,
         coverLetter,
+        portfolio,
+        linkedin,
+        github,
+        noticePeriod,
+        expectedCTC,
+        answers,
         resume: resumeFile,
       });
       setSubmitted(true);
@@ -105,7 +147,7 @@ export default function CareerDetailPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 text-left">
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         
         {/* Back Button */}
@@ -141,7 +183,7 @@ export default function CareerDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             {/* Left Column: Job Description details */}
-            <div className="lg:col-span-7 flex flex-col gap-6">
+            <div className="lg:col-span-6 flex flex-col gap-6">
               <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-8 shadow-md">
                 <span className="inline-flex items-center text-[10px] uppercase tracking-wider font-bold bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full mb-4">
                   {career.department}
@@ -208,12 +250,26 @@ export default function CareerDetailPage() {
                     </div>
                   )}
 
+                  {career.benefits && career.benefits.length > 0 && (
+                    <div>
+                      <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2.5">Perks & Benefits</h3>
+                      <ul className="space-y-2">
+                        {career.benefits.map((benefit, i) => (
+                          <li key={i} className="flex gap-2.5 text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            <Sparkles className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                            <span>{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
                   {career.skills && career.skills.length > 0 && (
                     <div>
                       <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2.5">Skills Required</h3>
                       <div className="flex flex-wrap gap-2">
                         {career.skills.map((skill, i) => (
-                          <span key={i} className="text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-350">
+                          <span key={i} className="text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-355">
                             {skill}
                           </span>
                         ))}
@@ -225,18 +281,20 @@ export default function CareerDetailPage() {
             </div>
 
             {/* Right Column: Application Form */}
-            <div className="lg:col-span-5">
-              <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-8 shadow-md sticky top-28">
+            <div className="lg:col-span-6">
+              <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-8 shadow-md">
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Apply for this Position</h3>
                 <p className="text-xs text-slate-500 mb-6">Complete the form below. Required fields are marked *</p>
 
                 {errorMsg && (
-                  <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 text-xs rounded-xl p-3 mb-5">
+                  <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 text-red-655 dark:text-red-400 text-xs rounded-xl p-3 mb-5 font-semibold">
                     {errorMsg}
                   </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  
+                  {/* Basic Info */}
                   <div>
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Full Name *</label>
                     <input
@@ -274,31 +332,178 @@ export default function CareerDetailPage() {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Professional Experience (Years/Details) *</label>
-                    <input
-                      type="text"
-                      required
-                      value={experience}
-                      onChange={(e) => setExperience(e.target.value)}
-                      placeholder="e.g. 3 years in React development"
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="sm:col-span-1">
+                      <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Experience *</label>
+                      <input
+                        type="text"
+                        required
+                        value={experience}
+                        onChange={(e) => setExperience(e.target.value)}
+                        placeholder="e.g. 3 Years"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Notice Period</label>
+                      <input
+                        type="text"
+                        value={noticePeriod}
+                        onChange={(e) => setNoticePeriod(e.target.value)}
+                        placeholder="e.g. Immediate / 30 Days"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Expected CTC</label>
+                      <input
+                        type="text"
+                        value={expectedCTC}
+                        onChange={(e) => setExpectedCTC(e.target.value)}
+                        placeholder="e.g. $90,000"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Links Row */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Portfolio URL</label>
+                      <input
+                        type="url"
+                        value={portfolio}
+                        onChange={(e) => setPortfolio(e.target.value)}
+                        placeholder="https://..."
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">LinkedIn Profile</label>
+                      <input
+                        type="url"
+                        value={linkedin}
+                        onChange={(e) => setLinkedin(e.target.value)}
+                        placeholder="https://linkedin.com/in/..."
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">GitHub Profile</label>
+                      <input
+                        type="url"
+                        value={github}
+                        onChange={(e) => setGithub(e.target.value)}
+                        placeholder="https://github.com/..."
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Cover Letter / Message (Optional)</label>
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Cover Letter / Intro</label>
                     <textarea
                       rows={3}
                       value={coverLetter}
                       onChange={(e) => setCoverLetter(e.target.value)}
-                      placeholder="Briefly introduce yourself..."
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-3.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none"
+                      placeholder="Briefly introduce yourself and why you're a good fit..."
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none"
                     />
                   </div>
 
+                  {/* DYNAMIC QUESTIONS */}
+                  {career.formFields && career.formFields.length > 0 && (
+                    <div className="border-t pt-4 space-y-4">
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">Additional Questions</h4>
+                      {career.formFields.map((field) => {
+                        if (field.name === 'name' || field.name === 'email' || field.name === 'phone') return null;
+
+                        const val = answers[field.name] || '';
+
+                        return (
+                          <div key={field.name} className="space-y-1 text-left">
+                            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400">
+                              {field.label} {field.required && '*'}
+                            </label>
+
+                            {(field.type === 'text' || field.type === 'email' || field.type === 'phone' || field.type === 'url') && (
+                              <input
+                                type="text"
+                                required={field.required}
+                                value={val}
+                                onChange={(e) => handleAnswerChange(field.name, e.target.value)}
+                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                              />
+                            )}
+
+                            {field.type === 'textarea' && (
+                              <textarea
+                                required={field.required}
+                                value={val}
+                                onChange={(e) => handleAnswerChange(field.name, e.target.value)}
+                                rows={2}
+                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none"
+                              />
+                            )}
+
+                            {field.type === 'select' && (
+                              <select
+                                required={field.required}
+                                value={val}
+                                onChange={(e) => handleAnswerChange(field.name, e.target.value)}
+                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
+                              >
+                                <option value="">Select option...</option>
+                                {field.options?.map(opt => (
+                                  <option key={opt} value={opt}>{opt}</option>
+                                ))}
+                              </select>
+                            )}
+
+                            {field.type === 'radio' && (
+                              <div className="space-y-1 pt-1 flex flex-wrap gap-4">
+                                {field.options?.map(opt => (
+                                  <label key={opt} className="flex items-center gap-1.5 text-xs text-slate-700 dark:text-slate-350 cursor-pointer">
+                                    <input
+                                      type="radio"
+                                      name={field.name}
+                                      required={field.required && !val}
+                                      checked={val === opt}
+                                      onChange={() => handleAnswerChange(field.name, opt)}
+                                      className="text-blue-600 focus:ring-blue-500"
+                                    />
+                                    <span>{opt}</span>
+                                  </label>
+                                ))}
+                              </div>
+                            )}
+
+                            {field.type === 'checkbox' && (
+                              <div className="space-y-1 pt-1 flex flex-wrap gap-4">
+                                {field.options?.map(opt => {
+                                  const list = Array.isArray(val) ? val : [];
+                                  return (
+                                    <label key={opt} className="flex items-center gap-1.5 text-xs text-slate-700 dark:text-slate-350 cursor-pointer">
+                                      <input
+                                        type="checkbox"
+                                        checked={list.includes(opt)}
+                                        onChange={(e) => handleCheckboxGroupChange(field.name, opt, e.target.checked)}
+                                        className="rounded text-blue-600 focus:ring-blue-500"
+                                      />
+                                      <span>{opt}</span>
+                                    </label>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
                   {/* PDF RESUME UPLOAD */}
-                  <div>
+                  <div className="border-t pt-4">
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Resume Upload (PDF only, max 5MB) *</label>
                     <input
                       type="file"
@@ -322,7 +527,7 @@ export default function CareerDetailPage() {
                       ) : (
                         <>
                           <Upload className="w-6 h-6 text-slate-400 mb-2" />
-                          <p className="text-xs text-slate-550 dark:text-slate-400 font-semibold">Click to select PDF resume</p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Click to select PDF resume</p>
                           <p className="text-[10px] text-slate-400 mt-0.5">Maximum size: 5MB</p>
                         </>
                       )}
@@ -332,7 +537,7 @@ export default function CareerDetailPage() {
                   <Button
                     type="submit"
                     disabled={submitting}
-                    className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 w-full flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-600/10 cursor-pointer font-bold uppercase text-xs tracking-wider"
+                    className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 w-full flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-600/10 cursor-pointer font-bold uppercase text-xs tracking-wider mt-4"
                   >
                     {submitting ? (
                       <>

@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
-      <body className="min-h-screen bg-gray-50">
+      <body className="min-h-screen bg-slate-50 antialiased">
         <AuthProvider>
           {children}
           <ToastContainer position="top-right" autoClose={3000} />

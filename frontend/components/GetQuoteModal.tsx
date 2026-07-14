@@ -125,11 +125,13 @@ export function GetQuoteModal({ children }: { children?: React.ReactNode }) {
         description="Thanks for telling us about your project. We'll send you a proposal very soon."
       />
       <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger 
-        className={children ? "" : "hidden sm:inline-flex bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-6 py-2.5 rounded-full shadow-md shadow-blue-500/20 text-sm transition-all hover:scale-105 hover:shadow-blue-500/40 active:scale-95 cursor-pointer border-t border-white/20 items-center justify-center"}
-      >
-        {children || "Get Quote"}
-      </DialogTrigger>
+      {children ? (
+        <DialogTrigger render={children} />
+      ) : (
+        <DialogTrigger className="hidden sm:inline-flex bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-6 py-2.5 rounded-full shadow-md shadow-blue-500/20 text-sm transition-all hover:scale-105 hover:shadow-blue-500/40 active:scale-95 cursor-pointer border-t border-white/20 items-center justify-center">
+          Get Quote
+        </DialogTrigger>
+      )}
       
       <DialogContent className="sm:max-w-[550px] p-0 overflow-hidden bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-3xl outline-none">
         {/* Fancy Header Gradient */}

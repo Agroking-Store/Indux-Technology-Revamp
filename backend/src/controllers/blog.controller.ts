@@ -72,7 +72,7 @@ export const createBlog = asyncHandler(async (req: AuthRequest, res: Response) =
 // ============================
 export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1;
-  const limit = parseInt(req.query.limit as string) || 10;
+  const limit = parseInt(req.query.limit as string) || 20;
   const status = req.query.status as string; // optional filter
 
   const filter: any = {};
@@ -82,6 +82,11 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
 
   const total = await Blog.countDocuments(filter);
   const blogs = await Blog.find(filter)
+    // Exclude heavy fields not needed for the list view.
+    // 'content' is rich HTML (can be 100s of KB) and 'featuredImage'
+    // is a raw base64 Data URL (can be MBs). Only fetch them on
+    // the single-blog detail/edit endpoints.
+    .select("-content -featuredImage -seoTitle -seoDescription -featuredImagePublicId")
     .sort({ createdAt: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
@@ -96,6 +101,7 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
     },
   }, "Blogs fetched successfully"));
 });
+
 
 // ============================
 // GET SINGLE BLOG
