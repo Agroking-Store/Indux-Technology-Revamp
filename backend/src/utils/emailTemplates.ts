@@ -154,3 +154,26 @@ export const getQuoteEmailTemplate = (name: string, serviceInterest: string, com
   
   return getEmailBaseTemplate("We received your quote request - Indux Technology", bodyContent);
 };
+
+// Forgot Password Email Template
+export const getForgotPasswordEmailTemplate = (name: string, resetUrl: string) => {
+  const bodyContent = `
+    <h2 class="greeting">Hi ${name},</h2>
+    <p class="text-body">
+      You are receiving this email because you (or someone else) requested a password reset for your Indux Technology admin account.
+    </p>
+    <p class="text-body">
+      Please click the button below to complete the process. This link is valid for 10 minutes.
+    </p>
+    
+    <div class="cta-container">
+      <a href="${resetUrl}" class="cta-button">Reset Password</a>
+    </div>
+
+    <p class="text-body" style="font-size: 14px; color: #64748b;">
+      If you did not request this, please ignore this email and your password will remain unchanged.
+    </p>
+  `;
+  
+  return getEmailBaseTemplate("Password Reset Request - Indux Technology", bodyContent);
+};

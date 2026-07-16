@@ -24,6 +24,8 @@ const eventSchema = z.object({
   status: z.enum(['Draft', 'Published']),
   coverImage: z.string().min(1, 'Cover image is required'),
   bannerImage: z.string().min(1, 'Banner image is required'),
+  isPaid: z.boolean(),
+  registrationFee: z.coerce.number().min(0),
 });
 
 type EventFormData = z.infer<typeof eventSchema>;
@@ -87,9 +89,10 @@ export default function EditEventPage() {
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<EventFormData>({
-    resolver: zodResolver(eventSchema),
+    resolver: zodResolver(eventSchema) as any,
     defaultValues: { 
       status: 'Draft',
       slug: '',
@@ -104,8 +107,12 @@ export default function EditEventPage() {
       location: '',
       coverImage: '',
       bannerImage: '',
+      isPaid: false,
+      registrationFee: 0,
     },
   });
+
+  const watchIsPaid = watch('isPaid');
 
   const formatTzDate = (dateStr?: string) => {
     if (!dateStr) return '';
@@ -135,6 +142,8 @@ export default function EditEventPage() {
           status: event.status || 'Draft',
           coverImage: event.coverImage || '',
           bannerImage: event.bannerImage || '',
+          isPaid: event.isPaid || false,
+          registrationFee: event.registrationFee || 0,
         });
 
         if (event.formFields && event.formFields.length > 0) {
@@ -757,6 +766,33 @@ export default function EditEventPage() {
                 className="mt-1 w-full px-4 py-2 border rounded-lg text-sm focus:outline-indigo-500"
               />
               {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location.message}</p>}
+            </div>
+
+            {/* Payment Configuration */}
+            <div className="border-t border-gray-100 pt-4 space-y-3">
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  {...register('isPaid')}
+                  className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <span className="text-xs font-bold text-gray-700">Paid Event (Requires Ticket)</span>
+              </label>
+
+              {watchIsPaid && (
+                <div className="space-y-1.5 animate-fadeIn">
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide">Registration Fee (INR) *</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    {...register('registrationFee')}
+                    className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500"
+                    placeholder="e.g. 499"
+                  />
+                  {errors.registrationFee && <p className="text-red-500 text-xs mt-1">{errors.registrationFee.message}</p>}
+                </div>
+              )}
             </div>
           </div>
 

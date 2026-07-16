@@ -9,6 +9,11 @@ export interface IEventRegistration extends Document {
   phone: string;
   answers: Record<string, any>; // Stores dynamic form fields answers
   status: RegistrationStatus;
+  paymentStatus: "None" | "Pending" | "Paid" | "Failed";
+  razorpayOrderId?: string;
+  razorpayPaymentId?: string;
+  razorpaySignature?: string;
+  amountPaid?: number;
   notes?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -51,6 +56,27 @@ const EventRegistrationSchema = new Schema<IEventRegistration>(
       },
       default: "Pending",
       index: true,
+    },
+    paymentStatus: {
+      type: String,
+      enum: {
+        values: ["None", "Pending", "Paid", "Failed"],
+        message: "Payment status must be None, Pending, Paid, or Failed",
+      },
+      default: "None",
+      index: true,
+    },
+    razorpayOrderId: {
+      type: String,
+    },
+    razorpayPaymentId: {
+      type: String,
+    },
+    razorpaySignature: {
+      type: String,
+    },
+    amountPaid: {
+      type: Number,
     },
     notes: {
       type: String,

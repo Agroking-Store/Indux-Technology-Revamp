@@ -7,14 +7,18 @@ import {
   updateRegistrationNotes,
   deleteRegistration,
   exportRegistrationsToCSV,
+  verifyPayment,
+  cancelRegistration,
 } from "../controllers/event-registration.controller";
 import { protect } from "../middlewares/auth";
 import { uploadRegistrationFile } from "../middlewares/upload";
 
 const router = Router();
 
-// ---- Public Route ----
+// ---- Public Routes ----
 router.post("/", uploadRegistrationFile, createRegistration);
+router.post("/verify-payment", verifyPayment);
+router.post("/cancel", cancelRegistration);
 
 // ---- Admin Protected Routes ----
 router.use(protect);

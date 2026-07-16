@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { registerForEvent, Event } from "@/lib/api";
+import { registerForEvent, Event, verifyPaymentSignature, cancelRegistration } from "@/lib/api";
 import { Calendar, MapPin, Clock, ShieldAlert, Award, FileText, CheckCircle, ChevronDown, User, Sparkles, Building, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -31,6 +31,44 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
 
   const [registering, setRegistering] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  // Mock Payment Modal States
+  const [showMockPayment, setShowMockPayment] = useState(false);
+  const [mockPaymentData, setMockPaymentData] = useState<{
+    orderId: string;
+    amount: number;
+  } | null>(null);
+
+  const handleSimulatePaymentSuccess = async () => {
+    if (!mockPaymentData) return;
+    setRegistering(true);
+    setShowMockPayment(false);
+    try {
+      await verifyPaymentSignature({
+        razorpayOrderId: mockPaymentData.orderId,
+        razorpayPaymentId: `pay_stub_${Date.now()}`,
+        razorpaySignature: "signature_stub_mock_verification_key_success",
+      });
+      setSuccess(true);
+    } catch (err: any) {
+      const msg = err.response?.data?.message || "Mock payment verification failed.";
+      alert(msg);
+    } finally {
+      setRegistering(false);
+    }
+  };
+
+  const handleCancelMockPayment = async () => {
+    setShowMockPayment(false);
+    setRegistering(false);
+    if (mockPaymentData) {
+      try {
+        await cancelRegistration(mockPaymentData.orderId);
+      } catch (e) {
+        console.error("Failed to clean up cancelled mock registration:", e);
+      }
+    }
+  };
 
   // Accordion faq expanded indices
   const [faqExpanded, setFaqExpanded] = useState<Record<number, boolean>>({});
@@ -63,6 +101,16 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
     }
   };
 
+  const loadRazorpayScript = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -91,8 +139,9 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
     }
 
     setRegistering(true);
+    let orderSuccess = false;
     try {
-      await registerForEvent({
+      const res = await registerForEvent({
         eventId: event._id,
         name: fullName,
         email,
@@ -100,12 +149,90 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
         answers,
         file: uploadFile,
       });
-      setSuccess(true);
+
+      const regData = res.data || res;
+      const isPaid = event.isPaid || regData?.isPaid;
+      const razorpayOrderId = regData?.razorpayOrderId;
+
+      if (isPaid && razorpayOrderId) {
+        // Load Razorpay SDK script
+        const isLoaded = await loadRazorpayScript();
+        if (!isLoaded) {
+          throw new Error("Razorpay SDK failed to load. Please check your internet connection.");
+        }
+
+        const isStubOrder = razorpayOrderId.startsWith("order_stub_");
+
+        if (isStubOrder) {
+          // Open the beautiful custom mock payment modal instead of ugly window.confirm
+          setMockPaymentData({
+            orderId: razorpayOrderId,
+            amount: regData?.amountPaid || event.registrationFee || 0,
+          });
+          setShowMockPayment(true);
+          orderSuccess = true; // Prevents loader from turning off immediately
+        } else {
+          // Live/Test Checkout Overlay
+          const razorpayKey = regData?.razorpayKeyId || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_stub_key";
+          
+          const options = {
+            key: razorpayKey,
+            amount: (regData?.amountPaid || event.registrationFee || 0) * 100, // Razorpay works in paise
+            currency: "INR",
+            name: "Indux Technology",
+            description: `Ticket for ${event.title}`,
+            order_id: razorpayOrderId,
+            handler: async function (response: any) {
+              setRegistering(true);
+              try {
+                // Call verification endpoint
+                await verifyPaymentSignature({
+                  razorpayOrderId: razorpayOrderId,
+                  razorpayPaymentId: response.razorpay_payment_id,
+                  razorpaySignature: response.razorpay_signature,
+                });
+                setSuccess(true);
+              } catch (err: any) {
+                alert(err.response?.data?.message || "Payment verification failed. Please contact support.");
+              } finally {
+                setRegistering(false);
+              }
+            },
+            prefill: {
+              name: fullName,
+              email: email,
+              contact: phone,
+            },
+            theme: {
+              color: "#2563EB",
+            },
+            modal: {
+              ondismiss: async function () {
+                setRegistering(false);
+                try {
+                  await cancelRegistration(razorpayOrderId);
+                } catch (e) {
+                  console.error("Failed to clean up dismissed registration:", e);
+                }
+              }
+            }
+          };
+
+          const rzp = new (window as any).Razorpay(options);
+          rzp.open();
+        }
+      } else {
+        // Free event
+        orderSuccess = true;
+        setSuccess(true);
+      }
     } catch (err: any) {
-      const msg = err.response?.data?.message || "Failed to submit registration. Please check inputs.";
+      const msg = err.response?.data?.message || err.message || "Failed to submit registration. Please check inputs.";
       alert(msg);
     } finally {
-      setRegistering(false);
+      if (!orderSuccess) {
+        setRegistering(false);
+      }
     }
   };
 
@@ -334,6 +461,16 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                   </span>
                 </div>
               </div>
+
+              <div className="flex items-start gap-3 pt-3.5">
+                <Award className="text-blue-600 mt-0.5 shrink-0" size={18} />
+                <div>
+                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">Registration Fee</span>
+                  <span className="text-slate-850 dark:text-slate-200 font-extrabold text-sm">
+                    {event.isPaid ? `₹${event.registrationFee}` : "Free"}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -555,8 +692,13 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                     disabled={registering}
                     className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold shadow-lg shadow-blue-500/20 transition disabled:opacity-50 mt-6 cursor-pointer"
                   >
-                    {registering ? "Reserving spot..." : "Register / RSVP"}
+                    {registering ? "Processing..." : event.isPaid ? `Pay ₹${event.registrationFee} & Register` : "Register / RSVP"}
                   </Button>
+                  {event.isPaid && (
+                    <p className="text-center text-[10px] text-slate-400 mt-2 font-semibold">
+                      Secured by Razorpay. Includes immediate access to all event sessions.
+                    </p>
+                  )}
                 </form>
               </div>
             )}
@@ -564,6 +706,70 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
         </div>
 
       </section>
+
+      {/* ===== CUSTOM MOCK PAYMENT DIALOG (SLICK GLASSMORPHISM OVERLAY) ===== */}
+      <AnimatePresence>
+        {showMockPayment && mockPaymentData && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+              onClick={handleCancelMockPayment}
+            ></motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative bg-white dark:bg-slate-900 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 text-center space-y-6 z-10"
+            >
+              <div className="size-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-full flex items-center justify-center mx-auto border border-blue-200/50">
+                <Sparkles size={32} />
+              </div>
+              
+              <div className="space-y-2">
+                <h3 className="text-2xl font-black text-slate-900 dark:text-slate-100">Simulate Payment</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  This is a test environment order simulation. No real money will be charged.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 dark:bg-slate-950 p-5 rounded-2xl border border-slate-150 dark:border-slate-850 space-y-3.5 text-left text-sm">
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-400 font-bold text-xs uppercase tracking-wide">Order ID</span>
+                  <span className="font-mono text-xs text-slate-750 dark:text-slate-300">{mockPaymentData.orderId}</span>
+                </div>
+                <div className="flex justify-between items-center border-t border-slate-100 dark:border-slate-800 pt-3">
+                  <span className="text-slate-400 font-bold text-xs uppercase tracking-wide">Event</span>
+                  <span className="font-extrabold text-slate-800 dark:text-slate-200 text-xs line-clamp-1">{event.title}</span>
+                </div>
+                <div className="flex justify-between items-center border-t border-slate-100 dark:border-slate-800 pt-3">
+                  <span className="text-slate-400 font-bold text-xs uppercase tracking-wide">Amount Due</span>
+                  <span className="font-black text-slate-900 dark:text-slate-100 text-lg">₹{mockPaymentData.amount}</span>
+                </div>
+              </div>
+
+              <div className="flex gap-4 pt-2">
+                <Button 
+                  onClick={handleCancelMockPayment} 
+                  variant="outline" 
+                  className="flex-1 rounded-full py-6 font-bold cursor-pointer"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={handleSimulatePaymentSuccess} 
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-full py-6 font-bold shadow-lg shadow-blue-500/20 cursor-pointer"
+                >
+                  Confirm Payment
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

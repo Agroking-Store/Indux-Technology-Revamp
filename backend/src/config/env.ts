@@ -17,6 +17,9 @@ interface EnvConfig {
 
   SMTP_USER: string;
   SMTP_PASS: string;
+
+  RAZORPAY_KEY_ID: string;
+  RAZORPAY_KEY_SECRET: string;
 }
 
 function required(key: string): string {
@@ -43,4 +46,7 @@ export const env: EnvConfig = {
 
   SMTP_USER: process.env.SMTP_USER || "",
   SMTP_PASS: process.env.SMTP_PASS || "",
+
+  RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID || "",
+  RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET || "",
 };

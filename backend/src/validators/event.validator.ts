@@ -75,6 +75,8 @@ export const createEventSchema = z.object({
   registrationDeadline: z.coerce.date(),
   organizer: z.string().trim().min(1, "Organizer is required"),
   location: z.string().trim().min(1, "Location / venue is required"),
+  isPaid: z.preprocess((val) => val === "true" || val === true, z.boolean()).default(false),
+  registrationFee: z.coerce.number().min(0).default(0),
   status: z.enum(["Draft", "Published"]).default("Draft"),
   coverImage: z.string().trim().min(1, "Cover image is required"),
   bannerImage: z.string().trim().min(1, "Banner image is required"),

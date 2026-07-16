@@ -34,3 +34,11 @@ export const updateRegistrationNotesSchema = z.object({
 export type CreateRegistrationInput = z.infer<typeof createRegistrationSchema>;
 export type UpdateRegistrationStatusInput = z.infer<typeof updateRegistrationStatusSchema>;
 export type UpdateRegistrationNotesInput = z.infer<typeof updateRegistrationNotesSchema>;
+
+export const verifyPaymentSchema = z.object({
+  razorpayOrderId: z.string().trim().min(1, "Razorpay Order ID is required"),
+  razorpayPaymentId: z.string().trim().min(1, "Razorpay Payment ID is required"),
+  razorpaySignature: z.string().trim().min(1, "Razorpay Signature is required"),
+});
+
+export type VerifyPaymentInput = z.infer<typeof verifyPaymentSchema>;

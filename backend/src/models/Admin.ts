@@ -5,6 +5,8 @@ export interface IAdmin extends Document {
   name: string;
   email: string;
   password: string;
+  resetPasswordToken?: string;
+  resetPasswordExpire?: Date;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
@@ -30,6 +32,12 @@ const AdminSchema = new Schema<IAdmin>(
       required: [true, "Password is required"],
       minlength: [8, "Password must be at least 8 characters"],
       select: false, // never return password by default on queries
+    },
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpire: {
+      type: Date,
     },
   },
   { timestamps: true }

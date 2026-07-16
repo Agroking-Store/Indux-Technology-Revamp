@@ -5,7 +5,6 @@ import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
 import asyncHandler from "../utils/asyncHandler";
 import { AuthRequest } from "../middlewares/auth";
-import { deleteFromCloudinary } from "../services/cloudinary";
 
 // Helper to generate slug if not provided
 const generateSlugFromTitle = (title: string): string => {
@@ -182,11 +181,6 @@ export const deleteBlog = asyncHandler(async (req: AuthRequest, res: Response) =
   const blog = await Blog.findById(id);
   if (!blog) {
     throw ApiError.notFound("Blog not found");
-  }
-
-  // Clean up the Cloudinary image
-  if (blog.featuredImagePublicId) {
-    await deleteFromCloudinary(blog.featuredImagePublicId);
   }
 
   await blog.deleteOne();

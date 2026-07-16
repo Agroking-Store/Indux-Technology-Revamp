@@ -208,6 +208,8 @@ export interface Event {
   organizer: string;
   location: string;
   status: "Draft" | "Published";
+  isPaid?: boolean;
+  registrationFee?: number;
   formFields: FormField[];
   speakers?: Speaker[];
   schedule?: ScheduleItem[];
@@ -227,6 +229,12 @@ export interface EventRegistrationInput {
   phone: string;
   answers: Record<string, any>;
   file?: File;
+}
+
+export interface VerifyPaymentInput {
+  razorpayOrderId: string;
+  razorpayPaymentId: string;
+  razorpaySignature: string;
 }
 
 export const getEvents = async (): Promise<Event[]> => {
@@ -255,6 +263,18 @@ export const registerForEvent = async (
   const res = await api.post("/event-registrations", formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
+  return res.data;
+};
+
+export const verifyPaymentSignature = async (
+  input: VerifyPaymentInput,
+): Promise<any> => {
+  const res = await api.post("/event-registrations/verify-payment", input);
+  return res.data;
+};
+
+export const cancelRegistration = async (razorpayOrderId: string): Promise<any> => {
+  const res = await api.post("/event-registrations/cancel", { razorpayOrderId });
   return res.data;
 };
 
