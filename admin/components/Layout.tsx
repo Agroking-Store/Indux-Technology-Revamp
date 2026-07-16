@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 import { Sidebar } from './Sidebar';
 import { usePathname } from 'next/navigation';
 import { Globe, Bell, ChevronRight, User } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 interface LayoutProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   const pathname = usePathname();
+  const { admin } = useAuth();
 
   // Generate clean section name from path
   const pathSegments = pathname.split('/').filter(Boolean);
@@ -64,7 +66,7 @@ export const Layout = ({ children }: LayoutProps) => {
               <div className="size-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 border">
                 <User size={14} />
               </div>
-              <span className="text-xs font-bold text-slate-600">Operator</span>
+              <span className="text-xs font-bold text-slate-600 dark:text-slate-300">{admin?.name || 'Operator'}</span>
             </div>
 
           </div>

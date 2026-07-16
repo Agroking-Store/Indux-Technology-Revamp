@@ -6,7 +6,6 @@ import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
 import asyncHandler from "../utils/asyncHandler";
 import { AuthRequest } from "../middlewares/auth";
-import { deleteFromCloudinary } from "../services/cloudinary";
 
 // Helper to generate slug if not provided
 const generateSlugFromTitle = (title: string): string => {
@@ -166,14 +165,6 @@ export const deleteEvent = asyncHandler(async (req: AuthRequest, res: Response) 
   if (!event) {
     throw ApiError.notFound("Event not found");
   }
-
-  // Clean up Cloudinary images
-  const coverPublicId = (event as any).coverImagePublicId;
-  const bannerPublicId = (event as any).bannerImagePublicId;
-  await Promise.all([
-    coverPublicId ? deleteFromCloudinary(coverPublicId) : Promise.resolve(),
-    bannerPublicId ? deleteFromCloudinary(bannerPublicId) : Promise.resolve(),
-  ]);
 
   // Delete all registrations for this event
   await EventRegistration.deleteMany({ eventId: event._id });

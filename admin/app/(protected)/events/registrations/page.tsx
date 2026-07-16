@@ -223,6 +223,8 @@ function RegistrationsContent() {
                   <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Attendee</th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Event Details</th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Registration Date</th>
+                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Payment Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Paid Amount</th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
@@ -247,6 +249,19 @@ function RegistrationsContent() {
                           day: 'numeric',
                           year: 'numeric',
                         })}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-bold rounded-full border ${
+                          reg.paymentStatus === 'Paid' ? 'bg-emerald-50 text-emerald-700 border-emerald-105' :
+                          reg.paymentStatus === 'Failed' ? 'bg-rose-50 text-rose-700 border-rose-100' :
+                          reg.paymentStatus === 'Pending' ? 'bg-amber-50 text-amber-700 border-amber-100' :
+                          'bg-slate-50 text-slate-500 border-slate-100'
+                        }`}>
+                          {reg.paymentStatus || 'None'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                        {reg.amountPaid ? `₹${reg.amountPaid}` : '—'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-bold rounded-full border ${
@@ -361,6 +376,30 @@ function RegistrationsContent() {
                   <span className="text-[10px] uppercase font-bold text-gray-400">Registration Date</span>
                   <p className="text-sm font-semibold text-gray-800 mt-0.5">{new Date(selectedReg.createdAt).toLocaleString()}</p>
                 </div>
+                {selectedReg.paymentStatus && selectedReg.paymentStatus !== 'None' && (
+                  <>
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-gray-400">Payment Status</span>
+                      <p className="text-sm font-semibold text-gray-800 mt-0.5">{selectedReg.paymentStatus}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-gray-400">Amount Paid</span>
+                      <p className="text-sm font-semibold text-gray-800 mt-0.5">{selectedReg.amountPaid ? `₹${selectedReg.amountPaid}` : '—'}</p>
+                    </div>
+                    {selectedReg.razorpayOrderId && (
+                      <div className="md:col-span-2">
+                        <span className="text-[10px] uppercase font-bold text-gray-400">Razorpay Order ID</span>
+                        <p className="text-xs font-mono text-gray-700 mt-0.5">{selectedReg.razorpayOrderId}</p>
+                      </div>
+                    )}
+                    {selectedReg.razorpayPaymentId && (
+                      <div className="md:col-span-2">
+                        <span className="text-[10px] uppercase font-bold text-gray-400">Razorpay Payment ID</span>
+                        <p className="text-xs font-mono text-gray-700 mt-0.5">{selectedReg.razorpayPaymentId}</p>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
 
               {/* Box 2: Dynamic Custom Fields Answers */}

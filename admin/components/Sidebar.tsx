@@ -18,7 +18,7 @@ import {
 
 export const Sidebar = () => {
   const pathname = usePathname();
-  const { logout } = useAuth();
+  const { admin, logout } = useAuth();
 
   const groups = [
     {
@@ -98,11 +98,11 @@ export const Sidebar = () => {
       <div className="p-4 border-t border-slate-800/60 bg-slate-950/20 flex flex-col gap-2">
         <div className="flex items-center gap-3 px-2 py-1">
           <div className="size-9 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-extrabold text-xs">
-            AD
+            {admin?.name ? admin.name.substring(0, 2).toUpperCase() : 'AD'}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-bold text-slate-200 truncate leading-none">System Admin</p>
-            <span className="text-[9px] text-slate-500 font-semibold truncate block mt-1">admin@induxtech.com</span>
+            <p className="text-xs font-bold text-slate-200 truncate leading-none">{admin?.name || 'System Admin'}</p>
+            <span className="text-[9px] text-slate-500 font-semibold truncate block mt-1">{admin?.email || 'admin@induxtech.com'}</span>
           </div>
         </div>
 

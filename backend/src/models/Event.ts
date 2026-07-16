@@ -33,6 +33,8 @@ export interface IEvent extends Document {
   registrationDeadline: Date;
   organizer: string;
   location: string;
+  isPaid: boolean;
+  registrationFee: number;
   status: EventStatus;
   formFields: IFormField[];
   speakers?: Array<{ name: string; role: string; company?: string; avatar?: string }>;
@@ -115,6 +117,14 @@ const EventSchema = new Schema<IEvent>(
       type: String,
       required: [true, "Location / venue is required"],
       trim: true,
+    },
+    isPaid: {
+      type: Boolean,
+      default: false,
+    },
+    registrationFee: {
+      type: Number,
+      default: 0,
     },
     status: {
       type: String,

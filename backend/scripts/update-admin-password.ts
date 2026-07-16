@@ -13,7 +13,7 @@ const updateAdminPassword = async () => {
     await mongoose.connect(process.env.MONGO_URI!);
     console.log('Connected to MongoDB');
 
-    const adminEmail = 'admin@example.com';
+    const adminEmail = 'shailjaiswal9135@gmail.com';
     const newPassword = 'password123'; // Change to any password you want
 
     // Generate a fresh hash

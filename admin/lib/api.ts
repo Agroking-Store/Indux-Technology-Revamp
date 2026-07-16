@@ -90,6 +90,8 @@ export interface Event {
   organizer: string;
   location: string;
   status: 'Draft' | 'Published';
+  isPaid?: boolean;
+  registrationFee?: number;
   formFields: FormField[];
   speakers?: Speaker[];
   schedule?: ScheduleItem[];
@@ -107,6 +109,10 @@ export interface EventRegistration {
   phone: string;
   answers: Record<string, any>;
   status: 'Pending' | 'Approved' | 'Rejected' | 'Attended';
+  paymentStatus?: 'None' | 'Pending' | 'Paid' | 'Failed';
+  amountPaid?: number;
+  razorpayOrderId?: string;
+  razorpayPaymentId?: string;
   notes?: string;
   createdAt: string;
   updatedAt: string;

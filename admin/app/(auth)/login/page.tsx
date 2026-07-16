@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { Mail, Lock, Sparkles, ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
+import { Mail, Lock, Sparkles, ShieldCheck, Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
@@ -68,19 +70,31 @@ export default function LoginPage() {
 
           {/* Password field */}
           <div className="space-y-1.5">
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Access Password</label>
+            <div className="flex justify-between items-center">
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Access Password</label>
+              <Link href="/forgot-password" className="text-[10px] font-bold text-indigo-400 hover:text-indigo-300 transition-colors">
+                Forgot Password?
+              </Link>
+            </div>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                 <Lock size={16} />
               </div>
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-950/80 border border-slate-850 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-500 text-white placeholder-slate-600"
+                className="w-full pl-10 pr-10 py-2.5 text-sm bg-slate-950/80 border border-slate-850 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-500 text-white placeholder-slate-600"
                 placeholder="••••••••"
                 required
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
             </div>
           </div>
 

@@ -24,6 +24,8 @@ const eventSchema = z.object({
   status: z.enum(['Draft', 'Published']),
   coverImage: z.string().min(1, 'Cover image is required'),
   bannerImage: z.string().min(1, 'Banner image is required'),
+  isPaid: z.boolean(),
+  registrationFee: z.coerce.number().min(0),
 });
 
 type EventFormData = z.infer<typeof eventSchema>;
@@ -88,9 +90,10 @@ export default function CreateEventPage() {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<EventFormData>({
-    resolver: zodResolver(eventSchema),
+    resolver: zodResolver(eventSchema) as any,
     defaultValues: { 
       status: 'Draft',
       slug: '',
@@ -105,8 +108,12 @@ export default function CreateEventPage() {
       location: '',
       coverImage: '',
       bannerImage: '',
+      isPaid: false,
+      registrationFee: 0,
     },
   });
+
+  const watchIsPaid = watch('isPaid');
 
   // Dynamic Fields Helpers
   const addField = () => {
@@ -698,6 +705,33 @@ export default function CreateEventPage() {
                 placeholder="e.g. Royal Orchid Hall OR Zoom Webinar Link"
               />
               {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location.message}</p>}
+            </div>
+
+            {/* Payment Configuration */}
+            <div className="border-t border-gray-100 pt-4 space-y-3">
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  {...register('isPaid')}
+                  className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <span className="text-xs font-bold text-gray-700">Paid Event (Requires Ticket)</span>
+              </label>
+
+              {watchIsPaid && (
+                <div className="space-y-1.5 animate-fadeIn">
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide">Registration Fee (INR) *</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    {...register('registrationFee')}
+                    className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500"
+                    placeholder="e.g. 499"
+                  />
+                  {errors.registrationFee && <p className="text-red-500 text-xs mt-1">{errors.registrationFee.message}</p>}
+                </div>
+              )}
             </div>
           </div>
 

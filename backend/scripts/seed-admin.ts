@@ -1,6 +1,5 @@
 // backend/scripts/seed-admin.ts
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import Admin from '../src/models/Admin'; // adjust path if needed
 import dns from 'dns'
@@ -13,7 +12,7 @@ const seedAdmin = async () => {
     await mongoose.connect(process.env.MONGO_URI!);
     console.log('Connected to MongoDB');
 
-    const adminEmail = 'admin@example.com';
+    const adminEmail = 'shailjaiswal9135@gmail.com';
     const adminPassword = 'password123';
 
     // Check if admin already exists
