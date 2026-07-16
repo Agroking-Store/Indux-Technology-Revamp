@@ -87,10 +87,24 @@ const servicesData = {
       href: "/services/web-dev",
       icon: Globe,
     },
-
-    { title: "Mobile App Dev", href: "/services/mobile-dev", icon: Smartphone },
-    { title: "AI Solutions", href: "/services/ai-chatbots", icon: Bot },
-    { title: "Business Automation", href: "/services/automation", icon: Zap },
+    {
+      title: "Mobile App Dev",
+      desc: "Native and cross-platform apps",
+      href: "/services/mobile-dev",
+      icon: Smartphone,
+    },
+    {
+      title: "AI Solutions",
+      desc: "Intelligent chat and agents",
+      href: "/services/ai-chatbots",
+      icon: Bot,
+    },
+    {
+      title: "Business Automation",
+      desc: "Streamline tasks and workflows",
+      href: "/services/automation",
+      icon: Zap,
+    },
   ],
   side: [],
 };
@@ -399,12 +413,14 @@ function DropdownMenu({
         {isHovered && (
           <motion.div
             className={cn(
-              "absolute top-[80px] left-1/2 -translate-x-1/2 pt-2",
+              "absolute top-[80px] left-1/2 pt-2",
               data.side && data.side.length > 0
-                ? "w-[900px]"
-                : data.main.length === 4
-                  ? "w-[1000px]"
-                  : "w-[750px]",
+                ? "w-[900px] -translate-x-1/2"
+                : data.main.length === 6
+                  ? "w-[1240px] -translate-x-[30%]"
+                  : data.main.length === 4
+                    ? "w-[1000px] -translate-x-1/2"
+                    : "w-[750px] -translate-x-1/2",
             )}
             initial={{ opacity: 0, y: 10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -416,7 +432,11 @@ function DropdownMenu({
               <div
                 className={cn(
                   "flex-1 grid gap-4",
-                  data.main.length === 4 ? "grid-cols-4" : "grid-cols-3",
+                  data.main.length === 6
+                    ? "grid-cols-6"
+                    : data.main.length === 4
+                      ? "grid-cols-4"
+                      : "grid-cols-3",
                 )}
               >
                 {data.main.map((item, idx) => (

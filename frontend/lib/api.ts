@@ -278,9 +278,9 @@ export const cancelRegistration = async (razorpayOrderId: string): Promise<any> 
   return res.data;
 };
 
-export const getVisitorCount = async (): Promise<number> => {
+export const getVisitorCount = async (log = true): Promise<number> => {
   try {
-    const res = await api.get("/visitors");
+    const res = await api.get(`/visitors?log=${log}`);
     return res.data.count;
   } catch (error) {
     console.error("Error fetching visitor count:", error);

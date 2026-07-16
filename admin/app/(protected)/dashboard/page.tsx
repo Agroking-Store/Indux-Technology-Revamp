@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import api, { ApiResponse } from '@/lib/api';
 import Link from 'next/link';
-import { FileText, Briefcase, MessageSquare, Calendar, PlusCircle, Sparkles, TrendingUp, CheckCircle, Clock, Inbox, UserCheck, Heart, UserMinus, MapPin } from 'lucide-react';
+import { FileText, Briefcase, MessageSquare, Calendar, PlusCircle, Sparkles, TrendingUp, CheckCircle, Clock, Inbox, UserCheck, Heart, UserMinus, MapPin, Users } from 'lucide-react';
 
 interface DashboardStats {
   blogs: { total: number; published: number; draft: number };
@@ -52,6 +52,19 @@ export default function DashboardPage() {
     };
     fetchStats();
   }, []);
+
+  // Website Traffic Analytics States
+  const [visitorRange, setVisitorRange] = useState<'week' | 'month'>('week');
+  const [visitorData, setVisitorData] = useState<{ total: number; chartData: Array<{ label: string; count: number }> } | null>(null);
+  const [loadingVisitors, setLoadingVisitors] = useState(false);
+
+  useEffect(() => {
+    setLoadingVisitors(true);
+    api.get<ApiResponse<{ total: number; chartData: Array<{ label: string; count: number }> }>>(`/dashboard/visitor-stats?range=${visitorRange}`)
+      .then(res => setVisitorData(res.data.data))
+      .catch(console.error)
+      .finally(() => setLoadingVisitors(false));
+  }, [visitorRange]);
 
   useEffect(() => {
     if (activeTab === 'ats' && !atsStats) {
@@ -206,6 +219,92 @@ export default function DashboardPage() {
                 </div>
               );
             })}
+          </div>
+
+          {/* Website Traffic & Visitors Card */}
+          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 border border-indigo-150 dark:border-indigo-900">
+                    <Users size={16} />
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Website Traffic Analytics</h3>
+                </div>
+                <p className="text-xs text-slate-500 font-semibold">Monitor real-time user visits and traffic history.</p>
+              </div>
+              
+              {/* Filter Selector Tabs */}
+              <div className="flex bg-slate-100 dark:bg-slate-950 p-1 rounded-xl border border-slate-200/50 dark:border-slate-850">
+                <button
+                  onClick={() => setVisitorRange('week')}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${visitorRange === 'week' ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                >
+                  This Week
+                </button>
+                <button
+                  onClick={() => setVisitorRange('month')}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${visitorRange === 'month' ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                >
+                  This Month
+                </button>
+              </div>
+            </div>
+
+            {loadingVisitors ? (
+              <div className="flex justify-center items-center h-48">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
+              </div>
+            ) : !visitorData ? (
+              <div className="py-12 text-center text-xs text-gray-400 italic">Failed to load traffic metrics.</div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Left: Highlight Total */}
+                <div className="space-y-4 flex flex-col justify-center border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 pb-6 md:pb-0 md:pr-8">
+                  <span className="text-[11px] uppercase font-bold text-slate-450 tracking-wider">Total Visitors ({visitorRange === 'week' ? 'Past 7 Days' : 'Past 30 Days'})</span>
+                  <div className="space-y-1">
+                    <h2 className="text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+                      {visitorData.total}
+                    </h2>
+                    <p className="text-[10px] text-slate-450 font-bold flex items-center gap-1">
+                      <TrendingUp size={10} className="text-emerald-500 animate-pulse" /> Active user traffic log
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right: Trend Chart (spans 2 columns) */}
+                <div className="md:col-span-2 space-y-4">
+                  <span className="text-[10px] uppercase font-bold text-slate-450 tracking-wider block text-left">Traffic Trend History</span>
+                  
+                  {visitorData.chartData.length === 0 ? (
+                    <div className="h-32 flex items-center justify-center text-xs text-slate-400 italic">No traffic recorded yet.</div>
+                  ) : (
+                    <div className="flex items-end justify-around h-36 pt-6 px-2">
+                      {visitorData.chartData.map((item, idx) => {
+                        const maxVal = Math.max(...visitorData.chartData.map(x => x.count), 1);
+                        const heightPct = `${Math.round((item.count / maxVal) * 100)}%`;
+                        return (
+                          <div key={idx} className="flex flex-col items-center gap-2 group relative flex-1 max-w-[64px]">
+                            <div className="flex-1 w-full bg-slate-50 dark:bg-slate-950/40 rounded-xl relative overflow-hidden flex items-end min-h-[100px] border border-slate-100 dark:border-slate-850">
+                              <div
+                                style={{ height: heightPct }}
+                                className="w-full bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-xl group-hover:scale-y-105 transition-all duration-300 origin-bottom"
+                              />
+                              <span className="absolute top-1 left-1/2 -translate-x-1/2 bg-slate-900 text-white font-extrabold text-[9px] px-1.5 py-0.5 rounded shadow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                                {item.count} views
+                              </span>
+                            </div>
+                            <span className="text-[9px] font-bold text-slate-450 line-clamp-1 w-full text-center">
+                              {item.label}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -4,6 +4,8 @@ import Career from "../models/Career";
 import Lead from "../models/Lead";
 import Event from "../models/Event";
 import JobApplication from "../models/JobApplication";
+import EventRegistration from "../models/EventRegistration";
+import { Visitor } from "../models/Visitor";
 import ApiResponse from "../utils/ApiResponse";
 import asyncHandler from "../utils/asyncHandler";
 
@@ -164,5 +166,84 @@ export const getAtsStats = asyncHandler(async (_req: Request, res: Response) => 
         appsOverTime: past6Months,
       }
     }, "ATS statistics fetched successfully")
+  );
+});
+
+// @desc    Get website visitor stats with range filtering
+// @route   GET /api/v1/dashboard/visitor-stats
+// @access  Private
+export const getVisitorStats = asyncHandler(async (req: Request, res: Response) => {
+  const { range = "week" } = req.query;
+
+  const data: Array<{ label: string; count: number }> = [];
+  let totalCount = 0;
+
+  if (range === "week") {
+    // Past 7 days (including today)
+    for (let i = 6; i >= 0; i--) {
+      const start = new Date();
+      start.setDate(start.getDate() - i);
+      start.setHours(0, 0, 0, 0);
+
+      const end = new Date();
+      end.setDate(end.getDate() - i);
+      end.setHours(23, 59, 59, 999);
+
+      const count = await Visitor.countDocuments({
+        createdAt: { $gte: start, $lte: end },
+      });
+
+      totalCount += count;
+
+      const dayLabel = start.toLocaleDateString("en-US", { weekday: "short" });
+      data.push({ label: dayLabel, count });
+    }
+  } else if (range === "month") {
+    // Past 30 days grouped in 4 weeks
+    for (let i = 3; i >= 0; i--) {
+      const start = new Date();
+      start.setDate(start.getDate() - (i + 1) * 7);
+      start.setHours(0, 0, 0, 0);
+
+      const end = new Date();
+      end.setDate(end.getDate() - i * 7);
+      end.setHours(23, 59, 59, 999);
+
+      const count = await Visitor.countDocuments({
+        createdAt: { $gte: start, $lte: end },
+      });
+
+      totalCount += count;
+
+      data.push({ label: `Week ${4 - i}`, count });
+    }
+  } else {
+    // All time (fallback / total)
+    totalCount = await Visitor.countDocuments();
+  }
+
+  res.status(200).json(
+    new ApiResponse(200, {
+      total: totalCount,
+      chartData: data,
+    }, "Visitor statistics fetched successfully")
+  );
+});
+
+// @desc    Get system notifications count and details
+// @route   GET /api/v1/dashboard/notifications
+// @access  Private
+export const getNotifications = asyncHandler(async (_req: Request, res: Response) => {
+  const newLeads = await Lead.countDocuments({ status: "New" });
+  const newApplications = await JobApplication.countDocuments({ status: "New" });
+  const pendingRegistrations = await EventRegistration.countDocuments({ status: "Pending" });
+
+  res.status(200).json(
+    new ApiResponse(200, {
+      leads: newLeads,
+      applications: newApplications,
+      registrations: pendingRegistrations,
+      total: newLeads + newApplications + pendingRegistrations,
+    }, "Notifications counts fetched successfully")
   );
 });

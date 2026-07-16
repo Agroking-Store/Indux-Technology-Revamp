@@ -6,19 +6,26 @@ const router = Router();
 
 router.get(
   "/",
-  asyncHandler(async (_req: Request, res: Response) => {
-    let visitor = await Visitor.findOne();
+  asyncHandler(async (req: Request, res: Response) => {
+    const shouldLog = req.query.log !== "false";
 
-    if (!visitor) {
-      visitor = await Visitor.create({ count: 1 });
-    } else {
-      visitor.count += 1;
-      await visitor.save();
+    if (shouldLog) {
+      try {
+        // Create new visitor entry
+        await Visitor.create({
+          ip: req.ip || req.socket.remoteAddress,
+          userAgent: req.headers["user-agent"],
+        });
+      } catch (err) {
+        console.error("Failed to log visitor:", err);
+      }
     }
+
+    const totalCount = await Visitor.countDocuments();
 
     res.status(200).json({
       success: true,
-      count: visitor.count,
+      count: totalCount,
     });
   }),
 );
