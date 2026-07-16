@@ -19,12 +19,12 @@ router.post("/", uploadResume, submitApplication);
 
 // ---- Secure resume streaming (supports auth token in query param or auth headers) ----
 router.get("/:id/resume", getResumeStream);
+router.get("/export", exportApplications);
 
 // ---- Protected endpoints (admin only) ----
 router.use(protect);
 
 router.get("/", getApplications);
-router.get("/export", exportApplications);
 router.get("/:id", getCandidateDetails);
 router.patch("/:id/status", updateApplicationStatus);
 router.patch("/:id/notes", updateApplicationNotes);

@@ -30,6 +30,8 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
   const [github, setGithub] = useState("");
   const [noticePeriod, setNoticePeriod] = useState("");
   const [expectedCTC, setExpectedCTC] = useState("");
+  const [skills, setSkills] = useState("");
+  const [preferredLocation, setPreferredLocation] = useState("");
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   
   // Custom Answers State
@@ -72,7 +74,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!fullName || !email || !phone || !experience || !resumeFile) {
+    if (!fullName || !email || !phone || !experience || !skills || !resumeFile) {
       setErrorMsg("Please fill in all required fields and upload your resume.");
       return;
     }
@@ -106,6 +108,8 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
         github,
         noticePeriod,
         expectedCTC,
+        skills,
+        preferredLocation,
         answers,
         resume: resumeFile,
       });
@@ -327,6 +331,30 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={expectedCTC}
                         onChange={(e) => setExpectedCTC(e.target.value)}
                         placeholder="e.g. $90,000"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Key Skills * (comma-separated)</label>
+                      <input
+                        type="text"
+                        required
+                        value={skills}
+                        onChange={(e) => setSkills(e.target.value)}
+                        placeholder="e.g. React, Next.js, Node.js, MongoDB"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-605 dark:text-slate-400 mb-1.5">Preferred Work Location</label>
+                      <input
+                        type="text"
+                        value={preferredLocation}
+                        onChange={(e) => setPreferredLocation(e.target.value)}
+                        placeholder="e.g. Remote / Pune"
                         className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       />
                     </div>

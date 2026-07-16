@@ -229,22 +229,22 @@ export default function DashboardPage() {
                   <div className="p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 border border-indigo-150 dark:border-indigo-900">
                     <Users size={16} />
                   </div>
-                  <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Website Traffic Analytics</h3>
+                  <h3 className="text-sm font-black text-slate-850 dark:text-slate-200 uppercase tracking-wider">Website Traffic Analytics</h3>
                 </div>
-                <p className="text-xs text-slate-500 font-semibold">Monitor real-time user visits and traffic history.</p>
+                <p className="text-xs text-slate-600 dark:text-slate-350 font-semibold">Monitor real-time user visits and traffic history.</p>
               </div>
               
               {/* Filter Selector Tabs */}
-              <div className="flex bg-slate-100 dark:bg-slate-950 p-1 rounded-xl border border-slate-200/50 dark:border-slate-850">
+              <div className="flex bg-slate-100 dark:bg-slate-955 p-1 rounded-xl border border-slate-200/50 dark:border-slate-850">
                 <button
                   onClick={() => setVisitorRange('week')}
-                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${visitorRange === 'week' ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${visitorRange === 'week' ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-700'}`}
                 >
                   This Week
                 </button>
                 <button
                   onClick={() => setVisitorRange('month')}
-                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${visitorRange === 'month' ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${visitorRange === 'month' ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-700'}`}
                 >
                   This Month
                 </button>
@@ -256,17 +256,17 @@ export default function DashboardPage() {
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
               </div>
             ) : !visitorData ? (
-              <div className="py-12 text-center text-xs text-gray-400 italic">Failed to load traffic metrics.</div>
+              <div className="py-12 text-center text-xs text-slate-500 italic">Failed to load traffic metrics.</div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Left: Highlight Total */}
                 <div className="space-y-4 flex flex-col justify-center border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 pb-6 md:pb-0 md:pr-8">
-                  <span className="text-[11px] uppercase font-bold text-slate-450 tracking-wider">Total Visitors ({visitorRange === 'week' ? 'Past 7 Days' : 'Past 30 Days'})</span>
+                  <span className="text-[11px] uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">Total Visitors ({visitorRange === 'week' ? 'Past 7 Days' : 'Past 30 Days'})</span>
                   <div className="space-y-1">
                     <h2 className="text-5xl font-black text-slate-900 dark:text-white tracking-tight">
                       {visitorData.total}
                     </h2>
-                    <p className="text-[10px] text-slate-450 font-bold flex items-center gap-1">
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1">
                       <TrendingUp size={10} className="text-emerald-500 animate-pulse" /> Active user traffic log
                     </p>
                   </div>
@@ -274,10 +274,10 @@ export default function DashboardPage() {
 
                 {/* Right: Trend Chart (spans 2 columns) */}
                 <div className="md:col-span-2 space-y-4">
-                  <span className="text-[10px] uppercase font-bold text-slate-450 tracking-wider block text-left">Traffic Trend History</span>
+                  <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider block text-left">Traffic Trend History</span>
                   
                   {visitorData.chartData.length === 0 ? (
-                    <div className="h-32 flex items-center justify-center text-xs text-slate-400 italic">No traffic recorded yet.</div>
+                    <div className="h-32 flex items-center justify-center text-xs text-slate-405 italic">No traffic recorded yet.</div>
                   ) : (
                     <div className="flex items-end justify-around h-36 pt-6 px-2">
                       {visitorData.chartData.map((item, idx) => {
@@ -294,7 +294,7 @@ export default function DashboardPage() {
                                 {item.count} views
                               </span>
                             </div>
-                            <span className="text-[9px] font-bold text-slate-450 line-clamp-1 w-full text-center">
+                            <span className="text-[9px] font-bold text-slate-655 dark:text-slate-350 line-clamp-1 w-full text-center">
                               {item.label}
                             </span>
                           </div>
