@@ -43,7 +43,28 @@ export default function Footer() {
   useEffect(() => {
     const fetchCount = async () => {
       try {
-        const data = await getVisitorCount();
+        const lastVisitTime = sessionStorage.getItem("indux_session_visitor_time");
+        const now = Date.now();
+        const THIRTY_MINUTES_MS = 30 * 60 * 1000;
+
+        let shouldLog = true;
+
+        if (lastVisitTime) {
+          const elapsed = now - parseInt(lastVisitTime, 10);
+          if (elapsed < THIRTY_MINUTES_MS) {
+            shouldLog = false; // Active session, skip logging
+          }
+        }
+
+        let data: number;
+        if (shouldLog) {
+          data = await getVisitorCount(true);
+        } else {
+          data = await getVisitorCount(false);
+        }
+
+        // Save or update timestamp to extend the active session window
+        sessionStorage.setItem("indux_session_visitor_time", now.toString());
         setVisitorCount(data);
       } catch (error) {
         console.error("Failed to load visitor count:", error);
