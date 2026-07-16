@@ -24,6 +24,16 @@ export interface IJobApplication extends Document {
     | "Hired"
     | "Rejected";
   notes?: string;
+  matchScore?: number;
+  rating?: number;
+  scoreBreakdown?: {
+    experienceScore: number;
+    skillsScore: number;
+    experienceMax: number;
+    skillsMax: number;
+  };
+  skills?: string;
+  preferredLocation?: string;
   createdAt: Date;
   updatedAt: Date;
 
@@ -63,6 +73,11 @@ const JobApplicationSchema = new Schema<IJobApplication>(
       default: "New",
     },
     notes: { type: String, default: "" },
+    matchScore: { type: Number, default: 0 },
+    rating: { type: Number, default: 0 },
+    scoreBreakdown: { type: Schema.Types.Mixed, default: {} },
+    skills: { type: String, default: "", trim: true },
+    preferredLocation: { type: String, default: "", trim: true },
   },
   {
     timestamps: true,

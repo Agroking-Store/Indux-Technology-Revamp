@@ -172,6 +172,18 @@ export default function CandidateDetailPage() {
                 <span className="text-slate-400 block font-bold uppercase tracking-wider text-[9px]">Hiring Stage</span>
                 <span className="text-gray-800 font-extrabold text-sm block mt-1 uppercase tracking-wide text-indigo-650">{application.status}</span>
               </div>
+              {application.preferredLocation && (
+                <div className="p-3 bg-slate-50 border rounded-2xl">
+                  <span className="text-slate-400 block font-bold uppercase tracking-wider text-[9px]">Preferred Location</span>
+                  <span className="text-gray-800 font-extrabold text-sm block mt-1 line-clamp-1">{application.preferredLocation}</span>
+                </div>
+              )}
+              {application.skills && (
+                <div className="p-3 bg-slate-50 border rounded-2xl col-span-2">
+                  <span className="text-slate-400 block font-bold uppercase tracking-wider text-[9px]">Candidate Skills</span>
+                  <span className="text-gray-800 font-extrabold text-sm block mt-1 line-clamp-1">{application.skills}</span>
+                </div>
+              )}
             </div>
 
             {/* Profile Socials Links */}
@@ -273,6 +285,44 @@ export default function CandidateDetailPage() {
 
         {/* Right Column: Status Actions and Notes */}
         <div className="lg:col-span-4 space-y-6">
+
+          {/* Match Score breakdown card */}
+          <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm space-y-4">
+            <h3 className="text-base font-bold text-gray-800 flex items-center gap-1.5">
+              <Award className="text-indigo-500" size={18} /> Candidate Match Score
+            </h3>
+            
+            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-3 text-xs">
+              <div className="flex justify-between items-center">
+                <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Experience Score</span>
+                <span className="font-extrabold text-slate-800">
+                  {application.scoreBreakdown?.experienceScore !== undefined 
+                    ? `${application.scoreBreakdown.experienceScore}/${application.scoreBreakdown.experienceMax || 60}`
+                    : `${application.matchScore ? Math.round(application.matchScore * 0.6) : 0}/60`}
+                </span>
+              </div>
+              <div className="flex justify-between items-center border-t border-slate-100 pt-3">
+                <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Skills Score</span>
+                <span className="font-extrabold text-slate-800">
+                  {application.scoreBreakdown?.skillsScore !== undefined 
+                    ? `${application.scoreBreakdown.skillsScore}/${application.scoreBreakdown.skillsMax || 40}`
+                    : `${application.matchScore ? Math.round(application.matchScore * 0.4) : 0}/40`}
+                </span>
+              </div>
+              <div className="flex justify-between items-center border-t border-slate-100 pt-3">
+                <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Total Score</span>
+                <span className="font-black text-slate-900 text-sm">
+                  {application.matchScore !== undefined ? `${application.matchScore}/100` : '0/100'}
+                </span>
+              </div>
+              <div className="flex justify-between items-center border-t border-slate-100 pt-3">
+                <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Overall Rating</span>
+                <span className="font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-100 flex items-center gap-1 w-fit">
+                  ⭐ {application.rating !== undefined ? `${application.rating.toFixed(1)}/10` : '0.0/10'}
+                </span>
+              </div>
+            </div>
+          </div>
           
           {/* Status Pipeline Cards */}
           <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm space-y-4">

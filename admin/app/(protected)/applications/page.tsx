@@ -264,6 +264,8 @@ function ApplicationsContent() {
                   <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Candidate</th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Applied Position</th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Experience</th>
+                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Match Score</th>
+                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Rating</th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Applied Date</th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Hiring Pipeline</th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Resume PDF</th>
@@ -302,6 +304,20 @@ function ApplicationsContent() {
                         {app.experience}
                       </td>
 
+                      {/* Match Score */}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-left">
+                        <span className="font-extrabold text-slate-850 bg-slate-100 dark:bg-slate-800 dark:text-slate-200 px-2.5 py-1 rounded-lg">
+                          {app.matchScore !== undefined ? `${app.matchScore}/100` : 'N/A'}
+                        </span>
+                      </td>
+
+                      {/* Rating */}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-left">
+                        <span className="font-bold text-amber-600 bg-amber-50 dark:bg-amber-950/20 dark:text-amber-400 px-2.5 py-1 rounded-lg border border-amber-100 dark:border-amber-900/30 flex items-center gap-1 w-fit">
+                          ⭐ {app.rating !== undefined ? app.rating.toFixed(1) : '0.0'}
+                        </span>
+                      </td>
+
                       {/* Applied Date */}
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-left">
                         {new Date(app.createdAt).toLocaleDateString(undefined, {
@@ -331,12 +347,14 @@ function ApplicationsContent() {
 
                       {/* Resume PDF Actions */}
                       <td className="px-6 py-4 whitespace-nowrap text-left space-x-1.5">
-                        <button
-                          onClick={() => setPreviewResumeUrl(`${process.env.NEXT_PUBLIC_API_URL}/applications/${app._id}/resume?token=${token}`)}
-                          className="inline-flex items-center gap-1 text-[10px] font-bold text-indigo-650 bg-indigo-50 border border-indigo-100 px-2.5 py-1.5 rounded-lg hover:bg-indigo-100 transition"
+                        <a
+                          href={`${process.env.NEXT_PUBLIC_API_URL}/applications/${app._id}/resume?token=${token}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-[10px] font-bold text-indigo-650 bg-indigo-50 border border-indigo-100 px-2.5 py-1.5 rounded-lg hover:bg-indigo-100 transition cursor-pointer"
                         >
                           <Eye size={12} /> Preview
-                        </button>
+                        </a>
                         <a
                           href={`${process.env.NEXT_PUBLIC_API_URL}/applications/${app._id}/resume?token=${token}`}
                           download={`Resume-${(app.candidateName || app.fullName || 'Candidate').replace(/\s+/g, '_')}.pdf`}
@@ -397,33 +415,6 @@ function ApplicationsContent() {
           </div>
         )}
       </div>
-
-      {/* PDF resume preview modal overlay */}
-      {previewResumeUrl && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-3xl border border-gray-100 max-w-4xl w-full h-[85vh] shadow-2xl flex flex-col overflow-hidden text-left">
-            <div className="px-6 py-4 border-b flex justify-between items-center bg-gray-50">
-              <div>
-                <h3 className="font-extrabold text-gray-900 text-lg">Resume PDF Document</h3>
-                <p className="text-xs text-gray-500">Recruiter quick preview console</p>
-              </div>
-              <button
-                onClick={() => setPreviewResumeUrl(null)}
-                className="p-1.5 hover:bg-slate-100 rounded-xl transition text-slate-400 hover:text-slate-655"
-              >
-                <X size={20} />
-              </button>
-            </div>
-            <div className="flex-grow p-4 bg-slate-100 flex items-center justify-center">
-              <iframe
-                src={`${previewResumeUrl}#toolbar=0`}
-                className="w-full h-full rounded-2xl border bg-white shadow-inner"
-                title="Resume Preview"
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   );

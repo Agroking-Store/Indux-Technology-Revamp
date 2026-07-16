@@ -8,6 +8,7 @@ import ApiResponse from "../utils/ApiResponse";
 import asyncHandler from "../utils/asyncHandler";
 import { AuthRequest } from "../middlewares/auth";
 import { env } from "../config/env";
+import { computeMatchScore } from "../utils/matchScore";
 
 // ============================
 // SUBMIT JOB APPLICATION (Public)
@@ -47,6 +48,30 @@ export const submitApplication = asyncHandler(async (req: Request, res: Response
     }
   }
 
+  // Extract skills and location from root fields or dynamic answers
+  let candidateSkills = validated.skills || "";
+  let preferredLocation = validated.preferredLocation || "";
+
+  if (parsedAnswers && typeof parsedAnswers === "object") {
+    for (const [key, val] of Object.entries(parsedAnswers)) {
+      const lowerKey = key.toLowerCase();
+      if (!candidateSkills && (lowerKey.includes("skill") || lowerKey.includes("skills"))) {
+        candidateSkills = Array.isArray(val) ? val.join(", ") : String(val);
+      }
+      if (!preferredLocation && (lowerKey.includes("location") || lowerKey.includes("preferred"))) {
+        preferredLocation = Array.isArray(val) ? val.join(", ") : String(val);
+      }
+    }
+  }
+
+  // Calculate Match Score using our algorithm utility
+  const { matchScore, rating, scoreBreakdown } = computeMatchScore(
+    validated.experience,
+    candidateSkills,
+    career.experience,
+    career.skills || []
+  );
+
   const application = await JobApplication.create({
     jobId: targetJobId,
     candidateName: validated.candidateName || validated.fullName || "Candidate",
@@ -62,6 +87,11 @@ export const submitApplication = asyncHandler(async (req: Request, res: Response
     answers: parsedAnswers,
     resume: resumeBase64,
     status: "New",
+    matchScore,
+    rating,
+    scoreBreakdown,
+    skills: candidateSkills,
+    preferredLocation,
   });
 
   res.status(201).json(new ApiResponse(201, application, "Application submitted successfully"));
@@ -113,7 +143,7 @@ export const getApplications = asyncHandler(async (req: AuthRequest, res: Respon
 
   const applications = await JobApplication.find(query)
     .populate("jobId", "title department location")
-    .sort({ createdAt: -1 })
+    .sort({ matchScore: -1, createdAt: -1 })
     .skip(skip)
     .limit(limit);
 
@@ -249,7 +279,25 @@ export const deleteApplication = asyncHandler(async (req: AuthRequest, res: Resp
 // ============================
 // EXPORT APPLICATIONS TO CSV (Admin Only)
 // ============================
-export const exportApplications = asyncHandler(async (req: AuthRequest, res: Response) => {
+export const exportApplications = asyncHandler(async (req: Request, res: Response) => {
+  // Accept token from Authorization header OR ?token= query param
+  let token: string | undefined;
+  if (req.headers.authorization?.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
+  } else if (typeof req.query.token === "string" && req.query.token) {
+    token = req.query.token;
+  }
+
+  if (!token) {
+    throw ApiError.unauthorized("Not authorized: no token provided");
+  }
+
+  try {
+    jwt.verify(token, env.JWT_SECRET);
+  } catch {
+    throw ApiError.unauthorized("Not authorized: invalid or expired token");
+  }
+
   const { jobId, careerId, status, search, date } = req.query;
 
   const query: any = {};
@@ -274,10 +322,10 @@ export const exportApplications = asyncHandler(async (req: AuthRequest, res: Res
 
   const applications = await JobApplication.find(query)
     .populate("jobId", "title department location")
-    .sort({ createdAt: -1 });
+    .sort({ matchScore: -1, createdAt: -1 });
 
   // Generate CSV
-  let csv = "Candidate Name,Email,Phone,Applied Job,Department,Location,Experience,Portfolio,LinkedIn,GitHub,Notice Period,Expected CTC,Status,Applied Date,Notes\n";
+  let csv = "Candidate Name,Email,Phone,Applied Job,Department,Location,Experience,Match Score,Rating,Portfolio,LinkedIn,GitHub,Notice Period,Expected CTC,Status,Applied Date,Notes\n";
 
   for (const app of applications) {
     const job = app.jobId as any;
@@ -288,6 +336,8 @@ export const exportApplications = asyncHandler(async (req: AuthRequest, res: Res
     const dept = `"${(job?.department || "").replace(/"/g, '""')}"`;
     const loc = `"${(job?.location || "").replace(/"/g, '""')}"`;
     const exp = `"${(app.experience || "").replace(/"/g, '""')}"`;
+    const score = `"${app.matchScore !== undefined ? app.matchScore : 0}"`;
+    const ratingStr = `"${app.rating !== undefined ? app.rating : 0.0}"`;
     const port = `"${(app.portfolio || "").replace(/"/g, '""')}"`;
     const li = `"${(app.linkedin || "").replace(/"/g, '""')}"`;
     const gh = `"${(app.github || "").replace(/"/g, '""')}"`;
@@ -297,7 +347,7 @@ export const exportApplications = asyncHandler(async (req: AuthRequest, res: Res
     const appliedAt = `"${new Date(app.createdAt).toLocaleDateString()}"`;
     const notesStr = `"${(app.notes || "").replace(/\n/g, " ").replace(/"/g, '""')}"`;
 
-    csv += `${name},${email},${phone},${jobTitle},${dept},${loc},${exp},${port},${li},${gh},${notice},${ctc},${stat},${appliedAt},${notesStr}\n`;
+    csv += `${name},${email},${phone},${jobTitle},${dept},${loc},${exp},${score},${ratingStr},${port},${li},${gh},${notice},${ctc},${stat},${appliedAt},${notesStr}\n`;
   }
 
   res.setHeader("Content-Type", "text/csv");

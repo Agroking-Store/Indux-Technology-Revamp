@@ -91,6 +91,8 @@ export interface JobApplicationInput {
   github?: string;
   noticePeriod?: string;
   expectedCTC?: string;
+  skills?: string;
+  preferredLocation?: string;
   answers?: Record<string, any>;
   resume: File; // Native File object from upload input
 }
@@ -111,6 +113,8 @@ export const submitApplication = async (
   if (input.github) formData.append("github", input.github);
   if (input.noticePeriod) formData.append("noticePeriod", input.noticePeriod);
   if (input.expectedCTC) formData.append("expectedCTC", input.expectedCTC);
+  if (input.skills) formData.append("skills", input.skills);
+  if (input.preferredLocation) formData.append("preferredLocation", input.preferredLocation);
   if (input.answers) formData.append("answers", JSON.stringify(input.answers));
 
   formData.append("resume", input.resume);

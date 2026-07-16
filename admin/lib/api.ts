@@ -160,6 +160,16 @@ export interface JobApplication {
   resumeUrl: string;
   status: 'New' | 'Reviewed' | 'Shortlisted' | 'Interview Scheduled' | 'Interview Completed' | 'Offered' | 'Hired' | 'Rejected';
   notes?: string;
+  matchScore?: number;
+  rating?: number;
+  scoreBreakdown?: {
+    experienceScore: number;
+    skillsScore: number;
+    experienceMax: number;
+    skillsMax: number;
+  };
+  skills?: string;
+  preferredLocation?: string;
   createdAt: string;
   updatedAt: string;
 }

@@ -14,6 +14,8 @@ export const createApplicationSchema = z.object({
   github: z.string().optional(),
   noticePeriod: z.string().optional(),
   expectedCTC: z.string().optional(),
+  skills: z.string().optional(),
+  preferredLocation: z.string().optional(),
   answers: z.any().optional(), // parsed custom fields responses
 });
 
