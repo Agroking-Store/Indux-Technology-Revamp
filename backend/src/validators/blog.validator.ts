@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-// Matches Blog model. `featuredImage` is deliberately excluded here —
-// it's handled by multer/Cloudinary upload middleware, not raw JSON body.
+// Matches Blog model. `featuredImage` is a base64 data URI (or URL) stored
+// directly as a string — no separate multer/Cloudinary upload step.
 export const createBlogSchema = z.object({
   title: z.string().trim().min(1, "Title is required"),
   slug: z
@@ -10,6 +10,7 @@ export const createBlogSchema = z.object({
     .toLowerCase()
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug must be lowercase, alphanumeric, hyphen-separated")
     .optional(), // auto-generated from title in the controller if omitted
+  featuredImage: z.string().trim().min(1, "Featured image is required"),
   shortDescription: z
     .string()
     .trim()

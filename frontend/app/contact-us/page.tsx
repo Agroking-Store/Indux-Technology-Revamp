@@ -1,9 +1,16 @@
 "use client";
+<<<<<<< HEAD
 
 import React, { useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { Phone, Mail, Send, Building2, MapPin } from "lucide-react";
 
+=======
+import React from "react";
+import { ContactForm } from "@/components/ContactForm";
+import { motion, Variants } from "framer-motion";
+import { Phone, Mail, MapPin } from "lucide-react";
+>>>>>>> main
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -154,6 +161,7 @@ export default function PremiumContact() {
                 <p className="mt-2 text-slate-500">Fill out the form below and our team will get back to you within 24 hours.</p>
               </div>
 
+<<<<<<< HEAD
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">                
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div className="flex flex-col gap-2">
@@ -266,6 +274,9 @@ export default function PremiumContact() {
                   </motion.button>
                 </div>
               </form>
+=======
+              <ContactForm />
+>>>>>>> main
             </div>
           </motion.div>
         </div>

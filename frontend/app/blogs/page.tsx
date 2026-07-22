@@ -9,9 +9,9 @@ import { Button } from '@/components/ui/button';
 
 // Fallback high-quality internet image URLs
 const fallbackImages = [
-  'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80', // MacBook with code
-  'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80', // Tech server room
-  'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80', // Laptop workspace
+  '/images/unsplash/img-3be447cf.webp', // MacBook with code
+  '/images/unsplash/img-0f36d5cf.webp', // Tech server room
+  '/images/unsplash/img-8f08504f.webp', // Laptop workspace
 ];
 
 function formatDate(dateStr: string) {

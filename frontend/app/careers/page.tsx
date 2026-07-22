@@ -9,23 +9,23 @@ import { Button } from '@/components/ui/button';
 import { NumberTicker } from '@/components/ui/number-ticker';
 
 const heroImage =
-  'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80'; // team meeting around a table
+  '/images/unsplash/img-48235d4d.webp'; // team meeting around a table
 
 const galleryImages = [
   {
-    src: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80',
+    src: '/images/unsplash/img-f5258efe.webp',
     alt: 'Team collaborating at a desk',
   },
   {
-    src: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80',
+    src: '/images/unsplash/img-c5464143.webp',
     alt: 'Team celebrating a win together',
   },
   {
-    src: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=600&q=80',
+    src: '/images/unsplash/img-fbe10b87.webp',
     alt: 'Handshake during an interview',
   },
   {
-    src: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=600&q=80',
+    src: '/images/unsplash/img-75eb484d.webp',
     alt: 'Casual team discussion',
   },
 ];
@@ -69,13 +69,17 @@ export default function CareersPage() {
                 <p className="text-lg text-slate-505 dark:text-slate-400 leading-relaxed mt-2">
                   Build your engineering career with industry professionals who care about robust software and helping clients scale their digital infrastructure.
                 </p>
+<<<<<<< HEAD
                 <Button
                   className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer w-max flex items-center gap-2"
+=======
+                <a
+                  href="#open-positions"
+                  className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer w-max inline-flex items-center gap-2"
+>>>>>>> main
                 >
-                  <a href="#open-positions">
-                    View Open Positions <ArrowRight className="w-4 h-4" />
-                  </a>
-                </Button>
+                  View Open Positions <ArrowRight className="w-4 h-4" />
+                </a>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -114,7 +118,7 @@ export default function CareersPage() {
               className="grid grid-cols-3 gap-8 md:divide-x divide-blue-800/40 dark:divide-slate-800"
             >
               {[
-                { value: 1800, label: 'Trusted Clients', suffix: '+' },
+                { value: 350, label: 'Trusted Clients', suffix: '+' },
                 { value: 98, label: 'Retention Rate', suffix: '%' },
                 { value: 24, label: 'Systems Monitoring', suffix: '/7' },
               ].map((stat, idx) => (
@@ -321,13 +325,17 @@ export default function CareersPage() {
               <p className="text-blue-100/70 text-sm leading-relaxed mt-3 mb-8 max-w-md mx-auto">
                 We are always looking for exceptional software engineers, designers, and project managers. Get in touch with us directly.
               </p>
+<<<<<<< HEAD
               <Button
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wider text-xs uppercase transition-all duration-300 shadow-lg shadow-blue-700/20 hover:scale-105 active:scale-95"
+=======
+              <Link
+                href="/contact-us"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wider text-xs uppercase transition-all duration-300 shadow-lg shadow-blue-700/20 hover:scale-105 active:scale-95 inline-flex items-center justify-center"
+>>>>>>> main
               >
-                <Link href="/contact-us">
-                  Get in Touch
-                </Link>
-              </Button>
+                Get in Touch
+              </Link>
             </motion.div>
           </div>
         </section>

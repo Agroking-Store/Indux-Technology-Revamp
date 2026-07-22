@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { InstagramLogoIcon, LinkedInLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { FaXTwitter, FaWhatsapp } from "react-icons/fa6";
 import { cn } from "@/lib/utils";
 
 const FacebookLogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -11,15 +12,16 @@ const FacebookLogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 const socials = [
-  { name: "LinkedIn", icon: LinkedInLogoIcon, href: "#", color: "hover:bg-[#0077b5] hover:text-white hover:border-[#0077b5]" },
-  { name: "Twitter", icon: TwitterLogoIcon, href: "#", color: "hover:bg-black dark:hover:bg-white dark:hover:text-black hover:text-white hover:border-black dark:hover:border-white" },
-  { name: "Facebook", icon: FacebookLogoIcon, href: "#", color: "hover:bg-[#1877f2] hover:text-white hover:border-[#1877f2]" },
-  { name: "Instagram", icon: InstagramLogoIcon, href: "#", color: "hover:bg-[#e4405f] hover:text-white hover:border-[#e4405f]" },
+  { name: "LinkedIn", icon: LinkedInLogoIcon, href: "https://www.linkedin.com/company/indux-technology/", color: "hover:bg-[#0077b5] hover:text-white hover:border-[#0077b5]" },
+  { name: "Twitter", icon: FaXTwitter, href: "https://x.com/induxtechnology", color: "hover:bg-black dark:hover:bg-white dark:hover:text-black hover:text-white hover:border-black dark:hover:border-white" },
+  { name: "Facebook", icon: FacebookLogoIcon, href: "https://www.facebook.com/885831577953764/", color: "hover:bg-[#1877f2] hover:text-white hover:border-[#1877f2]" },
+  { name: "Instagram", icon: InstagramLogoIcon, href: "https://www.instagram.com/indux.technology", color: "hover:bg-[#e4405f] hover:text-white hover:border-[#e4405f]" },
+  { name: "WhatsApp", icon: FaWhatsapp, href: "https://wa.me/918421538753", target: "_blank", color: "hover:bg-[#25D366] hover:text-white hover:border-[#25D366]" },
 ];
 
 export default function FloatingSocials() {
   return (
-    <div className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 pl-2">
+    <div className="fixed left-0 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-3 pl-2">
       {socials.map((social) => {
         const Icon = social.icon;
         return (

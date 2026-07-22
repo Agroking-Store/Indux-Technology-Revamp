@@ -1,6 +1,5 @@
 // backend/scripts/seed-admin.ts
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import Admin from '../src/models/Admin'; // adjust path if needed
 import dns from 'dns'
@@ -13,7 +12,7 @@ const seedAdmin = async () => {
     await mongoose.connect(process.env.MONGO_URI!);
     console.log('Connected to MongoDB');
 
-    const adminEmail = 'test@example.com';
+    const adminEmail = 'shailjaiswal9135@gmail.com';
     const adminPassword = 'password123';
 
     // Check if admin already exists
@@ -23,15 +22,11 @@ const seedAdmin = async () => {
       process.exit(0);
     }
 
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(adminPassword, salt);
-
-    // Create admin
+    // Create admin (Mongoose pre-save hook will hash this password automatically)
     await Admin.create({
       name: 'Admin',
       email: adminEmail,
-      password: hashedPassword,
+      password: adminPassword,
     });
 
     console.log(`Admin created with email: ${adminEmail} and password: ${adminPassword}`);

@@ -6,6 +6,7 @@ import {
   updateCareer,
   deleteCareer,
   updateCareerStatus,
+  duplicateCareer,
 } from "../controllers/career.controller";
 import { protect } from "../middlewares/auth";
 
@@ -19,6 +20,7 @@ router.get("/:id", getCareerById);
 router.use(protect); // all routes below this require authentication
 
 router.post("/", createCareer);
+router.post("/:id/duplicate", duplicateCareer);
 router.put("/:id", updateCareer);
 router.delete("/:id", deleteCareer);
 router.patch("/:id/status", updateCareerStatus);
