@@ -35,33 +35,33 @@ const GlobalPresenceClocks = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0">
                 {/* India Section */}
-                <div className="flex flex-col items-center text-center px-8 py-4">
-                    <div className="text-7xl md:text-8xl text-foreground font-extrabold tracking-tight mb-4 min-h-[96px]">
+                <div className="flex flex-col items-center text-center px-4 sm:px-8 py-4">
+                    <div className="text-5xl sm:text-7xl md:text-8xl text-foreground font-extrabold tracking-tight mb-4 min-h-[72px] sm:min-h-[96px]">
                         {indiaTime || "00:00"}
                     </div>
-                    <h3 className="text-3xl text-foreground font-bold mb-2">
-                        <span className="text-2xl mr-2">🇮🇳</span>India
+                    <h3 className="text-2xl sm:text-3xl text-foreground font-bold mb-2">
+                        <span className="text-xl sm:text-2xl mr-2">🇮🇳</span>India
                     </h3>
                     <div className="flex items-center gap-2 text-muted-foreground">
-                        <span className="font-medium uppercase tracking-widest text-sm">Mumbai</span>
+                        <span className="font-medium uppercase tracking-widest text-xs sm:text-sm">Mumbai</span>
                     </div>
-                    <div className="mt-4 text-sm text-muted-foreground font-semibold uppercase tracking-widest">
+                    <div className="mt-4 text-xs sm:text-sm text-muted-foreground font-semibold uppercase tracking-widest">
                         IST (UTC+5:30)
                     </div>
                 </div>
 
                 {/* UAE Section */}
-                <div className="flex flex-col items-center text-center px-8 py-4">
-                    <div className="text-7xl md:text-8xl text-foreground font-extrabold tracking-tight mb-4 min-h-[96px]">
+                <div className="flex flex-col items-center text-center px-4 sm:px-8 py-4">
+                    <div className="text-5xl sm:text-7xl md:text-8xl text-foreground font-extrabold tracking-tight mb-4 min-h-[72px] sm:min-h-[96px]">
                         {uaeTime || "00:00"}
                     </div>
-                    <h3 className="text-3xl text-foreground font-bold mb-2">
-                        <span className="text-2xl mr-2">🇦🇪</span>UAE
+                    <h3 className="text-2xl sm:text-3xl text-foreground font-bold mb-2">
+                        <span className="text-xl sm:text-2xl mr-2">🇦🇪</span>UAE
                     </h3>
                     <div className="flex items-center gap-2 text-muted-foreground">
-                        <span className="font-medium uppercase tracking-widest text-sm">Dubai</span>
+                        <span className="font-medium uppercase tracking-widest text-xs sm:text-sm">Dubai</span>
                     </div>
-                    <div className="mt-4 text-sm text-muted-foreground font-semibold uppercase tracking-widest">
+                    <div className="mt-4 text-xs sm:text-sm text-muted-foreground font-semibold uppercase tracking-widest">
                         GST (UTC+4:00)
                     </div>
                 </div>
@@ -75,7 +75,7 @@ export default function ServicesPage() {
     return (
         <>
             {/* Hero Section */}
-            <section className="relative pt-24 pb-32 overflow-hidden">
+            <section className="relative pt-20 sm:pt-24 pb-20 sm:pb-32 overflow-hidden">
                 <div className="absolute inset-0 w-full h-full z-0">
                     <img
                         alt="High-tech professional IT background"
@@ -83,12 +83,12 @@ export default function ServicesPage() {
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdepPcUqWQb-AvSbx-mPzI5Crwpvmi02OxS4GFzCKt-h2KiecG9Rys_cgYTOJTyjLYS7llW3Q8vb9irsUttkpKJoKBQvydmhMh7a9-RsZ8FIlFNlrcXMAvF4Q5W9DVPCu3zVA7g_yvrp67UA3nBclcMDbQDW_QAPOhd-Y5TEF8DOEx4q5csZaAVW5TjhXtHmRiMu-GbkmD34QiOflsK4kIODgdYtodC87c_6g1eBst_xOQPkYq_Rx2fQ"
                     />
                 </div>
-                <div className="relative max-w-7xl mx-auto px-6 text-center">
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary text-secondary-foreground mb-6">
                         <span className="w-2 h-2 rounded-full bg-primary"></span>
-                        <span className="text-sm font-semibold tracking-wider uppercase">Expert Solutions</span>
+                        <span className="text-xs sm:text-sm font-semibold tracking-wider uppercase">Expert Solutions</span>
                     </div>
-                    <h1 className="text-5xl md:text-7xl text-foreground mb-6 max-w-4xl mx-auto font-bold tracking-tight">
+                    <h1 className="text-3xl sm:text-5xl md:text-7xl text-foreground mb-6 max-w-4xl mx-auto font-bold tracking-tight">
                         Our Specialized IT Services
                     </h1>
                     <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">

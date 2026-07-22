@@ -86,7 +86,7 @@ export default async function ProductDetails({
             </div>
 
             {/* Status & Category Cards with cleaner styling */}
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm transition-hover hover:border-blue-200 dark:hover:border-blue-900">
                 <h4 className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
                   Status

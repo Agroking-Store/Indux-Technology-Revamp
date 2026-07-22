@@ -312,9 +312,9 @@ export default function Navbar() {
           </nav>
 
           {/* Right Section & Mobile Menu */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <LanguageSwitcher />
-            <AnimatedThemeToggler className="hidden sm:flex size-12 items-center justify-center rounded-full bg-slate-100/80 dark:bg-slate-900 text-slate-600 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-850 hover:text-blue-600 transition-colors cursor-pointer border border-slate-200 dark:border-slate-800" />
+            <AnimatedThemeToggler className="flex size-10 sm:size-12 items-center justify-center rounded-full bg-slate-100/80 dark:bg-slate-900 text-slate-600 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-850 hover:text-blue-600 transition-colors cursor-pointer border border-slate-200 dark:border-slate-800" />
             <GetQuoteModal />
 
             <MobileNav pathname={pathname} />
@@ -413,49 +413,49 @@ function DropdownMenu({
         {isHovered && (
           <motion.div
             className={cn(
-              "absolute top-[80px] left-1/2 pt-2",
+              "absolute top-[80px] left-1/2 -translate-x-1/2 pt-2 z-50 max-w-[calc(100vw-2rem)]",
               data.side && data.side.length > 0
-                ? "w-[900px] -translate-x-1/2"
+                ? "w-[900px]"
                 : data.main.length === 6
-                  ? "w-[1240px] -translate-x-[30%]"
+                  ? "w-[1240px]"
                   : data.main.length === 4
-                    ? "w-[1000px] -translate-x-1/2"
-                    : "w-[750px] -translate-x-1/2",
+                    ? "w-[1000px]"
+                    : "w-[750px]",
             )}
             initial={{ opacity: 0, y: 10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.98 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-6 flex gap-6">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-6 flex gap-6 max-h-[80vh] overflow-y-auto">
               {/* Left Side: Horizontal Grid Cards */}
               <div
                 className={cn(
                   "flex-1 grid gap-4",
                   data.main.length === 6
-                    ? "grid-cols-6"
+                    ? "grid-cols-2 md:grid-cols-3 xl:grid-cols-6"
                     : data.main.length === 4
-                      ? "grid-cols-4"
-                      : "grid-cols-3",
+                      ? "grid-cols-2 lg:grid-cols-4"
+                      : "grid-cols-1 md:grid-cols-3",
                 )}
               >
                 {data.main.map((item, idx) => (
                   <Link
                     key={idx}
                     href={item.href || "#"}
-                    className="relative flex flex-col justify-between p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-blue-200 dark:hover:border-blue-900 hover:bg-blue-50/10 transition-all group/card overflow-hidden min-h-[220px]"
+                    className="relative flex flex-col justify-between p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-blue-200 dark:hover:border-blue-900 hover:bg-blue-50/10 transition-all group/card overflow-hidden min-h-[200px]"
                   >
                     {/* Grid Background Pattern */}
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-20 group-hover/card:opacity-100 transition-opacity duration-300" />
 
-                    <div className="relative z-10 text-slate-700 dark:text-slate-305 group-hover/card:text-blue-600 transition-colors">
+                    <div className="relative z-10 text-slate-700 dark:text-slate-300 group-hover/card:text-blue-600 transition-colors">
                       <item.icon className="size-7 stroke-[1.5]" />
                     </div>
-                    <div className="relative z-10 mt-8 text-left">
-                      <h4 className="font-bold text-slate-900 dark:text-white text-lg group-hover/card:text-blue-700 dark:group-hover/card:text-blue-400 transition-colors">
+                    <div className="relative z-10 mt-6 text-left">
+                      <h4 className="font-bold text-slate-900 dark:text-white text-base group-hover/card:text-blue-700 dark:group-hover/card:text-blue-400 transition-colors">
                         {item.title}
                       </h4>
-                      <p className="text-slate-500 dark:text-slate-400 text-sm mt-2 leading-relaxed">
+                      <p className="text-slate-500 dark:text-slate-400 text-xs mt-1 leading-relaxed">
                         {item.desc}
                       </p>
                     </div>
@@ -465,7 +465,7 @@ function DropdownMenu({
 
               {/* Right Side: Vertical List with Hover Effects */}
               {data.side && data.side.length > 0 && (
-                <div className="w-64 flex flex-col justify-center border-l dark:border-slate-800 pl-6 gap-1">
+                <div className="w-64 flex flex-col justify-center border-l dark:border-slate-800 pl-6 gap-1 shrink-0">
                   {data.side.map((item, idx) => (
                     <Link
                       key={idx}
@@ -514,11 +514,11 @@ function MobileNav({ pathname }: { pathname: string }) {
         <MenuIcon className="size-7 text-slate-700 dark:text-slate-200" />
       </SheetTrigger>
       <SheetContent
-        className="bg-white/95 dark:bg-slate-900/95 supports-[backdrop-filter]:bg-white/80 w-full md:max-w-md backdrop-blur-xl border-l dark:border-slate-800 p-0 flex flex-col"
+        className="bg-white/95 dark:bg-slate-900/95 supports-[backdrop-filter]:bg-white/80 w-full max-w-sm sm:max-w-md backdrop-blur-xl border-l dark:border-slate-800 p-0 flex flex-col"
         showCloseButton={false}
       >
-        <div className="flex h-24 items-center justify-between border-b dark:border-slate-800 px-8">
-          <p className="font-sans text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+        <div className="flex h-20 items-center justify-between border-b dark:border-slate-800 px-6 sm:px-8">
+          <p className="font-sans text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             Indux<span className="text-blue-600">.</span>
           </p>
           <SheetClose
@@ -526,12 +526,12 @@ function MobileNav({ pathname }: { pathname: string }) {
               <Button size="icon" variant="ghost" className="rounded-full" />
             }
           >
-            <XIcon className="size-7 text-slate-700 dark:text-slate-200" />
+            <XIcon className="size-6 text-slate-700 dark:text-slate-200" />
             <span className="sr-only">Close menu</span>
           </SheetClose>
         </div>
 
-        <div className="flex-1 overflow-y-auto py-8 px-8 flex flex-col gap-6">
+        <div className="flex-1 overflow-y-auto py-6 px-6 sm:px-8 flex flex-col gap-5">
           {/* Services Accordion */}
           <div>
             <div className="flex items-center justify-between w-full mb-2">
@@ -539,7 +539,7 @@ function MobileNav({ pathname }: { pathname: string }) {
                 render={
                   <Link
                     href="/services"
-                    className="text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                    className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
                   />
                 }
               >
@@ -558,15 +558,19 @@ function MobileNav({ pathname }: { pathname: string }) {
               </button>
             </div>
             {openSection === "services" && (
-              <div className="flex flex-col gap-4 mt-4 ml-4 border-l-2 dark:border-slate-800 pl-4">
+              <div className="flex flex-col gap-3 mt-3 ml-4 border-l-2 dark:border-slate-800 pl-4">
                 {servicesData.main.map((item) => (
-                  <Link
+                  <SheetClose
                     key={item.title}
-                    href={item.href || "#"}
-                    className="text-lg font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                    render={
+                      <Link
+                        href={item.href || "#"}
+                        className="text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                      />
+                    }
                   >
                     {item.title}
-                  </Link>
+                  </SheetClose>
                 ))}
               </div>
             )}
@@ -576,7 +580,7 @@ function MobileNav({ pathname }: { pathname: string }) {
           <div>
             <button
               onClick={() => toggleSection("company")}
-              className="flex items-center justify-between w-full text-2xl font-bold text-slate-900 dark:text-white mb-2"
+              className="flex items-center justify-between w-full text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2"
             >
               Company
               <ChevronDown
@@ -587,15 +591,19 @@ function MobileNav({ pathname }: { pathname: string }) {
               />
             </button>
             {openSection === "company" && (
-              <div className="flex flex-col gap-4 mt-4 ml-4 border-l-2 dark:border-slate-800 pl-4">
+              <div className="flex flex-col gap-3 mt-3 ml-4 border-l-2 dark:border-slate-800 pl-4">
                 {companyData.main.map((item) => (
-                  <Link
+                  <SheetClose
                     key={item.title}
-                    href={item.href || "#"}
-                    className="text-lg font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                    render={
+                      <Link
+                        href={item.href || "#"}
+                        className="text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                      />
+                    }
                   >
                     {item.title}
-                  </Link>
+                  </SheetClose>
                 ))}
               </div>
             )}
@@ -605,7 +613,7 @@ function MobileNav({ pathname }: { pathname: string }) {
             render={
               <Link
                 href="/products"
-                className="block text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                className="block text-xl sm:text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
               />
             }
           >
@@ -615,7 +623,7 @@ function MobileNav({ pathname }: { pathname: string }) {
             render={
               <Link
                 href="/contact-us"
-                className="block text-2xl font-bold text-slate-900 hover:text-slate-600 transition-colors"
+                className="block text-xl sm:text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 transition-colors"
               />
             }
           >
@@ -623,10 +631,12 @@ function MobileNav({ pathname }: { pathname: string }) {
           </SheetClose>
         </div>
 
-        <div className="p-8 border-t dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50">
-          <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-8 rounded-2xl text-xl shadow-lg shadow-blue-500/30 cursor-pointer border-t border-white/20">
-            Get Quote
-          </Button>
+        <div className="p-6 border-t dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 flex flex-col gap-4">
+          <GetQuoteModal>
+            <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-6 rounded-2xl text-lg shadow-lg shadow-blue-500/30 cursor-pointer border-t border-white/20">
+              Get Quote
+            </Button>
+          </GetQuoteModal>
         </div>
       </SheetContent>
     </Sheet>

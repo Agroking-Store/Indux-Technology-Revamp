@@ -157,8 +157,17 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply font-sans;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
 
     /* Prevent browser font blurriness */
     -webkit-font-smoothing: antialiased;
@@ -166,9 +175,6 @@
 
     top: 0 !important;
     position: static !important;
-  }
-  html {
-    @apply font-sans;
   }
 
   /* Force hardware accelerated inputs to maintain sub-pixel rendering focus alignment */
@@ -206,4 +212,13 @@
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
+}
+
+/* Hide scrollbar for horizontal carousel */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }

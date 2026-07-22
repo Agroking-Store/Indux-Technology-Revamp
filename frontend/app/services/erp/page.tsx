@@ -401,7 +401,7 @@ export default function ERPServicePage() {
               <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed font-sans">
                 We build ERP ecosystems capable of managing millions of data points simultaneously, maintaining high-speed query performance and steadfast security.
               </p>
-              <div className="grid grid-cols-2 gap-6 pt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
                 <div className="space-y-2">
                   <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                     <Database className="size-5" />
