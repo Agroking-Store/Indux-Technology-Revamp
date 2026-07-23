@@ -159,7 +159,7 @@ export default function ServicesPage() {
                                 <p className="text-muted-foreground mb-6 leading-relaxed">
                                     Building responsive, high-performance web applications that deliver exceptional user experiences across all devices. We focus on scalability and modern architecture to ensure your business stays ahead in a competitive digital landscape.
                                 </p>
-                                <Link href="/services/web-development" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
+                                <Link href="/services/web-dev" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
                             </div>
                         </div>
 
@@ -176,7 +176,7 @@ export default function ServicesPage() {
                                 <p className="text-muted-foreground mb-6 leading-relaxed">
                                     Native and cross-platform mobile solutions that keep your business connected with customers on the go. We build intuitive interfaces and robust backends that provide seamless performance on every handheld device.
                                 </p>
-                                <Link href="/services/mobile-app" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
+                                <Link href="/services/mobile-dev" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
                             </div>
                         </div>
 
@@ -210,7 +210,7 @@ export default function ServicesPage() {
                                 <p className="text-muted-foreground mb-6 leading-relaxed">
                                     Optimizing workflows and reducing manual tasks through smart automation technology tailored to your needs. We identify bottlenecks and implement efficient systems that free up your team for higher-value work.
                                 </p>
-                                <Link href="/services/business-automation" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
+                                <Link href="/services/automation" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
                             </div>
                         </div>
 
