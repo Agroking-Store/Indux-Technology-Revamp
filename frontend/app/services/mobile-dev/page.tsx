@@ -409,7 +409,7 @@ export default function MobileDevServicePage() {
               <p className="text-slate-555 dark:text-slate-455 text-sm md:text-base leading-relaxed font-sans">
                 We design apps that load instantly, secure local caches correctly, preserve device battery cycles, and maintain lightweight installation sizes.
               </p>
-              <div className="grid grid-cols-2 gap-6 pt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
                 <div className="space-y-2">
                   <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                     <Zap className="size-5" />

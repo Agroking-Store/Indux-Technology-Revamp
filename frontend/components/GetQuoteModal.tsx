@@ -153,20 +153,20 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
         </DialogTrigger>
       )}
       
-      <DialogContent className="sm:max-w-[550px] p-0 overflow-hidden bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-3xl outline-none">
+      <DialogContent className="w-[95vw] max-w-[550px] p-0 overflow-hidden bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-3xl outline-none max-h-[90vh] flex flex-col">
         {/* Fancy Header Gradient */}
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 z-10"></div>
         
-        <div className="p-8 pb-10">
-          <DialogHeader className="mb-6">
-            <DialogTitle className="text-2xl font-bold text-slate-900 dark:text-white text-left">Get a Free Quote</DialogTitle>
-            <DialogDescription className="text-slate-500 dark:text-slate-400 text-left">
+        <div className="p-5 sm:p-8 pb-6 sm:pb-10 overflow-y-auto max-h-[calc(90vh-1rem)] flex-1">
+          <DialogHeader className="mb-4 sm:mb-6">
+            <DialogTitle className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white text-left">Get a Free Quote</DialogTitle>
+            <DialogDescription className="text-sm sm:text-base text-slate-500 dark:text-slate-400 text-left">
               Tell us about your project and we'll get back to you with a proposal.
             </DialogDescription>
           </DialogHeader>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Full Name <span className="text-red-500">*</span></Label>
                   <Input id="name" placeholder="John Doe" className="rounded-xl bg-slate-50 dark:bg-slate-900 border-slate-200/60 dark:border-slate-800/60 shadow-sm focus-visible:ring-1 focus-visible:ring-blue-500/50" {...register("name")} />
@@ -178,7 +178,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="workEmail">Work Email <span className="text-red-500">*</span></Label>
                   <Input id="workEmail" type="email" placeholder="john@company.com" className="rounded-xl bg-slate-50 dark:bg-slate-900 border-slate-200/60 dark:border-slate-800/60 shadow-sm focus-visible:ring-1 focus-visible:ring-blue-500/50" {...register("workEmail")} />

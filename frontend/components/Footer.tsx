@@ -165,7 +165,7 @@ export default function Footer() {
                   <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-0.5">
                     Address
                   </span>
-                  <span className="leading-relaxed text-sm max-w-[200px]">
+                  <span className="leading-relaxed text-sm max-w-full sm:max-w-[220px]">
                     S. No. 05, Geeta Paradise, Opp. Zensar, Kharadi, Pune, India
                   </span>
                 </div>
@@ -202,9 +202,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-6 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="pt-6 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
           {/* Left: Social Icons */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 justify-center">
             <a
               href="https://www.facebook.com/885831577953764/"
               target="_blank"
@@ -257,7 +257,7 @@ export default function Footer() {
           </p>
 
           {/* Right: Visitor Counter Section */}
-          <div className="flex items-center gap-4 bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-2xl shadow-inner">
+          <div className="flex items-center gap-4 bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-2xl shadow-inner justify-center">
             <div className="flex items-center gap-2">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -282,9 +282,6 @@ export default function Footer() {
               </div>
             </div>
           </div>
-
-          {/* Spacer for layout balance */}
-          <div className="hidden md:block w-[100px]"></div>
         </div>
       </div>
     </footer>
