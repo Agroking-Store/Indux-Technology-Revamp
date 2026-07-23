@@ -413,7 +413,7 @@ function DropdownMenu({
         {isHovered && (
           <motion.div
             className={cn(
-              "fixed top-20 left-1/2 -translate-x-1/2 pt-2 z-50 max-w-[calc(100vw-2rem)]",
+              "absolute top-[80px] left-1/2 -translate-x-1/2 pt-2 z-50 max-w-[calc(100vw-2rem)]",
               data.side && data.side.length > 0
                 ? "w-[900px]"
                 : data.main.length === 6
