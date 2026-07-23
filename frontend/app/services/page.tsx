@@ -39,8 +39,9 @@ const GlobalPresenceClocks = () => {
                     <div className="text-7xl md:text-8xl text-foreground font-extrabold tracking-tight mb-4 min-h-[96px]">
                         {indiaTime || "00:00"}
                     </div>
-                    <h3 className="text-3xl text-foreground font-bold mb-2">
-                        <span className="text-2xl mr-2">🇮🇳</span>India
+                    <h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
+                        <img src="https://flagcdn.com/w40/in.png" alt="India Flag" className="w-8 h-auto mr-3" />
+                        India
                     </h3>
                     <div className="flex items-center gap-2 text-muted-foreground">
                         <span className="font-medium uppercase tracking-widest text-sm">Mumbai</span>
@@ -55,8 +56,9 @@ const GlobalPresenceClocks = () => {
                     <div className="text-7xl md:text-8xl text-foreground font-extrabold tracking-tight mb-4 min-h-[96px]">
                         {uaeTime || "00:00"}
                     </div>
-                    <h3 className="text-3xl text-foreground font-bold mb-2">
-                        <span className="text-2xl mr-2">🇦🇪</span>UAE
+                    <h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
+                        <img src="https://flagcdn.com/w40/ae.png" alt="UAE Flag" className="w-8 h-auto mr-3" />
+                        UAE
                     </h3>
                     <div className="flex items-center gap-2 text-muted-foreground">
                         <span className="font-medium uppercase tracking-widest text-sm">Dubai</span>
