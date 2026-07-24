@@ -249,7 +249,7 @@ export default function ERPServicePage() {
                       key={idx}
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-100px" }}
+                      viewport={{ once: true, margin: "-30px" }}
                       transition={{ duration: 0.6 }}
                       className="flex flex-col sm:flex-row gap-6 lg:gap-10 items-start w-full group text-left"
                     >
@@ -445,31 +445,46 @@ export default function ERPServicePage() {
         </section>
 
         {/* ===== BOTTOM CTA SECTION ===== */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mb-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12 mb-10">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            initial={{ opacity: 0, scale: 0.95, y: 30 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative bg-gradient-to-r from-blue-700 to-indigo-700 text-white rounded-3xl p-8 md:p-12 overflow-hidden shadow-xl"
+            className="relative bg-[#0F172A] text-white rounded-[2rem] p-8 md:p-12 overflow-hidden border border-slate-850 shadow-2xl"
           >
-            {/* Grid pattern */}
-            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none"></div>
+            {/* High-tech Glowing Background Accents */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-gradient-to-r from-blue-600/20 to-indigo-600/20 blur-[100px] pointer-events-none"></div>
+            
+            {/* Subtle Grid overlay */}
+            <div className="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+            
+            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+              
+              {/* Left Column: Heading and description */}
+              <div className="text-left lg:max-w-2xl space-y-4">
+                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.15] text-white">
+                  Ready to unify your business operations?
+                </h2>
+                <p className="text-slate-400 text-base md:text-lg leading-relaxed font-sans">
+                  Connect with our enterprise architects. Share your current operational challenges, and let us design a centralized solution that drives sustainable growth.
+                </p>
+              </div>
 
-            <div className="relative z-10 max-w-2xl text-left space-y-6">
-              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Ready to unify your business operations?</h2>
-              <p className="text-blue-100 text-base leading-relaxed font-sans">
-                Connect with our enterprise architects. Share your current operational challenges, and let us design a centralized solution that drives sustainable growth.
-              </p>
-              <div className="pt-2">
+              {/* Right Column: Button & footnote */}
+              <div className="flex flex-col items-center lg:items-end gap-3 w-full lg:w-auto flex-shrink-0">
                 <Button
                   nativeButton={false}
-                  className="bg-white hover:bg-slate-100 text-blue-700 px-8 py-6 rounded-full font-bold shadow-lg text-base cursor-pointer hover:scale-103 transition-transform"
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-blue-600/35"
                   render={<Link href="/contact-us" />}
                 >
-                  Start Conversation <ArrowRight className="size-4 ml-2" />
+                  Start Conversation <ArrowRight className="w-4 h-4" />
                 </Button>
+                <span className="text-xs text-slate-500 font-medium tracking-wide">
+                  Response within 24 hours • No commitment required
+                </span>
               </div>
+
             </div>
           </motion.div>
         </section>

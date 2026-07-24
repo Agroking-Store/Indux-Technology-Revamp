@@ -282,19 +282,17 @@ export default function Navbar() {
             <Image
               src="/induxtechnologylogo_blue.webp"
               alt="Indux Technology"
-              width={130}
-              height={36}
-              style={{ height: "auto" }}
-              className="object-contain dark:hidden"
+              width={390}
+              height={113}
+              className="w-[125px] md:w-[160px] h-auto object-contain dark:hidden"
               priority
             />
             <Image
               src="/induxtechnologylogo_white.webp"
               alt="Indux Technology"
-              width={130}
-              height={36}
-              style={{ height: "auto" }}
-              className="object-contain hidden dark:block"
+              width={390}
+              height={113}
+              className="w-[125px] md:w-[160px] h-auto object-contain hidden dark:block"
               priority
             />
           </Link>

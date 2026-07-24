@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin, ArrowRight, Send, Users } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, Send } from "lucide-react";
 import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { FaXTwitter, FaWhatsapp } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
-import { getVisitorCount } from "@/lib/api";
-import { NumberTicker } from "@/components/ui/number-ticker";
+import { toast } from "sonner";
 
 const FacebookLogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -32,46 +31,34 @@ const allLinks = [
   { name: "Blogs", href: "/blogs" },
   { name: "About Us", href: "/about" },
   { name: "Contact Us", href: "/contact-us" },
-  { name: "Careers", href: "/career" },
+  { name: "Careers", href: "/careers" },
   { name: "Privacy Policy", href: "/privacy-policy" },
   { name: "Terms of Service", href: "/terms-of-service" },
 ];
 
 export default function Footer() {
-  const [visitorCount, setVisitorCount] = useState<number>(0);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchCount = async () => {
-      try {
-        const lastVisitTime = sessionStorage.getItem("indux_session_visitor_time");
-        const now = Date.now();
-        const THIRTY_MINUTES_MS = 30 * 60 * 1000;
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      toast.error("Please enter your email address.");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
 
-        let shouldLog = true;
-
-        if (lastVisitTime) {
-          const elapsed = now - parseInt(lastVisitTime, 10);
-          if (elapsed < THIRTY_MINUTES_MS) {
-            shouldLog = false; // Active session, skip logging
-          }
-        }
-
-        let data: number;
-        if (shouldLog) {
-          data = await getVisitorCount(true);
-        } else {
-          data = await getVisitorCount(false);
-        }
-
-        // Save or update timestamp to extend the active session window
-        sessionStorage.setItem("indux_session_visitor_time", now.toString());
-        setVisitorCount(data);
-      } catch (error) {
-        console.error("Failed to load visitor count:", error);
-      }
-    };
-    fetchCount();
-  }, []);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      toast.success("Thank you! You have successfully subscribed to our newsletter.");
+      setEmail("");
+    }, 1000);
+  };
 
   return (
     <footer className="relative bg-[#0B1121] text-slate-300 pt-20 pb-8 border-t border-slate-800 overflow-hidden">
@@ -82,8 +69,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 mb-16">
+          
           {/* Left Section: Brand & Links */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 text-left">
             <Link
               href="/"
               className="flex items-center gap-2 cursor-pointer group w-max"
@@ -91,9 +79,9 @@ export default function Footer() {
               <Image
                 src="/induxtechnologylogo_white.webp"
                 alt="Indux Technology"
-                width={140}
-                height={40}
-                className="object-contain"
+                width={390}
+                height={113}
+                className="w-[145px] md:w-[180px] h-auto object-contain"
                 priority
               />
             </Link>
@@ -109,9 +97,10 @@ export default function Footer() {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-slate-400 hover:text-blue-400 transition-all hover:translate-x-1 inline-flex items-center gap-2 group cursor-pointer text-sm"
+                      className="text-slate-400 hover:text-blue-400 transition-all pl-5 relative group cursor-pointer text-sm block w-fit"
                     >
-                      <ArrowRight className="size-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                      {/* Placed absolutely to prevent text layout shift on hover */}
+                      <ArrowRight className="size-3 absolute left-0 top-[4px] opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-blue-400" />
                       {link.name}
                     </Link>
                   </li>
@@ -121,7 +110,7 @@ export default function Footer() {
           </div>
 
           {/* Middle Section: Contact Info */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 text-left">
             <h4 className="text-white font-bold text-xl tracking-wide">
               Contact Us
             </h4>
@@ -129,43 +118,43 @@ export default function Footer() {
             <div className="flex flex-col gap-5 mt-2">
               <a
                 href="mailto:connect@induxtechnology.com"
-                className="flex items-center gap-4 text-slate-300 hover:text-blue-400 transition-colors group cursor-pointer w-max"
+                className="flex items-start gap-4 text-slate-300 hover:text-blue-400 transition-colors group cursor-pointer w-fit"
               >
-                <div className="p-3 rounded-2xl bg-slate-800/50 group-hover:bg-blue-900/40 transition-colors border border-slate-700/50">
+                <div className="p-3 rounded-2xl bg-slate-800/50 group-hover:bg-blue-900/40 transition-colors border border-slate-700/50 shrink-0 mt-0.5">
                   <Mail className="size-5 text-blue-400" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-0.5">
                     Email
                   </span>
-                  <span>connect@induxtechnology.com</span>
+                  <span className="text-sm sm:text-base break-all">connect@induxtechnology.com</span>
                 </div>
               </a>
 
               <a
                 href="tel:+918421538753"
-                className="flex items-center gap-4 text-slate-300 hover:text-blue-400 transition-colors group cursor-pointer w-max"
+                className="flex items-start gap-4 text-slate-300 hover:text-blue-400 transition-colors group cursor-pointer w-fit"
               >
-                <div className="p-3 rounded-2xl bg-slate-800/50 group-hover:bg-blue-900/40 transition-colors border border-slate-700/50">
+                <div className="p-3 rounded-2xl bg-slate-800/50 group-hover:bg-blue-900/40 transition-colors border border-slate-700/50 shrink-0 mt-0.5">
                   <Phone className="size-5 text-blue-400" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-0.5">
                     Phone
                   </span>
-                  <span>+91 84215 38753</span>
+                  <span className="text-sm sm:text-base">+91 84215 38753</span>
                 </div>
               </a>
 
               <div className="flex items-start gap-4 text-slate-300 group">
-                <div className="p-3 rounded-2xl bg-slate-800/50 border border-slate-700/50 mt-1">
+                <div className="p-3 rounded-2xl bg-slate-800/50 border border-slate-700/50 shrink-0 mt-0.5">
                   <MapPin className="size-5 text-blue-400" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-0.5">
                     Address
                   </span>
-                  <span className="leading-relaxed text-sm max-w-full sm:max-w-[220px]">
+                  <span className="leading-relaxed text-sm max-w-[240px]">
                     S. No. 05, Geeta Paradise, Opp. Zensar, Kharadi, Pune, India
                   </span>
                 </div>
@@ -173,38 +162,54 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Right Section: Small Newsletter Box */}
-          <div className="flex flex-col gap-6">
+          {/* Right Section: Stay Updated */}
+          <div className="flex flex-col gap-6 text-left">
             <h4 className="text-white font-bold text-xl tracking-wide">
               Stay Updated
             </h4>
 
-            <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 shadow-xl relative overflow-hidden group">
+            <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 shadow-xl relative overflow-hidden group max-w-md w-full">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-indigo-500 opacity-70 group-hover:opacity-100 transition-opacity" />
 
               <p className="text-slate-400 text-sm mb-4">
-                Subscribe to our newsletter for the latest tech news and
-                updates.
+                Subscribe to our newsletter for the latest tech news and updates.
               </p>
 
-              <div className="flex flex-col gap-3">
+              <form onSubmit={handleSubscribe} className="flex flex-col gap-3">
                 <input
                   type="email"
                   placeholder="Your Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                  suppressHydrationWarning={true}
                   className="w-full bg-slate-950/50 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-slate-500"
                 />
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 rounded-xl font-medium shadow-lg shadow-blue-600/20 transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2">
-                  Subscribe <Send className="size-4" />
+                <Button 
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 rounded-xl font-medium shadow-lg shadow-blue-600/20 transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? "Subscribing..." : "Subscribe"} <Send className="size-4" />
                 </Button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Bottom Bar: Balanced layout on desktop, stacked on mobile */}
         <div className="pt-6 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-          {/* Left: Social Icons */}
-          <div className="flex items-center gap-3 justify-center">
+          {/* Left: Copyright */}
+          <p className="text-slate-500 text-sm">
+            Copyright &copy; {new Date().getFullYear()}{" "}
+            <span className="text-slate-300 font-semibold">
+              Indux Technology
+            </span>
+            . All Rights Reserved.
+          </p>
+
+          {/* Right: Social Icons */}
+          <div className="flex items-center gap-3 justify-center md:justify-end">
             <a
               href="https://www.facebook.com/885831577953764/"
               target="_blank"
@@ -245,42 +250,6 @@ export default function Footer() {
             >
               <FaWhatsapp className="size-4" />
             </a>
-          </div>
-
-          {/* Middle: Copyright */}
-          <p className="text-slate-500 text-sm text-center md:flex-1">
-            Copyright &copy; {new Date().getFullYear()}{" "}
-            <span className="text-slate-300 font-semibold">
-              Indux Technology
-            </span>
-            . All Rights Reserved.
-          </p>
-
-          {/* Right: Visitor Counter Section */}
-          <div className="flex items-center gap-4 bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-2xl shadow-inner justify-center">
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <Users className="size-4 text-slate-400" />
-            </div>
-
-            <div className="flex flex-col items-start leading-none">
-              <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-0.5">
-                Total Visits
-              </span>
-              <div className="text-blue-400 font-mono font-bold text-lg tracking-tighter">
-                {visitorCount > 0 ? (
-                  <NumberTicker
-                    value={visitorCount}
-                    className="text-blue-400 dark:text-blue-400"
-                  />
-                ) : (
-                  "..."
-                )}
-              </div>
-            </div>
           </div>
         </div>
       </div>

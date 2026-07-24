@@ -3,6 +3,7 @@ import {
   createBlog,
   getBlogs,
   getBlogById,
+  getBlogImage,
   updateBlog,
   deleteBlog,
   updateBlogStatus,
@@ -14,6 +15,7 @@ const router = Router();
 // ---- Public routes (no authentication) ----
 router.get("/", getBlogs);
 router.get("/:id", getBlogById);
+router.get("/:id/image", getBlogImage);
 
 // ---- Protected routes (admin only) ----
 router.use(protect);
