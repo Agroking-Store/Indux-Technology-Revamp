@@ -7,8 +7,8 @@ import { Mail, Phone, MapPin, ArrowRight, Send } from "lucide-react";
 import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { FaXTwitter, FaWhatsapp } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import { toast } from "sonner";
-
 const FacebookLogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="15"
@@ -24,7 +24,6 @@ const FacebookLogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
   </svg>
 );
-
 const allLinks = [
   { name: "Services", href: "/services" },
   { name: "Products", href: "/products" },
@@ -37,12 +36,12 @@ const allLinks = [
 ];
 
 export default function Footer() {
+  const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!email) {
+    if (!email.trim()) {
       toast.error("Please enter your email address.");
       return;
     }
@@ -51,15 +50,27 @@ export default function Footer() {
       toast.error("Please enter a valid email address.");
       return;
     }
-
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      toast.success("Thank you! You have successfully subscribed to our newsletter.");
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${API_URL}/news-letter/subscribe`,
+        {
+          email,
+        }
+      );
+      toast.success(
+        response.data.message || "Successfully subscribed!"
+      );
       setEmail("");
-    }, 1000);
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.message ||
+        "Subscription failed."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
-
   return (
     <footer className="relative bg-[#0B1121] text-slate-300 pt-20 pb-8 border-t border-slate-800 overflow-hidden">
       {/* Background Aesthetic */}
@@ -176,23 +187,25 @@ export default function Footer() {
               </p>
 
               <form onSubmit={handleSubscribe} className="flex flex-col gap-3">
-                <input
-                  type="email"
-                  placeholder="Your Email Address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={loading}
-                  suppressHydrationWarning={true}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-slate-500"
-                />
-                <Button 
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 rounded-xl font-medium shadow-lg shadow-blue-600/20 transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {loading ? "Subscribing..." : "Subscribe"} <Send className="size-4" />
-                </Button>
-              </form>
+    <input
+        type="email"
+        placeholder="Your Email Address"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        disabled={loading}
+        className="w-full bg-slate-950/50 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+    />
+    <Button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 rounded-xl font-medium shadow-lg shadow-blue-600/20 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+        {loading ? "Subscribing..." : "Subscribe"}
+
+        <Send className="size-4" />
+    </Button>
+
+</form>
             </div>
           </div>
         </div>
