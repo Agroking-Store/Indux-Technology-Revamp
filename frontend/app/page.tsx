@@ -12,6 +12,10 @@ import {
   Code2,
   ArrowUpRight,
   Star,
+  Cpu,
+  Briefcase,
+  Smile,
+  Handshake,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef, useEffect, useState } from "react";
@@ -27,14 +31,54 @@ import { GetQuoteModal } from "@/components/GetQuoteModal";
 
 // Review data
 const reviews = [
-  { name: "Paras Bora", rating: 5, body: "Laxman is very good at his work. I use the crm software he has developed for us. Reaping good benefits and is cost effective as well", img: "https://i.pravatar.cc/150?u=10" },
-  { name: "Subhangi Solunke", rating: 5, body: "Great experience with Indux Technology. They understood my needs and delivered perfectly. Professional team with smooth collaboration.", img: "https://i.pravatar.cc/150?u=20" },
-  { name: "Nikhil Sharma Eventpreneur", rating: 5, body: "Laxman has great knowledge about his industry and has been super productive with this delivery. Wishing you many success ahead.", img: "https://i.pravatar.cc/150?u=30" },
-  { name: "Aditya Chakre", rating: 5, body: "Just wanted to share my experience with Indux Technology. I used them for a CRM project and it was a really good experience. The project turned out great!", img: "https://i.pravatar.cc/150?u=40" },
-  { name: "Aditya Shastri1817", rating: 5, body: "Indux Technology played a key role in our digital transformation journey. From strategy to execution, they provided end-to-end solutions including development and marketing.", img: "https://i.pravatar.cc/150?u=50" },
-  { name: "Satish Mundalik", rating: 5, body: "Laxman is a master of CRM — creating strong connections, building trust, and maintaining lasting relationships. He believes every contact is valuable and every follow-up creates new opportunities.", img: "https://i.pravatar.cc/150?u=60" },
-  { name: "Priyanka V Memories Worldwide", rating: 5, body: "Give very genuine and correct solutions of your problems thru their CRM software", img: "https://i.pravatar.cc/150?u=70" },
-  { name: "atif pervez", rating: 5, body: "Indux Technology delivered a reliable IT solution with a professional and responsive team. A smooth experience and a dependable development partner.", img: "https://i.pravatar.cc/150?u=80" },
+  {
+    name: "Paras Bora",
+    rating: 5,
+    body: "Laxman is very good at his work. I use the crm software he has developed for us. Reaping good benefits and is cost effective as well",
+    img: "https://i.pravatar.cc/150?u=10",
+  },
+  {
+    name: "Subhangi Solunke",
+    rating: 5,
+    body: "Great experience with Indux Technology. They understood my needs and delivered perfectly. Professional team with smooth collaboration.",
+    img: "https://i.pravatar.cc/150?u=20",
+  },
+  {
+    name: "Nikhil Sharma Eventpreneur",
+    rating: 5,
+    body: "Laxman has great knowledge about his industry and has been super productive with this delivery. Wishing you many success ahead.",
+    img: "https://i.pravatar.cc/150?u=30",
+  },
+  {
+    name: "Aditya Chakre",
+    rating: 5,
+    body: "Just wanted to share my experience with Indux Technology. I used them for a CRM project and it was a really good experience. The project turned out great!",
+    img: "https://i.pravatar.cc/150?u=40",
+  },
+  {
+    name: "Aditya Shastri1817",
+    rating: 5,
+    body: "Indux Technology played a key role in our digital transformation journey. From strategy to execution, they provided end-to-end solutions including development and marketing.",
+    img: "https://i.pravatar.cc/150?u=50",
+  },
+  {
+    name: "Satish Mundalik",
+    rating: 5,
+    body: "Laxman is a master of CRM — creating strong connections, building trust, and maintaining lasting relationships. He believes every contact is valuable and every follow-up creates new opportunities.",
+    img: "https://i.pravatar.cc/150?u=60",
+  },
+  {
+    name: "Priyanka V Memories Worldwide",
+    rating: 5,
+    body: "Give very genuine and correct solutions of your problems thru their CRM software",
+    img: "https://i.pravatar.cc/150?u=70",
+  },
+  {
+    name: "atif pervez",
+    rating: 5,
+    body: "Indux Technology delivered a reliable IT solution with a professional and responsive team. A smooth experience and a dependable development partner.",
+    img: "https://i.pravatar.cc/150?u=80",
+  },
 ];
 const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);
@@ -50,8 +94,23 @@ const ReviewCard = ({
   rating: number;
   body: string;
 }) => {
-  const initials = name.split(" ").map((n) => n[0]).join("").substring(0, 2).toUpperCase();
-  const colors = ["bg-red-500", "bg-blue-600", "bg-green-600", "bg-yellow-600", "bg-purple-600", "bg-pink-600", "bg-indigo-600", "bg-teal-600", "bg-orange-600"];
+  const initials = name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .substring(0, 2)
+    .toUpperCase();
+  const colors = [
+    "bg-red-500",
+    "bg-blue-600",
+    "bg-green-600",
+    "bg-yellow-600",
+    "bg-purple-600",
+    "bg-pink-600",
+    "bg-indigo-600",
+    "bg-teal-600",
+    "bg-orange-600",
+  ];
   const bgColor = colors[name.length % colors.length];
 
   return (
@@ -61,7 +120,9 @@ const ReviewCard = ({
       }
     >
       <div className="flex flex-row items-center gap-3">
-        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold text-white shadow-sm ${bgColor}`}>
+        <div
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold text-white shadow-sm ${bgColor}`}
+        >
           {initials}
         </div>
         <div className="flex flex-col min-w-0">
@@ -72,10 +133,11 @@ const ReviewCard = ({
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
-                className={`w-3.5 h-3.5 ${i < rating
-                  ? "text-yellow-400 fill-yellow-400"
-                  : "text-slate-200 dark:text-slate-700"
-                  }`}
+                className={`w-3.5 h-3.5 ${
+                  i < rating
+                    ? "text-yellow-400 fill-yellow-400"
+                    : "text-slate-200 dark:text-slate-700"
+                }`}
               />
             ))}
           </div>
@@ -95,8 +157,7 @@ const fallbackBlogs = [
     category: "Cloud Computing",
     shortDescription:
       "Discover how moving your legacy systems to the cloud can improve scalability, reduce costs, and accelerate innovation.",
-    featuredImage:
-      "/images/unsplash/img-62ae3366.webp",
+    featuredImage: "/images/unsplash/img-62ae3366.webp",
     slug: "#",
   },
   {
@@ -105,8 +166,7 @@ const fallbackBlogs = [
     category: "Cybersecurity",
     shortDescription:
       "A comprehensive look at the emerging cyber threats in the modern digital landscape and how to protect your enterprise data.",
-    featuredImage:
-      "/images/unsplash/img-ca777973.webp",
+    featuredImage: "/images/unsplash/img-ca777973.webp",
     slug: "#",
   },
   {
@@ -115,8 +175,7 @@ const fallbackBlogs = [
     category: "AI & Machine Learning",
     shortDescription:
       "Learn how integrating machine learning and AI into your business applications can automate workflows and drive unprecedented growth.",
-    featuredImage:
-      "/images/unsplash/img-fbc3450c.webp",
+    featuredImage: "/images/unsplash/img-fbc3450c.webp",
     slug: "#",
   },
 ];
@@ -143,13 +202,14 @@ export default function Home() {
     return () => window.removeEventListener("resize", calculateRange);
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
+  const workRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: workProgress } = useScroll({
+    target: workRef,
     offset: ["start start", "end end"],
   });
 
-  // Move exact pixel distance based on vertical scroll progress
-  const xTransform = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
+  // Maps the 400vh vertical scroll to -70% horizontal movement
+  const x = useTransform(workProgress, [0, 1], ["0%", "-70%"]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [blogsLoading, setBlogsLoading] = useState(true);
 
@@ -168,14 +228,14 @@ export default function Home() {
   const displayedBlogs = blogs.length > 0 ? blogs : fallbackBlogs;
 
   return (
-    <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300 lg:pl-20">
       <main className="flex-1 w-full">
         {/* HERO SECTION */}
         <section className="relative overflow-hidden pt-6 pb-16 sm:pt-10 sm:pb-24 lg:pt-8 lg:pb-32">
           {/* Subtle dot pattern background */}
           <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full h-full opacity-40 dark:opacity-20 pointer-events-none bg-[radial-gradient(#cbd5e1_2px,transparent_2px)] dark:bg-[radial-gradient(#334155_2px,transparent_2px)] bg-[size:32px_32px]"></div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pl-20 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-8 items-center">
               {/* Left Side: Text Content */}
               <motion.div
@@ -258,7 +318,10 @@ export default function Home() {
 
                 {/* Floating Sparkles */}
                 <div className="absolute right-2 bottom-4 sm:right-0 sm:bottom-10 z-20 text-blue-500 animate-pulse">
-                  <Trophy className="w-8 h-8 sm:w-12 sm:h-12" fill="currentColor" />
+                  <Trophy
+                    className="w-8 h-8 sm:w-12 sm:h-12"
+                    fill="currentColor"
+                  />
                 </div>
 
                 <div className="grid grid-cols-12 grid-rows-12 gap-2.5 sm:gap-4 w-full h-full relative z-10 p-2 sm:p-6 md:p-8">
@@ -312,7 +375,7 @@ export default function Home() {
         </section>
 
         {/* ABOUT US SECTION */}
-        <section className="relative overflow-hidden bg-white dark:bg-slate-950">
+        <section className="relative overflow-hidden bg-white dark:bg-slate-950 pb-16 sm:pb-20 lg:pb-32 pt-0">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-24 items-center">
               {/* Left Side: Overlapping Images */}
@@ -419,15 +482,18 @@ export default function Home() {
                 </div>
 
                 <div className="mt-6 sm:mt-8">
-                  <Link href="/contact-us" className="inline-flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white px-6 sm:px-8 py-5 sm:py-6 rounded-full font-bold tracking-wider text-xs uppercase cursor-pointer transition-all shadow-lg shadow-blue-700/20 group w-full sm:w-auto">
-                    Connect With Us{" "}
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <Link href="/contact-us" className="w-full sm:w-auto">
+                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
+                      Connect With Us{" "}
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Button>
                   </Link>
                 </div>
               </motion.div>
             </div>
           </div>
 
+          {/* Solid Bottom Banner */}
           {/* Solid Bottom Banner */}
           <div className="bg-[#0f2e4a] dark:bg-slate-900 w-full py-10 sm:py-12 md:py-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -439,39 +505,60 @@ export default function Home() {
                 className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-4 md:divide-x divide-blue-800/40 dark:divide-slate-800"
               >
                 {[
-                  { num: 50, suffix: "+", label: "Technology Partners" },
-                  { num: 200, suffix: "+", label: "Complete project" },
-                  { num: 70, suffix: "+", label: "Team Members" },
-                  { num: 350, suffix: "+", label: "Happy clients" },
-                ].map((stat, idx) => (
-                  <div
-                    key={idx}
-                    className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4 md:px-6 lg:px-8 first:pl-0 last:pr-0"
-                  >
-                    <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full border-[1.5px] border-blue-400/20 flex items-center justify-center bg-blue-800/10 shrink-0">
-                      <Trophy
-                        className="w-4 h-4 sm:w-6 sm:h-6 text-blue-300 opacity-80"
-                        strokeWidth={1.5}
-                      />
+                  {
+                    num: 50,
+                    suffix: "+",
+                    label: "Technology Partners",
+                    icon: Cpu,
+                  },
+                  {
+                    num: 200,
+                    suffix: "+",
+                    label: "Complete project",
+                    icon: Briefcase,
+                  },
+                  { num: 70, suffix: "+", label: "Team Members", icon: Users },
+                  {
+                    num: 350,
+                    suffix: "+",
+                    label: "Happy clients",
+                    icon: Smile,
+                  },
+                ].map((stat, idx) => {
+                  const Icon = stat.icon;
+                  return (
+                    <div
+                      key={idx}
+                      className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4 md:px-6 lg:px-8 first:pl-0 last:pr-0"
+                    >
+                      <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full border-[1.5px] border-blue-400/20 flex items-center justify-center bg-blue-800/10 shrink-0">
+                        <Icon
+                          className="w-4 h-4 sm:w-6 sm:h-6 text-blue-300 opacity-80"
+                          strokeWidth={1.5}
+                        />
+                      </div>
+                      <div className="text-center sm:text-left">
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-0.5 sm:mb-1">
+                          <NumberTicker
+                            value={stat.num}
+                            className="text-white"
+                          />
+                          {stat.suffix}
+                        </h3>
+                        <p className="text-blue-100/70 font-medium text-[10px] sm:text-[11px] md:text-xs tracking-wider uppercase">
+                          {stat.label}
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-center sm:text-left">
-                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-0.5 sm:mb-1">
-                        <NumberTicker value={stat.num} className="text-white" />
-                        {stat.suffix}
-                      </h3>
-                      <p className="text-blue-100/70 font-medium text-[10px] sm:text-[11px] md:text-xs tracking-wider uppercase">
-                        {stat.label}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </motion.div>
             </div>
           </div>
         </section>
 
         {/* SERVICES SECTION */}
-        <section className="relative overflow-hidden py-16 sm:py-24 lg:py-32 bg-slate-50 dark:bg-slate-950">
+        <section className="relative overflow-hidden pb-16 sm:pb-24 lg:pb-32 pt-0 bg-slate-50 dark:bg-slate-950">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header Area */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 sm:mb-16">
@@ -502,10 +589,12 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="w-full sm:w-auto"
               >
-                <Button className="w-full sm:w-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 px-6 py-6 rounded-full font-semibold transition-all group shadow-sm cursor-pointer justify-center">
-                  View All Services{" "}
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
+                <Link href="/services" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
+                    View All Services{" "}
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
               </motion.div>
             </div>
 
@@ -618,8 +707,8 @@ export default function Home() {
         </section>
 
         {/* WHY CHOOSE US SECTION - STICKY SCROLL */}
-        <section className="bg-slate-50/50 dark:bg-slate-950/50 relative overflow-visible">
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
+        <section className="bg-slate-50/50 dark:bg-slate-950/50 relative overflow-visible pb-16 sm:pb-24 lg:pb-32 pt-0">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-12 sm:gap-16 lg:gap-24 items-start relative">
               {/* Left Side: Sticky Content */}
               <div className="w-full lg:w-5/12 lg:sticky lg:top-32 z-10">
@@ -648,9 +737,11 @@ export default function Home() {
                   your company.
                 </p>
 
-                <Link href="/contact-us" className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-8 py-5 sm:py-6 rounded-full font-bold tracking-wide text-xs sm:text-sm uppercase transition-all shadow-lg shadow-blue-600/20 group cursor-pointer w-full sm:w-auto">
-                  Consult with our experts{" "}
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                <Link href="/contact-us" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
+                    Consult With Our Expertise{" "}
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
                 </Link>
               </div>
 
@@ -719,35 +810,31 @@ export default function Home() {
 
         {/* WORK PROCESS SECTION */}
         <section
-          ref={containerRef}
-          style={{
-            height: scrollRange ? `${scrollRange + viewportHeight}px` : "180vh",
-          }}
-          className="relative bg-slate-50 dark:bg-slate-950"
+          ref={workRef}
+          className="relative h-[400vh] bg-slate-50 dark:bg-slate-950"
         >
-          <div className="sticky top-0 flex h-[100dvh] items-center overflow-hidden z-10 py-6 sm:py-0">
+          {/* This container 'locks' the screen. It is 100vh tall and sticky. */}
+          <div className="sticky top-0 flex h-screen items-center overflow-hidden">
             <motion.div
-              ref={trackRef}
-              style={{ x: xTransform }}
-              className="flex gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-8"
+              style={{ x }}
+              className="flex gap-12 px-[10vw] items-center"
             >
               {/* Intro Title Block */}
-              <div className="w-[85vw] sm:w-[70vw] md:w-[50vw] lg:w-[35vw] flex-shrink-0 flex flex-col justify-center pr-4 sm:pr-8 lg:pr-12">
-                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
+              <div className="w-[80vw] md:w-[45vw] lg:w-[35vw] flex-shrink-0 flex flex-col justify-center pr-12">
+                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-4">
                   <div className="flex gap-1">
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-300 dark:bg-slate-800"></span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-800"></span>
                   </div>
                   Our Work Process
                 </div>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-4 sm:mb-6">
+                <h2 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6">
                   Step-by-Step to <br /> Your{" "}
                   <span className="text-blue-600">Growth</span>
                 </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed">
-                  We collaborate closely with clients to understand their
-                  vision, goals, and target audience, conducting in-depth
-                  research to craft tailored digital solutions.
+                <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed max-w-md">
+                  We collaborate closely with clients to understand their vision
+                  and craft tailored digital solutions.
                 </p>
               </div>
 
@@ -756,57 +843,52 @@ export default function Home() {
                 {
                   step: "01",
                   title: "Discover & Strategize",
-                  desc: "We collaborate closely to understand your vision, target audience, and business goals, conducting in-depth research to craft a tailored digital roadmap.",
+                  desc: "We collaborate closely to understand your vision, target audience, and business goals.",
                 },
                 {
                   step: "02",
                   title: "Design & Architecture",
-                  desc: "Our expert team designs intuitive user experiences and plans highly scalable, secure architectures using modern technologies.",
+                  desc: "Our expert team designs intuitive user experiences and plans highly scalable architectures.",
                 },
                 {
                   step: "03",
                   title: "Execute & Develop",
-                  desc: "We follow agile methodologies to write clean, robust code, ensuring seamless functionality and rapid, flawless deployment.",
+                  desc: "We follow agile methodologies to write clean, robust code, ensuring seamless functionality.",
                 },
                 {
                   step: "04",
                   title: "Analyze & Grow",
-                  desc: "After launch, we continuously monitor performance, analyze user behavior, and optimize the product to maximize your ROI.",
+                  desc: "After launch, we continuously monitor performance and optimize the product.",
                 },
               ].map((card, idx) => (
                 <div
                   key={idx}
-                  className="w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[30vw] flex-shrink-0 flex flex-col rounded-2xl sm:rounded-[2rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-[360px] sm:h-[400px] md:h-[450px]"
+                  className="w-[85vw] md:w-[40vw] lg:w-[30vw] flex-shrink-0 flex flex-col rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-[450px] md:h-[500px]"
                 >
-                  {/* Top Half */}
-                  <div className="flex-1 p-6 sm:p-8 md:p-10 relative overflow-hidden flex flex-col justify-center">
-                    {/* Watermark Number */}
-                    <div className="absolute right-0 sm:right-2 md:-right-4 top-1/2 -translate-y-1/2 text-[6rem] sm:text-[8rem] md:text-[12rem] font-bold text-slate-100 dark:text-slate-800/50 pointer-events-none select-none z-0">
+                  <div className="flex-1 p-8 md:p-12 relative overflow-hidden flex flex-col justify-center">
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 text-[12rem] md:text-[16rem] font-bold text-slate-50 dark:text-slate-800/20 z-0">
                       {card.step}
                     </div>
                     <div className="relative z-10">
-                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 sm:mb-4 tracking-tight">
+                      <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">
                         {card.title}
                       </h3>
-                      <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium text-xs sm:text-sm md:text-base">
+                      <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
                         {card.desc}
                       </p>
                     </div>
                   </div>
-
-                  {/* Bottom Half */}
-                  <div className="h-16 sm:h-20 bg-[#0f2e4a] dark:bg-slate-800 flex items-center justify-between px-6 sm:px-8 md:px-10 relative overflow-hidden">
-                    {/* Diagonal Stripes Pattern */}
-                    <div className="absolute inset-0 opacity-10 bg-[linear-gradient(45deg,rgba(255,255,255,1)_25%,transparent_25%,transparent_50%,rgba(255,255,255,1)_50%,rgba(255,255,255,1)_75%,transparent_75%,transparent)] bg-[length:10px_10px]"></div>
-                    <span className="text-white text-[10px] sm:text-xs font-bold tracking-widest uppercase relative z-10">
+                  <div className="h-24 bg-[#0f2e4a] flex items-center justify-between px-10 md:px-12">
+                    <span className="text-white text-sm font-bold tracking-widest uppercase">
                       Step
                     </span>
-                    <span className="text-white text-lg sm:text-xl font-bold relative z-10">
+                    <span className="text-white text-3xl font-bold">
                       {card.step}
                     </span>
                   </div>
                 </div>
               ))}
+              <div className="w-[10vw] flex-shrink-0" />
             </motion.div>
           </div>
         </section>
@@ -906,15 +988,18 @@ export default function Home() {
 
             {/* View All Button */}
             <div className="mt-12 sm:mt-16 text-center">
-              <Link href="/products" className="inline-flex items-center justify-center bg-[#0f2e4a] hover:bg-blue-700 text-white px-8 py-5 sm:py-6 rounded-full font-bold tracking-wide transition-all shadow-lg shadow-[#0f2e4a]/20 cursor-pointer w-full sm:w-auto">
-                View All Work
+              <Link href="/products" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
+                  View All Work{" "}
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </Link>
             </div>
           </div>
         </section>
 
         {/* TESTIMONIALS SECTION */}
-        <section className="relative py-16 sm:py-24 lg:py-32 bg-slate-50 dark:bg-slate-950 overflow-hidden">
+        <section className="relative pb-16 sm:pb-24 lg:pb-32 pt-0 bg-slate-50 dark:bg-slate-950 overflow-hidden">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
               {/* Left Side: Static Anchor */}
@@ -942,7 +1027,9 @@ export default function Home() {
                     </svg>
                   </div>
                   <div className="relative z-10">
-                    <div className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-2">5.0</div>
+                    <div className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-2">
+                      5.0
+                    </div>
                     <div className="flex items-center gap-2 sm:gap-3 mb-4">
                       <div className="flex gap-1">
                         {[1, 2, 3, 4, 5].map((i) => (
@@ -952,7 +1039,9 @@ export default function Home() {
                           />
                         ))}
                       </div>
-                      <p className="text-blue-200 font-medium text-xs sm:text-sm tracking-wide">(30+ Reviews)</p>
+                      <p className="text-blue-200 font-medium text-xs sm:text-sm tracking-wide">
+                        (30+ Reviews)
+                      </p>
                     </div>
                     <p className="text-white text-sm md:text-lg font-medium mb-6 leading-relaxed max-w-[90%]">
                       Customer experiences that speak for themselves.
@@ -960,10 +1049,24 @@ export default function Home() {
 
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mt-2">
                       <div className="flex -space-x-3 justify-center sm:justify-start">
-                        <img className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=1" alt="avatar" />
-                        <img className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=2" alt="avatar" />
-                        <img className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all" src="https://i.pravatar.cc/150?u=3" alt="avatar" />
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] bg-blue-600 flex items-center justify-center text-white font-bold text-xs z-10">+37</div>
+                        <img
+                          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
+                          src="https://i.pravatar.cc/150?u=1"
+                          alt="avatar"
+                        />
+                        <img
+                          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
+                          src="https://i.pravatar.cc/150?u=2"
+                          alt="avatar"
+                        />
+                        <img
+                          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
+                          src="https://i.pravatar.cc/150?u=3"
+                          alt="avatar"
+                        />
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] bg-blue-600 flex items-center justify-center text-white font-bold text-xs z-10">
+                          +37
+                        </div>
                       </div>
 
                       <a
@@ -972,7 +1075,8 @@ export default function Home() {
                         rel="noopener noreferrer"
                         className="group flex items-center justify-center gap-2 bg-white/10 hover:bg-white text-white hover:text-[#0f2e4a] text-xs sm:text-sm font-bold py-2.5 px-5 rounded-full transition-all duration-300 backdrop-blur-sm border border-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]"
                       >
-                        Write Review <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        Write Review{" "}
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </a>
                     </div>
                   </div>
@@ -986,7 +1090,11 @@ export default function Home() {
                     <ReviewCard key={review.name + index} {...review} />
                   ))}
                 </Marquee>
-                <Marquee reverse pauseOnHover className="[--duration:45s] hidden sm:flex">
+                <Marquee
+                  reverse
+                  pauseOnHover
+                  className="[--duration:45s] hidden sm:flex"
+                >
                   {secondRow.map((review, index) => (
                     <ReviewCard key={review.name + index} {...review} />
                   ))}
@@ -1015,12 +1123,11 @@ export default function Home() {
                   Our Latest <br className="hidden md:block" /> News & Blogs
                 </h2>
               </div>
-              <Link
-                href="/blogs"
-                className="bg-white text-[#0f2e4a] hover:bg-slate-100 rounded-full px-8 py-5 sm:py-6 font-bold transition-all text-xs sm:text-sm w-full sm:w-fit group inline-flex items-center justify-center cursor-pointer"
-              >
-                View All Blogs{" "}
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              <Link href="/blogs" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
+                  View All Blogs{" "}
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </Link>
             </div>
 
@@ -1088,8 +1195,7 @@ export default function Home() {
                 Contact Us
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                Let's Get in{" "}
-                <span className="text-blue-600">Touch</span>
+                Let's Get in <span className="text-blue-600">Touch</span>
               </h2>
             </div>
 
