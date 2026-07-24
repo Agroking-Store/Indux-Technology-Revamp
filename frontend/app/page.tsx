@@ -202,13 +202,14 @@ export default function Home() {
     return () => window.removeEventListener("resize", calculateRange);
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
+  const workRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: workProgress } = useScroll({
+    target: workRef,
     offset: ["start start", "end end"],
   });
 
-  // Move exact pixel distance based on vertical scroll progress
-  const xTransform = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
+  // Maps the 400vh vertical scroll to -70% horizontal movement
+  const x = useTransform(workProgress, [0, 1], ["0%", "-70%"]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [blogsLoading, setBlogsLoading] = useState(true);
 
@@ -374,7 +375,7 @@ export default function Home() {
         </section>
 
         {/* ABOUT US SECTION */}
-        <section className="relative overflow-hidden bg-white dark:bg-slate-950">
+        <section className="relative overflow-hidden bg-white dark:bg-slate-950 pb-16 sm:pb-20 lg:pb-32 pt-0">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-24 items-center">
               {/* Left Side: Overlapping Images */}
@@ -557,7 +558,7 @@ export default function Home() {
         </section>
 
         {/* SERVICES SECTION */}
-        <section className="relative overflow-hidden py-16 sm:py-24 lg:py-32 bg-slate-50 dark:bg-slate-950">
+        <section className="relative overflow-hidden pb-16 sm:pb-24 lg:pb-32 pt-0 bg-slate-50 dark:bg-slate-950">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header Area */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 sm:mb-16">
@@ -706,8 +707,8 @@ export default function Home() {
         </section>
 
         {/* WHY CHOOSE US SECTION - STICKY SCROLL */}
-        <section className="bg-slate-50/50 dark:bg-slate-950/50 relative overflow-visible">
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
+        <section className="bg-slate-50/50 dark:bg-slate-950/50 relative overflow-visible pb-16 sm:pb-24 lg:pb-32 pt-0">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-12 sm:gap-16 lg:gap-24 items-start relative">
               {/* Left Side: Sticky Content */}
               <div className="w-full lg:w-5/12 lg:sticky lg:top-32 z-10">
@@ -809,35 +810,31 @@ export default function Home() {
 
         {/* WORK PROCESS SECTION */}
         <section
-          ref={containerRef}
-          style={{
-            height: scrollRange ? `${scrollRange + viewportHeight}px` : "180vh",
-          }}
-          className="relative bg-slate-50 dark:bg-slate-950"
+          ref={workRef}
+          className="relative h-[400vh] bg-slate-50 dark:bg-slate-950"
         >
-          <div className="sticky top-0 flex h-[100dvh] items-center overflow-hidden z-10 py-6 sm:py-0">
+          {/* This container 'locks' the screen. It is 100vh tall and sticky. */}
+          <div className="sticky top-0 flex h-screen items-center overflow-hidden">
             <motion.div
-              ref={trackRef}
-              style={{ x: xTransform }}
-              className="flex gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-8"
+              style={{ x }}
+              className="flex gap-12 px-[10vw] items-center"
             >
               {/* Intro Title Block */}
-              <div className="w-[85vw] sm:w-[70vw] md:w-[50vw] lg:w-[35vw] flex-shrink-0 flex flex-col justify-center pr-4 sm:pr-8 lg:pr-12">
-                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
+              <div className="w-[80vw] md:w-[45vw] lg:w-[35vw] flex-shrink-0 flex flex-col justify-center pr-12">
+                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-4">
                   <div className="flex gap-1">
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-300 dark:bg-slate-800"></span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-800"></span>
                   </div>
                   Our Work Process
                 </div>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-4 sm:mb-6">
+                <h2 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6">
                   Step-by-Step to <br /> Your{" "}
                   <span className="text-blue-600">Growth</span>
                 </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed">
-                  We collaborate closely with clients to understand their
-                  vision, goals, and target audience, conducting in-depth
-                  research to craft tailored digital solutions.
+                <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed max-w-md">
+                  We collaborate closely with clients to understand their vision
+                  and craft tailored digital solutions.
                 </p>
               </div>
 
@@ -846,57 +843,52 @@ export default function Home() {
                 {
                   step: "01",
                   title: "Discover & Strategize",
-                  desc: "We collaborate closely to understand your vision, target audience, and business goals, conducting in-depth research to craft a tailored digital roadmap.",
+                  desc: "We collaborate closely to understand your vision, target audience, and business goals.",
                 },
                 {
                   step: "02",
                   title: "Design & Architecture",
-                  desc: "Our expert team designs intuitive user experiences and plans highly scalable, secure architectures using modern technologies.",
+                  desc: "Our expert team designs intuitive user experiences and plans highly scalable architectures.",
                 },
                 {
                   step: "03",
                   title: "Execute & Develop",
-                  desc: "We follow agile methodologies to write clean, robust code, ensuring seamless functionality and rapid, flawless deployment.",
+                  desc: "We follow agile methodologies to write clean, robust code, ensuring seamless functionality.",
                 },
                 {
                   step: "04",
                   title: "Analyze & Grow",
-                  desc: "After launch, we continuously monitor performance, analyze user behavior, and optimize the product to maximize your ROI.",
+                  desc: "After launch, we continuously monitor performance and optimize the product.",
                 },
               ].map((card, idx) => (
                 <div
                   key={idx}
-                  className="w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[30vw] flex-shrink-0 flex flex-col rounded-2xl sm:rounded-[2rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-[360px] sm:h-[400px] md:h-[450px]"
+                  className="w-[85vw] md:w-[40vw] lg:w-[30vw] flex-shrink-0 flex flex-col rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-[450px] md:h-[500px]"
                 >
-                  {/* Top Half */}
-                  <div className="flex-1 p-6 sm:p-8 md:p-10 relative overflow-hidden flex flex-col justify-center">
-                    {/* Watermark Number */}
-                    <div className="absolute right-0 sm:right-2 md:-right-4 top-1/2 -translate-y-1/2 text-[6rem] sm:text-[8rem] md:text-[12rem] font-bold text-slate-100 dark:text-slate-800/50 pointer-events-none select-none z-0">
+                  <div className="flex-1 p-8 md:p-12 relative overflow-hidden flex flex-col justify-center">
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 text-[12rem] md:text-[16rem] font-bold text-slate-50 dark:text-slate-800/20 z-0">
                       {card.step}
                     </div>
                     <div className="relative z-10">
-                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 sm:mb-4 tracking-tight">
+                      <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">
                         {card.title}
                       </h3>
-                      <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium text-xs sm:text-sm md:text-base">
+                      <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
                         {card.desc}
                       </p>
                     </div>
                   </div>
-
-                  {/* Bottom Half */}
-                  <div className="h-16 sm:h-20 bg-[#0f2e4a] dark:bg-slate-800 flex items-center justify-between px-6 sm:px-8 md:px-10 relative overflow-hidden">
-                    {/* Diagonal Stripes Pattern */}
-                    <div className="absolute inset-0 opacity-10 bg-[linear-gradient(45deg,rgba(255,255,255,1)_25%,transparent_25%,transparent_50%,rgba(255,255,255,1)_50%,rgba(255,255,255,1)_75%,transparent_75%,transparent)] bg-[length:10px_10px]"></div>
-                    <span className="text-white text-[10px] sm:text-xs font-bold tracking-widest uppercase relative z-10">
+                  <div className="h-24 bg-[#0f2e4a] flex items-center justify-between px-10 md:px-12">
+                    <span className="text-white text-sm font-bold tracking-widest uppercase">
                       Step
                     </span>
-                    <span className="text-white text-lg sm:text-xl font-bold relative z-10">
+                    <span className="text-white text-3xl font-bold">
                       {card.step}
                     </span>
                   </div>
                 </div>
               ))}
+              <div className="w-[10vw] flex-shrink-0" />
             </motion.div>
           </div>
         </section>
@@ -1007,7 +999,7 @@ export default function Home() {
         </section>
 
         {/* TESTIMONIALS SECTION */}
-        <section className="relative py-16 sm:py-24 lg:py-32 bg-slate-50 dark:bg-slate-950 overflow-hidden">
+        <section className="relative pb-16 sm:pb-24 lg:pb-32 pt-0 bg-slate-50 dark:bg-slate-950 overflow-hidden">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
               {/* Left Side: Static Anchor */}
