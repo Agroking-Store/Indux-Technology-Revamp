@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import { Plus, Calendar, Users, UserPlus, Copy, Pencil, EyeOff, Trash2, Eye } from 'lucide-react';
 import api, { ApiResponse, Event } from '@/lib/api';
 
 export default function EventsPage() {
@@ -17,7 +18,7 @@ export default function EventsPage() {
         setEvents(res.data.data);
       }
     } catch (error) {
-      // handled
+      // handled globally or silenced
     } finally {
       if (isMounted.current) {
         setLoading(false);
@@ -91,136 +92,199 @@ export default function EventsPage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 dark:border-indigo-400"></div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-800">Events</h1>
+    <div className="max-w-7xl mx-auto space-y-6 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+      
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+        <div>
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
+            <Calendar className="text-indigo-600 dark:text-indigo-400 size-7" />
+            Events
+          </h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
+            Manage your upcoming schedule, view registrations, and publish new events.
+          </p>
+        </div>
         <Link
           href="/events/create"
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-semibold text-sm rounded-xl transition shadow-md shadow-indigo-600/10 shrink-0"
         >
-          + Create Event
+          <Plus size={18} />
+          Create Event
         </Link>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Cover
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Event Title
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Type / Category
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Date & Time
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Registrations
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {events.map((event) => (
-              <tr key={event._id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <img
-                    src={event.coverImage || '/placeholder-event.jpg'}
-                    alt={event.title}
-                    className="w-12 h-12 object-cover rounded-md border"
-                  />
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-semibold text-gray-900">{event.title}</div>
-                  <div className="text-xs text-gray-500">/{event.slug}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <span className="font-medium text-gray-800">{event.type}</span>
-                  <div className="text-xs text-gray-400">{event.category}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <div className="font-medium text-gray-800">
-                    {new Date(event.startDate).toLocaleDateString(undefined, {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric',
-                    })}
-                  </div>
-                  <div className="text-xs text-gray-400">
-                    {new Date(event.startDate).toLocaleTimeString(undefined, {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <span className="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-full text-xs font-bold border border-indigo-100">
-                    {event.registrationsCount || 0}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span
-                    className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      event.status === 'Published'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-yellow-100 text-yellow-800'
-                    }`}
-                  >
-                    {event.status}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-3">
-                  <Link
-                    href={`/events/registrations?eventId=${event._id}`}
-                    className="text-indigo-600 hover:text-indigo-900"
-                  >
-                    View Registrations
-                  </Link>
-                  <button
-                    onClick={() => handleDuplicate(event)}
-                    className="text-amber-600 hover:text-amber-900"
-                  >
-                    Duplicate
-                  </button>
-                  <Link href={`/events/edit/${event._id}`} className="text-blue-600 hover:text-blue-900">
-                    Edit
-                  </Link>
-                  <button
-                    onClick={() => handleToggleStatus(event._id, event.status)}
-                    className="text-gray-600 hover:text-gray-900"
-                  >
-                    {event.status === 'Published' ? 'Unpublish' : 'Publish'}
-                  </button>
-                  <button onClick={() => handleDelete(event._id)} className="text-red-600 hover:text-red-900">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {events.length === 0 && (
+      {/* Table Container */}
+      <div className="bg-white dark:bg-slate-900/60 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
+            <thead className="bg-slate-50 dark:bg-slate-900/80">
               <tr>
-                <td colSpan={7} className="px-6 py-4 text-center text-gray-500">
-                  No events found. Create your first event!
-                </td>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Cover
+                </th>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Event Title
+                </th>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Type / Category
+                </th>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Date & Time
+                </th>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Registrations
+                </th>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white dark:bg-slate-900/40 divide-y divide-slate-100 dark:divide-slate-800/80">
+              {events.map((event) => (
+                <tr key={event._id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+                  
+                  <td className="px-6 py-4 whitespace-nowrap">
+  <img
+    src={
+      event.coverImage ||
+      `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="%2394a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`
+    }
+    alt={event.title || 'Event thumbnail'}
+    onError={(e) => {
+      const target = e.currentTarget as HTMLImageElement;
+      target.onerror = null; // Unbind handler to prevent loops
+      target.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="%2394a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`;
+    }}
+    className="w-12 h-12 object-cover rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800"
+  />
+</td>
+                
+                  {/* Title & Slug */}
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-bold text-slate-900 dark:text-slate-100">{event.title || 'Untitled Event'}</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">/{event.slug || ''}</div>
+                  </td>
+                
+                  {/* Type & Category */}
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <span className="font-semibold text-slate-800 dark:text-slate-200">{event.type || 'Standard'}</span>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">{event.category || 'General'}</div>
+                  </td>
+                
+                  {/* Date & Time */}
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <div className="font-semibold text-slate-800 dark:text-slate-200">
+                      {event.startDate
+                        ? new Date(event.startDate).toLocaleDateString(undefined, {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })
+                        : 'TBD'}
+                    </div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">
+                      {event.startDate
+                        ? new Date(event.startDate).toLocaleTimeString(undefined, {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })
+                        : ''}
+                    </div>
+                  </td>
+                
+                  {/* Registrations Count */}
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <span className="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 px-2.5 py-1 rounded-full text-xs font-bold border border-indigo-100 dark:border-indigo-900/50">
+                      <Users size={12} />
+                      {event.registrationsCount || 0}
+                    </span>
+                  </td>
+                
+                  {/* Status Badge */}
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span
+                      className={`px-2.5 py-1 inline-flex text-xs leading-5 font-bold rounded-full border ${
+                        event.status === 'Published'
+                          ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border-emerald-200/60 dark:border-emerald-800/50'
+                          : 'bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 border-amber-200/60 dark:border-amber-800/50'
+                      }`}
+                    >
+                      {event.status || 'Draft'}
+                    </span>
+                  </td>
+                
+                  {/* Action Buttons */}
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold">
+                    <div className="flex items-center gap-1">
+                      <Link
+                        href={`/events/registrations?eventId=${event._id}`}
+                        className="p-1.5 rounded-lg text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition cursor-pointer"
+                        title="View Registrations"
+                        aria-label="View Registrations"
+                      >
+                        <UserPlus size={16} />
+                      </Link>
+                
+                      <button
+                        onClick={() => handleDuplicate(event)}
+                        className="p-1.5 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/50 transition cursor-pointer"
+                        title="Duplicate Event"
+                        aria-label="Duplicate Event"
+                      >
+                        <Copy size={16} />
+                      </button>
+                
+                      <Link
+                        href={`/events/edit/${event._id}`}
+                        className="p-1.5 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition cursor-pointer"
+                        title="Edit Event"
+                        aria-label="Edit Event"
+                      >
+                        <Pencil size={16} />
+                      </Link>
+                
+                      <button
+                        onClick={() => handleToggleStatus(event._id, event.status)}
+                        className="p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition cursor-pointer"
+                        title={event.status === 'Published' ? 'Unpublish Event' : 'Publish Event'}
+                        aria-label={event.status === 'Published' ? 'Unpublish Event' : 'Publish Event'}
+                      >
+                        {event.status === 'Published' ? <EyeOff size={16} /> : <Eye size={16} />}
+                      </button>
+                
+                      <button
+                        onClick={() => handleDelete(event._id)}
+                        className="p-1.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition cursor-pointer"
+                        title="Delete Event"
+                        aria-label="Delete Event"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+
+              {events.length === 0 && (
+                <tr>
+                  <td colSpan={7} className="px-6 py-8 text-center text-slate-500 dark:text-slate-400 text-sm italic">
+                    No events found. Create your first event!
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
