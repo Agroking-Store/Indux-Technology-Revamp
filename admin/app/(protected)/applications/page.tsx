@@ -157,7 +157,7 @@ function ApplicationsContent() {
         </div>
         <button
           onClick={handleExportCSV}
-          className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white rounded-lg transition text-sm font-semibold shadow-md shadow-emerald-600/10 cursor-pointer"
+          className="flex items-center gap-1.5 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-xl transition font-semibold text-sm shadow-md shadow-indigo-600/10 cursor-pointer"
         >
           <Download size={16} /> Export Candidates (CSV)
         </button>
@@ -285,11 +285,13 @@ function ApplicationsContent() {
                 {applications.map((app) => {
                   const job = app.jobId as any;
                   return (
-                    <tr key={app._id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
-                      
+                    <tr key={app._id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors" >    
                       {/* Name & Contact */}
                       <td className="px-6 py-4 whitespace-nowrap text-left">
-                        <div className="text-sm font-semibold text-slate-900 dark:text-slate-100">{app.candidateName || app.fullName || 'Candidate'}</div>
+                        <div className="text-sm font-semibold text-slate-900 dark:text-slate-100" onClick={()=>{
+                    window.open(`${process.env.NEXT_PUBLIC_API_URL}/applications/${app._id}/resume?token=${token}`)
+                    }
+                  }>{app.candidateName || app.fullName || 'Candidate'}</div>
                         <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-0.5"><Mail size={12} className="text-slate-400 dark:text-slate-500" /> {app.email}</div>
                         <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-0.5"><Phone size={12} className="text-slate-400 dark:text-slate-500" /> {app.phone}</div>
                       </td>

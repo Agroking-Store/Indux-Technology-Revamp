@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Roboto, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Providers from "@/providers/ThemeProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const roboto = Roboto({
+  variable: "--font-roboto",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
 });
 
 const geistMono = Geist_Mono({
@@ -27,13 +28,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
-      <body className="min-h-screen bg-slate-50 antialiased">
-      <Providers>
-        <AuthProvider>
-          {children}
-          <ToastContainer position="top-right" autoClose={3000} />
-        </AuthProvider>
+    <html lang="en" className={`${roboto.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <body className="min-h-screen bg-slate-50 dark:bg-slate-950 antialiased">
+        <Providers>
+          <AuthProvider>
+            {children}
+            <ToastContainer position="top-right" autoClose={3000} />
+          </AuthProvider>
         </Providers>
       </body>
     </html>

@@ -204,7 +204,7 @@ function RegistrationsContent() {
           <button
             onClick={handleExportCSV}
             disabled={!selectedEventId}
-            className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition text-sm font-semibold shadow-md shadow-emerald-600/10 disabled:opacity-50 cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-xl transition font-semibold text-sm shadow-md shadow-indigo-600/10 cursor-pointer"
           >
             <Download size={16} /> Export Registrations (CSV)
           </button>

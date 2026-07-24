@@ -288,11 +288,11 @@ export default function CandidateDetailPage() {
             </div>
 
             <div className="w-full h-[600px] rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-inner">
-              <iframe
-                src={`${secureResumeUrl}#toolbar=0`}
-                className="w-full h-full"
-                title="Candidate PDF Resume Viewer"
-              />
+            <iframe
+  src={`https://docs.google.com/viewer?url=${encodeURIComponent(secureResumeUrl)}&embedded=true`}
+  className="w-full h-full"
+  title="Candidate PDF Resume Viewer"
+/>
             </div>
           </div>
 
