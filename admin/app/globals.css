@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
+/* Tells Tailwind v4 to activate dark: variants when .dark class is on <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
+}
+
+/* Update background and foreground custom properties when .dark is active */
+.dark {
+  --background: #090d16;
+  --foreground: #f8fafc;
 }
 
 @theme inline {
@@ -20,12 +29,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Enforce clear, visible high-contrast text inside form inputs and control elements */
+/* Base input styling */
 input, textarea, select {
   color: #0f172a !important;
 }
 
-/* Allow text-white overrides in dark contexts like login pages */
-input.text-white, textarea.text-white {
+/* Allow text color overrides in dark mode */
+.dark input, 
+.dark textarea, 
+.dark select,
+input.text-white, 
+textarea.text-white {
   color: #ffffff !important;
 }

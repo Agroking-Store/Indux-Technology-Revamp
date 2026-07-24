@@ -6,7 +6,18 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'react-toastify';
-import { Trash2, ArrowUp, ArrowDown, Plus, Layout, Users, Calendar, HelpCircle, FileText } from 'lucide-react';
+import { 
+  Trash2, 
+  ArrowUp, 
+  ArrowDown, 
+  Plus, 
+  Layout, 
+  Users, 
+  Calendar, 
+  HelpCircle, 
+  FileText, 
+  ArrowLeft 
+} from 'lucide-react';
 import api, { ApiResponse } from '@/lib/api';
 
 const eventSchema = z.object({
@@ -168,7 +179,7 @@ export default function EditEventPage() {
         setBannerPreview(event.bannerImage || '');
       } catch (error) {
         // Handled
-      } finally {
+      }finally {
         setFetching(false);
       }
     };
@@ -245,7 +256,7 @@ export default function EditEventPage() {
     setFaqs(updated);
   };
 
-  // Image Upload Helpers — convert to base64 and store directly (no external host)
+  // Image Upload Helpers — convert to base64 and store directly
   const handleImageSelect = async (
     e: React.ChangeEvent<HTMLInputElement>,
     field: 'coverImage' | 'bannerImage',
@@ -316,55 +327,69 @@ export default function EditEventPage() {
   if (fetching) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 dark:border-indigo-400"></div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
-      <div className="flex items-center justify-between border-b pb-4">
+    <div className="max-w-5xl mx-auto space-y-6 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+      
+      {/* Header */}
+      <div className="flex items-center gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+        <button
+          type="button"
+          onClick={() => router.push('/events')}
+          className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition text-slate-500 dark:text-slate-400"
+        >
+          <ArrowLeft size={20} />
+        </button>
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Edit Event</h1>
-          <p className="text-gray-500 text-sm mt-1">Configure details, custom dynamic registrations, and metadata schedules.</p>
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Edit Event</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
+            Configure details, custom dynamic registrations, and metadata schedules.
+          </p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left">
         
+        {/* Left Column */}
         <div className="lg:col-span-2 space-y-6">
           
-          <div className="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm space-y-4">
-            <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <FileText className="text-indigo-600 size-5" /> Basic Details
+          {/* Basic Details */}
+          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+              <FileText className="text-indigo-600 dark:text-indigo-400 size-5" /> Basic Details
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Event Title *</label>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Event Title *</label>
                 <input
                   {...register('title')}
-                  className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-indigo-500 text-sm"
+                  className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 rounded-lg focus:outline-indigo-500 text-sm"
                   placeholder="e.g. INDUX AI Hackathon 2026"
                 />
-                {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
+                {errors.title && <p className="text-rose-500 text-xs mt-1">{errors.title.message}</p>}
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Slug (optional)</label>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Slug (optional)</label>
                 <input
                   {...register('slug')}
-                  className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-indigo-500 text-sm"
+                  className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 rounded-lg focus:outline-indigo-500 text-sm"
+                  placeholder="auto-generated slug if empty"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Event Type *</label>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Event Type *</label>
                 <select
                   {...register('type')}
-                  className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-indigo-500 text-sm bg-white"
+                  className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-indigo-500 text-sm"
                 >
                   <option value="Webinar">Webinar</option>
                   <option value="Hackathon">Hackathon</option>
@@ -377,70 +402,71 @@ export default function EditEventPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Category *</label>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Category *</label>
                 <input
                   {...register('category')}
-                  className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-indigo-500 text-sm"
+                  className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 rounded-lg focus:outline-indigo-500 text-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Organizer *</label>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Organizer *</label>
                 <input
                   {...register('organizer')}
-                  className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-indigo-500 text-sm"
+                  className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 rounded-lg focus:outline-indigo-500 text-sm"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Short Description *</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Short Description *</label>
               <textarea
                 {...register('shortDescription')}
                 rows={2}
                 maxLength={180}
-                className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-indigo-500 text-sm"
+                className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 rounded-lg focus:outline-indigo-500 text-sm"
               />
-              {errors.shortDescription && <p className="text-red-500 text-xs mt-1">{errors.shortDescription.message}</p>}
+              {errors.shortDescription && <p className="text-rose-500 text-xs mt-1">{errors.shortDescription.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Full Event Description *</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Full Event Description *</label>
               <textarea
                 {...register('description')}
                 rows={6}
-                className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-indigo-500 text-sm"
+                className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 rounded-lg focus:outline-indigo-500 text-sm"
               />
-              {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>}
+              {errors.description && <p className="text-rose-500 text-xs mt-1">{errors.description.message}</p>}
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm space-y-4">
+          {/* Registration Form Builder */}
+          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                <Layout className="text-indigo-600 size-5" /> Registration Form Builder
+              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                <Layout className="text-indigo-600 dark:text-indigo-400 size-5" /> Registration Form Builder
               </h3>
               <button
                 type="button"
                 onClick={addField}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-xs font-bold"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-lg transition text-xs font-bold shadow-sm"
               >
                 <Plus size={14} /> Add Custom Field
               </button>
             </div>
 
-            <p className="text-xs text-gray-555 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Design dynamic questions. Standard fields (Full Name, Email, Phone) are configured by default. Added fields are captured inside the JSON answers model.
             </p>
 
-            <div className="space-y-4 divide-y divide-gray-100">
+            <div className="space-y-4 divide-y divide-slate-100 dark:divide-slate-800">
               {formFields.map((field, idx) => {
                 const isBaseField = field.name === 'name' || field.name === 'email' || field.name === 'phone';
                 return (
                   <div key={idx} className="pt-4 flex flex-col gap-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-2 flex-grow max-w-sm">
-                        <span className="text-xs font-bold text-gray-400 bg-gray-100 w-6 h-6 rounded-full flex items-center justify-center select-none">
+                        <span className="text-xs font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 w-6 h-6 rounded-full flex items-center justify-center select-none shrink-0">
                           {idx + 1}
                         </span>
                         <input
@@ -448,7 +474,7 @@ export default function EditEventPage() {
                           value={field.label}
                           disabled={isBaseField}
                           onChange={(e) => updateField(idx, 'label', e.target.value)}
-                          className="w-full px-2.5 py-1 text-sm font-semibold border-b border-transparent hover:border-gray-300 focus:border-indigo-600 focus:outline-none disabled:bg-transparent disabled:border-none"
+                          className="w-full px-2.5 py-1 text-sm font-semibold bg-transparent text-slate-900 dark:text-slate-100 border-b border-transparent hover:border-slate-300 dark:hover:border-slate-700 focus:border-indigo-600 dark:focus:border-indigo-400 focus:outline-none disabled:bg-transparent disabled:border-none"
                         />
                       </div>
 
@@ -457,7 +483,7 @@ export default function EditEventPage() {
                           value={field.type}
                           disabled={isBaseField}
                           onChange={(e) => updateField(idx, 'type', e.target.value)}
-                          className="px-2.5 py-1 border rounded-lg text-xs font-medium bg-white focus:outline-indigo-500"
+                          className="px-2.5 py-1 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500 disabled:opacity-50"
                         >
                           <option value="text">Text Input</option>
                           <option value="email">Email</option>
@@ -478,9 +504,9 @@ export default function EditEventPage() {
                             checked={field.required}
                             disabled={isBaseField}
                             onChange={(e) => updateField(idx, 'required', e.target.checked)}
-                            className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            className="rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-white dark:bg-slate-900 disabled:opacity-50"
                           />
-                          <span className="text-xs font-bold text-gray-600">Required</span>
+                          <span className="text-xs font-bold text-slate-600 dark:text-slate-400">Required</span>
                         </label>
 
                         {!isBaseField && (
@@ -489,7 +515,7 @@ export default function EditEventPage() {
                               type="button"
                               onClick={() => moveField(idx, 'up')}
                               disabled={idx === 3}
-                              className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-500 disabled:opacity-30"
+                              className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500 dark:text-slate-400 disabled:opacity-30"
                             >
                               <ArrowUp size={14} />
                             </button>
@@ -497,14 +523,14 @@ export default function EditEventPage() {
                               type="button"
                               onClick={() => moveField(idx, 'down')}
                               disabled={idx === formFields.length - 1}
-                              className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-500 disabled:opacity-30"
+                              className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500 dark:text-slate-400 disabled:opacity-30"
                             >
                               <ArrowDown size={14} />
                             </button>
                             <button
                               type="button"
                               onClick={() => removeField(idx)}
-                              className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg"
+                              className="p-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/50 text-rose-600 dark:text-rose-400 rounded-lg"
                             >
                               <Trash2 size={14} />
                             </button>
@@ -516,33 +542,33 @@ export default function EditEventPage() {
                     {!isBaseField && (
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pl-8 pb-2">
                         <div>
-                          <label className="text-[10px] uppercase font-bold text-gray-400">Unique Identifier</label>
+                          <label className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500">Unique Identifier</label>
                           <input
                             type="text"
                             value={field.name}
                             onChange={(e) => updateField(idx, 'name', e.target.value)}
-                            className="mt-0.5 w-full px-2.5 py-1 text-xs border rounded-lg bg-gray-50 font-mono text-gray-600 focus:outline-indigo-500"
+                            className="mt-0.5 w-full px-2.5 py-1 text-xs border border-slate-200 dark:border-slate-800 rounded-lg bg-slate-50 dark:bg-slate-950 font-mono text-slate-600 dark:text-slate-300 focus:outline-indigo-500"
                           />
                         </div>
 
                         <div>
-                          <label className="text-[10px] uppercase font-bold text-gray-400">Placeholder Text</label>
+                          <label className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500">Placeholder Text</label>
                           <input
                             type="text"
                             value={field.placeholder || ''}
                             onChange={(e) => updateField(idx, 'placeholder', e.target.value)}
-                            className="mt-0.5 w-full px-2.5 py-1 text-xs border rounded-lg focus:outline-indigo-555"
+                            className="mt-0.5 w-full px-2.5 py-1 text-xs border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 rounded-lg focus:outline-indigo-500"
                           />
                         </div>
 
                         {(field.type === 'select' || field.type === 'radio' || field.type === 'checkbox') && (
                           <div>
-                            <label className="text-[10px] uppercase font-bold text-gray-400">Options (Comma separated) *</label>
+                            <label className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500">Options (Comma separated) *</label>
                             <input
                               type="text"
                               value={field.optionsStr || ''}
                               onChange={(e) => updateField(idx, 'optionsStr', e.target.value)}
-                              className="mt-0.5 w-full px-2.5 py-1 text-xs border rounded-lg border-indigo-200 focus:outline-indigo-500 focus:border-indigo-500"
+                              className="mt-0.5 w-full px-2.5 py-1 text-xs border border-indigo-200 dark:border-indigo-900/50 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-indigo-500"
                             />
                           </div>
                         )}
@@ -554,155 +580,159 @@ export default function EditEventPage() {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm space-y-6">
+          {/* Dynamic Speakers, Schedule, and FAQs Container */}
+          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
             
+            {/* Speakers Profile */}
             <div className="space-y-4">
-              <div className="flex items-center justify-between border-b pb-2">
-                <h4 className="text-base font-bold text-gray-800 flex items-center gap-2">
-                  <Users className="text-indigo-600 size-4.5" /> Speakers Profile
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
+                <h4 className="text-base font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                  <Users className="text-indigo-600 dark:text-indigo-400 size-5" /> Speakers Profile
                 </h4>
                 <button
                   type="button"
                   onClick={addSpeaker}
-                  className="flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-800 font-bold"
+                  className="flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition"
                 >
                   <Plus size={14} /> Add Speaker
                 </button>
               </div>
 
               {speakers.map((speaker, idx) => (
-                <div key={idx} className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end bg-gray-50/50 p-3.5 rounded-xl border border-gray-150 relative group">
+                <div key={idx} className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end bg-slate-50/80 dark:bg-slate-950/60 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 relative group">
                   <button
                     type="button"
                     onClick={() => removeSpeaker(idx)}
-                    className="absolute top-2 right-2 text-rose-500 hover:text-rose-700 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-2 right-2 text-rose-500 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <Trash2 size={14} />
                   </button>
                   <div className="md:col-span-2">
-                    <label className="text-[10px] font-bold text-gray-400">Speaker Name *</label>
+                    <label className="text-[10px] font-bold text-slate-400 dark:text-slate-500">Speaker Name *</label>
                     <input
                       type="text"
                       value={speaker.name}
                       onChange={(e) => updateSpeaker(idx, 'name', e.target.value)}
-                      className="w-full px-3 py-1.5 border rounded-lg text-xs bg-white focus:outline-indigo-500"
+                      className="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-gray-400">Role / Job Title *</label>
+                    <label className="text-[10px] font-bold text-slate-400 dark:text-slate-500">Role / Job Title *</label>
                     <input
                       type="text"
                       value={speaker.role}
                       onChange={(e) => updateSpeaker(idx, 'role', e.target.value)}
-                      className="w-full px-3 py-1.5 border rounded-lg text-xs bg-white focus:outline-indigo-500"
+                      className="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-gray-400">Company (optional)</label>
+                    <label className="text-[10px] font-bold text-slate-400 dark:text-slate-500">Company (optional)</label>
                     <input
                       type="text"
                       value={speaker.company || ''}
                       onChange={(e) => updateSpeaker(idx, 'company', e.target.value)}
-                      className="w-full px-3 py-1.5 border rounded-lg text-xs bg-white focus:outline-indigo-500"
+                      className="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500"
                     />
                   </div>
                 </div>
               ))}
             </div>
 
+            {/* Event Schedule Timeline */}
             <div className="space-y-4">
-              <div className="flex items-center justify-between border-b pb-2">
-                <h4 className="text-base font-bold text-gray-800 flex items-center gap-2">
-                  <Calendar className="text-indigo-600 size-4.5" /> Event Schedule Timeline
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
+                <h4 className="text-base font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                  <Calendar className="text-indigo-600 dark:text-indigo-400 size-5" /> Event Schedule Timeline
                 </h4>
                 <button
                   type="button"
                   onClick={addSchedule}
-                  className="flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-800 font-bold"
+                  className="flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition"
                 >
                   <Plus size={14} /> Add Slot
                 </button>
               </div>
 
               {schedule.map((slot, idx) => (
-                <div key={idx} className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end bg-gray-50/50 p-3.5 rounded-xl border border-gray-150 relative group">
+                <div key={idx} className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end bg-slate-50/80 dark:bg-slate-950/60 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 relative group">
                   <button
                     type="button"
                     onClick={() => removeSchedule(idx)}
-                    className="absolute top-2 right-2 text-rose-500 hover:text-rose-700 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-2 right-2 text-rose-500 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <Trash2 size={14} />
                   </button>
                   <div>
-                    <label className="text-[10px] font-bold text-gray-400">Time Range *</label>
+                    <label className="text-[10px] font-bold text-slate-400 dark:text-slate-500">Time Range *</label>
                     <input
                       type="text"
                       value={slot.time}
                       onChange={(e) => updateSchedule(idx, 'time', e.target.value)}
-                      className="w-full px-3 py-1.5 border rounded-lg text-xs bg-white focus:outline-indigo-500"
+                      className="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500"
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="text-[10px] font-bold text-gray-400">Session/Activity Title *</label>
+                    <label className="text-[10px] font-bold text-slate-400 dark:text-slate-500">Session/Activity Title *</label>
                     <input
                       type="text"
                       value={slot.title}
                       onChange={(e) => updateSchedule(idx, 'title', e.target.value)}
-                      className="w-full px-3 py-1.5 border rounded-lg text-xs bg-white focus:outline-indigo-500"
+                      className="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-gray-400">Brief Detail (optional)</label>
+                    <label className="text-[10px] font-bold text-slate-400 dark:text-slate-500">Brief Detail (optional)</label>
                     <input
                       type="text"
                       value={slot.description || ''}
                       onChange={(e) => updateSchedule(idx, 'description', e.target.value)}
-                      className="w-full px-3 py-1.5 border rounded-lg text-xs bg-white focus:outline-indigo-500"
+                      className="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500"
                     />
                   </div>
                 </div>
               ))}
             </div>
 
+            {/* FAQs */}
             <div className="space-y-4">
-              <div className="flex items-center justify-between border-b pb-2">
-                <h4 className="text-base font-bold text-gray-800 flex items-center gap-2">
-                  <HelpCircle className="text-indigo-600 size-4.5" /> Frequently Asked Questions
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
+                <h4 className="text-base font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                  <HelpCircle className="text-indigo-600 dark:text-indigo-400 size-5" /> Frequently Asked Questions
                 </h4>
                 <button
                   type="button"
                   onClick={addFaq}
-                  className="flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-800 font-bold"
+                  className="flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition"
                 >
                   <Plus size={14} /> Add FAQ
                 </button>
               </div>
 
               {faqs.map((faq, idx) => (
-                <div key={idx} className="bg-gray-50/50 p-3.5 rounded-xl border border-gray-150 relative group space-y-2">
+                <div key={idx} className="bg-slate-50/80 dark:bg-slate-950/60 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 relative group space-y-2">
                   <button
                     type="button"
                     onClick={() => removeFaq(idx)}
-                    className="absolute top-2 right-2 text-rose-500 hover:text-rose-700 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-2 right-2 text-rose-500 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <Trash2 size={14} />
                   </button>
                   <div>
-                    <label className="text-[10px] font-bold text-gray-400">Question *</label>
+                    <label className="text-[10px] font-bold text-slate-400 dark:text-slate-500">Question *</label>
                     <input
                       type="text"
                       value={faq.question}
                       onChange={(e) => updateFaq(idx, 'question', e.target.value)}
-                      className="w-full px-3 py-1.5 border rounded-lg text-xs bg-white focus:outline-indigo-500"
+                      className="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-gray-400">Answer *</label>
+                    <label className="text-[10px] font-bold text-slate-400 dark:text-slate-500">Answer *</label>
                     <textarea
                       value={faq.answer}
                       onChange={(e) => updateFaq(idx, 'answer', e.target.value)}
                       rows={2}
-                      className="w-full px-3 py-1.5 border rounded-lg text-xs bg-white focus:outline-indigo-500"
+                      className="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500"
                     />
                   </div>
                 </div>
@@ -713,16 +743,18 @@ export default function EditEventPage() {
 
         </div>
 
+        {/* Right Column */}
         <div className="space-y-6">
           
-          <div className="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm space-y-4">
-            <h3 className="text-base font-bold text-gray-800">Publish Parameters</h3>
+          {/* Publish Parameters */}
+          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+            <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">Publish Parameters</h3>
 
             <div>
-              <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Status</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Status</label>
               <select
                 {...register('status')}
-                className="mt-1 w-full px-3 py-2 border rounded-lg text-sm bg-white focus:outline-indigo-500"
+                className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-lg text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500 font-bold"
               >
                 <option value="Draft">Draft (Hidden)</option>
                 <option value="Published">Published (Public)</option>
@@ -730,118 +762,120 @@ export default function EditEventPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Start Date & Time *</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Start Date & Time *</label>
               <input
                 type="datetime-local"
                 {...register('startDate')}
-                className="mt-1 w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500"
+                className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-lg text-sm focus:outline-indigo-500"
               />
-              {errors.startDate && <p className="text-red-500 text-xs mt-1">{errors.startDate.message}</p>}
+              {errors.startDate && <p className="text-rose-500 text-xs mt-1">{errors.startDate.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">End Date & Time *</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">End Date & Time *</label>
               <input
                 type="datetime-local"
                 {...register('endDate')}
-                className="mt-1 w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500"
+                className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-lg text-sm focus:outline-indigo-500"
               />
-              {errors.endDate && <p className="text-red-500 text-xs mt-1">{errors.endDate.message}</p>}
+              {errors.endDate && <p className="text-rose-500 text-xs mt-1">{errors.endDate.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Registration Deadline *</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Registration Deadline *</label>
               <input
                 type="datetime-local"
                 {...register('registrationDeadline')}
-                className="mt-1 w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500"
+                className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-lg text-sm focus:outline-indigo-500"
               />
-              {errors.registrationDeadline && <p className="text-red-500 text-xs mt-1">{errors.registrationDeadline.message}</p>}
+              {errors.registrationDeadline && <p className="text-rose-500 text-xs mt-1">{errors.registrationDeadline.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Location / Venue *</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Location / Venue *</label>
               <input
                 {...register('location')}
-                className="mt-1 w-full px-4 py-2 border rounded-lg text-sm focus:outline-indigo-500"
+                className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 rounded-lg text-sm focus:outline-indigo-500"
               />
-              {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location.message}</p>}
+              {errors.location && <p className="text-rose-500 text-xs mt-1">{errors.location.message}</p>}
             </div>
 
             {/* Payment Configuration */}
-            <div className="border-t border-gray-100 pt-4 space-y-3">
+            <div className="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-3">
               <label className="flex items-center gap-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   {...register('isPaid')}
-                  className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-white dark:bg-slate-900"
                 />
-                <span className="text-xs font-bold text-gray-700">Paid Event (Requires Ticket)</span>
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300">Paid Event (Requires Ticket)</span>
               </label>
 
               {watchIsPaid && (
-                <div className="space-y-1.5 animate-fadeIn">
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide">Registration Fee (INR) *</label>
+                <div className="space-y-1.5 transition-all">
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Registration Fee (INR) *</label>
                   <input
                     type="number"
                     min="0"
                     step="0.01"
                     {...register('registrationFee')}
-                    className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500"
+                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-lg text-sm focus:outline-indigo-500"
                     placeholder="e.g. 499"
                   />
-                  {errors.registrationFee && <p className="text-red-500 text-xs mt-1">{errors.registrationFee.message}</p>}
+                  {errors.registrationFee && <p className="text-rose-500 text-xs mt-1">{errors.registrationFee.message}</p>}
                 </div>
               )}
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm space-y-4">
-            <h3 className="text-base font-bold text-gray-800">Event Media</h3>
+          {/* Event Media */}
+          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+            <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">Event Media</h3>
             
             <div>
-              <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Cover Image (upload to replace)</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Cover Image (upload to replace)</label>
               <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => handleImageSelect(e, 'coverImage', setCoverPreview)}
-                className="mt-1 w-full text-xs"
+                className="mt-1 w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 dark:file:bg-indigo-950/80 dark:file:text-indigo-300 hover:file:bg-indigo-100 cursor-pointer"
               />
               <input type="hidden" {...register('coverImage')} />
               {coverPreview && (
-                <img src={coverPreview} alt="Cover preview" className="mt-2 w-full h-32 object-cover rounded-lg border" />
+                <img src={coverPreview} alt="Cover preview" className="mt-2 w-full h-32 object-cover rounded-xl border border-slate-200 dark:border-slate-800" />
               )}
-              {errors.coverImage && <p className="text-red-500 text-xs mt-1">{errors.coverImage.message}</p>}
+              {errors.coverImage && <p className="text-rose-500 text-xs mt-1">{errors.coverImage.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-555 uppercase tracking-wide">Banner Image (upload to replace)</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Banner Image (upload to replace)</label>
               <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => handleImageSelect(e, 'bannerImage', setBannerPreview)}
-                className="mt-1 w-full text-xs"
+                className="mt-1 w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 dark:file:bg-indigo-950/80 dark:file:text-indigo-300 hover:file:bg-indigo-100 cursor-pointer"
               />
               <input type="hidden" {...register('bannerImage')} />
               {bannerPreview && (
-                <img src={bannerPreview} alt="Banner preview" className="mt-2 w-full h-24 object-cover rounded-lg border" />
+                <img src={bannerPreview} alt="Banner preview" className="mt-2 w-full h-24 object-cover rounded-xl border border-slate-200 dark:border-slate-800" />
               )}
-              {errors.bannerImage && <p className="text-red-500 text-xs mt-1">{errors.bannerImage.message}</p>}
+              {errors.bannerImage && <p className="text-rose-500 text-xs mt-1">{errors.bannerImage.message}</p>}
             </div>
           </div>
 
+          {/* Action Buttons */}
           <div className="flex gap-3">
             <button
               type="button"
               onClick={() => router.push('/events')}
-              className="flex-grow py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition text-sm text-center"
+              className="flex-grow py-3 px-4 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-xl transition text-sm text-center"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-grow py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md shadow-indigo-600/10 transition disabled:opacity-50 text-sm text-center"
+              className="flex-grow py-3 px-4 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-bold rounded-xl shadow-md shadow-indigo-600/10 transition disabled:opacity-50 text-sm text-center"
             >
               {loading ? 'Saving...' : 'Update Event'}
             </button>
