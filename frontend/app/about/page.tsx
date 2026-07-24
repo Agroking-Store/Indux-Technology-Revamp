@@ -3,7 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import { Sparkles, Play, Briefcase, Target, ShieldCheck, Asterisk, Trophy, KeyRound, Leaf, Rocket, Eye, CheckCircle2, Globe as GlobeIcon } from "lucide-react";
-import {Globe} from "@/components/ui/globe";
+import { Globe } from "@/components/ui/globe";
 
 export default function AboutPage() {
   const fadeUp: Variants = {
@@ -21,20 +21,20 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans overflow-hidden">
-      
+
       {/* Hero Section (Blue Background) */}
-      <section className="relative pt-48 md:pt-56 pb-64 px-6 bg-blue-600">
+      <section className="relative pt-32 md:pt-25 pb-64 px-6 bg-blue-600">
         {/* Floating Geometric Shapes */}
-        <div className="absolute top-20 left-1/4 text-white/20 animate-pulse">
+        <div className="absolute top-20 left-1/4 text-white/20">
           <Trophy size={50} />
         </div>
-        <div className="absolute top-32 right-1/4 text-white/20 animate-spin-slow">
+        <div className="absolute top-32 right-1/4 text-white/20">
           <KeyRound size={58} />
         </div>
         <div className="absolute top-40 right-1/3 w-4 h-4 rounded-full border-2 border-white/20" />
         <div className="absolute top-24 left-1/3 w-3 h-3 rounded-full bg-white/20" />
 
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
@@ -52,7 +52,7 @@ export default function AboutPage() {
       {/* Overlapping Image Grid */}
       <section className="relative px-6 -mt-40 z-20">
         <div className="max-w-6xl mx-auto">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
@@ -65,14 +65,14 @@ export default function AboutPage() {
               "/images/unsplash/img-f5258efe.webp",
               "/images/unsplash/img-29d85ac4.webp"
             ].map((imgSrc, index) => (
-              <motion.div 
-                key={imgSrc} 
+              <motion.div
+                key={imgSrc}
                 variants={fadeUp}
                 className={`relative w-full aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden shadow-xl ${index % 2 !== 0 ? 'md:mt-12' : ''}`}
               >
                 <div className="absolute inset-0 bg-slate-200 dark:bg-slate-800">
-                  <Image 
-                    src={imgSrc} 
+                  <Image
+                    src={imgSrc}
                     alt={`Indux Team & Workspace ${index + 1}`}
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-500"
@@ -86,9 +86,9 @@ export default function AboutPage() {
       </section>
 
       {/* Indux Group Stories (Centered Title, Two-Column Text) */}
-      <section className="px-6 py-24 md:py-32">
+      <section className="px-6 pt-24 md:pt-32 pb-12 md:pb-16">
         <div className="max-w-6xl mx-auto">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -99,7 +99,7 @@ export default function AboutPage() {
               Indux Group Journey
             </h2>
           </motion.div>
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -117,10 +117,10 @@ export default function AboutPage() {
       </section>
 
       {/* Founder Section (Overlapping Cards) */}
-      <section className="px-6 py-16 bg-slate-100 dark:bg-slate-900/50">
+      <section className="px-6 pt-12 pb-16 md:pt-16 md:pb-24 bg-slate-100 dark:bg-slate-900/50">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           {/* Left: Image with floating card */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -128,10 +128,10 @@ export default function AboutPage() {
             className="relative"
           >
             <div className="relative aspect-square md:aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl">
-              <Image 
-                src="https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&w=800&q=80" 
-                alt="Founder" 
-                fill 
+              <Image
+                src="https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&w=800&q=80"
+                alt="Founder"
+                fill
                 className="object-cover"
                 unoptimized
               />
@@ -151,7 +151,7 @@ export default function AboutPage() {
           </motion.div>
 
           {/* Right: Text and Quote */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -176,9 +176,9 @@ export default function AboutPage() {
       {/* Mission Section */}
       <section className="px-6 py-24 md:py-32 bg-white dark:bg-slate-950 relative overflow-hidden">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          
+
           {/* Left: Image Collage for Mission */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -198,7 +198,7 @@ export default function AboutPage() {
           </motion.div>
 
           {/* Right: Mission Content */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -231,9 +231,9 @@ export default function AboutPage() {
       {/* Vision Section */}
       <section className="px-6 py-24 md:py-32 bg-slate-50 dark:bg-slate-900/50 relative overflow-hidden">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          
+
           {/* Left: Vision Content */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -262,7 +262,7 @@ export default function AboutPage() {
           </motion.div>
 
           {/* Right: Image Collage for Vision */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -295,7 +295,7 @@ export default function AboutPage() {
         </div>
 
         <div className="max-w-6xl mx-auto text-center">
-          <motion.h2 
+          <motion.h2
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
@@ -306,7 +306,7 @@ export default function AboutPage() {
             faster and bigger
           </motion.h2>
 
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
@@ -351,9 +351,9 @@ export default function AboutPage() {
       {/* Global Reach Section */}
       <section className="px-6 py-24 md:py-32 bg-slate-50 dark:bg-slate-900/30 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          
+
           {/* Left: Content */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -366,15 +366,15 @@ export default function AboutPage() {
                 <GlobeIcon size={16} />
                 Global Presence
               </div>
-              
+
               <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6">
                 Trusted by Businesses Across the Globe
               </h2>
-              
+
               <p className="text-lg text-slate-600 dark:text-slate-400 mb-10 leading-relaxed">
                 Our digital solutions transcend borders. From dynamic startups in Silicon Valley to established enterprises in Asia, we build scalable, future-ready technology that connects the world and drives international growth.
               </p>
-              
+
               {/* Stats Row */}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 <div className="flex flex-col border-l-4 border-blue-500 pl-4">
@@ -394,7 +394,7 @@ export default function AboutPage() {
           </motion.div>
 
           {/* Right: Globe Component */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
