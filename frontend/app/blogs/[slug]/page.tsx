@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getBlogBySlug } from "@/lib/api";
+import { getBlogBySlug, getBlogs } from "@/lib/api";
 import BlogDetailClient from "./BlogDetailClient";
 
 interface PageProps {
@@ -55,8 +55,13 @@ export default async function Page({ params }: PageProps) {
   const { slug } = await params;
   
   let blog;
+  let relatedBlogs: any[] = [];
   try {
     blog = await getBlogBySlug(slug);
+    const allBlogs = await getBlogs();
+    relatedBlogs = allBlogs
+      .filter((b: any) => b.slug !== slug)
+      .slice(0, 3);
   } catch (error) {
     notFound();
   }
@@ -94,7 +99,7 @@ export default async function Page({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <BlogDetailClient blog={blog} />
+      <BlogDetailClient blog={blog} relatedBlogs={relatedBlogs} />
     </>
   );
 }

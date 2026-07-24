@@ -129,7 +129,7 @@ export default function CRMServicePage() {
 
       <main className="flex-grow">
         {/* ===== HERO SECTION ===== */}
-        <section className="relative pt-16 pb-20 lg:pt-24 lg:pb-32 font-sans">
+        <section className="relative pt-10 pb-12 lg:pt-14 lg:pb-16 font-sans">
           {/* Subtle grid pattern overlay */}
           <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none bg-[radial-gradient(#cbd5e1_2px,transparent_2px)] dark:bg-[radial-gradient(#334155_2px,transparent_2px)] bg-[size:32px_32px]"></div>
 
@@ -154,10 +154,10 @@ export default function CRMServicePage() {
                 <p className="text-lg text-slate-555 dark:text-slate-400 leading-relaxed mt-2 font-sans">
                   We design, implement, and customize Customer Relationship Management platforms that empower your sales, marketing, and support teams to build lasting connections.
                 </p>
-                <div className="flex flex-wrap items-center gap-4 pt-4">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4">
                   <Button
                     nativeButton={false}
-                    className="bg-blue-600 hover:bg-blue-750 text-white px-8 py-6 rounded-full text-base font-bold shadow-lg shadow-blue-500/20 transition-all hover:scale-103 cursor-pointer"
+                    className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2"
                     render={<Link href="/contact-us" />}
                   >
                     Start Your Project
@@ -165,7 +165,7 @@ export default function CRMServicePage() {
                   <Button
                     nativeButton={false}
                     variant="ghost"
-                    className="px-8 py-6 rounded-full text-base font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200/50 dark:hover:bg-slate-900 cursor-pointer"
+                    className="w-full sm:w-auto px-8 py-6 rounded-full font-medium text-base text-slate-700 dark:text-slate-350 hover:bg-slate-200/50 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-800/80 transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2"
                     render={<a href="#capabilities" />}
                   >
                     Explore Capabilities
@@ -206,7 +206,7 @@ export default function CRMServicePage() {
 
         {/* ===== CAPABILITIES SECTION ===== */}
         <section id="capabilities" className="relative overflow-visible border-t border-slate-200/60 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-950/50">
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
             
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start relative">
               
@@ -231,15 +231,15 @@ export default function CRMServicePage() {
 
                 <Button 
                   nativeButton={false}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wide text-sm uppercase transition-all shadow-lg shadow-blue-600/20 group cursor-pointer"
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 group"
                   render={<Link href="/contact-us" />}
                 >
-                  Consult with our experts <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  Consult with Our Experts <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
 
               {/* Right Column: Scrollable Cards */}
-              <div className="w-full lg:w-7/12 flex flex-col gap-8 lg:gap-12 lg:pb-32">
+              <div className="w-full lg:w-7/12 flex flex-col gap-6 lg:gap-8 lg:pb-32">
                 {capabilities.map((cap, idx) => {
                   const Icon = cap.icon;
                   const numStr = String(idx + 1).padStart(2, '0');
@@ -248,7 +248,7 @@ export default function CRMServicePage() {
                       key={idx}
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-100px" }}
+                      viewport={{ once: true, margin: "-30px" }}
                       transition={{ duration: 0.6 }}
                       className="flex flex-col sm:flex-row gap-6 lg:gap-10 items-start w-full group text-left"
                     >
@@ -279,8 +279,8 @@ export default function CRMServicePage() {
         </section>
 
         {/* ===== MODERN TECH STACK SECTION ===== */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-slate-200/60 dark:border-slate-900">
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-16 border-t border-slate-200/60 dark:border-slate-900">
+          <div className="text-center max-w-2xl mx-auto mb-10 space-y-4">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">Our Tech Stack</h2>
             <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed font-sans">
               We leverage top-tier CRM platforms and robust programming ecosystems to build scalable, reliable, and secure solutions.
@@ -319,8 +319,8 @@ export default function CRMServicePage() {
         </section>
 
         {/* ===== DEVELOPMENT PROCESS SECTION ===== */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-slate-200/60 dark:border-slate-900">
-          <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-16 border-t border-slate-200/60 dark:border-slate-900">
+          <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">Our Process</h2>
             <p className="text-slate-555 dark:text-slate-455 text-sm md:text-base leading-relaxed font-sans">
               We employ a structured, milestone-driven framework that guarantees transparency and precise execution.
@@ -382,7 +382,7 @@ export default function CRMServicePage() {
         </section>
 
         {/* ===== WHY INDUX SECTION ===== */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-slate-200/60 dark:border-slate-900">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-16 border-t border-slate-200/60 dark:border-slate-900">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
             {/* Value columns */}
@@ -444,31 +444,46 @@ export default function CRMServicePage() {
         </section>
 
         {/* ===== BOTTOM CTA SECTION ===== */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mb-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12 mb-10">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            initial={{ opacity: 0, scale: 0.95, y: 30 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative bg-gradient-to-r from-blue-700 to-indigo-700 text-white rounded-3xl p-8 md:p-12 overflow-hidden shadow-xl"
+            className="relative bg-[#0F172A] text-white rounded-[2rem] p-8 md:p-12 overflow-hidden border border-slate-850 shadow-2xl"
           >
-            {/* Grid pattern */}
-            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none"></div>
+            {/* High-tech Glowing Background Accents */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-gradient-to-r from-blue-600/20 to-indigo-600/20 blur-[100px] pointer-events-none"></div>
+            
+            {/* Subtle Grid overlay */}
+            <div className="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+            
+            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+              
+              {/* Left Column: Heading and description */}
+              <div className="text-left lg:max-w-2xl space-y-4">
+                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.15] text-white">
+                  Ready to transform your customer relationships?
+                </h2>
+                <p className="text-slate-400 text-base md:text-lg leading-relaxed font-sans">
+                  Connect with our CRM specialists. Tell us about your sales processes, team structure, and growth objectives.
+                </p>
+              </div>
 
-            <div className="relative z-10 max-w-2xl text-left space-y-6">
-              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Ready to transform your customer relationships?</h2>
-              <p className="text-blue-100 text-base leading-relaxed font-sans">
-                Connect with our CRM specialists. Tell us about your sales processes, team structure, and growth objectives.
-              </p>
-              <div className="pt-2">
+              {/* Right Column: Button & footnote */}
+              <div className="flex flex-col items-center lg:items-end gap-3 w-full lg:w-auto flex-shrink-0">
                 <Button
                   nativeButton={false}
-                  className="bg-white hover:bg-slate-100 text-blue-700 px-8 py-6 rounded-full font-bold shadow-lg text-base cursor-pointer hover:scale-103 transition-transform"
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-blue-600/35"
                   render={<Link href="/contact-us" />}
                 >
-                  Start Conversation <ArrowRight className="size-4 ml-2" />
+                  Start Conversation <ArrowRight className="w-4 h-4" />
                 </Button>
+                <span className="text-xs text-slate-500 font-medium tracking-wide">
+                  Response within 24 hours • No commitment required
+                </span>
               </div>
+
             </div>
           </motion.div>
         </section>

@@ -249,6 +249,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
                             country={field.value && field.value.toString().startsWith('+') ? undefined : country}
                             placeholder="98765 43210"
                             maxLength={16}
+                            suppressHydrationWarning={true}
                             className="flex-1 pr-3 py-1 bg-transparent outline-none text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500 min-w-0"
                           />
                         </div>
