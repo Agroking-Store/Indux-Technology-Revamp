@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getCareers, Career } from '@/lib/api';
 import Link from 'next/link';
-import { Briefcase, MapPin, DollarSign, Users, ArrowRight, Trophy } from 'lucide-react';
+import { Briefcase, MapPin, DollarSign, Users, ArrowRight, Trophy, HeartHandshake, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { NumberTicker } from '@/components/ui/number-ticker';
@@ -71,9 +71,9 @@ export default function CareersPage() {
                 </p>
                 <a
                   href="#open-positions"
-                  className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer w-max inline-flex items-center gap-2"
+                  className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] cursor-pointer w-max inline-flex items-center gap-3 group"
                 >
-                  View Open Positions <ArrowRight className="w-4 h-4" />
+                  View Open Positions <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </a>
               </motion.div>
               <motion.div
@@ -113,24 +113,27 @@ export default function CareersPage() {
               className="grid grid-cols-3 gap-8 md:divide-x divide-blue-800/40 dark:divide-slate-800"
             >
               {[
-                { value: 350, label: 'Trusted Clients', suffix: '+' },
-                { value: 98, label: 'Retention Rate', suffix: '%' },
-                { value: 24, label: 'Systems Monitoring', suffix: '/7' },
-              ].map((stat, idx) => (
-                <div key={idx} className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 md:px-8 first:pl-0 last:pr-0">
-                  <div className="w-14 h-14 rounded-full border-[1.5px] border-blue-400/20 flex items-center justify-center bg-blue-800/10">
-                    <Trophy className="w-6 h-6 text-blue-300 opacity-80" strokeWidth={1.5} />
+                { value: 350, label: 'Trusted Clients', suffix: '+', icon: Users },
+                { value: 98, label: 'Retention Rate', suffix: '%', icon: HeartHandshake },
+                { value: 24, label: 'Systems Monitoring', suffix: '/7', icon: Activity },
+              ].map((stat, idx) => {
+                const Icon = stat.icon;
+                return (
+                  <div key={idx} className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 md:px-8 first:pl-0 last:pr-0">
+                    <div className="w-14 h-14 rounded-full border-[1.5px] border-blue-400/20 flex items-center justify-center bg-blue-800/10">
+                      <Icon className="w-6 h-6 text-blue-300 opacity-80" strokeWidth={1.5} />
+                    </div>
+                    <div className="text-center md:text-left">
+                      <h3 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-1">
+                        <NumberTicker value={stat.value} className="text-white" />{stat.suffix}
+                      </h3>
+                      <p className="text-blue-100/70 font-medium text-[11px] md:text-xs tracking-wider uppercase">
+                        {stat.label}
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-center md:text-left">
-                    <h3 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-1">
-                      <NumberTicker value={stat.value} className="text-white" />{stat.suffix}
-                    </h3>
-                    <p className="text-blue-100/70 font-medium text-[11px] md:text-xs tracking-wider uppercase">
-                      {stat.label}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </motion.div>
           </div>
         </section>
@@ -322,9 +325,9 @@ export default function CareersPage() {
               </p>
               <Link
                 href="/contact-us"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wider text-xs uppercase transition-all duration-300 shadow-lg shadow-blue-700/20 hover:scale-105 active:scale-95 inline-flex items-center justify-center"
+                className="bg-white hover:bg-slate-50 text-blue-900 px-8 py-4 rounded-full font-bold tracking-wider text-sm uppercase transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 inline-flex items-center justify-center gap-2 group"
               >
-                Get in Touch
+                Get in Touch <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </motion.div>
           </div>

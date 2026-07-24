@@ -34,7 +34,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters."),
+  name: z.string()
+    .min(2, "Name must be at least 2 characters.")
+    .max(100, "Name must not exceed 100 characters.")
+    .regex(/^[^0-9]*$/, "Name must not contain numbers."),
   email: z.string().email("Please enter a valid email address."),
   phone: z.string().min(1, "Phone number is required").refine((val) => val && isValidPhoneNumber(val), { message: "Invalid phone number" }),
   message: z.string().min(10, "Message must be at least 10 characters."),
@@ -191,7 +194,8 @@ export function ContactForm() {
                   <PhoneInput
                     {...field}
                     id="contact-phone"
-                    country={field.value && field.value.toString().startsWith('+') ? undefined : country}
+                    country={country}
+                    international={false}
                     placeholder="98765 43210"
                     maxLength={16}
                     className="flex-1 pr-4 py-2 bg-transparent outline-none text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-400 min-w-0 h-full"
