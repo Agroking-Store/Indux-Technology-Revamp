@@ -151,7 +151,7 @@ export default function LeadsPage() {
         <div className="flex items-center gap-3 w-full md:w-auto flex-wrap sm:flex-nowrap">
           <button
             onClick={() => setShowOnlyQuotes(!showOnlyQuotes)}
-            className={`px-4 py-2 rounded-xl text-sm font-semibold border transition-colors whitespace-nowrap ${
+            className={`px-4 py-2 rounded-xl text-sm font-semibold border transition-colors whitespace-nowrap cursor-pointer ${
               showOnlyQuotes 
                 ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800/60' 
                 : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50'
@@ -165,7 +165,7 @@ export default function LeadsPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full sm:w-40 px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-indigo-500 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200"
+              className="w-full sm:w-40 px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-indigo-500 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 cursor-pointer"
             >
               <option value="All">All Statuses</option>
               <option value="New">New</option>
@@ -240,14 +240,14 @@ export default function LeadsPage() {
                     <td className="px-6 py-4 text-right space-x-2 whitespace-nowrap">
                       <button
                         onClick={() => setSelectedLead(lead)}
-                        className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800/80 rounded-lg transition inline-flex"
+                        className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800/80 rounded-lg transition inline-flex cursor-pointer"
                         title="View Details"
                       >
                         <Eye size={16} />
                       </button>
                       <button
                         onClick={() => handleDelete(lead._id)}
-                        className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-lg transition inline-flex"
+                        className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-lg transition inline-flex cursor-pointer"
                         title="Delete Lead"
                       >
                         <Trash2 size={16} />

@@ -157,7 +157,7 @@ function ApplicationsContent() {
         </div>
         <button
           onClick={handleExportCSV}
-          className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white rounded-lg transition text-sm font-semibold shadow-md shadow-emerald-600/10"
+          className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white rounded-lg transition text-sm font-semibold shadow-md shadow-emerald-600/10 cursor-pointer"
         >
           <Download size={16} /> Export Candidates (CSV)
         </button>
@@ -367,7 +367,7 @@ function ApplicationsContent() {
                         <a
                           href={`${process.env.NEXT_PUBLIC_API_URL}/applications/${app._id}/resume?token=${token}`}
                           download={`Resume-${(app.candidateName || app.fullName || 'Candidate').replace(/\s+/g, '_')}.pdf`}
-                          className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/80 transition"
+                          className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/80 transition cursor-pointer"
                         >
                           <Download size={12} /> Get
                         </a>
@@ -377,14 +377,14 @@ function ApplicationsContent() {
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-1">
                         <button
                           onClick={() => router.push(`/applications/${app._id}`)}
-                          className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 p-1.5 rounded-lg transition inline-flex"
+                          className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 p-1.5 rounded-lg transition inline-flex cursor-pointer"
                           title="View candidate profile details"
                         >
                           <FileText size={16} />
                         </button>
                         <button
                           onClick={() => handleDelete(app._id)}
-                          className="text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition inline-flex"
+                          className="text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition inline-flex cursor-pointer"
                           title="Delete application"
                         >
                           <Trash2 size={16} />

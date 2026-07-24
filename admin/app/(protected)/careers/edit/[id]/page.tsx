@@ -337,7 +337,7 @@ export default function EditCareerPage() {
               <button
                 type="button"
                 onClick={addCustomField}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-600 dark:text-indigo-400 rounded-lg text-xs font-semibold transition border border-indigo-100 dark:border-indigo-900/40"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-600 dark:text-indigo-400 rounded-lg text-xs font-semibold transition border border-indigo-100 dark:border-indigo-900/40 cursor-pointer"
               >
                 <Plus size={14} /> Add Question
               </button>
@@ -446,7 +446,7 @@ export default function EditCareerPage() {
               <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Status</label>
               <select
                 {...register('status')}
-                className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-lg text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500 font-bold"
+                className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-lg text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500 font-bold cursor-pointer"
               >
                 <option value="Active">Active</option>
                 <option value="Closed">Closed</option>
@@ -476,14 +476,14 @@ export default function EditCareerPage() {
             <button
               type="button"
               onClick={() => router.push('/careers')}
-              className="flex-1 px-4 py-2.5 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition text-sm font-semibold"
+              className="flex-1 px-4 py-2.5 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition text-sm font-semibold cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-xl transition text-sm font-semibold shadow-md shadow-indigo-600/10 disabled:opacity-50"
+              className="flex-1 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-xl transition text-sm font-semibold shadow-md shadow-indigo-600/10 disabled:opacity-50 cursor-pointer"
             >
               {loading ? 'Saving...' : 'Save Posting'}
             </button>

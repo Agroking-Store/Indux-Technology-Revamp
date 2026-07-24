@@ -223,7 +223,7 @@ export default function CreateBlogPage() {
               <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Status</label>
               <select
                 {...register('status')}
-                className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-lg text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500"
+                className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-lg text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500 cursor-pointer"
               >
                 <option value="Draft">Draft</option>
                 <option value="Published">Published</option>
@@ -261,7 +261,7 @@ export default function CreateBlogPage() {
                 type="file"
                 accept="image/*"
                 onChange={handleImageSelect}
-                className="mt-1 w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 dark:file:bg-indigo-950/50 file:text-indigo-700 dark:file:text-indigo-300 hover:file:bg-indigo-100 dark:hover:file:bg-indigo-900/50 cursor-pointer"
+                className="mt-1 w-full cursor-pointer text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 dark:file:bg-indigo-950/50 file:text-indigo-700 dark:file:text-indigo-300 hover:file:bg-indigo-100 dark:hover:file:bg-indigo-900/50 "
               />
               <input type="hidden" {...register('featuredImage')} />
               {imagePreview && (
@@ -276,14 +276,14 @@ export default function CreateBlogPage() {
             <button
               type="button"
               onClick={() => router.push('/blogs')}
-              className="flex-grow py-3 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl transition text-sm text-center"
+              className="flex-grow py-3 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl transition text-sm text-center cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-grow py-3 px-4 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-bold rounded-xl shadow-md transition disabled:opacity-50 text-sm text-center shadow-indigo-600/20"
+              className="flex-grow py-3 px-4 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-bold rounded-xl shadow-md transition disabled:opacity-50 text-sm text-center shadow-indigo-600/20 cursor-pointer"
             >
               {loading ? 'Submitting...' : 'Write Post'}
             </button>

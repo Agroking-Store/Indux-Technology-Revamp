@@ -389,7 +389,7 @@ export default function EditEventPage() {
                 <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Event Type *</label>
                 <select
                   {...register('type')}
-                  className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-indigo-500 text-sm"
+                  className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-indigo-500 text-sm cursor-pointer"
                 >
                   <option value="Webinar">Webinar</option>
                   <option value="Hackathon">Hackathon</option>
@@ -449,7 +449,7 @@ export default function EditEventPage() {
               <button
                 type="button"
                 onClick={addField}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-lg transition text-xs font-bold shadow-sm"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-lg transition text-xs font-bold shadow-sm cursor-pointer"
               >
                 <Plus size={14} /> Add Custom Field
               </button>
@@ -483,7 +483,7 @@ export default function EditEventPage() {
                           value={field.type}
                           disabled={isBaseField}
                           onChange={(e) => updateField(idx, 'type', e.target.value)}
-                          className="px-2.5 py-1 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500 disabled:opacity-50"
+                          className="px-2.5 py-1 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500 disabled:opacity-50 cursor-pointer"
                         >
                           <option value="text">Text Input</option>
                           <option value="email">Email</option>
@@ -592,7 +592,7 @@ export default function EditEventPage() {
                 <button
                   type="button"
                   onClick={addSpeaker}
-                  className="flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition"
+                  className="flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition cursor-pointer"
                 >
                   <Plus size={14} /> Add Speaker
                 </button>
@@ -647,7 +647,7 @@ export default function EditEventPage() {
                 <button
                   type="button"
                   onClick={addSchedule}
-                  className="flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition"
+                  className="flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition cursor-pointer"
                 >
                   <Plus size={14} /> Add Slot
                 </button>
@@ -702,7 +702,7 @@ export default function EditEventPage() {
                 <button
                   type="button"
                   onClick={addFaq}
-                  className="flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition"
+                  className="flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition cursor-pointer"
                 >
                   <Plus size={14} /> Add FAQ
                 </button>
@@ -754,7 +754,7 @@ export default function EditEventPage() {
               <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Status</label>
               <select
                 {...register('status')}
-                className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-lg text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500 font-bold"
+                className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-lg text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500 font-bold cursor-pointer"
               >
                 <option value="Draft">Draft (Hidden)</option>
                 <option value="Published">Published (Public)</option>
@@ -868,14 +868,14 @@ export default function EditEventPage() {
             <button
               type="button"
               onClick={() => router.push('/events')}
-              className="flex-grow py-3 px-4 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-xl transition text-sm text-center"
+              className="flex-grow py-3 px-4 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-xl transition text-sm text-center cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-grow py-3 px-4 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-bold rounded-xl shadow-md shadow-indigo-600/10 transition disabled:opacity-50 text-sm text-center"
+              className="flex-grow py-3 px-4 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-bold rounded-xl shadow-md shadow-indigo-600/10 transition disabled:opacity-50 text-sm text-center cursor-pointer"
             >
               {loading ? 'Saving...' : 'Update Event'}
             </button>

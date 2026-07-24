@@ -165,35 +165,35 @@ export default function CareersPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-1.5 flex items-center">
                     <Link
                       href={`/applications?jobId=${career._id}`}
-                      className="text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 p-1.5 rounded-lg transition inline-flex"
+                      className="text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 p-1.5 rounded-lg transition inline-flex cursor-pointer"
                       title="View candidates"
                     >
                       <Inbox size={16} />
                     </Link>
                     <Link
                       href={`/careers/edit/${career._id}`}
-                      className="text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 p-1.5 rounded-lg transition inline-flex"
+                      className="text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 p-1.5 rounded-lg transition inline-flex cursor-pointer"
                       title="Edit posting"
                     >
                       <Edit2 size={16} />
                     </Link>
                     <button
                       onClick={() => handleDuplicate(career._id)}
-                      className="text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 p-1.5 rounded-lg transition inline-flex"
+                      className="text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 p-1.5 rounded-lg transition inline-flex cursor-pointer"
                       title="Duplicate job opening"
                     >
                       <Copy size={16} />
                     </button>
                     <button
                       onClick={() => handleToggleStatus(career._id, career.status)}
-                      className="text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 p-1.5 rounded-lg transition inline-flex"
+                      className="text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 p-1.5 rounded-lg transition inline-flex cursor-pointer"
                       title={career.status === 'Active' ? 'Close job' : 'Reopen job'}
                     >
                       <Eye size={16} />
                     </button>
                     <button
                       onClick={() => handleDelete(career._id)}
-                      className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition inline-flex"
+                      className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition inline-flex cursor-pointer"
                       title="Delete"
                     >
                       <Trash2 size={16} />

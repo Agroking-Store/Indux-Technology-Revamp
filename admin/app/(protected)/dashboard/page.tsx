@@ -152,7 +152,6 @@ export default function DashboardPage() {
   {/* Header Text Section */}
   <div className="space-y-1 relative z-10">
     <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider">
-      <Sparkles className="size-4 animate-spin-slow" />
       Operations Overview
     </div>
     <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
@@ -184,7 +183,7 @@ export default function DashboardPage() {
       <div className="flex border-b border-slate-200 dark:border-slate-800">
         <button
           onClick={() => setActiveTab('system')}
-          className={`px-6 py-3 font-bold text-sm border-b-2 transition ${
+          className={`px-6 py-3 font-bold text-sm border-b-2 transition cursor-pointer ${
             activeTab === 'system' 
               ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400' 
               : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
@@ -194,7 +193,7 @@ export default function DashboardPage() {
         </button>
         <button
           onClick={() => setActiveTab('ats')}
-          className={`px-6 py-3 font-bold text-sm border-b-2 transition ${
+          className={`px-6 py-3 font-bold text-sm border-b-2 transition cursor-pointer ${
             activeTab === 'ats' 
               ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400' 
               : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
@@ -270,7 +269,7 @@ export default function DashboardPage() {
               <div className="flex bg-slate-100 dark:bg-slate-950 p-1 rounded-xl border border-slate-200/60 dark:border-slate-800">
                 <button
                   onClick={() => setVisitorRange('week')}
-                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     visitorRange === 'week' 
                       ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm' 
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
@@ -280,7 +279,7 @@ export default function DashboardPage() {
                 </button>
                 <button
                   onClick={() => setVisitorRange('month')}
-                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     visitorRange === 'month' 
                       ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm' 
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'

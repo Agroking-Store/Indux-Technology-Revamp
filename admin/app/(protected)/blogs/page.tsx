@@ -111,7 +111,7 @@ export default function BlogsPage() {
           <select
             value={statusFilter}
             onChange={e => setStatusFilter(e.target.value as typeof statusFilter)}
-            className="px-3 py-2 border rounded-xl text-sm bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold focus:outline-indigo-500 border-slate-200 dark:border-slate-800 shadow-sm"
+            className="px-3 py-2 border rounded-xl text-sm bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold focus:outline-indigo-500 border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer"
           >
             <option value="">All Statuses</option>
             <option value="Published">Published</option>
@@ -209,7 +209,7 @@ export default function BlogsPage() {
                       </Link>
                       <button
                         onClick={() => handleToggleStatus(blog._id, blog.status)}
-                        className={`p-1.5 rounded-lg transition inline-flex ${
+                        className={`p-1.5 rounded-lg transition inline-flex cursor-pointer ${
                           blog.status === 'Published'
                             ? 'text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/50'
                             : 'text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/50'
@@ -220,7 +220,7 @@ export default function BlogsPage() {
                       </button>
                       <button
                         onClick={() => handleDelete(blog._id)}
-                        className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition inline-flex"
+                        className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition inline-flex cursor-pointer"
                         title="Delete article"
                       >
                         <Trash2 size={16} />

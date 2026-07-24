@@ -201,20 +201,10 @@ function RegistrationsContent() {
         </div>
         
         <div className="flex items-center gap-3">
-          {/* Dark / Light Mode Toggle Button */}
-          <button
-            onClick={toggleDarkMode}
-            className="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          >
-            {isDarkMode ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-indigo-600" />}
-          </button>
-
-          {/* CSV Export Button */}
           <button
             onClick={handleExportCSV}
             disabled={!selectedEventId}
-            className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition text-sm font-semibold shadow-md shadow-emerald-600/10 disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition text-sm font-semibold shadow-md shadow-emerald-600/10 disabled:opacity-50 cursor-pointer"
           >
             <Download size={16} /> Export Registrations (CSV)
           </button>
@@ -243,7 +233,7 @@ function RegistrationsContent() {
           <select
             value={selectedEventId}
             onChange={(e) => { setSelectedEventId(e.target.value); setPage(1); }}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-indigo-500"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-indigo-500 cursor-pointer"
           >
             <option value="">All Events</option>
             {events.map(event => (
@@ -257,7 +247,7 @@ function RegistrationsContent() {
           <select
             value={statusFilter}
             onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-indigo-500"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-indigo-500 cursor-pointer"
           >
             <option value="">All Statuses</option>
             <option value="Pending">Pending</option>

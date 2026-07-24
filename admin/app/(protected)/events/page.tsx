@@ -228,7 +228,7 @@ export default function EventsPage() {
                     <div className="flex items-center gap-1">
                       <Link
                         href={`/events/registrations?eventId=${event._id}`}
-                        className="p-1.5 rounded-lg text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition"
+                        className="p-1.5 rounded-lg text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition cursor-pointer"
                         title="View Registrations"
                         aria-label="View Registrations"
                       >
@@ -237,7 +237,7 @@ export default function EventsPage() {
                 
                       <button
                         onClick={() => handleDuplicate(event)}
-                        className="p-1.5 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/50 transition"
+                        className="p-1.5 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/50 transition cursor-pointer"
                         title="Duplicate Event"
                         aria-label="Duplicate Event"
                       >
@@ -246,7 +246,7 @@ export default function EventsPage() {
                 
                       <Link
                         href={`/events/edit/${event._id}`}
-                        className="p-1.5 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition"
+                        className="p-1.5 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition cursor-pointer"
                         title="Edit Event"
                         aria-label="Edit Event"
                       >
@@ -255,7 +255,7 @@ export default function EventsPage() {
                 
                       <button
                         onClick={() => handleToggleStatus(event._id, event.status)}
-                        className="p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition"
+                        className="p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition cursor-pointer"
                         title={event.status === 'Published' ? 'Unpublish Event' : 'Publish Event'}
                         aria-label={event.status === 'Published' ? 'Unpublish Event' : 'Publish Event'}
                       >
@@ -264,7 +264,7 @@ export default function EventsPage() {
                 
                       <button
                         onClick={() => handleDelete(event._id)}
-                        className="p-1.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition"
+                        className="p-1.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition cursor-pointer"
                         title="Delete Event"
                         aria-label="Delete Event"
                       >

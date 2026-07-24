@@ -134,7 +134,7 @@ export const Sidebar = () => {
 
         <button
           onClick={logout}
-          className="flex items-center justify-center gap-2 px-3 py-2 w-full rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-500/10 border border-transparent hover:border-rose-200 dark:hover:border-rose-500/20 transition-all duration-200"
+          className="flex items-center justify-center gap-2 px-3 py-2 w-full rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-500/10 border border-transparent hover:border-rose-200 dark:hover:border-rose-500/20 transition-all duration-200 cursor-pointer"
         >
           <LogOut size={14} />
           <span>Sign Out</span>
