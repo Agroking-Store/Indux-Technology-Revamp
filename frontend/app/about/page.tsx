@@ -286,14 +286,6 @@ export default function AboutPage() {
 
       {/* Value Props Section */}
       <section className="relative px-6 py-24 md:py-32">
-        {/* Floating Shapes */}
-        <div className="absolute top-20 right-1/4 text-blue-300 dark:text-blue-500/50 animate-bounce drop-shadow-[0_0_15px_rgba(59,130,246,0.5)] z-0">
-          <KeyRound size={40} />
-        </div>
-        <div className="absolute bottom-20 left-1/4 text-indigo-300 dark:text-indigo-500/50 animate-pulse drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] z-0">
-          <Leaf size={48} />
-        </div>
-
         <div className="max-w-6xl mx-auto text-center">
           <motion.h2
             initial="hidden"
