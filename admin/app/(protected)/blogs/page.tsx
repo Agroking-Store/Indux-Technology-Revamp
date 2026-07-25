@@ -19,13 +19,13 @@ interface Blog {
 
 function SkeletonRow() {
   return (
-    <tr className="animate-pulse">
-      <td className="px-6 py-4"><div className="h-4 bg-slate-100 rounded w-3/4" /></td>
-      <td className="px-6 py-4"><div className="h-4 bg-slate-100 rounded w-20" /></td>
-      <td className="px-6 py-4"><div className="h-4 bg-slate-100 rounded w-24" /></td>
-      <td className="px-6 py-4"><div className="h-4 bg-slate-100 rounded w-16" /></td>
-      <td className="px-6 py-4"><div className="h-6 bg-slate-100 rounded-full w-20" /></td>
-      <td className="px-6 py-4"><div className="h-4 bg-slate-100 rounded w-24 ml-auto" /></td>
+    <tr className="animate-pulse border-b border-slate-100 dark:border-slate-800/60">
+      <td className="px-6 py-4"><div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-3/4" /></td>
+      <td className="px-6 py-4"><div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-20" /></td>
+      <td className="px-6 py-4"><div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-24" /></td>
+      <td className="px-6 py-4"><div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-16" /></td>
+      <td className="px-6 py-4"><div className="h-6 bg-slate-200 dark:bg-slate-800 rounded-full w-20" /></td>
+      <td className="px-6 py-4"><div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-24 ml-auto" /></td>
     </tr>
   );
 }
@@ -91,16 +91,18 @@ export default function BlogsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-slate-900 dark:text-slate-100 transition-colors duration-300">
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Blogs Feed</h1>
-          <p className="text-gray-500 text-sm mt-1">
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Blogs Feed</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
             Write, edit, and publish blog articles.
             {!loading && (
-              <span className="ml-2 font-semibold text-indigo-600">{totalCount} article{totalCount !== 1 ? 's' : ''} total</span>
+              <span className="ml-2 font-semibold text-indigo-600 dark:text-indigo-400">
+                {totalCount} article{totalCount !== 1 ? 's' : ''} total
+              </span>
             )}
           </p>
         </div>
@@ -109,7 +111,7 @@ export default function BlogsPage() {
           <select
             value={statusFilter}
             onChange={e => setStatusFilter(e.target.value as typeof statusFilter)}
-            className="px-3 py-2 border rounded-xl text-sm bg-white text-slate-700 font-semibold focus:outline-indigo-500 border-slate-200"
+            className="px-3 py-2 border rounded-xl text-sm bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold focus:outline-indigo-500 border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer"
           >
             <option value="">All Statuses</option>
             <option value="Published">Published</option>
@@ -117,49 +119,49 @@ export default function BlogsPage() {
           </select>
           <Link
             href="/blogs/create"
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition font-semibold text-sm shadow-md shadow-indigo-600/10"
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-indigo-600 dark:bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-500 text-white rounded-xl transition font-semibold text-sm shadow-md shadow-indigo-600/20"
           >
             <Plus size={16} /> Create Article
           </Link>
         </div>
       </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-2xl shadow border border-gray-200/80 overflow-hidden">
+      {/* Table Container */}
+      <div className="bg-white dark:bg-slate-900/60 rounded-2xl shadow-sm border border-slate-200/80 dark:border-slate-800 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
+            <thead className="bg-slate-50/80 dark:bg-slate-950/50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Article Title</th>
-                <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Category</th>
-                <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Author</th>
-                <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Created Date</th>
-                <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Article Title</th>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Category</th>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Author</th>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Created Date</th>
+                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3.5 text-right text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white dark:bg-slate-900/40 divide-y divide-slate-200/80 dark:divide-slate-800">
 
               {/* Skeleton rows while loading */}
               {loading && Array.from({ length: 6 }).map((_, i) => <SkeletonRow key={i} />)}
 
               {/* Data rows */}
               {!loading && blogs.map((blog) => (
-                <tr key={blog._id} className="hover:bg-gray-50 transition-colors">
+                <tr key={blog._id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
 
-                  {/* Title + Slug */}
+                  {/* Title + Slug + Tags */}
                   <td className="px-6 py-4">
-                    <div className="text-sm font-semibold text-gray-900 line-clamp-1">{blog.title}</div>
-                    <div className="text-xs text-gray-400 font-mono mt-0.5">/{blog.slug}</div>
+                    <div className="text-sm font-semibold text-slate-900 dark:text-slate-100 line-clamp-1">{blog.title}</div>
+                    <div className="text-xs text-slate-400 dark:text-slate-500 font-mono mt-0.5">/{blog.slug}</div>
                     {blog.tags && blog.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-1">
+                      <div className="flex flex-wrap gap-1 mt-1.5">
                         {blog.tags.slice(0, 3).map(tag => (
-                          <span key={tag} className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-indigo-600 bg-indigo-50 border border-indigo-100 rounded px-1.5 py-0.5">
+                          <span key={tag} className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 rounded px-1.5 py-0.5">
                             <Tag size={8} /> {tag}
                           </span>
                         ))}
                         {blog.tags.length > 3 && (
-                          <span className="text-[10px] font-semibold text-gray-400">+{blog.tags.length - 3} more</span>
+                          <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500">+{blog.tags.length - 3} more</span>
                         )}
                       </div>
                     )}
@@ -167,18 +169,18 @@ export default function BlogsPage() {
 
                   {/* Category */}
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-bold border border-slate-200/50">
+                    <span className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-md text-xs font-bold border border-slate-200/50 dark:border-slate-700/50">
                       {blog.category || 'Tech'}
                     </span>
                   </td>
 
                   {/* Author */}
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-400 font-medium">
                     {blog.author || '—'}
                   </td>
 
                   {/* Date */}
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
                     {new Date(blog.createdAt).toLocaleDateString(undefined, {
                       month: 'short', day: 'numeric', year: 'numeric',
                     })}
@@ -188,8 +190,8 @@ export default function BlogsPage() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-bold rounded-full border ${
                       blog.status === 'Published'
-                        ? 'bg-green-50 text-green-700 border-green-100'
-                        : 'bg-yellow-50 text-yellow-700 border-yellow-100'
+                        ? 'bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-400 border-green-200 dark:border-green-900/40'
+                        : 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-900/40'
                     }`}>
                       {blog.status}
                     </span>
@@ -200,17 +202,17 @@ export default function BlogsPage() {
                     <div className="flex items-center justify-end gap-1">
                       <Link
                         href={`/blogs/edit/${blog._id}`}
-                        className="text-indigo-600 hover:bg-indigo-50 p-1.5 rounded-lg transition inline-flex"
+                        className="text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 p-1.5 rounded-lg transition inline-flex"
                         title="Edit article"
                       >
                         <Edit2 size={16} />
                       </Link>
                       <button
                         onClick={() => handleToggleStatus(blog._id, blog.status)}
-                        className={`p-1.5 rounded-lg transition inline-flex ${
+                        className={`p-1.5 rounded-lg transition inline-flex cursor-pointer ${
                           blog.status === 'Published'
-                            ? 'text-yellow-600 hover:bg-yellow-50'
-                            : 'text-green-600 hover:bg-green-50'
+                            ? 'text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/50'
+                            : 'text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/50'
                         }`}
                         title={blog.status === 'Published' ? 'Move to Draft' : 'Publish article'}
                       >
@@ -218,7 +220,7 @@ export default function BlogsPage() {
                       </button>
                       <button
                         onClick={() => handleDelete(blog._id)}
-                        className="text-rose-600 hover:bg-rose-50 p-1.5 rounded-lg transition inline-flex"
+                        className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition inline-flex cursor-pointer"
                         title="Delete article"
                       >
                         <Trash2 size={16} />
@@ -232,10 +234,10 @@ export default function BlogsPage() {
               {/* Empty state */}
               {!loading && blogs.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-6 py-16 text-center text-gray-500">
-                    <FileText className="size-12 mx-auto mb-3 opacity-30 text-gray-400" />
-                    <h3 className="text-lg font-bold text-gray-800">No Articles Found</h3>
-                    <p className="text-sm mt-1 text-gray-400">
+                  <td colSpan={6} className="px-6 py-16 text-center text-slate-500 dark:text-slate-400">
+                    <FileText className="size-12 mx-auto mb-3 opacity-30 text-slate-400 dark:text-slate-600" />
+                    <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">No Articles Found</h3>
+                    <p className="text-sm mt-1 text-slate-400 dark:text-slate-500">
                       {statusFilter ? `No ${statusFilter} articles yet.` : 'Create your first blog post to populate the feed.'}
                     </p>
                   </td>

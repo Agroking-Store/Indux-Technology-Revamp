@@ -1,31 +1,48 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
 }
 
+.dark {
+  --background: #090d16;
+  --foreground: #f8fafc;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
+  --font-sans: var(--font-roboto);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer base {
+  html {
+    @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
-/* Enforce clear, visible high-contrast text inside form inputs and control elements */
 input, textarea, select {
   color: #0f172a !important;
 }
 
-/* Allow text-white overrides in dark contexts like login pages */
-input.text-white, textarea.text-white {
+.dark input, 
+.dark textarea, 
+.dark select,
+input.text-white, 
+textarea.text-white {
   color: #ffffff !important;
 }
