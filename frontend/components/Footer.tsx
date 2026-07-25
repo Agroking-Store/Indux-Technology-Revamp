@@ -194,6 +194,7 @@ export default function Footer() {
         onChange={(e) => setEmail(e.target.value)}
         disabled={loading}
         className="w-full bg-slate-950/50 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+        suppressHydrationWarning
     />
     <Button
         type="submit"

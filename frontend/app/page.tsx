@@ -202,14 +202,13 @@ export default function Home() {
     return () => window.removeEventListener("resize", calculateRange);
   }, []);
 
-  const workRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: workProgress } = useScroll({
-    target: workRef,
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  // Maps the 400vh vertical scroll to -70% horizontal movement
-  const x = useTransform(workProgress, [0, 1], ["0%", "-70%"]);
+  // Move exact pixel distance based on vertical scroll progress
+  const xTransform = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [blogsLoading, setBlogsLoading] = useState(true);
 
@@ -228,14 +227,14 @@ export default function Home() {
   const displayedBlogs = blogs.length > 0 ? blogs : fallbackBlogs;
 
   return (
-    <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300 lg:pl-20">
+    <div className="flex flex-col min-h-screen w-full overflow-x-clip bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <main className="flex-1 w-full">
         {/* HERO SECTION */}
         <section className="relative overflow-hidden pt-6 pb-16 sm:pt-10 sm:pb-24 lg:pt-8 lg:pb-32">
           {/* Subtle dot pattern background */}
           <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full h-full opacity-40 dark:opacity-20 pointer-events-none bg-[radial-gradient(#cbd5e1_2px,transparent_2px)] dark:bg-[radial-gradient(#334155_2px,transparent_2px)] bg-[size:32px_32px]"></div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pl-20 relative z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-8 items-center">
               {/* Left Side: Text Content */}
               <motion.div
@@ -707,7 +706,7 @@ export default function Home() {
         </section>
 
         {/* WHY CHOOSE US SECTION - STICKY SCROLL */}
-        <section className="bg-slate-50/50 dark:bg-slate-950/50 relative overflow-visible pb-16 sm:pb-24 lg:pb-32 pt-0">
+        <section className="bg-slate-50/50 dark:bg-slate-950/50 relative overflow-visible py-16 sm:py-24 lg:py-32">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-12 sm:gap-16 lg:gap-24 items-start relative">
               {/* Left Side: Sticky Content */}
@@ -776,7 +775,7 @@ export default function Home() {
                       key={idx}
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-100px" }}
+                      viewport={{ once: true, margin: "-30px" }}
                       transition={{ duration: 0.6 }}
                       className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-10 items-start w-full group"
                     >
@@ -807,34 +806,38 @@ export default function Home() {
             </div>
           </div>
         </section>
-
         {/* WORK PROCESS SECTION */}
         <section
-          ref={workRef}
-          className="relative h-[400vh] bg-slate-50 dark:bg-slate-950"
+          ref={containerRef}
+          style={{
+            height: scrollRange ? `${scrollRange + viewportHeight}px` : "180vh",
+          }}
+          className="relative bg-slate-50 dark:bg-slate-950"
         >
           {/* This container 'locks' the screen. It is 100vh tall and sticky. */}
-          <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+          <div className="sticky top-0 flex h-screen items-center overflow-hidden z-10">
             <motion.div
-              style={{ x }}
-              className="flex gap-12 px-[10vw] items-center"
+              ref={trackRef}
+              style={{ x: xTransform }}
+              className="flex gap-8 px-4 sm:px-6 lg:px-8 items-center"
             >
               {/* Intro Title Block */}
-              <div className="w-[80vw] md:w-[45vw] lg:w-[35vw] flex-shrink-0 flex flex-col justify-center pr-12">
-                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-4">
+              <div className="w-[85vw] md:w-[50vw] lg:w-[35vw] flex-shrink-0 flex flex-col justify-center pr-8 lg:pr-12">
+                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-sm text-blue-600 uppercase mb-4">
                   <div className="flex gap-1">
-                    <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-                    <span className="w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-800"></span>
+                    <span className="w-3.5 h-3.5 rounded-full bg-blue-500"></span>
+                    <span className="w-3.5 h-3.5 rounded-full bg-slate-300 dark:bg-slate-800"></span>
                   </div>
                   Our Work Process
                 </div>
-                <h2 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6">
                   Step-by-Step to <br /> Your{" "}
                   <span className="text-blue-600">Growth</span>
                 </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed max-w-md">
-                  We collaborate closely with clients to understand their vision
-                  and craft tailored digital solutions.
+                <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
+                  We collaborate closely with clients to understand their vision,
+                  goals, and target audience, conducting in-depth research to
+                  craft tailored digital solutions.
                 </p>
               </div>
 
@@ -843,46 +846,48 @@ export default function Home() {
                 {
                   step: "01",
                   title: "Discover & Strategize",
-                  desc: "We collaborate closely to understand your vision, target audience, and business goals.",
+                  desc: "We collaborate closely to understand your vision, target audience, and business goals, conducting in-depth research to craft a tailored digital roadmap.",
                 },
                 {
                   step: "02",
                   title: "Design & Architecture",
-                  desc: "Our expert team designs intuitive user experiences and plans highly scalable architectures.",
+                  desc: "Our expert team designs intuitive user experiences and plans highly scalable, secure architectures using modern technologies.",
                 },
                 {
                   step: "03",
                   title: "Execute & Develop",
-                  desc: "We follow agile methodologies to write clean, robust code, ensuring seamless functionality.",
+                  desc: "We follow agile methodologies to write clean, robust code, ensuring seamless functionality and rapid, flawless deployment.",
                 },
                 {
                   step: "04",
                   title: "Analyze & Grow",
-                  desc: "After launch, we continuously monitor performance and optimize the product.",
+                  desc: "After launch, we continuously monitor performance, analyze user behavior, and optimize the product to maximize your ROI.",
                 },
               ].map((card, idx) => (
                 <div
                   key={idx}
-                  className="w-[85vw] md:w-[40vw] lg:w-[30vw] flex-shrink-0 flex flex-col rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-[450px] md:h-[500px]"
+                  className="w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[30vw] flex-shrink-0 flex flex-col rounded-[2rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-[400px] md:h-[450px]"
                 >
-                  <div className="flex-1 p-8 md:p-12 relative overflow-hidden flex flex-col justify-center">
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 text-[12rem] md:text-[16rem] font-bold text-slate-50 dark:text-slate-800/20 z-0">
+                  <div className="flex-1 p-8 md:p-10 relative overflow-hidden flex flex-col justify-center">
+                    <div className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 text-[8rem] md:text-[12rem] font-bold text-slate-100 dark:text-slate-800/50 pointer-events-none select-none z-0">
                       {card.step}
                     </div>
                     <div className="relative z-10">
-                      <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">
+                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
                         {card.title}
                       </h3>
-                      <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
+                      <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium text-sm md:text-base">
                         {card.desc}
                       </p>
                     </div>
                   </div>
-                  <div className="h-24 bg-[#0f2e4a] flex items-center justify-between px-10 md:px-12">
-                    <span className="text-white text-sm font-bold tracking-widest uppercase">
+                  <div className="h-20 bg-[#0f2e4a] dark:bg-slate-800 flex items-center justify-between px-8 md:px-10 relative overflow-hidden">
+                    {/* Diagonal Stripes Pattern */}
+                    <div className="absolute inset-0 opacity-10 bg-[linear-gradient(45deg,rgba(255,255,255,1)_25%,transparent_25%,transparent_50%,rgba(255,255,255,1)_50%,rgba(255,255,255,1)_75%,transparent_75%,transparent)] bg-[length:10px_10px]"></div>
+                    <span className="text-white text-xs font-bold tracking-widest uppercase relative z-10">
                       Step
                     </span>
-                    <span className="text-white text-3xl font-bold">
+                    <span className="text-white text-xl font-bold relative z-10">
                       {card.step}
                     </span>
                   </div>
