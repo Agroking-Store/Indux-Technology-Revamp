@@ -88,9 +88,26 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${roboto.variable} ${geistMono.variable} h-full antialiased font-sans`}
+      className={`${roboto.variable} ${geistMono.variable} h-full antialiased font-sans dark`}
       suppressHydrationWarning
     >
+      <head>
+        <script
+          id="theme-initializer"
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                var savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'light') {
+                  document.documentElement.classList.remove('dark');
+                } else {
+                  document.documentElement.classList.add('dark');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans">
         <Navbar />
         <main className="flex-grow">{children}</main>
