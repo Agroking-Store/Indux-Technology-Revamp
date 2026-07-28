@@ -29,7 +29,13 @@ import {
   Calendar,
 } from "lucide-react";
 import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
-import { FaXTwitter, FaWhatsapp } from "react-icons/fa6";
+import { FaXTwitter, FaWhatsapp, FaHandshake, FaUsersGear } from "react-icons/fa6";
+import { TbDeviceMobileCode, TbBuildingCog } from "react-icons/tb";
+import { GiLaptop, GiArtificialIntelligence } from "react-icons/gi";
+import { HiUserGroup } from "react-icons/hi2";
+import { ImBlog } from "react-icons/im";
+import { MdHomeWork } from "react-icons/md";
+import { IoCalendarSharp } from "react-icons/io5";
 
 const FacebookLogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -73,37 +79,37 @@ const servicesData = {
       title: "CRM Solutions",
       desc: "Manage customer relationships",
       href: "/services/crm",
-      icon: Users,
+      icon: FaUsersGear,
     },
     {
       title: "ERP Systems",
       desc: "Enterprise resource planning",
       href: "/services/erp",
-      icon: Layers,
+      icon: TbBuildingCog,
     },
     {
       title: "Web Development",
       desc: "Modern and fast web apps",
       href: "/services/web-dev",
-      icon: Globe,
+      icon: GiLaptop,
     },
     {
       title: "Mobile App Dev",
       desc: "Native and cross-platform apps",
       href: "/services/mobile-dev",
-      icon: Smartphone,
+      icon: TbDeviceMobileCode,
     },
     {
       title: "AI Solutions",
       desc: "Intelligent chat and agents",
       href: "/services/ai-chatbots",
-      icon: Bot,
+      icon: GiArtificialIntelligence,
     },
     {
       title: "Business Automation",
       desc: "Streamline tasks and workflows",
       href: "/services/automation",
-      icon: Zap,
+      icon: FaHandshake,
     },
   ],
   side: [],
@@ -116,25 +122,25 @@ const companyData = {
       title: "About Us",
       desc: "Our mission and vision",
       href: "/about",
-      icon: Info,
+      icon: HiUserGroup,
     },
     {
       title: "Blogs",
       desc: "Latest news and articles",
       href: "/blogs",
-      icon: BookOpen,
+      icon: ImBlog,
     },
     {
       title: "Careers",
       desc: "Join our growing team",
       href: "/careers",
-      icon: Briefcase,
+      icon: MdHomeWork,
     },
     {
       title: "Events",
       desc: "Join our upcoming events",
       href: "/events",
-      icon: Calendar,
+      icon: IoCalendarSharp,
     },
   ],
   side: [],
@@ -181,7 +187,7 @@ const LanguageSwitcher = () => {
         <SelectTrigger className="w-auto min-w-[60px] border-none bg-transparent h-full focus:ring-0 text-[13px] font-bold cursor-pointer gap-2 px-1">
           <SelectValue>{languageNames[currentLang]}</SelectValue>
         </SelectTrigger>
-        <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800 shadow-xl">
+        <SelectContent alignItemWithTrigger={false} sideOffset={8} className="min-w-[120px] rounded-lg border-slate-200 dark:border-slate-800 shadow-lg">
           <SelectItem value="en" className="cursor-pointer font-medium">
             English
           </SelectItem>
@@ -425,37 +431,34 @@ function DropdownMenu({
             exit={{ opacity: 0, y: 10, scale: 0.98 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-6 flex gap-6 max-h-[80vh] overflow-y-auto">
+            <div className="bg-white rounded-3xl shadow-lg border border-slate-100 p-6 flex gap-6 max-h-[80vh] overflow-y-auto">
               {/* Left Side: Horizontal Grid Cards */}
               <div
                 className={cn(
-                  "flex-1 grid gap-4",
+                  "flex-1 grid gap-2 md:gap-4",
                   data.main.length === 6
-                    ? "grid-cols-2 md:grid-cols-3 xl:grid-cols-6"
+                    ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
                     : data.main.length === 4
-                      ? "grid-cols-2 lg:grid-cols-4"
-                      : "grid-cols-1 md:grid-cols-3",
+                      ? "grid-cols-1 md:grid-cols-2"
+                      : "grid-cols-1 md:grid-cols-2",
                 )}
               >
                 {data.main.map((item, idx) => (
                   <Link
                     key={idx}
                     href={item.href || "#"}
-                    className="relative flex flex-col justify-between p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-blue-200 dark:hover:border-blue-900 hover:bg-blue-50/10 transition-all group/card overflow-hidden min-h-[200px]"
+                    className="relative flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 transition-all group/card overflow-hidden"
                   >
                     {/* Grid Background Pattern */}
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-20 group-hover/card:opacity-100 transition-opacity duration-300" />
 
-                    <div className="relative z-10 text-slate-700 dark:text-slate-300 group-hover/card:text-blue-600 transition-colors">
-                      <item.icon className="size-7 stroke-[1.5]" />
+                    <div className="relative z-10 text-slate-700 group-hover/card:text-blue-600 transition-colors shrink-0">
+                      <item.icon className="size-6" />
                     </div>
-                    <div className="relative z-10 mt-6 text-left">
-                      <h4 className="font-bold text-slate-900 dark:text-white text-base group-hover/card:text-blue-700 dark:group-hover/card:text-blue-400 transition-colors">
+                    <div className="relative z-10 text-left">
+                      <h4 className="font-bold text-slate-900 text-sm group-hover/card:text-blue-700 transition-colors">
                         {item.title}
                       </h4>
-                      <p className="text-slate-500 dark:text-slate-400 text-xs mt-1 leading-relaxed">
-                        {item.desc}
-                      </p>
                     </div>
                   </Link>
                 ))}
@@ -463,16 +466,16 @@ function DropdownMenu({
 
               {/* Right Side: Vertical List with Hover Effects */}
               {data.side && data.side.length > 0 && (
-                <div className="w-64 flex flex-col justify-center border-l dark:border-slate-800 pl-6 gap-1 shrink-0">
+                <div className="w-64 flex flex-col justify-center border-l pl-6 gap-1 shrink-0">
                   {data.side.map((item, idx) => (
                     <Link
                       key={idx}
                       href={item.href}
-                      className="text-base font-medium text-slate-600 dark:text-slate-300 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 rounded-xl p-3 transition-all flex items-center justify-between group/link"
+                      className="text-base font-medium text-slate-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl p-3 transition-all flex items-center justify-between group/link"
                     >
                       <div className="flex items-center gap-3">
                         <div className="text-slate-400 group-hover/link:text-blue-600 transition-colors">
-                          <item.icon className="size-5 stroke-[1.5]" />
+                          <item.icon className="size-5" />
                         </div>
                         {item.title}
                       </div>
