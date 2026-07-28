@@ -2,12 +2,20 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'react-toastify';
 import { FileText, ArrowLeft, Image as ImageIcon, Settings } from 'lucide-react';
 import api, { ApiResponse } from '@/lib/api';
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const blogSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -47,6 +55,7 @@ export default function EditBlogPage() {
     handleSubmit,
     reset,
     setValue,
+    control,
     formState: { errors },
   } = useForm<BlogFormData>({
     resolver: zodResolver(blogSchema),
@@ -64,7 +73,6 @@ export default function EditBlogPage() {
     },
   });
 
-  // Fetch existing blog details
   useEffect(() => {
     const fetchBlog = async () => {
       try {
@@ -140,27 +148,49 @@ export default function EditBlogPage() {
 
   if (fetching) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 dark:border-indigo-400"></div>
+      <div className="max-w-5xl mx-auto space-y-6">
+        <div className="flex items-center gap-4 border-b border-border pb-4">
+          <Skeleton className="h-10 w-10 rounded-xl" />
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-64" />
+            <Skeleton className="h-4 w-96" />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left">
+          <div className="lg:col-span-2 space-y-6">
+            <Skeleton className="h-[400px] w-full rounded-xl" />
+            <Skeleton className="h-[200px] w-full rounded-xl" />
+          </div>
+          <div className="space-y-6">
+            <Skeleton className="h-[250px] w-full rounded-xl" />
+            <Skeleton className="h-[250px] w-full rounded-xl" />
+            <div className="flex gap-3">
+              <Skeleton className="h-10 w-full rounded-xl" />
+              <Skeleton className="h-10 w-full rounded-xl" />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div className="max-w-5xl mx-auto space-y-6 transition-colors duration-300">
       
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
-        <button
+      <div className="flex items-center gap-4 border-b border-border pb-4">
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
           onClick={() => router.push('/blogs')}
-          className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition text-slate-500 dark:text-slate-400"
+          className="text-muted-foreground cursor-pointer"
         >
           <ArrowLeft size={20} />
-        </button>
+        </Button>
         <div>
-          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Edit Article</h1>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
+          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Edit Article</h1>
+          <p className="text-muted-foreground text-sm mt-1">
             Compose article content, categories, and SEO configurations.
           </p>
         </div>
@@ -171,159 +201,178 @@ export default function EditBlogPage() {
         {/* Left: Content fields */}
         <div className="lg:col-span-2 space-y-6">
           
-          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <FileText className="text-indigo-600 dark:text-indigo-400 size-5" /> Article Content
-            </h3>
-
-            <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Article Title *</label>
-              <input
-                {...register('title')}
-                className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-lg focus:outline-indigo-500 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-              />
-              {errors.title && <p className="text-rose-500 dark:text-rose-400 text-xs mt-1">{errors.title.message}</p>}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Slug (optional)</label>
-                <input
-                  {...register('slug')}
-                  className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-lg focus:outline-indigo-500 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <FileText className="text-indigo-600 dark:text-indigo-400 size-5" /> Article Content
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-1.5">
+                <Label>Article Title *</Label>
+                <Input
+                  {...register('title')}
+                  placeholder="e.g. Navigating Next.js 16 Compiler Performance"
                 />
+                {errors.title && <p className="text-destructive text-xs mt-1">{errors.title.message}</p>}
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Author *</label>
-                <input
-                  {...register('author')}
-                  className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-lg focus:outline-indigo-500 text-sm text-slate-900 dark:text-slate-100"
-                />
-                {errors.author && <p className="text-rose-500 dark:text-rose-400 text-xs mt-1">{errors.author.message}</p>}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <Label>Slug (optional)</Label>
+                  <Input
+                    {...register('slug')}
+                    placeholder="auto-generated from title"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label>Author *</Label>
+                  <Input {...register('author')} />
+                  {errors.author && <p className="text-destructive text-xs mt-1">{errors.author.message}</p>}
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Short Summary *</label>
-              <textarea
-                {...register('shortDescription')}
-                rows={2}
-                maxLength={300}
-                className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-lg focus:outline-indigo-500 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-              />
-              {errors.shortDescription && <p className="text-rose-500 dark:text-rose-400 text-xs mt-1">{errors.shortDescription.message}</p>}
-            </div>
+              <div className="space-y-1.5">
+                <Label>Short Summary *</Label>
+                <Textarea
+                  {...register('shortDescription')}
+                  rows={2}
+                  maxLength={300}
+                  className="max-h-[200px] overflow-y-auto"
+                  placeholder="Quick hook summary displayed in cards (max 300 chars)"
+                />
+                {errors.shortDescription && <p className="text-destructive text-xs mt-1">{errors.shortDescription.message}</p>}
+              </div>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Article Body * (HTML/Markdown supported)</label>
-              <textarea
-                {...register('content')}
-                rows={10}
-                className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-lg focus:outline-indigo-500 text-sm font-mono text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-              />
-              {errors.content && <p className="text-rose-500 dark:text-rose-400 text-xs mt-1">{errors.content.message}</p>}
-            </div>
-          </div>
+              <div className="space-y-1.5">
+                <Label>Article Body * (HTML/Markdown supported)</Label>
+                <Textarea
+                  {...register('content')}
+                  rows={10}
+                  className="font-mono max-h-[500px] overflow-y-auto"
+                  placeholder="Write full blog post contents here..."
+                />
+                {errors.content && <p className="text-destructive text-xs mt-1">{errors.content.message}</p>}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* SEO Panel */}
-          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <Settings className="text-indigo-600 dark:text-indigo-400 size-5" /> SEO Settings
-            </h3>
-            
-            <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">SEO Search Title (optional)</label>
-              <input
-                {...register('seoTitle')}
-                className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-lg focus:outline-indigo-500 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-              />
-            </div>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Settings className="text-indigo-600 dark:text-indigo-400 size-5" /> SEO Settings
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-1.5">
+                <Label>SEO Search Title (optional)</Label>
+                <Input
+                  {...register('seoTitle')}
+                  placeholder="SEO title tag override"
+                />
+              </div>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">SEO Meta Description (optional)</label>
-              <input
-                {...register('seoDescription')}
-                className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-lg focus:outline-indigo-500 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-              />
-            </div>
-          </div>
+              <div className="space-y-1.5">
+                <Label>SEO Meta Description (optional)</Label>
+                <Input
+                  {...register('seoDescription')}
+                  placeholder="SEO meta description snippet override"
+                />
+              </div>
+            </CardContent>
+          </Card>
 
         </div>
 
         {/* Right: metadata & media */}
         <div className="space-y-6">
           
-          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">Parameters</h3>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Parameters</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-1.5">
+                <Label>Status</Label>
+                <Controller
+                  control={control}
+                  name="status"
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value || 'Draft'}>
+                      <SelectTrigger className="cursor-pointer">
+                        <SelectValue placeholder="Select Status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Draft" className="cursor-pointer">Draft</SelectItem>
+                        <SelectItem value="Published" className="cursor-pointer">Published</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+              </div>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Status</label>
-              <select
-                {...register('status')}
-                className="mt-1 w-full px-3 py-2 border border-slate-200 dark:border-slate-800 rounded-lg text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-indigo-500 cursor-pointer"
-              >
-                <option value="Draft">Draft</option>
-                <option value="Published">Published</option>
-              </select>
-            </div>
+              <div className="space-y-1.5">
+                <Label>Category *</Label>
+                <Input
+                  {...register('category')}
+                  placeholder="e.g. Tech, Dev, AI"
+                />
+                {errors.category && <p className="text-destructive text-xs mt-1">{errors.category.message}</p>}
+              </div>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Category *</label>
-              <input
-                {...register('category')}
-                className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-lg text-sm text-slate-900 dark:text-slate-100 focus:outline-indigo-500 placeholder-slate-400 dark:placeholder-slate-500"
-              />
-              {errors.category && <p className="text-rose-500 dark:text-rose-400 text-xs mt-1">{errors.category.message}</p>}
-            </div>
+              <div className="space-y-1.5">
+                <Label>Tags (comma separated)</Label>
+                <Input
+                  {...register('tags')}
+                  placeholder="react, nextjs, routing"
+                />
+              </div>
+            </CardContent>
+          </Card>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Tags (comma separated)</label>
-              <input
-                {...register('tags')}
-                className="mt-1 w-full px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-lg text-sm text-slate-900 dark:text-slate-100 focus:outline-indigo-500 placeholder-slate-400 dark:placeholder-slate-500"
-              />
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-              <ImageIcon className="text-indigo-600 dark:text-indigo-400" size={18} /> Featured Image
-            </h3>
-            
-            <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Upload Image (to replace)</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageSelect}
-                className="mt-1 w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 dark:file:bg-indigo-950/50 file:text-indigo-700 dark:file:text-indigo-300 hover:file:bg-indigo-100 dark:hover:file:bg-indigo-900/50 cursor-pointer"
-              />
-              <input type="hidden" {...register('featuredImage')} />
-              <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">Leave empty to keep existing featured cover</p>
-              {imagePreview && (
-                <img src={imagePreview} alt="Featured image preview" className="mt-2 w-full h-32 object-cover rounded-lg border border-slate-200 dark:border-slate-800" />
-              )}
-              {errors.featuredImage && <p className="text-rose-500 dark:text-rose-400 text-xs mt-1">{errors.featuredImage.message}</p>}
-            </div>
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base flex items-center gap-1.5">
+                <ImageIcon className="text-indigo-600 dark:text-indigo-400" size={18} /> Featured Image
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-1.5">
+                <Label>Upload Image *</Label>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageSelect}
+                  className="cursor-pointer file:cursor-pointer file:text-indigo-600 dark:file:text-indigo-400"
+                />
+                <input type="hidden" {...register('featuredImage')} />
+                {imagePreview && (
+                  <img src={imagePreview} alt="Featured image preview" className="mt-4 w-full h-32 object-cover rounded-lg border border-border" />
+                )}
+                {errors.featuredImage && <p className="text-destructive text-xs mt-1">{errors.featuredImage.message}</p>}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Actions */}
-          <div className="flex gap-3">
-            <button
+          <div className="flex gap-3 pt-2">
+            <Button
               type="button"
+              variant="outline"
               onClick={() => router.push('/blogs')}
-              className="flex-grow py-3 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl transition text-sm text-center cursor-pointer"
+              className="flex-1 cursor-pointer"
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
               disabled={loading}
-              className="flex-grow py-3 px-4 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-bold rounded-xl shadow-md transition disabled:opacity-50 text-sm text-center shadow-indigo-600/20 cursor-pointer"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
             >
-              {loading ? 'Saving...' : 'Update Article'}
-            </button>
+              {loading ? 'Updating...' : 'Update Post'}
+            </Button>
           </div>
 
         </div>

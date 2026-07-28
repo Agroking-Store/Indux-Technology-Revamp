@@ -1,11 +1,9 @@
 'use client';
 
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
-import Link from 'next/link';
 import { toast } from 'react-toastify';
-import { Edit2, Eye, EyeOff, Trash2, Plus, FileText, Tag, Search, X } from 'lucide-react';
+import { Trash2, Search, X, CheckCircle } from 'lucide-react';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
-import { cn } from '@/lib/utils';
 import api, { ApiResponse } from '@/lib/api';
 import {
   ColumnDef,
@@ -22,7 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -35,21 +33,22 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-interface Blog {
+interface Quote {
   _id: string;
-  title: string;
-  slug: string;
-  category?: string;
-  author?: string;
-  tags?: string[];
-  status: 'Draft' | 'Published';
+  name: string;
+  workEmail: string;
+  phone: string;
+  companyName?: string;
+  serviceInterest: string;
+  message?: string;
+  status: 'New' | 'Contacted' | 'Closed';
   createdAt: string;
 }
 
-export default function BlogsPage() {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+export default function QuotesTable() {
+  const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
-  const [statusFilter, setStatusFilter] = useState<'all' | 'Published' | 'Draft'>('all');
+  const [statusFilter, setStatusFilter] = useState<'All' | 'New' | 'Contacted' | 'Closed'>('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [totalCount, setTotalCount] = useState(0);
@@ -64,12 +63,12 @@ export default function BlogsPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchTerm);
-      setPagination(prev => ({ ...prev, pageIndex: 0 })); // reset to first page on search
+      setPagination(prev => ({ ...prev, pageIndex: 0 })); 
     }, 500);
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  const fetchBlogs = useCallback(async () => {
+  const fetchQuotes = useCallback(async () => {
     setLoading(true);
     try {
       const params: Record<string, string | number> = { 
@@ -77,15 +76,15 @@ export default function BlogsPage() {
         page: pagination.pageIndex + 1
       };
       
-      if (statusFilter !== 'all') params.status = statusFilter;
+      if (statusFilter !== 'All') params.status = statusFilter;
       if (debouncedSearch) params.search = debouncedSearch;
 
-      const res = await api.get<ApiResponse<{ blogs: Blog[]; pagination: { total: number } }>>(
-        '/blogs',
+      const res = await api.get<ApiResponse<{ quotes: Quote[]; pagination: { total: number } }>>(
+        '/quotes',
         { params }
       );
       if (isMounted.current) {
-        setBlogs(res.data.data.blogs);
+        setQuotes(res.data.data.quotes);
         setTotalCount(res.data.data.pagination.total);
       }
     } catch {
@@ -97,41 +96,43 @@ export default function BlogsPage() {
 
   useEffect(() => {
     isMounted.current = true;
-    fetchBlogs();
+    fetchQuotes();
     return () => { isMounted.current = false; };
-  }, [fetchBlogs]);
+  }, [fetchQuotes]);
 
   const handleDelete = async (id: string) => {
     try {
-      await api.delete(`/blogs/${id}`);
-      toast.success('Blog deleted successfully');
-      fetchBlogs();
+      await api.delete(`/quotes/${id}`);
+      toast.success('Quote deleted successfully');
+      fetchQuotes();
     } catch {
       // handled
     }
   };
 
-  const handleToggleStatus = async (id: string, currentStatus: string) => {
-    const newStatus = currentStatus === 'Published' ? 'Draft' : 'Published';
+  const handleUpdateStatus = async (id: string, currentStatus: string) => {
+    let newStatus = 'New';
+    if (currentStatus === 'New') newStatus = 'Contacted';
+    else if (currentStatus === 'Contacted') newStatus = 'Closed';
+    else newStatus = 'New';
+
     try {
-      await api.patch(`/blogs/${id}/status`, { status: newStatus });
-      toast.success(`Blog ${newStatus === 'Published' ? 'published' : 'moved to Draft'}`);
-      setBlogs(prev =>
-        prev.map(b => b._id === id ? { ...b, status: newStatus as Blog['status'] } : b)
-      );
+      await api.patch(`/quotes/${id}/status`, { status: newStatus });
+      toast.success(`Quote status updated to ${newStatus}`);
+      fetchQuotes();
     } catch {
-      fetchBlogs();
+      // handled
     }
   };
 
   const handleClearFilters = () => {
-    setStatusFilter('all');
+    setStatusFilter('All');
     setSearchTerm('');
     setDebouncedSearch('');
     setPagination({ pageIndex: 0, pageSize: 10 });
   };
 
-  const columns: ColumnDef<Blog>[] = useMemo(() => [
+  const columns: ColumnDef<Quote>[] = useMemo(() => [
     {
       id: "serial",
       header: () => <div className="text-center">S.No</div>,
@@ -142,32 +143,18 @@ export default function BlogsPage() {
       ),
     },
     {
-      accessorKey: "title",
-      header: () => <div className="text-center">Article Title</div>,
+      accessorKey: "name",
+      header: () => <div className="text-center">Client Details</div>,
       cell: ({ row }) => {
-        const blog = row.original;
+        const quote = row.original;
         return (
           <div className="flex flex-col gap-1 w-full pr-6">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger render={<div className="text-sm font-semibold text-foreground truncate cursor-help">{blog.title}</div>} />
-                <TooltipContent>
-                  <p>{blog.title}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            
-            <div className="text-xs text-muted-foreground font-mono truncate">/{blog.slug}</div>
-            {blog.tags && blog.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1 mt-1 truncate">
-                {blog.tags.slice(0, 2).map(tag => (
-                  <Badge variant="secondary" key={tag} className="text-[10px] px-1.5 py-0 h-4 truncate max-w-[80px]">
-                    <Tag size={8} className="mr-1 shrink-0" /> <span className="truncate">{tag}</span>
-                  </Badge>
-                ))}
-                {blog.tags.length > 2 && (
-                  <span className="text-[10px] font-semibold text-muted-foreground whitespace-nowrap">+{blog.tags.length - 2} more</span>
-                )}
+            <div className="text-sm font-semibold text-foreground truncate">{quote.name}</div>
+            <div className="text-xs text-muted-foreground truncate">{quote.workEmail}</div>
+            <div className="text-xs text-muted-foreground font-mono truncate">{quote.phone}</div>
+            {quote.companyName && (
+              <div className="text-xs font-semibold text-blue-600 dark:text-blue-400 mt-0.5 truncate">
+                {quote.companyName}
               </div>
             )}
           </div>
@@ -175,22 +162,31 @@ export default function BlogsPage() {
       },
     },
     {
-      accessorKey: "category",
-      header: () => <div className="text-center">Category</div>,
+      accessorKey: "serviceInterest",
+      header: () => <div className="text-center">Service Interest</div>,
       cell: ({ row }) => (
-        <Badge variant="outline" className="bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 font-bold whitespace-nowrap truncate max-w-[120px]">
-          {row.getValue("category") || 'Tech'}
+        <Badge variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-400 dark:border-indigo-900/40 font-bold whitespace-nowrap truncate max-w-[150px]">
+          {row.getValue("serviceInterest")}
         </Badge>
       ),
     },
     {
-      accessorKey: "author",
-      header: () => <div className="text-center">Author</div>,
-      cell: ({ row }) => (
-        <div className="whitespace-nowrap text-sm font-medium truncate max-w-[120px]">
-          {row.getValue("author") || '—'}
-        </div>
-      ),
+      accessorKey: "message",
+      header: () => <div className="text-center">Message</div>,
+      cell: ({ row }) => {
+        const msg = row.getValue("message") as string;
+        if (!msg) return <span className="text-muted-foreground text-sm">—</span>;
+        return (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger render={<div className="whitespace-nowrap text-sm text-muted-foreground truncate max-w-[150px] cursor-help">{msg}</div>} />
+              <TooltipContent className="max-w-[300px] whitespace-normal">
+                {msg}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+      }
     },
     {
       accessorKey: "createdAt",
@@ -208,16 +204,12 @@ export default function BlogsPage() {
       header: () => <div className="text-center">Status</div>,
       cell: ({ row }) => {
         const status = row.getValue("status") as string;
-        const isPublished = status === 'Published';
+        let colorClass = 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-900/40'; // New
+        if (status === 'Contacted') colorClass = 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-900/40';
+        else if (status === 'Closed') colorClass = 'bg-green-50 text-green-700 border-green-200 dark:bg-green-950/40 dark:text-green-400 dark:border-green-900/40';
+
         return (
-          <Badge 
-            variant="outline" 
-            className={`whitespace-nowrap ${
-              isPublished 
-                ? 'bg-green-50 text-green-700 border-green-200 dark:bg-green-950/40 dark:text-green-400 dark:border-green-900/40' 
-                : 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-900/40'
-            }`}
-          >
+          <Badge variant="outline" className={`whitespace-nowrap ${colorClass}`}>
             {status}
           </Badge>
         );
@@ -227,46 +219,30 @@ export default function BlogsPage() {
       id: "actions",
       header: () => <div className="text-right">Actions</div>,
       cell: ({ row }) => {
-        const blog = row.original;
+        const quote = row.original;
         return (
           <div className="flex items-center justify-end gap-1">
             <TooltipProvider>
               
               <Tooltip>
                 <TooltipTrigger render={
-                  <Link
-                    href={`/blogs/edit/${blog._id}`}
-                    className={buttonVariants({ variant: "ghost", size: "icon", className: "h-8 w-8 text-indigo-600 dark:text-indigo-400 cursor-pointer" })}
-                  >
-                    <Edit2 size={16} />
-                  </Link>
-                } />
-                <TooltipContent>Edit Article</TooltipContent>
-              </Tooltip>
-
-              <Tooltip>
-                <TooltipTrigger render={
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => handleToggleStatus(blog._id, blog.status)}
-                    className={`h-8 w-8 cursor-pointer ${
-                      blog.status === 'Published'
-                        ? 'text-amber-600 dark:text-amber-400 hover:text-amber-700'
-                        : 'text-green-600 dark:text-green-400 hover:text-green-700'
-                    }`}
+                    onClick={() => handleUpdateStatus(quote._id, quote.status)}
+                    className="h-8 w-8 cursor-pointer text-indigo-600 dark:text-indigo-400 hover:text-indigo-700"
                   >
-                    {blog.status === 'Published' ? <EyeOff size={16} /> : <Eye size={16} />}
+                    <CheckCircle size={16} />
                   </Button>
                 } />
-                <TooltipContent>{blog.status === 'Published' ? 'Move to Draft' : 'Publish Article'}</TooltipContent>
+                <TooltipContent>Update Status</TooltipContent>
               </Tooltip>
 
               <ConfirmDialog
-                title="Are you sure you want to delete this blog?"
-                description="This action cannot be undone. This will permanently delete the blog."
+                title="Are you sure you want to delete this quote?"
+                description="This action cannot be undone."
                 confirmText="Yes, delete"
-                onConfirm={() => handleDelete(blog._id)}
+                onConfirm={() => handleDelete(quote._id)}
                 icon="trash"
                 trigger={
                   <div className="inline-block">
@@ -280,7 +256,7 @@ export default function BlogsPage() {
                           <Trash2 size={16} />
                         </Button>
                       } />
-                      <TooltipContent>Delete Article</TooltipContent>
+                      <TooltipContent>Delete Quote</TooltipContent>
                     </Tooltip>
                   </div>
                 }
@@ -290,10 +266,10 @@ export default function BlogsPage() {
         );
       },
     },
-  ], [handleToggleStatus, handleDelete, pagination]);
+  ], [handleDelete, pagination]);
 
   const table = useReactTable({
-    data: blogs,
+    data: quotes,
     columns,
     pageCount: Math.ceil(totalCount / pagination.pageSize),
     state: {
@@ -305,37 +281,14 @@ export default function BlogsPage() {
   });
 
   return (
-    <div className="space-y-6 transition-colors duration-300">
-
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-border pb-4">
-        <div>
-          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Blogs Feed</h1>
-          <p className="text-muted-foreground text-sm mt-1 flex items-center">
-            Write, edit, and publish blog articles.
-            {!loading && (
-              <span className="ml-2 font-semibold text-blue-600 dark:text-blue-400">
-                • {totalCount} article{totalCount !== 1 ? 's' : ''} total
-              </span>
-            )}
-          </p>
-        </div>
-        
-        <Link
-          href="/blogs/create"
-          className={cn(buttonVariants(), "bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white cursor-pointer shadow-md shadow-blue-600/20")}
-        >
-          <Plus size={16} className="mr-1" /> Create Article
-        </Link>
-      </div>
-
-      {/* Filters & Actions Bar */}
+    <div className="space-y-4">
+      {/* Filters Bar */}
       <div className="flex flex-col sm:flex-row gap-3 items-center justify-between bg-card p-3 rounded-xl border border-border shadow-sm">
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <div className="relative w-full sm:w-[280px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input 
-              placeholder="Search title, category, tags..." 
+              placeholder="Search quotes..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-9 h-9"
@@ -346,14 +299,15 @@ export default function BlogsPage() {
               <SelectValue placeholder="All Statuses" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all" className="cursor-pointer">All Statuses</SelectItem>
-              <SelectItem value="Published" className="cursor-pointer">Published</SelectItem>
-              <SelectItem value="Draft" className="cursor-pointer">Drafts</SelectItem>
+              <SelectItem value="All" className="cursor-pointer">All Statuses</SelectItem>
+              <SelectItem value="New" className="cursor-pointer">New</SelectItem>
+              <SelectItem value="Contacted" className="cursor-pointer">Contacted</SelectItem>
+              <SelectItem value="Closed" className="cursor-pointer">Closed</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        {(statusFilter !== 'all' || searchTerm !== '') && (
+        {(statusFilter !== 'All' || searchTerm !== '') && (
           <Button 
             variant="ghost" 
             size="sm" 
@@ -374,8 +328,8 @@ export default function BlogsPage() {
                 {headerGroup.headers.map((header) => {
                   let width = 'auto';
                   if (header.id === 'serial') width = '60px';
-                  else if (header.id === 'title') width = '40%';
-                  else if (header.id === 'actions') width = '120px';
+                  else if (header.id === 'name') width = '35%';
+                  else if (header.id === 'actions') width = '100px';
                   
                   return (
                     <TableHead key={header.id} className="font-bold text-muted-foreground uppercase text-xs tracking-wider h-11 align-middle" style={{ width }}>
@@ -401,7 +355,7 @@ export default function BlogsPage() {
                   <TableCell><Skeleton className="h-6 w-24" /></TableCell>
                   <TableCell><Skeleton className="h-6 w-24" /></TableCell>
                   <TableCell><Skeleton className="h-6 w-20 rounded-full" /></TableCell>
-                  <TableCell><Skeleton className="h-8 w-24 ml-auto" /></TableCell>
+                  <TableCell><Skeleton className="h-8 w-20 ml-auto" /></TableCell>
                 </TableRow>
               ))
             ) : table.getRowModel().rows?.length ? (
@@ -422,10 +376,9 @@ export default function BlogsPage() {
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-48 text-center">
                   <div className="flex flex-col items-center justify-center">
-                    <FileText className="size-12 mb-3 opacity-30 text-muted-foreground" />
-                    <h3 className="text-lg font-bold text-foreground">No Articles Found</h3>
+                    <h3 className="text-lg font-bold text-foreground">No Quotes Found</h3>
                     <p className="text-sm mt-1 text-muted-foreground">
-                      {searchTerm ? 'Try adjusting your search or filters.' : 'Create your first blog post to populate the feed.'}
+                      {searchTerm ? 'Try adjusting your search or filters.' : 'There are no quote requests yet.'}
                     </p>
                   </div>
                 </TableCell>

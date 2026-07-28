@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { Roboto, Geist_Mono } from "next/font/google";
+import { Roboto, Geist_Mono, Geist } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Providers from "@/providers/ThemeProvider";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -28,8 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${roboto.variable} ${geistMono.variable}`} suppressHydrationWarning>
-      <body className="min-h-screen bg-slate-50 dark:bg-slate-950 antialiased">
+    <html lang="en" className={cn(roboto.variable, geistMono.variable, "font-sans", geist.variable)} suppressHydrationWarning>
+      <body className="min-h-screen bg-background text-foreground antialiased">
         <Providers>
           <AuthProvider>
             {children}

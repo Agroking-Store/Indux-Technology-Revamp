@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { Plus, Calendar, Users, UserPlus, Copy, Pencil, EyeOff, Trash2, Eye } from 'lucide-react';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse, Event } from '@/lib/api';
 
 export default function EventsPage() {
@@ -38,7 +39,6 @@ export default function EventsPage() {
   }, [fetchEvents]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this event? This will also delete all of its registrations.')) return;
     try {
       await api.delete(`/events/${id}`);
       toast.success('Event deleted successfully');
@@ -262,14 +262,22 @@ export default function EventsPage() {
                         {event.status === 'Published' ? <EyeOff size={16} /> : <Eye size={16} />}
                       </button>
                 
-                      <button
-                        onClick={() => handleDelete(event._id)}
-                        className="p-1.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition cursor-pointer"
-                        title="Delete Event"
-                        aria-label="Delete Event"
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                      <ConfirmDialog
+                        title="Are you sure you want to delete this event?"
+                        description="This action cannot be undone. This will also delete all of its registrations."
+                        confirmText="Yes, delete"
+                        onConfirm={() => handleDelete(event._id)}
+                        icon="trash"
+                        trigger={
+                          <button
+                            className="p-1.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition cursor-pointer"
+                            title="Delete Event"
+                            aria-label="Delete Event"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        }
+                      />
                     </div>
                   </td>
                 </tr>

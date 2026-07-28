@@ -64,10 +64,19 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1;
   const limit = parseInt(req.query.limit as string) || 20;
   const status = req.query.status as string; // optional filter
+  const search = req.query.search as string; // optional search filter
 
   const filter: any = {};
   if (status && (status === "Draft" || status === "Published")) {
     filter.status = status;
+  }
+
+  if (search) {
+    filter.$or = [
+      { title: { $regex: search, $options: "i" } },
+      { tags: { $regex: search, $options: "i" } },
+      { category: { $regex: search, $options: "i" } }
+    ];
   }
 
   const total = await Blog.countDocuments(filter);
