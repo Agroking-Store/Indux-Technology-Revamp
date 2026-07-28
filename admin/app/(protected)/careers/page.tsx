@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { Edit2, Eye, Trash2, Plus, Briefcase, Copy, Inbox } from 'lucide-react';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse, Career } from '@/lib/api';
 
 export default function CareersPage() {
@@ -39,7 +40,6 @@ export default function CareersPage() {
   }, [fetchCareers]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this job and all its applications?')) return;
     try {
       await api.delete(`/careers/${id}`);
       toast.success('Job posting and applications deleted successfully');
@@ -191,13 +191,21 @@ export default function CareersPage() {
                     >
                       <Eye size={16} />
                     </button>
-                    <button
-                      onClick={() => handleDelete(career._id)}
-                      className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition inline-flex cursor-pointer"
-                      title="Delete"
-                    >
-                      <Trash2 size={16} />
-                    </button>
+                    <ConfirmDialog
+                      title="Are you sure you want to delete this job?"
+                      description="This action cannot be undone. This will permanently delete the job and all its applications."
+                      confirmText="Yes, delete"
+                      onConfirm={() => handleDelete(career._id)}
+                      icon="trash"
+                      trigger={
+                        <button
+                          className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition inline-flex cursor-pointer"
+                          title="Delete"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      }
+                    />
                   </td>
                 </tr>
               ))}

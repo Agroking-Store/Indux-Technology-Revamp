@@ -40,15 +40,42 @@ export const createQuote = async (
 // @route   GET /api/v1/quotes
 // @access  Private
 export const getQuotes = async (
-  _req: Request,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const quotes = await Quote.find().sort({ createdAt: -1 });
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 20;
+    const search = req.query.search as string;
+    const status = req.query.status as string;
+
+    const filter: any = {};
+    if (status && status !== "All") {
+      filter.status = status;
+    }
+
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { workEmail: { $regex: search, $options: "i" } },
+        { companyName: { $regex: search, $options: "i" } },
+        { serviceInterest: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const total = await Quote.countDocuments(filter);
+    const quotes = await Quote.find(filter)
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
     res.status(200).json({
       success: true,
-      data: quotes,
+      data: {
+        quotes,
+        pagination: { total, page, limit }
+      },
     });
   } catch (error) {
     next(error);

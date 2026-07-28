@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { Search, Download, Mail, Phone, User, Check, X, FileText, Trash2, Eye, Sun, Moon } from 'lucide-react';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse, EventRegistration, Event } from '@/lib/api';
 
 interface RegistrationQueryParams {
@@ -145,7 +146,6 @@ function RegistrationsContent() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this registration?')) return;
     try {
       await api.delete(`/event-registrations/${id}`);
       toast.success('Registration deleted');
@@ -361,13 +361,21 @@ function RegistrationsContent() {
                         >
                           <X size={16} />
                         </button>
-                        <button
-                          onClick={() => handleDelete(reg._id)}
-                          className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition"
-                          title="Delete"
-                        >
-                          <Trash2 size={16} />
-                        </button>
+                        <ConfirmDialog
+                          title="Are you sure you want to delete this registration?"
+                          description="This action cannot be undone. This will permanently delete the registration."
+                          confirmText="Yes, delete"
+                          onConfirm={() => handleDelete(reg._id)}
+                          icon="trash"
+                          trigger={
+                            <button
+                              className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition cursor-pointer"
+                              title="Delete"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          }
+                        />
                       </td>
                     </tr>
                   );

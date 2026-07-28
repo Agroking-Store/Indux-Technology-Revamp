@@ -14,6 +14,7 @@ import {
   Search, 
   Eye 
 } from 'lucide-react';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse, JobApplication, Career } from '@/lib/api';
 
 function ApplicationsContent() {
@@ -85,7 +86,6 @@ function ApplicationsContent() {
   }, [fetchApplications]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this job application?')) return;
     try {
       await api.delete(`/applications/${id}`);
       toast.success('Job application deleted successfully');
@@ -384,13 +384,21 @@ function ApplicationsContent() {
                         >
                           <FileText size={16} />
                         </button>
-                        <button
-                          onClick={() => handleDelete(app._id)}
-                          className="text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition inline-flex cursor-pointer"
-                          title="Delete application"
-                        >
-                          <Trash2 size={16} />
-                        </button>
+                        <ConfirmDialog
+                          title="Are you sure you want to delete this job application?"
+                          description="This action cannot be undone. This will permanently delete the application."
+                          confirmText="Yes, delete"
+                          onConfirm={() => handleDelete(app._id)}
+                          icon="trash"
+                          trigger={
+                            <button
+                              className="text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition inline-flex cursor-pointer"
+                              title="Delete application"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          }
+                        />
                       </td>
 
                     </tr>
