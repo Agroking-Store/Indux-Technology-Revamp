@@ -330,6 +330,7 @@ export default function Home() {
                       src="/images/unsplash/img-f787f12c.webp"
                       alt="Team working"
                       fill
+                      loading="eager"
                       sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
@@ -340,6 +341,7 @@ export default function Home() {
                     <Image
                       src="/images/unsplash/img-4dddf9a5.webp"
                       alt="Discussion"
+                      loading="eager"
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
@@ -391,6 +393,7 @@ export default function Home() {
                     src="/images/unsplash/img-4dddf9a5.webp"
                     alt="Team Discussion"
                     fill
+                    loading="eager"
                     sizes="(max-width: 768px) 75vw, 35vw"
                     className="object-cover"
                   />

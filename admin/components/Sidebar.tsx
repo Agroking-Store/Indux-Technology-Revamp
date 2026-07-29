@@ -14,7 +14,7 @@ import {
   LogOut,
   Sparkles
 } from 'lucide-react';
-
+import Image from "next/image";
 export const Sidebar = () => {
   const pathname = usePathname();
   const { admin, logout } = useAuth();
@@ -77,9 +77,15 @@ export const Sidebar = () => {
       
       {/* Brand Logo Header */}
       <div className="p-6 border-b border-gray-100 dark:border-slate-800/60 flex items-center gap-2.5">
-        <div className="size-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-          <Sparkles className="size-4.5 text-white animate-pulse" />
-        </div>
+<div className="size-10 rounded-xl bg-black border border-zinc-800 flex items-center justify-center">
+  <Image
+    src="/induxtechnologylogo_white.webp"
+    alt="Indux Technology"
+    width={26}
+    height={26}
+    className="object-contain"
+  />
+</div>
         <div>
           <h1 className="text-base font-extrabold text-gray-900 dark:text-white tracking-tight leading-none">Indux Tech</h1>
           <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mt-1 block">Control Center</span>
