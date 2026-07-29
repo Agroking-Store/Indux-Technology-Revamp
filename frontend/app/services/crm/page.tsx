@@ -206,12 +206,12 @@ export default function CRMServicePage() {
 
         {/* ===== CAPABILITIES SECTION ===== */}
         <section id="capabilities" className="relative overflow-visible border-t border-slate-200/60 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-950/50">
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
             
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start relative">
               
               {/* Left Column: Sticky Title & Info */}
-              <div className="w-full lg:w-5/12 lg:sticky lg:top-32 z-10 text-left">
+              <div className="w-full lg:w-5/12 lg:sticky lg:top-28 z-10 text-left">
                 <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-6">
                   <div className="flex gap-1">
                     <span className="w-4 h-4 rounded-full bg-blue-500 animate-ping"></span>
@@ -231,15 +231,15 @@ export default function CRMServicePage() {
 
                 <Button 
                   nativeButton={false}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wide text-sm uppercase transition-all shadow-lg shadow-blue-600/20 group cursor-pointer"
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 group"
                   render={<Link href="/contact-us" />}
                 >
-                  Consult with our experts <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  Consult with Our Experts <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
 
               {/* Right Column: Scrollable Cards */}
-              <div className="w-full lg:w-7/12 flex flex-col gap-8 lg:gap-12 lg:pb-32">
+              <div className="w-full lg:w-7/12 flex flex-col gap-6 lg:gap-8 lg:pb-16">
                 {capabilities.map((cap, idx) => {
                   const Icon = cap.icon;
                   const numStr = String(idx + 1).padStart(2, '0');
@@ -350,7 +350,7 @@ export default function CRMServicePage() {
                     <div className="w-full md:w-[45%] bg-white dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 hover:border-blue-500/30 hover:shadow-2xl dark:hover:shadow-none transition-all duration-300 relative overflow-hidden group">
                       
                       {/* Stylized background number */}
-                      <span className="absolute right-6 top-6 text-7xl font-extrabold text-slate-100 dark:text-slate-800/40 select-none group-hover:scale-110 transition-transform duration-500">
+                      <span className="absolute right-6 top-6 text-7xl font-extrabold text-slate-100 dark:text-slate-800/80 select-none group-hover:scale-110 transition-transform duration-500">
                         {step.step}
                       </span>
                       

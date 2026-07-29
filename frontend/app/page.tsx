@@ -226,8 +226,110 @@ export default function Home() {
 
   const displayedBlogs = blogs.length > 0 ? blogs : fallbackBlogs;
 
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Indux Technology",
+    "url": "https://induxtechnology.com",
+    "logo": "https://induxtechnology.com/induxtechnologylogo_white.webp",
+    "sameAs": [
+      "https://www.linkedin.com/company/induxtechnology",
+      "https://www.facebook.com/885831577953764/",
+      "https://x.com/induxtechnology"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+918421538753",
+      "contactType": "customer service",
+      "email": "connect@induxtechnology.com",
+      "availableLanguage": ["English", "Hindi", "Marathi"]
+    }
+  };
+
+  const businessJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Indux Technology",
+    "image": "https://induxtechnology.com/images/og-image.jpg",
+    "@id": "https://induxtechnology.com/#localbusiness",
+    "url": "https://induxtechnology.com",
+    "telephone": "+918421538753",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Geeta Paradise, Kharadi",
+      "addressLocality": "Pune",
+      "addressRegion": "MH",
+      "postalCode": "411014",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 18.5526,
+      "longitude": 73.9407
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/induxtechnology",
+      "https://www.facebook.com/885831577953764/",
+      "https://x.com/induxtechnology"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "3"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Paras Bora"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5"
+        },
+        "reviewBody": "Laxman is very good at his work. I use the crm software he has developed for us. Reaping good benefits and is cost effective as well"
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Subhangi Solunke"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5"
+        },
+        "reviewBody": "Great experience with Indux Technology. They understood my needs and delivered perfectly. Professional team with smooth collaboration."
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Nikhil Sharma Eventpreneur"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5"
+        },
+        "reviewBody": "Laxman has great knowledge about his industry and has been super productive with this delivery. Wishing you many success ahead."
+      }
+    ]
+  };
+
   return (
     <div className="flex flex-col min-h-screen w-full overflow-x-clip bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        id="org-schema"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        id="local-business-schema"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
+      />
       <main className="flex-1 w-full">
         {/* HERO SECTION */}
         <section className="relative overflow-hidden pt-6 pb-16 sm:pt-10 sm:pb-24 lg:pt-8 lg:pb-32">

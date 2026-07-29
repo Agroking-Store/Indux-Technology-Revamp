@@ -372,8 +372,8 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
               </p>
               <button
                 onClick={() => {
-                   navigator.clipboard.writeText(window.location.href);
-                   toast.success('Article link copied to clipboard!');
+                  navigator.clipboard.writeText(window.location.href);
+                  toast.success('Article link copied to clipboard!');
                 }}
                 className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-blue-500 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/15 py-3 text-xs font-bold text-slate-700 dark:text-slate-350 transition-all cursor-pointer shadow-sm active:scale-98"
               >
