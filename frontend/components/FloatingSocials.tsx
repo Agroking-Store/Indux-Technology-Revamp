@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { FaXTwitter, FaWhatsapp } from "react-icons/fa6";

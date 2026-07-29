@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React from "react";
 import { ContactForm } from "@/components/ContactForm";
 import { motion, Variants } from "framer-motion";

@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import { Sparkles, Play, Briefcase, Target, ShieldCheck, Asterisk, Trophy, KeyRound, Leaf, Rocket, Eye, CheckCircle2, Globe as GlobeIcon } from "lucide-react";
