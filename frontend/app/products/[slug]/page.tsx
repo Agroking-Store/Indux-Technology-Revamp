@@ -24,8 +24,39 @@ export default function ProductDetailPage() {
 
   if (!product) return notFound();
 
+  // Helper to ensure leading slash for images
+  const imageSrc = product.image.startsWith("http")
+    ? product.image
+    : product.image.startsWith("/")
+      ? product.image
+      : `/${product.image}`;
+
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.title,
+    "image": imageSrc.startsWith("/") ? `https://induxtechnology.com${imageSrc}` : imageSrc,
+    "description": product.shortDescription,
+    "category": product.category,
+    "brand": {
+      "@type": "Brand",
+      "name": "Indux Technology"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "INR",
+      "price": "Contact for pricing",
+      "availability": "https://schema.org/InStock",
+      "url": `https://induxtechnology.com/products/${slug}`
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       {/* 1. HERO SECTION */}
       <section className="relative pt-24 pb-20 overflow-hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#3b82f6_1.5px,transparent_1.5px)] [background-size:24px_24px]"></div>
