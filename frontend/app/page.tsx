@@ -15,17 +15,15 @@ import {
   Cpu,
   Briefcase,
   Smile,
-  Handshake,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { getBlogs, submitLead, Blog } from "@/lib/api";
-import { motion, useScroll, useTransform } from "framer-motion";
+
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { LineShadowText } from "@/components/ui/line-shadow-text";
 import { Marquee } from "@/components/ui/marquee";
-import { ConfettiButton } from "@/components/ui/confetti";
 import { ContactForm } from "@/components/ContactForm";
 import { GetQuoteModal } from "@/components/GetQuoteModal";
 
@@ -187,28 +185,67 @@ export default function Home() {
   const [scrollRange, setScrollRange] = useState(0);
   const [viewportHeight, setViewportHeight] = useState(0);
 
-  // Measure exact horizontal overflow width dynamically
   useEffect(() => {
-    const calculateRange = () => {
-      if (trackRef.current) {
-        // Total track width minus screen width = exact distance to scroll
-        setScrollRange(trackRef.current.scrollWidth - window.innerWidth);
+    const handleScroll = () => {
+      // Only do fake horizontal scroll on desktop
+      if (window.innerWidth < 768) {
+        if (trackRef.current) {
+          trackRef.current.style.transform = `none`;
+        }
+        return;
       }
-      setViewportHeight(window.innerHeight);
+
+      if (!containerRef.current || !trackRef.current) return;
+      
+      const containerTop = containerRef.current.offsetTop;
+      const scrollPosition = window.scrollY;
+      
+      // If we haven't reached the container, don't move horizontal track
+      if (scrollPosition < containerTop) {
+        trackRef.current.style.transform = `translateX(0px)`;
+        return;
+      }
+      
+      // Calculate how far we've scrolled inside the container
+      const scrolledPastContainer = scrollPosition - containerTop;
+      
+      // Calculate the max distance we can scroll vertically for this effect
+      const maxScroll = scrollRange;
+      
+      // Calculate the translation (clamp between 0 and maxScroll)
+      const xTranslate = Math.min(Math.max(scrolledPastContainer, 0), maxScroll);
+      
+      // Apply the negative translation to the track
+      trackRef.current.style.transform = `translateX(-${xTranslate}px)`;
     };
 
-    calculateRange();
+    const calculateRange = () => {
+      if (window.innerWidth >= 768 && trackRef.current) {
+        // Temporarily clear transform to calculate correct width
+        trackRef.current.style.transform = `none`;
+        // Total track width minus screen width = exact distance to scroll
+        setScrollRange(trackRef.current.scrollWidth - window.innerWidth);
+        setViewportHeight(window.innerHeight);
+        // Reapply scroll position immediately
+        handleScroll();
+      } else {
+        setScrollRange(0);
+        setViewportHeight(0);
+      }
+    };
+
+    // Delay calculation slightly to ensure DOM is fully rendered and fonts loaded
+    const timer = setTimeout(calculateRange, 100);
     window.addEventListener("resize", calculateRange);
-    return () => window.removeEventListener("resize", calculateRange);
-  }, []);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", calculateRange);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollRange]);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  // Move exact pixel distance based on vertical scroll progress
-  const xTransform = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [blogsLoading, setBlogsLoading] = useState(true);
 
@@ -339,11 +376,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-8 items-center">
               {/* Left Side: Text Content */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="flex flex-col gap-4 sm:gap-6 text-left max-w-xl mx-auto lg:mx-0"
+              <div className="flex flex-col gap-4 sm:gap-6 text-left max-w-xl mx-auto lg:mx-0"
               >
                 <div className="inline-flex items-center gap-2 font-medium text-slate-600 dark:text-slate-400 text-base sm:text-lg w-max">
                   <div className="flex items-center">
@@ -379,14 +412,10 @@ export default function Home() {
                     Our Services
                   </Link>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Right Side: Bento Image Grid (Custom Layout) */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                className="relative w-full aspect-square md:aspect-[4/3] lg:aspect-square flex items-center justify-center max-w-lg mx-auto lg:max-w-none"
+              <div className="relative w-full aspect-square md:aspect-[4/3] lg:aspect-square flex items-center justify-center max-w-lg mx-auto lg:max-w-none"
               >
                 {/* Floating Rotating Text Badge */}
                 <div className="absolute -left-2 sm:left-0 lg:-left-6 bottom-6 sm:bottom-1/4 z-20 w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-2xl dark:shadow-none dark:border dark:border-slate-800">
@@ -415,14 +444,6 @@ export default function Home() {
                   <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-inner">
                     <Trophy className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
-                </div>
-
-                {/* Floating Sparkles */}
-                <div className="absolute right-2 bottom-4 sm:right-0 sm:bottom-10 z-20 text-blue-500 animate-pulse">
-                  <Trophy
-                    className="w-8 h-8 sm:w-12 sm:h-12"
-                    fill="currentColor"
-                  />
                 </div>
 
                 <div className="grid grid-cols-12 grid-rows-12 gap-2.5 sm:gap-4 w-full h-full relative z-10 p-2 sm:p-6 md:p-8">
@@ -472,7 +493,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
@@ -482,12 +503,7 @@ export default function Home() {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-24 items-center">
               {/* Left Side: Overlapping Images */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
-                className="relative h-[360px] sm:h-[480px] md:h-[600px] w-full max-w-lg mx-auto lg:max-w-none"
+              <div className="relative h-[360px] sm:h-[480px] md:h-[600px] w-full max-w-lg mx-auto lg:max-w-none"
               >
                 {/* Back Image (Tall) */}
                 <div className="absolute top-0 left-0 w-3/4 h-[80%] sm:h-[85%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-md">
@@ -523,15 +539,10 @@ export default function Home() {
                     Of Experience
                   </p>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Right Side: Text & Features */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-                className="flex flex-col gap-4 sm:gap-6"
+              <div className="flex flex-col gap-4 sm:gap-6"
               >
                 <div className="text-blue-600 dark:text-blue-500 font-bold tracking-wider text-xs sm:text-sm uppercase flex items-center gap-2">
                   COMPANY ABOUT
@@ -563,12 +574,7 @@ export default function Home() {
                       "Affordable price upto 2 years",
                       "Reliable & Experienced Team",
                     ].map((item, i) => (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
-                        key={i}
+                      <div key={i}
                         className="flex items-center gap-3"
                       >
                         <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center">
@@ -580,7 +586,7 @@ export default function Home() {
                         <span className="text-slate-600 dark:text-slate-300 font-medium text-sm">
                           {item}
                         </span>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -593,7 +599,7 @@ export default function Home() {
                     </Button>
                   </Link>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
 
@@ -601,12 +607,7 @@ export default function Home() {
           {/* Solid Bottom Banner */}
           <div className="bg-[#0f2e4a] dark:bg-slate-900 w-full py-10 sm:py-12 md:py-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-4 md:divide-x divide-blue-800/40 dark:divide-slate-800"
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-4 md:divide-x divide-blue-800/40 dark:divide-slate-800"
               >
                 {[
                   {
@@ -656,7 +657,7 @@ export default function Home() {
                     </div>
                   );
                 })}
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
@@ -666,12 +667,7 @@ export default function Home() {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header Area */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 sm:mb-16">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="max-w-2xl"
+              <div className="max-w-2xl"
               >
                 <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
                   <div className="flex gap-1">
@@ -684,14 +680,9 @@ export default function Home() {
                   Accelerate Growth with Our{" "}
                   <span className="text-blue-600">IT Expertise</span>
                 </h2>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="w-full sm:w-auto"
+              <div className="w-full sm:w-auto"
               >
                 <Link href="/services" className="w-full sm:w-auto">
                   <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
@@ -699,18 +690,13 @@ export default function Home() {
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
-              </motion.div>
+              </div>
             </div>
 
             {/* Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {/* Card 1: CRM */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
+              <div className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
@@ -737,15 +723,10 @@ export default function Home() {
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Card 2: Manufacturing ERP */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
+              <div className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
                 <div className="p-6 sm:p-8 pb-2 sm:pb-4 flex flex-col flex-grow order-2 md:order-1">
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-white mb-2 sm:mb-3 transition-colors">
@@ -771,15 +752,10 @@ export default function Home() {
                     />
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Card 3: Sales Automation */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
+              <div className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
@@ -805,7 +781,7 @@ export default function Home() {
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
@@ -876,13 +852,8 @@ export default function Home() {
                   const Icon = feature.icon;
                   const numStr = String(idx + 1).padStart(2, "0");
                   return (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, y: 50 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-30px" }}
-                      transition={{ duration: 0.6 }}
-                      className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-10 items-start w-full group"
+                    <div
+                      key={idx} className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-10 items-start w-full group"
                     >
                       {/* Huge Number */}
                       <div className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-bold text-blue-800 dark:text-blue-500 leading-none tracking-tighter sm:mt-4 w-16 sm:w-24 md:w-32 flex-shrink-0">
@@ -904,30 +875,29 @@ export default function Home() {
                           {feature.desc}
                         </p>
                       </div>
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>
             </div>
           </div>
         </section>
-        {/* WORK PROCESS SECTION */}
+        {/* WORK PROCESS SECTION - Responsive (Vertical on Mobile, Fake Horizontal on Desktop) */}
         <section
           ref={containerRef}
           style={{
-            height: scrollRange ? `${scrollRange + viewportHeight}px` : "180vh",
+            height: scrollRange > 0 ? `${scrollRange + viewportHeight}px` : "auto",
           }}
           className="relative bg-slate-50 dark:bg-slate-950"
         >
-          {/* This container 'locks' the screen. It is 100vh tall and sticky. */}
-          <div className="sticky top-0 flex h-screen items-center overflow-hidden z-10">
-            <motion.div
+          {/* Container logic: sticky on desktop, static block on mobile */}
+          <div className="md:sticky md:top-0 flex md:h-screen items-center overflow-hidden z-10 py-16 md:py-0">
+            <div
               ref={trackRef}
-              style={{ x: xTransform }}
-              className="flex gap-8 px-4 sm:px-6 lg:px-8 items-center"
+              className="flex flex-col md:flex-row gap-8 px-4 sm:px-6 lg:px-8 items-center w-full md:w-auto md:flex-nowrap will-change-transform"
             >
               {/* Intro Title Block */}
-              <div className="w-[85vw] md:w-[50vw] lg:w-[35vw] flex-shrink-0 flex flex-col justify-center pr-8 lg:pr-12">
+              <div className="w-full md:w-[50vw] lg:w-[35vw] md:flex-shrink-0 flex flex-col justify-center pr-0 md:pr-8 lg:pr-12 text-center md:text-left mb-10 md:mb-0">
                 <div className="inline-flex items-center gap-2 font-bold tracking-wider text-sm text-blue-600 uppercase mb-4">
                   <div className="flex gap-1">
                     <span className="w-3.5 h-3.5 rounded-full bg-blue-500"></span>
@@ -971,7 +941,7 @@ export default function Home() {
               ].map((card, idx) => (
                 <div
                   key={idx}
-                  className="w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[30vw] flex-shrink-0 flex flex-col rounded-[2rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-[400px] md:h-[450px]"
+                  className="w-full md:w-[45vw] lg:w-[30vw] md:flex-shrink-0 flex flex-col rounded-[2rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-auto md:h-[450px]"
                 >
                   <div className="flex-1 p-8 md:p-10 relative overflow-hidden flex flex-col justify-center">
                     <div className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 text-[8rem] md:text-[12rem] font-bold text-slate-100 dark:text-slate-800/50 pointer-events-none select-none z-0">
@@ -998,8 +968,8 @@ export default function Home() {
                   </div>
                 </div>
               ))}
-              <div className="w-[10vw] flex-shrink-0" />
-            </motion.div>
+              <div className="hidden md:block w-[10vw] flex-shrink-0" />
+            </div>
           </div>
         </section>
 
@@ -1008,12 +978,7 @@ export default function Home() {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header */}
             <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
+              <div >
                 <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
                   <div className="flex gap-1">
                     <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
@@ -1025,7 +990,7 @@ export default function Home() {
                   Work That Drives{" "}
                   <span className="text-blue-600">Results</span>
                 </h2>
-              </motion.div>
+              </div>
             </div>
 
             {/* Grid */}
@@ -1052,13 +1017,8 @@ export default function Home() {
                   img: "/indux_erp.webp",
                 },
               ].map((project, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="group bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-500 cursor-pointer flex flex-col"
+                <div
+                  key={idx} className="group bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-500 cursor-pointer flex flex-col"
                 >
                   {/* Image Container */}
                   <div className="p-3 sm:p-4 md:p-6 pb-0">
@@ -1092,7 +1052,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 

@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-import FloatingSocials from "@/components/FloatingSocials";
 import Script from "next/script";
 
 const roboto = Roboto({
@@ -118,7 +117,6 @@ export default function RootLayout({
         <Footer />
         <Toaster />
         <ScrollToTop />
-        <FloatingSocials />
 
         <Script
           src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
