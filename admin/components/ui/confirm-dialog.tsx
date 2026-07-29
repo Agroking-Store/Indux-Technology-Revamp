@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils';
 
 export interface ConfirmDialogProps {
   /** The element that triggers the dialog (e.g., a button) */
-  trigger?: ReactNode;
+  trigger?: ReactElement;
   /** Main title of the dialog */
   title: string;
   /** Detailed description of the action */
@@ -52,7 +52,7 @@ export function ConfirmDialog({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
-      {trigger && <AlertDialogTrigger>{trigger}</AlertDialogTrigger>}
+      {trigger && <AlertDialogTrigger render={trigger} />}
       
       {/* 
         We override the default p-4 and rounded-xl of AlertDialogContent 
