@@ -109,9 +109,9 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
     }
   ]);
 
-  const host = req.get("host");
-  const protocol = req.protocol;
-
+  const host = req.get("host") || "";
+  const isLocal =host.includes("localhost") || host.startsWith("127.0.0.1");
+const protocol = isLocal ? "http" : "https";
   const mappedBlogs = blogs.map(blog => {
     const blogObj = { ...blog };
     if (blogObj.featuredImage === "DYNAMIC_IMAGE_ROUTE") {
@@ -175,14 +175,14 @@ export const getBlogById = asyncHandler(async (req: Request, res: Response) => {
     throw ApiError.notFound("Blog not found");
   }
 
-  const host = req.get("host");
-  const protocol = req.protocol;
-
-  const blogObj = { ...blog };
-  if (blogObj.featuredImage === "DYNAMIC_IMAGE_ROUTE") {
-    blogObj.featuredImage = `${protocol}://${host}/api/v1/blogs/${blogObj._id}/image`;
-  }
-
+  const host = req.get("host") || "";
+const isLocal =
+  host.includes("localhost") || host.startsWith("127.0.0.1");
+const protocol = isLocal ? "http" : "https";
+const blogObj = { ...blog };
+if (blogObj.featuredImage === "DYNAMIC_IMAGE_ROUTE") {
+  blogObj.featuredImage = `${protocol}://${host}/api/v1/blogs/${blogObj._id}/image`;
+}
   res.status(200).json(new ApiResponse(200, blogObj, "Blog fetched successfully"));
 });
 
