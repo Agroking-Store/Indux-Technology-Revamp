@@ -45,7 +45,6 @@ export default function BlogsPage() {
   }, []);
 
   const publishedBlogs = useMemo(() => blogs.filter((b) => b.status === 'Published'), [blogs]);
-
   const categories = useMemo(() => {
     const unique = Array.from(new Set(publishedBlogs.map((b) => b.category).filter(Boolean)));
     return ['All', ...unique];
@@ -79,7 +78,7 @@ export default function BlogsPage() {
     setSubscribed(true);
     setEmail('');
   };
-
+  
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <main className="flex-1">
