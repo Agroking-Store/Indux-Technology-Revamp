@@ -215,7 +215,6 @@ export default function LeadsTable() {
         const status = row.getValue("status") as string;
       
         return (
-          <div className="flex items-center justify-end gap-1">
             <TooltipProvider>
               {status !== "Closed" && (
                 <Tooltip>
@@ -235,33 +234,29 @@ export default function LeadsTable() {
                 </Tooltip>
               )}
       
-              <ConfirmDialog
-                title="Are you sure you want to delete this lead?"
-                description="This action cannot be undone."
-                confirmText="Yes, delete"
-                onConfirm={() => handleDelete(lead._id)}
-                icon="trash"
-                trigger={
-                  <div className="inline-block">
-                    <Tooltip>
-                      <TooltipTrigger
-                        render={
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/50 cursor-pointer"
-                          >
-                            <Trash2 size={16} />
-                          </Button>
-                        }
-                      />
-                      <TooltipContent>Delete Lead</TooltipContent>
-                    </Tooltip>
-                  </div>
-                }
-              />
+      <Tooltip>
+  <ConfirmDialog
+    title="Are you sure you want to delete this lead?"
+    description="This action cannot be undone."
+    confirmText="Yes, delete"
+    onConfirm={() => handleDelete(lead._id)}
+    icon="trash"
+    trigger={
+      <Button
+        variant="ghost"
+        size="icon"
+        className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:text-rose-700 cursor-pointer"
+      >
+        <Trash2 size={16} />
+      </Button>
+    }
+  />
+
+  <TooltipContent>
+    Delete Lead
+  </TooltipContent>
+</Tooltip>
             </TooltipProvider>
-          </div>
         );
       },
     },

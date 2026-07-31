@@ -269,20 +269,31 @@ export default function BlogsPage() {
                 onConfirm={() => handleDelete(blog._id)}
                 icon="trash"
                 trigger={
-                  <div className="inline-block">
                     <Tooltip>
-                      <TooltipTrigger render={
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/50 cursor-pointer"
-                        >
-                          <Trash2 size={16} />
-                        </Button>
-                      } />
-                      <TooltipContent>Delete Article</TooltipContent>
-                    </Tooltip>
-                  </div>
+  <ConfirmDialog
+    title="Are you sure you want to delete this blog?"
+    description="This action cannot be undone. This will permanently delete the blog."
+    confirmText="Yes, delete"
+    onConfirm={() => handleDelete(blog._id)}
+    icon="trash"
+    trigger={
+      <TooltipTrigger
+        render={
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/50 cursor-pointer"
+          >
+            <Trash2 size={16} />
+          </Button>
+        }
+      />
+    }
+  />
+
+  <TooltipContent>Delete Article</TooltipContent>
+</Tooltip>
+                  
                 }
               />
             </TooltipProvider>
