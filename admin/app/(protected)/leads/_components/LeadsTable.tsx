@@ -212,49 +212,51 @@ export default function LeadsTable() {
       header: () => <div className="text-right">Actions</div>,
       cell: ({ row }) => {
         const lead = row.original;
+        const status = row.getValue("status") as string;
+      
         return (
-          <div className="flex items-center justify-end gap-1">
             <TooltipProvider>
-              
-              <Tooltip>
-                <TooltipTrigger render={
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleUpdateStatus(lead._id, lead.status)}
-                    className="h-8 w-8 cursor-pointer text-indigo-600 dark:text-indigo-400 hover:text-indigo-700"
-                  >
-                    <CheckCircle size={16} />
-                  </Button>
-                } />
-                <TooltipContent>Update Status</TooltipContent>
-              </Tooltip>
+              {status !== "Closed" && (
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleUpdateStatus(lead._id, lead.status)}
+                        className="h-8 w-8 cursor-pointer text-indigo-600 dark:text-indigo-400 hover:text-indigo-700"
+                      >
+                        <CheckCircle size={16} />
+                      </Button>
+                    }
+                  />
+                  <TooltipContent>Update Status</TooltipContent>
+                </Tooltip>
+              )}
+      
+      <Tooltip>
+  <ConfirmDialog
+    title="Are you sure you want to delete this lead?"
+    description="This action cannot be undone."
+    confirmText="Yes, delete"
+    onConfirm={() => handleDelete(lead._id)}
+    icon="trash"
+    trigger={
+      <Button
+        variant="ghost"
+        size="icon"
+        className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:text-rose-700 cursor-pointer"
+      >
+        <Trash2 size={16} />
+      </Button>
+    }
+  />
 
-              <ConfirmDialog
-                title="Are you sure you want to delete this lead?"
-                description="This action cannot be undone."
-                confirmText="Yes, delete"
-                onConfirm={() => handleDelete(lead._id)}
-                icon="trash"
-                trigger={
-                  <div className="inline-block">
-                    <Tooltip>
-                      <TooltipTrigger render={
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/50 cursor-pointer"
-                        >
-                          <Trash2 size={16} />
-                        </Button>
-                      } />
-                      <TooltipContent>Delete Lead</TooltipContent>
-                    </Tooltip>
-                  </div>
-                }
-              />
+  <TooltipContent>
+    Delete Lead
+  </TooltipContent>
+</Tooltip>
             </TooltipProvider>
-          </div>
         );
       },
     },

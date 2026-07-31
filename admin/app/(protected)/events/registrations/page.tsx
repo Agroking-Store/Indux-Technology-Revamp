@@ -6,7 +6,14 @@ import { toast } from 'react-toastify';
 import { Search, Download, Mail, Phone, User, Check, X, FileText, Trash2, Eye, Sun, Moon } from 'lucide-react';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse, EventRegistration, Event } from '@/lib/api';
-
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 interface RegistrationQueryParams {
   page: number;
   limit: number;
@@ -214,60 +221,72 @@ function RegistrationsContent() {
       {/* Filters Bar */}
       <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-sm grid grid-cols-1 md:grid-cols-4 gap-4 transition-colors">
         
-        {/* Search */}
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
-            <Search size={16} />
-          </div>
-          <input
-            type="text"
-            placeholder="Search by name or email..."
-            value={searchQuery}
-            onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
-            className="w-full pl-9 pr-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-indigo-500"
-          />
-        </div>
+  {/* Search */}
+  <div className="relative">
+    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 z-10" size={16} />
+    <Input
+      type="text"
+      placeholder="Search by name or email..."
+      value={searchQuery}
+      onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
+      className="w-full pl-9 pr-3 py-2 h-10 border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus-visible:ring-indigo-500 shadow-none"
+    />
+  </div>
 
-        {/* Event Selector */}
-        <div>
-          <select
-            value={selectedEventId}
-            onChange={(e) => { setSelectedEventId(e.target.value); setPage(1); }}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-indigo-500 cursor-pointer"
-          >
-            <option value="">All Events</option>
-            {events.map(event => (
-              <option key={event._id} value={event._id}>{event.title}</option>
-            ))}
-          </select>
-        </div>
+  {/* Event Selector */}
+  <div>
+    <Select
+      value={selectedEventId || "ALL"}
+      onValueChange={(value) => { 
+        setSelectedEventId(!value || value === "ALL" ? "" : value); 
+        setPage(1); 
+      }}
+    >
+      <SelectTrigger className="w-full px-3 py-2 h-10 border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:ring-indigo-500 shadow-none">
+        <SelectValue placeholder="All Events" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="ALL">All Events</SelectItem>
+        {events.map(event => (
+          <SelectItem key={event._id} value={event._id}>{event.title}</SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  </div>
 
-        {/* Status Selector */}
-        <div>
-          <select
-            value={statusFilter}
-            onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-indigo-500 cursor-pointer"
-          >
-            <option value="">All Statuses</option>
-            <option value="Pending">Pending</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
-            <option value="Attended">Attended</option>
-          </select>
-        </div>
+  {/* Status Selector */}
+  <div>
+    <Select
+      value={statusFilter || "ALL"}
+      onValueChange={(value) => { 
+        setStatusFilter(!value || value === "ALL" ? "" : value); 
+        setPage(1); 
+      }}
+    >
+      <SelectTrigger className="w-full px-3 py-2 h-10 border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:ring-indigo-500 shadow-none">
+        <SelectValue placeholder="All Statuses" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="ALL">All Statuses</SelectItem>
+        <SelectItem value="Pending">Pending</SelectItem>
+        <SelectItem value="Approved">Approved</SelectItem>
+        <SelectItem value="Rejected">Rejected</SelectItem>
+        <SelectItem value="Attended">Attended</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
 
-        {/* Date Filter */}
-        <div>
-          <input
-            type="date"
-            value={dateFilter}
-            onChange={(e) => { setDateFilter(e.target.value); setPage(1); }}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-indigo-500"
-          />
-        </div>
+  {/* Date Filter */}
+  <div>
+    <Input
+      type="date"
+      value={dateFilter}
+      onChange={(e) => { setDateFilter(e.target.value); setPage(1); }}
+      className="w-full px-3 py-2 h-10 border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:ring-indigo-500 shadow-none"
+    />
+  </div>
 
-      </div>
+</div>
 
       {/* Main Registrations Table */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow border border-gray-200/80 dark:border-gray-700 overflow-hidden transition-colors">

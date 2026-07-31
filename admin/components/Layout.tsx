@@ -19,7 +19,7 @@ interface LayoutProps {
 export const Layout = ({ children }: LayoutProps) => {
   const pathname = usePathname();
   const { admin, logout } = useAuth();
-
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [notifData, setNotifData] = useState<{ leads: number; applications: number; registrations: number; total: number } | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [hasViewed, setHasViewed] = useState(false);
@@ -56,7 +56,22 @@ export const Layout = ({ children }: LayoutProps) => {
     }
     setDropdownOpen((prev) => !prev);
   };
-
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    }
+    if (dropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownOpen]);
   const pathSegments = pathname.split('/').filter(Boolean);
   const sectionName = pathSegments.length > 0
     ? pathSegments[pathSegments.length - 1].charAt(0).toUpperCase() + pathSegments[pathSegments.length - 1].slice(1)
@@ -91,7 +106,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
               <ThemeToggle />
 
-              <div className="relative">
+              <div className="relative" ref={dropdownRef}>
                 <button 
                   onClick={toggleDropdown}
                   className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500 dark:text-slate-400 transition relative cursor-pointer flex items-center justify-center"
@@ -109,9 +124,7 @@ export const Layout = ({ children }: LayoutProps) => {
                 </button>
 
                 {dropdownOpen && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setDropdownOpen(false)} />
-                    
+                  <>                    
                     <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-4 z-50 space-y-3">
                       <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-800">
                         <span className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Notifications</span>

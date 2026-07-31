@@ -6,7 +6,15 @@ import { toast } from 'react-toastify';
 import { Plus, Calendar, Users, UserPlus, Copy, Pencil, EyeOff, Trash2, Eye } from 'lucide-react';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse, Event } from '@/lib/api';
-
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button, buttonVariants } from "@/components/ui/button";
 export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
@@ -122,178 +130,185 @@ export default function EventsPage() {
 
       {/* Table Container */}
       <div className="bg-white dark:bg-slate-900/60 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
-            <thead className="bg-slate-50 dark:bg-slate-900/80">
-              <tr>
-                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  Cover
-                </th>
-                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  Event Title
-                </th>
-                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  Type / Category
-                </th>
-                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  Date & Time
-                </th>
-                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  Registrations
-                </th>
-                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white dark:bg-slate-900/40 divide-y divide-slate-100 dark:divide-slate-800/80">
-              {events.map((event) => (
-                <tr key={event._id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
-                  
-                  <td className="px-6 py-4 whitespace-nowrap">
-  <img
-    src={
-      event.coverImage ||
-      `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="%2394a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`
-    }
-    alt={event.title || 'Event thumbnail'}
-    onError={(e) => {
-      const target = e.currentTarget as HTMLImageElement;
-      target.onerror = null; // Unbind handler to prevent loops
-      target.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="%2394a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`;
-    }}
-    className="w-12 h-12 object-cover rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800"
-  />
-</td>
-                
-                  {/* Title & Slug */}
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-bold text-slate-900 dark:text-slate-100">{event.title || 'Untitled Event'}</div>
-                    <div className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">/{event.slug || ''}</div>
-                  </td>
-                
-                  {/* Type & Category */}
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <span className="font-semibold text-slate-800 dark:text-slate-200">{event.type || 'Standard'}</span>
-                    <div className="text-xs text-slate-500 dark:text-slate-400">{event.category || 'General'}</div>
-                  </td>
-                
-                  {/* Date & Time */}
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <div className="font-semibold text-slate-800 dark:text-slate-200">
-                      {event.startDate
-                        ? new Date(event.startDate).toLocaleDateString(undefined, {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                          })
-                        : 'TBD'}
-                    </div>
-                    <div className="text-xs text-slate-500 dark:text-slate-400">
-                      {event.startDate
-                        ? new Date(event.startDate).toLocaleTimeString(undefined, {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })
-                        : ''}
-                    </div>
-                  </td>
-                
-                  {/* Registrations Count */}
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <span className="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 px-2.5 py-1 rounded-full text-xs font-bold border border-indigo-100 dark:border-indigo-900/50">
-                      <Users size={12} />
-                      {event.registrationsCount || 0}
-                    </span>
-                  </td>
-                
-                  {/* Status Badge */}
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-2.5 py-1 inline-flex text-xs leading-5 font-bold rounded-full border ${
-                        event.status === 'Published'
-                          ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border-emerald-200/60 dark:border-emerald-800/50'
-                          : 'bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 border-amber-200/60 dark:border-amber-800/50'
-                      }`}
+  <div className="overflow-x-auto">
+    <Table>
+      <TableHeader className="bg-slate-50 dark:bg-slate-900/80">
+        <TableRow className="hover:bg-transparent">
+          <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Cover
+          </TableHead>
+          <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Event Title
+          </TableHead>
+          <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Type / Category
+          </TableHead>
+          <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Date & Time
+          </TableHead>
+          <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Registrations
+          </TableHead>
+          <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Status
+          </TableHead>
+          <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Actions
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody className="bg-white dark:bg-slate-900/40 divide-y divide-slate-100 dark:divide-slate-800/80 text-left">
+        {events.map((event) => (
+          <TableRow key={event._id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+            
+            {/* Cover Image */}
+            <TableCell className="px-6 py-4 whitespace-nowrap">
+              <img
+                src={
+                  event.coverImage ||
+                  `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="%2394a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`
+                }
+                alt={event.title || 'Event thumbnail'}
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  target.onerror = null;
+                  target.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="%2394a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`;
+                }}
+                className="w-12 h-12 object-cover rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800"
+              />
+            </TableCell>
+          
+            {/* Title & Slug */}
+            <TableCell className="px-6 py-4 whitespace-nowrap">
+              <div className="text-sm font-bold text-slate-900 dark:text-slate-100">{event.title || 'Untitled Event'}</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">/{event.slug || ''}</div>
+            </TableCell>
+          
+            {/* Type & Category */}
+            <TableCell className="px-6 py-4 whitespace-nowrap text-sm">
+              <span className="font-semibold text-slate-800 dark:text-slate-200">{event.type || 'Standard'}</span>
+              <div className="text-xs text-slate-500 dark:text-slate-400">{event.category || 'General'}</div>
+            </TableCell>
+          
+            {/* Date & Time */}
+            <TableCell className="px-6 py-4 whitespace-nowrap text-sm">
+              <div className="font-semibold text-slate-800 dark:text-slate-200">
+                {event.startDate
+                  ? new Date(event.startDate).toLocaleDateString(undefined, {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })
+                  : 'TBD'}
+              </div>
+              <div className="text-xs text-slate-500 dark:text-slate-400">
+                {event.startDate
+                  ? new Date(event.startDate).toLocaleTimeString(undefined, {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })
+                  : ''}
+              </div>
+            </TableCell>
+          
+            {/* Registrations Count */}
+            <TableCell className="px-6 py-4 whitespace-nowrap text-sm">
+              <span className="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 px-2.5 py-1 rounded-full text-xs font-bold border border-indigo-100 dark:border-indigo-900/50">
+                <Users size={12} />
+                {event.registrationsCount || 0}
+              </span>
+            </TableCell>
+          
+            {/* Status Badge */}
+            <TableCell className="px-6 py-4 whitespace-nowrap">
+              <span
+                className={`px-2.5 py-1 inline-flex text-xs leading-5 font-bold rounded-full border ${
+                  event.status === 'Published'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border-emerald-200/60 dark:border-emerald-800/50'
+                    : 'bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 border-amber-200/60 dark:border-amber-800/50'
+                }`}
+              >
+                {event.status || 'Draft'}
+              </span>
+            </TableCell>
+          
+            {/* Action Buttons */}
+            <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-semibold">
+              <div className="flex items-center gap-1">
+                <Link
+                  href={`/events/registrations?eventId=${event._id}`}
+                  className={`${buttonVariants({ variant: "ghost", size: "icon" })} h-8 w-8 p-1.5 rounded-lg text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition cursor-pointer`}
+                  title="View Registrations"
+                  aria-label="View Registrations"
+                >
+                  <UserPlus size={16} />
+                </Link>
+          
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleDuplicate(event)}
+                  className="h-8 w-8 p-1.5 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/50 transition cursor-pointer"
+                  title="Duplicate Event"
+                  aria-label="Duplicate Event"
+                >
+                  <Copy size={16} />
+                </Button>
+          
+                <Link
+                  href={`/events/edit/${event._id}`}
+                  className={`${buttonVariants({ variant: "ghost", size: "icon" })} h-8 w-8 p-1.5 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition cursor-pointer`}
+                  title="Edit Event"
+                  aria-label="Edit Event"
+                >
+                  <Pencil size={16} />
+                </Link>
+          
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleToggleStatus(event._id, event.status)}
+                  className="h-8 w-8 p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition cursor-pointer"
+                  title={event.status === 'Published' ? 'Unpublish Event' : 'Publish Event'}
+                  aria-label={event.status === 'Published' ? 'Unpublish Event' : 'Publish Event'}
+                >
+                  {event.status === 'Published' ? <EyeOff size={16} /> : <Eye size={16} />}
+                </Button>
+          
+                <ConfirmDialog
+                  title="Are you sure you want to delete this event?"
+                  description="This action cannot be undone. This will also delete all of its registrations."
+                  confirmText="Yes, delete"
+                  onConfirm={() => handleDelete(event._id)}
+                  icon="trash"
+                  trigger={
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 p-1.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition cursor-pointer"
+                      title="Delete Event"
+                      aria-label="Delete Event"
                     >
-                      {event.status || 'Draft'}
-                    </span>
-                  </td>
-                
-                  {/* Action Buttons */}
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold">
-                    <div className="flex items-center gap-1">
-                      <Link
-                        href={`/events/registrations?eventId=${event._id}`}
-                        className="p-1.5 rounded-lg text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition cursor-pointer"
-                        title="View Registrations"
-                        aria-label="View Registrations"
-                      >
-                        <UserPlus size={16} />
-                      </Link>
-                
-                      <button
-                        onClick={() => handleDuplicate(event)}
-                        className="p-1.5 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/50 transition cursor-pointer"
-                        title="Duplicate Event"
-                        aria-label="Duplicate Event"
-                      >
-                        <Copy size={16} />
-                      </button>
-                
-                      <Link
-                        href={`/events/edit/${event._id}`}
-                        className="p-1.5 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition cursor-pointer"
-                        title="Edit Event"
-                        aria-label="Edit Event"
-                      >
-                        <Pencil size={16} />
-                      </Link>
-                
-                      <button
-                        onClick={() => handleToggleStatus(event._id, event.status)}
-                        className="p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition cursor-pointer"
-                        title={event.status === 'Published' ? 'Unpublish Event' : 'Publish Event'}
-                        aria-label={event.status === 'Published' ? 'Unpublish Event' : 'Publish Event'}
-                      >
-                        {event.status === 'Published' ? <EyeOff size={16} /> : <Eye size={16} />}
-                      </button>
-                
-                      <ConfirmDialog
-                        title="Are you sure you want to delete this event?"
-                        description="This action cannot be undone. This will also delete all of its registrations."
-                        confirmText="Yes, delete"
-                        onConfirm={() => handleDelete(event._id)}
-                        icon="trash"
-                        trigger={
-                          <button
-                            className="p-1.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition cursor-pointer"
-                            title="Delete Event"
-                            aria-label="Delete Event"
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        }
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                      <Trash2 size={16} />
+                    </Button>
+                  }
+                />
+              </div>
+            </TableCell>
+          </TableRow>
+        ))}
 
-              {events.length === 0 && (
-                <tr>
-                  <td colSpan={7} className="px-6 py-8 text-center text-slate-500 dark:text-slate-400 text-sm italic">
-                    No events found. Create your first event!
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+        {events.length === 0 && (
+          <TableRow>
+            <TableCell colSpan={7} className="px-6 py-8 text-center text-slate-500 dark:text-slate-400 text-sm italic">
+              No events found. Create your first event!
+            </TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
+  </div>
+</div>
     </div>
   );
 }
