@@ -138,12 +138,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         isActive={active}
                         tooltip={item.label}
                         className={
-                          active 
-                            ? 'bg-indigo-600 text-white hover:bg-indigo-700 hover:text-white dark:bg-indigo-600/90 dark:text-white dark:hover:bg-indigo-500' 
-                            : 'text-muted-foreground hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600/90 dark:hover:text-white'
+                          active
+                            ? "bg-indigo-600 text-white hover:bg-indigo-600 hover:text-white dark:bg-indigo-600 dark:text-white dark:hover:bg-indigo-600"
+                            : "text-muted-foreground hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white"
                         }
                       >
-                        <item.icon className={active ? 'text-white' : ''} />
+                        <item.icon />
                         <span>{item.label}</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
