@@ -57,11 +57,16 @@ export const getLeads = async (
     }
 
     if (search) {
+      const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      
+      const phoneRegexStr = search.replace(/\s+/g, '').split('').map(char => {
+        return char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }).join('\\s*');
+
       filter.$or = [
-        { name: { $regex: search, $options: "i" } },
-        { email: { $regex: search, $options: "i" } },
-        { companyName: { $regex: search, $options: "i" } },
-        { service: { $regex: search, $options: "i" } },
+        { name: { $regex: escapedSearch, $options: "i" } },
+        { email: { $regex: escapedSearch, $options: "i" } },
+        { phone: { $regex: phoneRegexStr, $options: "i" } },
       ];
     }
 
@@ -77,6 +82,31 @@ export const getLeads = async (
         leads,
         pagination: { total, page, limit }
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get single lead by ID
+// @route   GET /api/v1/leads/:id
+// @access  Private
+export const getLeadById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const lead = await Lead.findById(id);
+
+    if (!lead) {
+      return next(ApiError.notFound("Lead not found"));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: lead,
     });
   } catch (error) {
     next(error);

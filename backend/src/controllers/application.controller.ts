@@ -32,8 +32,8 @@ export const submitApplication = asyncHandler(async (req: Request, res: Response
     throw ApiError.notFound("Active job opening not found");
   }
 
-  // Convert buffer to Base64 PDF Data URL
-  const resumeBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
+  // Save relative static URL to the uploaded resume
+  const resumeUrl = `/uploads/resumes/${req.file.filename}`;
 
   // Parse custom answers if sent as JSON string or object
   let parsedAnswers = {};
@@ -85,7 +85,7 @@ export const submitApplication = asyncHandler(async (req: Request, res: Response
     noticePeriod: validated.noticePeriod,
     expectedCTC: validated.expectedCTC,
     answers: parsedAnswers,
-    resume: resumeBase64,
+    resume: resumeUrl,
     status: "New",
     matchScore,
     rating,
@@ -164,55 +164,7 @@ export const getApplications = asyncHandler(async (req: AuthRequest, res: Respon
   );
 });
 
-// ============================
-// STREAM PDF RESUME (Admin & Secure)
-// ============================
-export const getResumeStream = asyncHandler(async (req: Request, res: Response) => {
-  const { id } = req.params;
 
-  // Accept token from Authorization header OR ?token= query param
-  // (query param is required for iframes and <a download> links which can't set headers)
-  let token: string | undefined;
-  if (req.headers.authorization?.startsWith("Bearer ")) {
-    token = req.headers.authorization.split(" ")[1];
-  } else if (typeof req.query.token === "string" && req.query.token) {
-    token = req.query.token;
-  }
-
-  if (!token) {
-    throw ApiError.unauthorized("Not authorized: no token provided");
-  }
-
-  try {
-    jwt.verify(token, env.JWT_SECRET);
-  } catch {
-    throw ApiError.unauthorized("Not authorized: invalid or expired token");
-  }
-
-  // Retrieve base64 resume from MongoDB explicitly
-  const application = await JobApplication.findById(id).select("+resume");
-  if (!application) {
-    throw ApiError.notFound("Application not found");
-  }
-
-  if (!application.resume) {
-    throw ApiError.notFound("Resume file not found");
-  }
-
-  // Parse MIME type and Base64 string
-  const matches = application.resume.match(/^data:([^;]+);base64,(.+)$/);
-  if (!matches || matches.length !== 3) {
-    throw ApiError.badRequest("Invalid resume file format");
-  }
-
-  const mimeType = matches[1];
-  const base64Data = matches[2];
-  const buffer = Buffer.from(base64Data, "base64");
-
-  res.setHeader("Content-Type", mimeType);
-  res.setHeader("Content-Disposition", `inline; filename="Resume-${application.candidateName.replace(/\s+/g, "_")}.pdf"`);
-  res.status(200).send(buffer);
-});
 
 // ============================
 // GET CANDIDATE DETAILS (Admin Only)

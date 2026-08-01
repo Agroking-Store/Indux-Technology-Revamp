@@ -49,18 +49,32 @@ export const getQuotes = async (
     const limit = parseInt(req.query.limit as string) || 20;
     const search = req.query.search as string;
     const status = req.query.status as string;
+    const serviceInterest = req.query.serviceInterest as string;
 
     const filter: any = {};
     if (status && status !== "All") {
       filter.status = status;
     }
+    
+    if (serviceInterest && serviceInterest !== "All") {
+      filter.serviceInterest = serviceInterest;
+    }
 
     if (search) {
+      const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      
+      // Create a flexible regex for phone search that ignores spaces.
+      // e.g. "+141" becomes "\+\s*1\s*4\s*1"
+      const phoneRegexStr = search.replace(/\s+/g, '').split('').map(char => {
+        return char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }).join('\\s*');
+
       filter.$or = [
-        { name: { $regex: search, $options: "i" } },
-        { workEmail: { $regex: search, $options: "i" } },
-        { companyName: { $regex: search, $options: "i" } },
-        { serviceInterest: { $regex: search, $options: "i" } },
+        { name: { $regex: escapedSearch, $options: "i" } },
+        { workEmail: { $regex: escapedSearch, $options: "i" } },
+        { companyName: { $regex: escapedSearch, $options: "i" } },
+        { phone: { $regex: phoneRegexStr, $options: "i" } },
+        { serviceInterest: { $regex: escapedSearch, $options: "i" } },
       ];
     }
 
@@ -76,6 +90,31 @@ export const getQuotes = async (
         quotes,
         pagination: { total, page, limit }
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get single quote by ID
+// @route   GET /api/v1/quotes/:id
+// @access  Private
+export const getQuoteById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const quote = await Quote.findById(id);
+
+    if (!quote) {
+      return next(ApiError.notFound("Quote not found"));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: quote,
     });
   } catch (error) {
     next(error);

@@ -1,25 +1,25 @@
 'use client';
 
-import { Mail } from 'lucide-react';
-import LeadsTable from './_components/LeadsTable';
+import { Briefcase } from 'lucide-react';
+import QuotesTable from './_components/QuotesTable';
 
-export default function LeadsPage() {
+export default function QuotesPage() {
   return (
     <div className="space-y-6 transition-colors duration-300">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-border pb-4">
         <div>
           <h1 className="text-3xl font-extrabold text-foreground tracking-tight flex items-center gap-2">
-            <Mail className="text-indigo-600 dark:text-indigo-400" /> Contact Leads
+            <Briefcase className="text-indigo-600 dark:text-indigo-400" /> Quote Requests
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Manage your contact form submissions and leads.
+            Manage your service quote requests and client inquiries.
           </p>
         </div>
       </div>
 
       <div className="mt-4">
-        <LeadsTable />
+        <QuotesTable />
       </div>
     </div>
   );

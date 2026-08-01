@@ -3,6 +3,7 @@ import { protect } from "../middlewares/auth";
 import {
   createQuote,
   getQuotes,
+  getQuoteById,
   updateQuoteStatus,
   deleteQuote,
 } from "../controllers/quote.controller";
@@ -14,6 +15,7 @@ router.post("/", createQuote);
 
 // Protected admin routes to view & manage quotes
 router.get("/", protect, getQuotes);
+router.get("/:id", protect, getQuoteById);
 router.patch("/:id/status", protect, updateQuoteStatus);
 router.delete("/:id", protect, deleteQuote);
 

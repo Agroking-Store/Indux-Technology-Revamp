@@ -40,8 +40,8 @@ const eventSchema = z.object({
   organizer: z.string().min(1, 'Organizer is required'),
   location: z.string().min(1, 'Location/Venue is required'),
   status: z.enum(['Draft', 'Published']),
-  coverImage: z.string().min(1, 'Cover image is required'),
-  bannerImage: z.string().min(1, 'Banner image is required'),
+  coverImage: z.any().optional(),
+  bannerImage: z.any().optional(),
   isPaid: z.boolean(),
   registrationFee: z.coerce.number().min(0),
 });
@@ -285,13 +285,11 @@ export default function EditEventPage() {
       );
     }
 
-    try {
-      const base64 = await fileToBase64(file);
-      setValue(field, base64, { shouldValidate: true });
-      setPreview(base64);
-    } catch {
-      toast.error('Failed to read the selected image.');
-    }
+    setValue(field, file, { shouldValidate: true });
+    
+    // Create object URL for preview
+    const previewUrl = URL.createObjectURL(file);
+    setPreview(previewUrl);
   };
 
   const onSubmit = async (data: EventFormData) => { //[cite: 3]
@@ -313,17 +311,29 @@ export default function EditEventPage() {
         options: optionsStr ? optionsStr.split(',').map(s => s.trim()).filter(Boolean) : undefined,
       }));
 
-      const payload = {
-        ...data,
-        formFields: parsedFormFields,
-        speakers: speakers.filter(s => s.name),
-        schedule: schedule.filter(s => s.title),
-        faqs: faqs.filter(f => f.question),
-      };
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === 'coverImage' || key === 'bannerImage') {
+          if (value instanceof File) {
+            formData.append(key, value);
+          }
+        } else if (key === 'isPaid') {
+          formData.append(key, value ? 'true' : 'false');
+        } else if (value !== undefined && value !== null) {
+          formData.append(key, String(value));
+        }
+      });
 
-      await api.put(`/events/${id}`, payload); //[cite: 3]
+      formData.append('formFields', JSON.stringify(parsedFormFields));
+      if (speakers.length > 0) formData.append('speakers', JSON.stringify(speakers));
+      if (schedule.length > 0) formData.append('schedule', JSON.stringify(schedule));
+      if (faqs.length > 0) formData.append('faqs', JSON.stringify(faqs));
 
-      toast.success('Event updated successfully');
+      await api.put(`/events/${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      toast.success('Event updated successfully!');
       router.push('/events');
     } catch (error: any) {
       const msg = error?.response?.data?.message || error?.message || 'Failed to update event. Please try again.';

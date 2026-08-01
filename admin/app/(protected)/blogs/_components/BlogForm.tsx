@@ -26,20 +26,12 @@ export const blogSchema = z.object({
   status: z.enum(['Draft', 'Published']),
   seoTitle: z.string().optional(),
   seoDescription: z.string().optional(),
-  featuredImage: z.string().min(1, 'Featured image is required'),
+  featuredImage: z.any().refine((val) => val !== undefined && val !== '', 'Featured image is required'),
 });
 
 export type BlogFormData = z.infer<typeof blogSchema>;
 
 const RECOMMENDED_MAX_IMAGE_SIZE = 3 * 1024 * 1024; // 3MB
-
-const fileToBase64 = (file: File): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
 
 interface BlogFormProps {
   initialValues?: Partial<BlogFormData>;
@@ -118,11 +110,10 @@ export default function BlogForm({
     }
 
     try {
-      const base64 = await fileToBase64(file);
-      setValue('featuredImage', base64, { shouldValidate: true });
-      setImagePreview(base64);
+      setValue('featuredImage', file, { shouldValidate: true });
+      setImagePreview(URL.createObjectURL(file));
     } catch {
-      toast.error('Failed to read the selected image.');
+      toast.error('Failed to select the image.');
     }
   };
 
@@ -282,7 +273,7 @@ export default function BlogForm({
               {imagePreview && (
                 <img src={imagePreview} alt="Featured image preview" className="mt-4 w-full h-32 object-cover rounded-lg border border-border" />
               )}
-              {errors.featuredImage && <p className="text-destructive text-xs mt-1">{errors.featuredImage.message}</p>}
+              {errors.featuredImage && <p className="text-destructive text-xs mt-1">{errors.featuredImage.message as string}</p>}
             </div>
           </CardContent>
         </Card>

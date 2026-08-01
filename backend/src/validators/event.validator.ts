@@ -78,8 +78,8 @@ export const createEventSchema = z.object({
   isPaid: z.preprocess((val) => val === "true" || val === true, z.boolean()).default(false),
   registrationFee: z.coerce.number().min(0).default(0),
   status: z.enum(["Draft", "Published"]).default("Draft"),
-  coverImage: z.string().trim().min(1, "Cover image is required"),
-  bannerImage: z.string().trim().min(1, "Banner image is required"),
+  coverImage: z.string().trim().optional(),
+  bannerImage: z.string().trim().optional(),
   formFields: z
     .union([z.string(), z.array(z.any())])
     .optional()

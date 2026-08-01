@@ -2,17 +2,25 @@
 
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { toast } from 'react-toastify';
-import { Trash2, Search, X, CheckCircle, MessageSquare } from 'lucide-react';
+import { Trash2, Search, X, CheckCircle, MessageSquare, Check, ChevronsUpDown } from 'lucide-react';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse } from '@/lib/api';
+import { useRouter } from 'next/navigation';
+import { cn } from "@/lib/utils";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
 import {
   ColumnDef,
   flexRender,
@@ -50,13 +58,31 @@ interface Quote {
   serviceInterest: string;
   message?: string;
   status: 'New' | 'Contacted' | 'Closed';
+
   createdAt: string;
 }
+
+const servicesList = [
+  { value: "product_engineering", label: "Product Engineering" },
+  { value: "it_consulting", label: "IT Consulting" },
+  { value: "managed_it_services", label: "Managed IT Services" },
+  { value: "dedicated_team", label: "Dedicated Team" },
+  { value: "web_development", label: "Web Development" },
+  { value: "mobile_development", label: "Mobile Development" },
+  { value: "ui_ux_design", label: "UI/UX Design" },
+  { value: "digital_transformation", label: "Digital Transformation" },
+  { value: "cloud_services", label: "Cloud Services" },
+  { value: "digital_marketing", label: "Digital Marketing" },
+  { value: "ai_ml_services", label: "AI/ML Services" },
+  { value: "others", label: "Others" },
+];
 
 export default function QuotesTable() {
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<'All' | 'New' | 'Contacted' | 'Closed'>('All');
+  const [serviceFilter, setServiceFilter] = useState<string>('All');
+  const [serviceOpen, setServiceOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [totalCount, setTotalCount] = useState(0);
@@ -64,7 +90,8 @@ export default function QuotesTable() {
     pageIndex: 0,
     pageSize: 10,
   });
-  const [activeMessageQuote, setActiveMessageQuote] = useState<Quote | null>(null);
+
+  const router = useRouter();
 
   const isMounted = useRef(true);
 
@@ -86,6 +113,7 @@ export default function QuotesTable() {
       };
       
       if (statusFilter !== 'All') params.status = statusFilter;
+      if (serviceFilter !== 'All') params.serviceInterest = serviceFilter;
       if (debouncedSearch) params.search = debouncedSearch;
 
       const res = await api.get<ApiResponse<{ quotes: Quote[]; pagination: { total: number } }>>(
@@ -101,7 +129,7 @@ export default function QuotesTable() {
     } finally {
       if (isMounted.current) setLoading(false);
     }
-  }, [statusFilter, debouncedSearch, pagination.pageIndex, pagination.pageSize]);
+  }, [statusFilter, serviceFilter, debouncedSearch, pagination.pageIndex, pagination.pageSize]);
 
   useEffect(() => {
     isMounted.current = true;
@@ -136,6 +164,7 @@ export default function QuotesTable() {
 
   const handleClearFilters = () => {
     setStatusFilter('All');
+    setServiceFilter('All');
     setSearchTerm('');
     setDebouncedSearch('');
     setPagination({ pageIndex: 0, pageSize: 10 });
@@ -153,16 +182,14 @@ export default function QuotesTable() {
     },
     {
       accessorKey: "name",
-      header: () => <div className="text-left">Client Details</div>,
+      header: () => <div className="text-left font-semibold">Client Name</div>,
       cell: ({ row }) => {
         const quote = row.original;
         return (
           <div className="flex flex-col gap-1 w-full text-left">
-            <div className="text-sm font-semibold text-foreground truncate">{quote.name}</div>
-            <div className="text-xs text-muted-foreground truncate">{quote.workEmail}</div>
-            <div className="text-xs text-muted-foreground font-mono truncate">{quote.phone}</div>
+            <div className="text-sm font-bold text-foreground truncate max-w-[180px]">{quote.name}</div>
             {quote.companyName && (
-              <div className="text-xs font-semibold text-blue-600 dark:text-blue-400 mt-0.5 truncate">
+              <div className="text-xs font-semibold text-blue-600 dark:text-blue-400 mt-0.5 truncate max-w-[180px]">
                 {quote.companyName}
               </div>
             )}
@@ -171,46 +198,36 @@ export default function QuotesTable() {
       },
     },
     {
-      accessorKey: "serviceInterest",
-      header: () => <div className="text-left">Service Interest</div>,
-      cell: ({ row }) => (
-        <Badge variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-400 dark:border-indigo-900/40 font-bold whitespace-nowrap truncate max-w-[150px]">
-          {row.getValue("serviceInterest")}
-        </Badge>
-      ),
-    },
-    {
-      accessorKey: "message",
-      header: () => <div className="text-center">Message</div>,
+      id: "contact",
+      header: () => <div className="text-left font-semibold">Contact Info</div>,
       cell: ({ row }) => {
         const quote = row.original;
-        if (!quote.message) return <div className="flex justify-center text-muted-foreground text-sm">—</div>;
         return (
-          <div className="flex justify-center">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger render={
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setActiveMessageQuote(quote)}
-                    className="h-8 w-8 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-700 cursor-pointer"
-                  >
-                    <MessageSquare size={16} />
-                  </Button>
-                } />
-                <TooltipContent>View Message</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+          <div className="flex flex-col gap-1 text-left max-w-[160px]">
+            <div className="text-xs text-muted-foreground truncate" title={quote.workEmail}>{quote.workEmail}</div>
+            <div className="text-xs text-muted-foreground font-mono truncate" title={quote.phone}>{quote.phone}</div>
           </div>
+        );
+      },
+    },
+    {
+      accessorKey: "serviceInterest",
+      header: () => <div className="text-left font-semibold">Service Interest</div>,
+      cell: ({ row }) => {
+        const rawValue = row.getValue("serviceInterest") as string;
+        const mappedLabel = servicesList.find((s) => s.value === rawValue)?.label || rawValue;
+        return (
+          <Badge variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-400 dark:border-indigo-900/40 font-bold whitespace-nowrap truncate max-w-[150px]">
+            {mappedLabel}
+          </Badge>
         );
       }
     },
     {
       accessorKey: "createdAt",
-      header: () => <div className="text-left">Date</div>,
+      header: () => <div className="text-center font-semibold px-4">Date</div>,
       cell: ({ row }) => (
-        <div className="whitespace-nowrap text-sm text-muted-foreground">
+        <div className="whitespace-nowrap text-sm text-muted-foreground text-center px-4">
           {new Date(row.getValue("createdAt")).toLocaleDateString(undefined, {
             month: 'short', day: 'numeric', year: 'numeric',
           })}
@@ -219,7 +236,7 @@ export default function QuotesTable() {
     },
     {
       accessorKey: "status",
-      header: () => <div className="text-left">Status</div>,
+      header: () => <div className="text-center font-semibold">Status</div>,
       cell: ({ row }) => {
         const status = row.getValue("status") as string;
         let colorClass = 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-900/40'; // New
@@ -227,58 +244,63 @@ export default function QuotesTable() {
         else if (status === 'Closed') colorClass = 'bg-green-50 text-green-700 border-green-200 dark:bg-green-950/40 dark:text-green-400 dark:border-green-900/40';
 
         return (
-          <Badge variant="outline" className={`whitespace-nowrap ${colorClass}`}>
-            {status}
-          </Badge>
+          <div className="text-center">
+            <Badge variant="outline" className={`whitespace-nowrap ${colorClass}`}>
+              {status}
+            </Badge>
+          </div>
         );
       },
     },
     {
       id: "actions",
-      header: () => <div className="text-right">Actions</div>,
+      header: () => <div className="text-center font-semibold pl-4">Actions</div>,
       cell: ({ row }) => {
         const quote = row.original;
+        const status = row.getValue("status") as string;
         return (
-          <div className="flex items-center justify-end gap-1">
+          <div className="flex items-center justify-center gap-2 pl-4">
             <TooltipProvider>
               
+              {status !== "Closed" && (
+                <Tooltip>
+                  <TooltipTrigger render={
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={(e) => { e.stopPropagation(); handleUpdateStatus(quote._id, quote.status); }}
+                      className="h-10 w-10 cursor-pointer bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-colors shadow-sm"
+                    >
+                      <CheckCircle size={15} />
+                    </Button>
+                  } />
+                  <TooltipContent>Update Status</TooltipContent>
+                </Tooltip>
+              )}
+
               <Tooltip>
                 <TooltipTrigger render={
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleUpdateStatus(quote._id, quote.status)}
-                    className="h-8 w-8 cursor-pointer text-indigo-600 dark:text-indigo-400 hover:text-indigo-700"
-                  >
-                    <CheckCircle size={16} />
-                  </Button>
-                } />
-                <TooltipContent>Update Status</TooltipContent>
-              </Tooltip>
-
-              <ConfirmDialog
-                title="Are you sure you want to delete this quote?"
-                description="This action cannot be undone."
-                confirmText="Yes, delete"
-                onConfirm={() => handleDelete(quote._id)}
-                icon="trash"
-                trigger={
-                  <div className="inline-block">
-                    <Tooltip>
-                      <TooltipTrigger render={
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <ConfirmDialog
+                      title="Are you sure you want to delete this quote?"
+                      description="This action cannot be undone."
+                      confirmText="Yes, delete"
+                      onConfirm={() => handleDelete(quote._id)}
+                      icon="trash"
+                      trigger={
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
-                          className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/50 cursor-pointer"
+                          className="h-10 w-10 cursor-pointer bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:border-rose-200 dark:hover:border-rose-900 transition-colors shadow-sm"
                         >
-                          <Trash2 size={16} />
+                          <Trash2 size={15} />
                         </Button>
-                      } />
-                      <TooltipContent>Delete Quote</TooltipContent>
-                    </Tooltip>
+                      }
+                    />
                   </div>
-                }
-              />
+                } />
+                <TooltipContent>Delete Quote</TooltipContent>
+              </Tooltip>
             </TooltipProvider>
           </div>
         );
@@ -309,7 +331,7 @@ export default function QuotesTable() {
               placeholder="Search quotes..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-9 h-9"
+              className="pl-9 h-9 border-blue-100 dark:border-blue-900/30 focus-visible:border-blue-300 focus-visible:ring-1 focus-visible:ring-blue-400/30 transition-all"
             />
           </div>
           <Select value={statusFilter} onValueChange={(value) => { setStatusFilter(value as 'All' | 'New' | 'Contacted' | 'Closed'); setPagination(prev => ({ ...prev, pageIndex: 0 })); }}>
@@ -323,9 +345,72 @@ export default function QuotesTable() {
               <SelectItem value="Closed" className="cursor-pointer">Closed</SelectItem>
             </SelectContent>
           </Select>
+
+          <Popover open={serviceOpen} onOpenChange={setServiceOpen}>
+            <PopoverTrigger render={
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={serviceOpen}
+                className="w-[180px] h-9 justify-between font-normal cursor-pointer"
+              />
+            }>
+              {serviceFilter === 'All'
+                ? "All Services"
+                : servicesList.find((service) => service.value === serviceFilter)?.label}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0" align="start">
+              <Command>
+                <CommandInput placeholder="Search service..." className="h-9" />
+                <CommandList className="max-h-[300px] overflow-y-auto overflow-x-hidden custom-scrollbar">
+                  <CommandEmpty>No service found.</CommandEmpty>
+                  <CommandGroup>
+                    <CommandItem
+                      value="All"
+                      onSelect={() => {
+                        setServiceFilter("All");
+                        setServiceOpen(false);
+                        setPagination(prev => ({ ...prev, pageIndex: 0 }));
+                      }}
+                      className="cursor-pointer"
+                    >
+                      All Services
+                      <Check
+                        className={cn(
+                          "ml-auto h-4 w-4",
+                          serviceFilter === "All" ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                    {servicesList.map((service) => (
+                      <CommandItem
+                        key={service.value}
+                        value={service.value}
+                        onSelect={(currentValue) => {
+                          setServiceFilter(currentValue === serviceFilter ? "All" : currentValue);
+                          setServiceOpen(false);
+                          setPagination(prev => ({ ...prev, pageIndex: 0 }));
+                        }}
+                        className="cursor-pointer"
+                      >
+                        {service.label}
+                        <Check
+                          className={cn(
+                            "ml-auto h-4 w-4",
+                            serviceFilter === service.value ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
 
-        {(statusFilter !== 'All' || searchTerm !== '') && (
+        {(statusFilter !== 'All' || serviceFilter !== 'All' || searchTerm !== '') && (
           <Button 
             variant="ghost" 
             size="sm" 
@@ -346,12 +431,12 @@ export default function QuotesTable() {
                 {headerGroup.headers.map((header) => {
                   let width = 'auto';
                   if (header.id === 'serial') width = '70px';
-                  else if (header.id === 'name') width = '28%';
-                  else if (header.id === 'serviceInterest') width = '18%';
-                  else if (header.id === 'message') width = '100px';
+                  else if (header.id === 'name') width = '200px';
+                  else if (header.id === 'contact') width = '200px';
+                  else if (header.id === 'serviceInterest') width = '20%';
                   else if (header.id === 'createdAt') width = '140px';
                   else if (header.id === 'status') width = '120px';
-                  else if (header.id === 'actions') width = '100px';
+                  else if (header.id === 'actions') width = '120px';
                   
                   return (
                     <TableHead key={header.id} className="font-bold text-muted-foreground uppercase text-xs tracking-wider h-11 align-middle" style={{ width }}>
@@ -371,13 +456,13 @@ export default function QuotesTable() {
             {loading ? (
               Array.from({ length: 5 }).map((_, idx) => (
                 <TableRow key={idx}>
-                  <TableCell><Skeleton className="h-6 w-8" /></TableCell>
-                  <TableCell><Skeleton className="h-10 w-full" /></TableCell>
-                  <TableCell><Skeleton className="h-6 w-20" /></TableCell>
-                  <TableCell><Skeleton className="h-6 w-24" /></TableCell>
-                  <TableCell><Skeleton className="h-6 w-24" /></TableCell>
-                  <TableCell><Skeleton className="h-6 w-20 rounded-full" /></TableCell>
-                  <TableCell><Skeleton className="h-8 w-20 ml-auto" /></TableCell>
+                  <TableCell><div className="flex justify-center"><Skeleton className="h-4 w-6" /></div></TableCell>
+                  <TableCell><Skeleton className="h-10 w-[180px]" /></TableCell>
+                  <TableCell><Skeleton className="h-10 w-[160px]" /></TableCell>
+                  <TableCell><Skeleton className="h-6 w-24 rounded-full" /></TableCell>
+                  <TableCell><div className="flex justify-center"><Skeleton className="h-4 w-20" /></div></TableCell>
+                  <TableCell><div className="flex justify-center"><Skeleton className="h-6 w-16 rounded-full" /></div></TableCell>
+                  <TableCell><div className="flex justify-center gap-2"><Skeleton className="h-10 w-10 rounded-md" /><Skeleton className="h-10 w-10 rounded-md" /></div></TableCell>
                 </TableRow>
               ))
             ) : table.getRowModel().rows?.length ? (
@@ -385,10 +470,16 @@ export default function QuotesTable() {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="hover:bg-muted/50 transition-colors"
+                  className="hover:bg-slate-200 dark:hover:bg-slate-800/70 transition-colors cursor-pointer"
+                  onClick={() => router.push(`/quotes/${row.original._id}`)}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="py-3 px-4">
+                    <TableCell key={cell.id} className="py-3 px-4" onClick={(e) => {
+                      // Prevent row click if clicking on an action button
+                      if ((e.target as HTMLElement).closest('button')) {
+                        e.stopPropagation();
+                      }
+                    }}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
@@ -438,65 +529,6 @@ export default function QuotesTable() {
           </div>
         )}
       </Card>
-
-      {/* Message Modal */}
-      <Dialog open={activeMessageQuote !== null} onOpenChange={(open) => { if (!open) setActiveMessageQuote(null); }}>
-        <DialogContent className="sm:max-w-[500px]">
-          <DialogHeader>
-            <DialogTitle className="text-lg font-bold flex items-center gap-2">
-              <MessageSquare className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-              Quote Request Message
-            </DialogTitle>
-            <DialogDescription className="text-muted-foreground text-xs">
-              Submitted on {activeMessageQuote && new Date(activeMessageQuote.createdAt).toLocaleString()}
-            </DialogDescription>
-          </DialogHeader>
-
-          {activeMessageQuote && (
-            <div className="space-y-4 py-2">
-              {/* Sender Details Card */}
-              <div className="grid grid-cols-2 gap-3 text-sm bg-muted/40 p-3 rounded-lg border border-border">
-                <div>
-                  <div className="text-xs text-muted-foreground">From</div>
-                  <div className="font-semibold text-foreground">{activeMessageQuote.name}</div>
-                </div>
-                {activeMessageQuote.companyName && (
-                  <div>
-                    <div className="text-xs text-muted-foreground">Company</div>
-                    <div className="font-semibold text-foreground">{activeMessageQuote.companyName}</div>
-                  </div>
-                )}
-                <div>
-                  <div className="text-xs text-muted-foreground">Email</div>
-                  <div className="font-semibold text-foreground select-all">{activeMessageQuote.workEmail}</div>
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">Phone</div>
-                  <div className="font-semibold text-foreground select-all">{activeMessageQuote.phone}</div>
-                </div>
-                <div className="col-span-2">
-                  <div className="text-xs text-muted-foreground">Service Interest</div>
-                  <div className="font-semibold text-foreground">
-                    <Badge variant="outline" className="mt-1 bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-400 dark:border-indigo-900/40 font-bold">
-                      {activeMessageQuote.serviceInterest}
-                    </Badge>
-                  </div>
-                </div>
-              </div>
-
-              {/* Message Box */}
-              <div className="space-y-1">
-                <div className="text-xs text-muted-foreground">Message</div>
-                <div className="bg-background border border-border rounded-lg p-3 text-sm text-foreground whitespace-pre-wrap max-h-[200px] overflow-y-auto leading-relaxed shadow-inner">
-                  {activeMessageQuote.message}
-                </div>
-              </div>
-            </div>
-          )}
-
-          <DialogFooter showCloseButton={true} />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

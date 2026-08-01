@@ -6,7 +6,7 @@ export const createApplicationSchema = z.object({
   candidateName: z.string().optional(),
   fullName: z.string().optional(), // compatibility
   email: z.string().email("Invalid email format"),
-  phone: z.string().min(10, "Phone number must be at least 10 digits"),
+  phone: z.string().regex(/^\+?[0-9\s\-()]{7,20}$/, "Please enter a valid phone number format (numbers only)"),
   experience: z.string().min(1, "Experience details are required"),
   coverLetter: z.string().optional(),
   portfolio: z.string().optional(),

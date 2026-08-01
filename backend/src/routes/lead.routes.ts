@@ -3,6 +3,7 @@ import { protect } from "../middlewares/auth";
 import {
   createLead,
   getLeads,
+  getLeadById,
   updateLeadStatus,
   deleteLead,
 } from "../controllers/lead.controller";
@@ -14,6 +15,7 @@ router.post("/", createLead);
 
 // Protected admin routes to view & manage leads
 router.get("/", protect, getLeads);
+router.get("/:id", protect, getLeadById);
 router.patch("/:id/status", protect, updateLeadStatus);
 router.delete("/:id", protect, deleteLead);
 

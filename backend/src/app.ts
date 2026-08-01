@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import dns from "dns";
+import path from "path";
 
 import { env } from "./config/env";
 import ApiError from "./utils/ApiError";
@@ -36,6 +37,9 @@ app.use(
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());
+
+// Serve uploaded static files
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Health check route
 app.get("/api/v1/health", (_req: Request, res: Response) => {

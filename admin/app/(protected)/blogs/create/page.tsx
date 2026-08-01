@@ -16,9 +16,19 @@ export default function CreateBlogPage() {
     setLoading(true);
     try {
       const tagsArray = data.tags ? data.tags.split(',').map((t) => t.trim()).filter(Boolean) : [];
-      const payload = { ...data, tags: tagsArray };
+      
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === 'tags') {
+          formData.append(key, JSON.stringify(tagsArray));
+        } else if (value !== undefined && value !== null) {
+          formData.append(key, value as string | Blob);
+        }
+      });
 
-      await api.post('/blogs', payload);
+      await api.post('/blogs', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
       toast.success('Article created successfully');
       router.push('/blogs');
     } catch (error) {

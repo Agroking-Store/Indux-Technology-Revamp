@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import PhoneInput from "react-phone-number-input/input";
-import { isValidPhoneNumber, getCountries, getCountryCallingCode } from "react-phone-number-input";
+import { isValidPhoneNumber, getCountries, getCountryCallingCode, parsePhoneNumber } from "react-phone-number-input";
 import flags from "react-phone-number-input/flags";
 import en from "react-phone-number-input/locale/en.json";
 import "react-phone-number-input/style.css";
@@ -39,7 +39,7 @@ const contactSchema = z.object({
     .max(100, "Name must not exceed 100 characters.")
     .regex(/^[^0-9]*$/, "Name must not contain numbers."),
   email: z.string().email("Please enter a valid email address."),
-  phone: z.string().min(1, "Phone number is required").refine((val) => val && isValidPhoneNumber(val), { message: "Invalid phone number" }),
+  phone: z.string().regex(/^\d{8,12}$/, "Phone number must be between 8 to 12 digits"),
   message: z.string().min(10, "Message must be at least 10 characters."),
 });
 
@@ -70,7 +70,16 @@ export function ContactForm() {
   const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     try {
-      await submitLead({ ...data, source: "Contact Us" });
+      let finalPhone = data.phone;
+      const parsed = parsePhoneNumber(data.phone, country);
+      if (parsed) {
+        finalPhone = `+${parsed.countryCallingCode} ${parsed.nationalNumber}`;
+      } else {
+        const clean = data.phone.replace(/[^\d+]/g, '');
+        finalPhone = clean.startsWith('+') ? clean : `+${getCountryCallingCode(country)} ${clean}`;
+      }
+
+      await submitLead({ ...data, phone: finalPhone });
       setShowSuccess(true);
       reset();
     } catch (err: any) {
@@ -162,7 +171,7 @@ export function ContactForm() {
                               return (
                                 <CommandItem
                                   key={c}
-                                  value={`${(en as any)[c]} ${c}`}
+                                  value={`${(en as any)[c]} ${c} +${getCountryCallingCode(c)}`}
                                   onSelect={() => {
                                     setCountry(c);
                                     setCountryOpen(false);
@@ -191,13 +200,16 @@ export function ContactForm() {
                     +{country ? getCountryCallingCode(country) : ""}
                   </span>
                   
-                  <PhoneInput
+                  <input
                     {...field}
-                    id="contact-phone"
-                    country={country}
-                    international={false}
-                    placeholder="98765 43210"
-                    maxLength={16}
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/\D/g, "");
+                      field.onChange(val);
+                    }}
+                    maxLength={country === "IN" ? 10 : 12}
+                    id="phone"
+                    type="tel"
+                    placeholder="Enter number"
                     className="flex-1 pr-4 py-2 bg-transparent outline-none text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-400 min-w-0 h-full"
                   />
                 </div>

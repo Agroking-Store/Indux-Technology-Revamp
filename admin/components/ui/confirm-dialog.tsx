@@ -73,7 +73,7 @@ export function ConfirmDialog({
           </div>
           
           <AlertDialogHeader className="mb-2 !space-y-0 w-full flex flex-col items-center">
-            <AlertDialogTitle className="text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white">
+            <AlertDialogTitle className="text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white text-center w-full">
               {title}
             </AlertDialogTitle>
           </AlertDialogHeader>

@@ -5,14 +5,7 @@ import { toast } from 'react-toastify';
 import { Trash2, Search, X, CheckCircle, MessageSquare } from 'lucide-react';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse } from '@/lib/api';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
+import { useRouter } from 'next/navigation';
 import {
   ColumnDef,
   flexRender,
@@ -46,9 +39,6 @@ interface Lead {
   name: string;
   email: string;
   phone: string;
-  companyName?: string;
-  service?: string;
-  source?: string;
   message: string;
   status: 'New' | 'Contacted' | 'Closed';
   createdAt: string;
@@ -65,7 +55,8 @@ export default function LeadsTable() {
     pageIndex: 0,
     pageSize: 10,
   });
-  const [activeMessageLead, setActiveMessageLead] = useState<Lead | null>(null);
+
+  const router = useRouter();
 
   const isMounted = useRef(true);
 
@@ -154,58 +145,35 @@ export default function LeadsTable() {
     },
     {
       accessorKey: "name",
-      header: () => <div className="text-left">Lead Details</div>,
+      header: () => <div className="text-left font-semibold">Name</div>,
       cell: ({ row }) => {
         const lead = row.original;
         return (
-          <div className="flex flex-col gap-1 w-full text-left">
-            <div className="text-sm font-semibold text-foreground truncate">{lead.name}</div>
-            <div className="text-xs text-muted-foreground truncate">{lead.email}</div>
-            <div className="text-xs text-muted-foreground font-mono truncate">{lead.phone}</div>
+          <div className="text-sm font-bold text-foreground truncate max-w-[180px] text-left">
+            {lead.name}
           </div>
         );
       },
     },
     {
-      accessorKey: "service",
-      header: () => <div className="text-left">Service</div>,
-      cell: ({ row }) => (
-        <Badge variant="outline" className="bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 font-bold whitespace-nowrap truncate max-w-[150px]">
-          {row.getValue("service") || 'General Inquiry'}
-        </Badge>
-      ),
-    },
-    {
-      accessorKey: "message",
-      header: () => <div className="text-center">Message</div>,
+      id: "contact",
+      header: () => <div className="text-left font-semibold">Contact Info</div>,
       cell: ({ row }) => {
         const lead = row.original;
         return (
-          <div className="flex justify-center">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger render={
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setActiveMessageLead(lead)}
-                    className="h-8 w-8 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-700 cursor-pointer"
-                  >
-                    <MessageSquare size={16} />
-                  </Button>
-                } />
-                <TooltipContent>View Message</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+          <div className="flex flex-col gap-1 text-left max-w-[220px]">
+            <div className="text-xs text-muted-foreground truncate" title={lead.email}>{lead.email}</div>
+            <div className="text-xs text-muted-foreground font-mono truncate" title={lead.phone}>{lead.phone}</div>
           </div>
         );
-      }
+      },
     },
+
     {
       accessorKey: "createdAt",
-      header: () => <div className="text-left">Date</div>,
+      header: () => <div className="text-center font-semibold px-4">Date</div>,
       cell: ({ row }) => (
-        <div className="whitespace-nowrap text-sm text-muted-foreground">
+        <div className="whitespace-nowrap text-sm text-muted-foreground text-center px-4">
           {new Date(row.getValue("createdAt")).toLocaleDateString(undefined, {
             month: 'short', day: 'numeric', year: 'numeric',
           })}
@@ -214,7 +182,7 @@ export default function LeadsTable() {
     },
     {
       accessorKey: "status",
-      header: () => <div className="text-left">Status</div>,
+      header: () => <div className="text-center font-semibold">Status</div>,
       cell: ({ row }) => {
         const status = row.getValue("status") as string;
         let colorClass = 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-900/40'; // New
@@ -222,33 +190,35 @@ export default function LeadsTable() {
         else if (status === 'Closed') colorClass = 'bg-green-50 text-green-700 border-green-200 dark:bg-green-950/40 dark:text-green-400 dark:border-green-900/40';
 
         return (
-          <Badge variant="outline" className={`whitespace-nowrap ${colorClass}`}>
-            {status}
-          </Badge>
+          <div className="text-center">
+            <Badge variant="outline" className={`whitespace-nowrap ${colorClass}`}>
+              {status}
+            </Badge>
+          </div>
         );
       },
     },
     {
       id: "actions",
-      header: () => <div className="text-right">Actions</div>,
+      header: () => <div className="text-center font-semibold pl-4">Actions</div>,
       cell: ({ row }) => {
         const lead = row.original;
         const status = row.getValue("status") as string;
       
         return (
-          <div className="flex items-center justify-end gap-1">
+          <div className="flex items-center justify-center gap-2 pl-4">
             <TooltipProvider>
               {status !== "Closed" && (
                 <Tooltip>
                   <TooltipTrigger
                     render={
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="icon"
-                        onClick={() => handleUpdateStatus(lead._id, lead.status)}
-                        className="h-8 w-8 cursor-pointer text-indigo-600 dark:text-indigo-400 hover:text-indigo-700"
+                        onClick={(e) => { e.stopPropagation(); handleUpdateStatus(lead._id, lead.status); }}
+                        className="h-10 w-10 cursor-pointer bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-colors shadow-sm"
                       >
-                        <CheckCircle size={16} />
+                        <CheckCircle size={15} />
                       </Button>
                     }
                   />
@@ -256,29 +226,29 @@ export default function LeadsTable() {
                 </Tooltip>
               )}
       
-              <ConfirmDialog
-                title="Are you sure you want to delete this lead?"
-                description="This action cannot be undone."
-                confirmText="Yes, delete"
-                onConfirm={() => handleDelete(lead._id)}
-                icon="trash"
-                trigger={
-                  <div className="inline-block">
-                    <Tooltip>
-                      <TooltipTrigger render={
+              <Tooltip>
+                <TooltipTrigger render={
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <ConfirmDialog
+                      title="Are you sure you want to delete this lead?"
+                      description="This action cannot be undone."
+                      confirmText="Yes, delete"
+                      onConfirm={() => handleDelete(lead._id)}
+                      icon="trash"
+                      trigger={
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
-                          className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:text-rose-700 cursor-pointer"
+                          className="h-10 w-10 cursor-pointer bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:border-rose-200 dark:hover:border-rose-900 transition-colors shadow-sm"
                         >
-                          <Trash2 size={16} />
+                          <Trash2 size={15} />
                         </Button>
-                      } />
-                      <TooltipContent>Delete Lead</TooltipContent>
-                    </Tooltip>
+                      }
+                    />
                   </div>
-                }
-              />
+                } />
+                <TooltipContent>Delete Lead</TooltipContent>
+              </Tooltip>
             </TooltipProvider>
           </div>
         );
@@ -309,7 +279,7 @@ export default function LeadsTable() {
               placeholder="Search leads..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-9 h-9"
+              className="pl-9 h-9 border-blue-100 dark:border-blue-900 focus-visible:border-blue-300 focus-visible:ring-1 focus-visible:ring-blue-400 transition-all"
             />
           </div>
           <Select value={statusFilter} onValueChange={(value) => { setStatusFilter(value as 'All' | 'New' | 'Contacted' | 'Closed'); setPagination(prev => ({ ...prev, pageIndex: 0 })); }}>
@@ -346,12 +316,11 @@ export default function LeadsTable() {
                 {headerGroup.headers.map((header) => {
                   let width = 'auto';
                   if (header.id === 'serial') width = '70px';
-                  else if (header.id === 'name') width = '28%';
-                  else if (header.id === 'service') width = '18%';
-                  else if (header.id === 'message') width = '100px';
+                  else if (header.id === 'name') width = '200px';
+                  else if (header.id === 'contact') width = '200px';
                   else if (header.id === 'createdAt') width = '140px';
                   else if (header.id === 'status') width = '120px';
-                  else if (header.id === 'actions') width = '100px';
+                  else if (header.id === 'actions') width = '120px';
                   
                   return (
                     <TableHead key={header.id} className="font-bold text-muted-foreground uppercase text-xs tracking-wider h-11 align-middle" style={{ width }}>
@@ -371,13 +340,12 @@ export default function LeadsTable() {
             {loading ? (
               Array.from({ length: 5 }).map((_, idx) => (
                 <TableRow key={idx}>
-                  <TableCell><Skeleton className="h-6 w-8" /></TableCell>
-                  <TableCell><Skeleton className="h-10 w-full" /></TableCell>
-                  <TableCell><Skeleton className="h-6 w-20" /></TableCell>
-                  <TableCell><Skeleton className="h-6 w-24" /></TableCell>
-                  <TableCell><Skeleton className="h-6 w-24" /></TableCell>
-                  <TableCell><Skeleton className="h-6 w-20 rounded-full" /></TableCell>
-                  <TableCell><Skeleton className="h-8 w-20 ml-auto" /></TableCell>
+                  <TableCell><div className="flex justify-center"><Skeleton className="h-4 w-6" /></div></TableCell>
+                  <TableCell><Skeleton className="h-10 w-[180px]" /></TableCell>
+                  <TableCell><Skeleton className="h-10 w-[160px]" /></TableCell>
+                  <TableCell><div className="flex justify-center"><Skeleton className="h-4 w-20" /></div></TableCell>
+                  <TableCell><div className="flex justify-center"><Skeleton className="h-6 w-16 rounded-full" /></div></TableCell>
+                  <TableCell><div className="flex justify-center gap-2"><Skeleton className="h-10 w-10 rounded-md" /><Skeleton className="h-10 w-10 rounded-md" /></div></TableCell>
                 </TableRow>
               ))
             ) : table.getRowModel().rows?.length ? (
@@ -385,10 +353,16 @@ export default function LeadsTable() {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="hover:bg-muted/50 transition-colors"
+                  className="hover:bg-slate-200 dark:hover:bg-slate-800/70 transition-colors cursor-pointer"
+                  onClick={() => router.push(`/leads/${row.original._id}`)}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="py-3 px-4">
+                    <TableCell key={cell.id} className="py-3 px-4" onClick={(e) => {
+                      // Prevent row click if clicking on an action button
+                      if ((e.target as HTMLElement).closest('button')) {
+                        e.stopPropagation();
+                      }
+                    }}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
@@ -438,65 +412,6 @@ export default function LeadsTable() {
           </div>
         )}
       </Card>
-
-      {/* Message Modal */}
-      <Dialog open={activeMessageLead !== null} onOpenChange={(open) => { if (!open) setActiveMessageLead(null); }}>
-        <DialogContent className="sm:max-w-[500px]">
-          <DialogHeader>
-            <DialogTitle className="text-lg font-bold flex items-center gap-2">
-              <MessageSquare className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-              Lead Message
-            </DialogTitle>
-            <DialogDescription className="text-muted-foreground text-xs">
-              Submitted on {activeMessageLead && new Date(activeMessageLead.createdAt).toLocaleString()}
-            </DialogDescription>
-          </DialogHeader>
-
-          {activeMessageLead && (
-            <div className="space-y-4 py-2">
-              {/* Sender Details Card */}
-              <div className="grid grid-cols-2 gap-3 text-sm bg-muted/40 p-3 rounded-lg border border-border">
-                <div>
-                  <div className="text-xs text-muted-foreground">From</div>
-                  <div className="font-semibold text-foreground">{activeMessageLead.name}</div>
-                </div>
-                {activeMessageLead.companyName && (
-                  <div>
-                    <div className="text-xs text-muted-foreground">Company</div>
-                    <div className="font-semibold text-foreground">{activeMessageLead.companyName}</div>
-                  </div>
-                )}
-                <div>
-                  <div className="text-xs text-muted-foreground">Email</div>
-                  <div className="font-semibold text-foreground select-all">{activeMessageLead.email}</div>
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">Phone</div>
-                  <div className="font-semibold text-foreground select-all">{activeMessageLead.phone}</div>
-                </div>
-                <div className="col-span-2">
-                  <div className="text-xs text-muted-foreground">Service Inquiry</div>
-                  <div className="font-semibold text-foreground">
-                    <Badge variant="outline" className="mt-1 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700">
-                      {activeMessageLead.service || 'General Inquiry'}
-                    </Badge>
-                  </div>
-                </div>
-              </div>
-
-              {/* Message Box */}
-              <div className="space-y-1">
-                <div className="text-xs text-muted-foreground">Message</div>
-                <div className="bg-background border border-border rounded-lg p-3 text-sm text-foreground whitespace-pre-wrap max-h-[200px] overflow-y-auto leading-relaxed shadow-inner">
-                  {activeMessageLead.message}
-                </div>
-              </div>
-            </div>
-          )}
-
-          <DialogFooter showCloseButton={true} />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
