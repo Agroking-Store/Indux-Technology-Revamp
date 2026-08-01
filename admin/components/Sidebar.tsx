@@ -127,7 +127,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         }
                       >
                         <item.icon />
-                        <item.icon />
                         <span>{item.label}</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
