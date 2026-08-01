@@ -571,7 +571,7 @@ export default function DashboardPage() {
                     {atsStats.charts.appsByLocation.length === 0 ? (
                       <div className="py-20 text-center text-xs text-slate-400 italic">No location coordinates registered.</div>
                     ) : (
-                      <div className="grid grid-cols-2 gap-4 h-60 overflow-y-auto pt-2">
+                      <div className="grid grid-cols-2 gap-4 h-60 overflow-y-auto pt-2 content-start">
                         {atsStats.charts.appsByLocation.map((item, idx) => (
                           <div key={idx} className="p-4 bg-slate-50 dark:bg-slate-900/80 border border-slate-100 dark:border-slate-800 rounded-2xl flex items-center justify-between shadow-sm">
                             <div className="flex items-center gap-2">
