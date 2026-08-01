@@ -11,11 +11,30 @@ router.get(
 
     if (shouldLog) {
       try {
-        // Create new visitor entry
-        await Visitor.create({
-          ip: req.ip || req.socket.remoteAddress,
-          userAgent: req.headers["user-agent"],
+        const ip = req.ip || req.socket.remoteAddress || "unknown";
+        
+        // Calculate the current date in IST (Indian Standard Time)
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'Asia/Kolkata',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
         });
+        // 'en-CA' outputs format 'YYYY-MM-DD'
+        const visitDateIst = formatter.format(now);
+
+        // Check if this IP has already visited today in IST
+        const existingVisit = await Visitor.findOne({ ip, visitDateIst });
+
+        if (!existingVisit) {
+          // Create new visitor entry
+          await Visitor.create({
+            ip,
+            userAgent: req.headers["user-agent"],
+            visitDateIst,
+          });
+        }
       } catch (err) {
         console.error("Failed to log visitor:", err);
       }

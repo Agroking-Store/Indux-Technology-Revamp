@@ -3,21 +3,21 @@
 import { useEffect, useState } from 'react';
 import api, { ApiResponse } from '@/lib/api';
 import Link from 'next/link';
-import { 
-  FileText, 
-  Briefcase, 
-  MessageSquare, 
-  Calendar, 
-  PlusCircle, 
-  Sparkles, 
-  TrendingUp, 
-  CheckCircle, 
-  Clock, 
-  Inbox, 
-  UserCheck, 
-  Heart, 
-  MapPin, 
-  Users 
+import {
+  FileText,
+  Briefcase,
+  MessageSquare,
+  Calendar,
+  PlusCircle,
+  Sparkles,
+  TrendingUp,
+  CheckCircle,
+  Clock,
+  Inbox,
+  UserCheck,
+  Heart,
+  MapPin,
+  Users
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -109,7 +109,7 @@ export default function DashboardPage() {
       <div className="space-y-8 p-4 w-full">
         {/* Welcome Banner Skeleton */}
         <Skeleton className="h-[140px] w-full rounded-3xl" />
-        
+
         {/* Tabs Skeleton */}
         <div className="flex gap-2 mb-6">
           <Skeleton className="h-10 w-32 rounded-lg" />
@@ -181,7 +181,7 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8 text-left transition-colors duration-300">
-      
+
       {/* Welcome Banner */}
       <div className="relative overflow-hidden bg-gradient-to-r from-indigo-50/80 via-white to-slate-100 dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-md dark:shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-colors duration-300">
         <div className="absolute top-0 right-0 w-80 h-full opacity-20 dark:opacity-10 bg-[radial-gradient(#6366f1_2px,transparent_2px)] dark:bg-[radial-gradient(#818cf8_2px,transparent_2px)] bg-[size:24px_24px] pointer-events-none" />
@@ -238,7 +238,7 @@ export default function DashboardPage() {
                         <TrendingUp size={10} className="text-emerald-500" /> Database Entries Count
                       </p>
                     </div>
-                    
+
                     <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
                       {card.breakdowns.map((b, bIdx) => (
                         <Badge key={bIdx} variant="outline" className={`${b.color} font-bold text-[10px] px-2.5 py-0.5 border rounded-lg`}>
@@ -264,11 +264,11 @@ export default function DashboardPage() {
                 </div>
                 <CardDescription className="text-xs font-semibold text-slate-500 dark:text-slate-400 m-0 p-0 border-0">Monitor real-time user visits and traffic history.</CardDescription>
               </div>
-              
+
               <Tabs value={visitorRange} onValueChange={(val) => setVisitorRange(val as any)} className="w-auto">
-                <TabsList className="grid w-full grid-cols-2 bg-slate-100 dark:bg-slate-950 p-1 rounded-xl border border-slate-200/60 dark:border-slate-800">
-                  <TabsTrigger value="week" className="px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:shadow-sm">This Week</TabsTrigger>
-                  <TabsTrigger value="month" className="px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:shadow-sm">This Month</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 bg-slate-100 dark:bg-slate-950 p-[3px] rounded-xl border border-slate-200/60 dark:border-slate-800">
+                  <TabsTrigger value="week" className="px-4 text-xs font-bold transition-all cursor-pointer data-active:bg-white dark:data-active:bg-slate-800 data-active:text-indigo-600 dark:data-active:text-indigo-400 data-active:shadow-sm">This Week</TabsTrigger>
+                  <TabsTrigger value="month" className="px-4 text-xs font-bold transition-all cursor-pointer data-active:bg-white dark:data-active:bg-slate-800 data-active:text-indigo-600 dark:data-active:text-indigo-400 data-active:shadow-sm">This Month</TabsTrigger>
                 </TabsList>
               </Tabs>
             </CardHeader>
@@ -299,7 +299,7 @@ export default function DashboardPage() {
                   {/* Right: Trend Chart */}
                   <div className="md:col-span-2 space-y-4">
                     <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider block text-left">Traffic Trend History</span>
-                    
+
                     {visitorData.chartData.length === 0 ? (
                       <div className="h-32 flex items-center justify-center text-xs text-slate-400 italic">No traffic recorded yet.</div>
                     ) : (
@@ -435,7 +435,7 @@ export default function DashboardPage() {
 
               {/* ATS Charts Grids */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
+
                 {/* 1. Applications Per Job (Bar Chart) */}
                 <Card className="border border-slate-200/80 dark:border-slate-800 shadow-sm rounded-2xl dark:bg-slate-900/60 p-6 overflow-hidden">
                   <CardHeader className="p-0 pb-4 border-0">
@@ -571,7 +571,7 @@ export default function DashboardPage() {
                     {atsStats.charts.appsByLocation.length === 0 ? (
                       <div className="py-20 text-center text-xs text-slate-400 italic">No location coordinates registered.</div>
                     ) : (
-                      <div className="grid grid-cols-2 gap-4 h-60 overflow-y-auto pt-2">
+                      <div className="grid grid-cols-2 gap-4 h-60 overflow-y-auto pt-2 content-start">
                         {atsStats.charts.appsByLocation.map((item, idx) => (
                           <div key={idx} className="p-4 bg-slate-50 dark:bg-slate-900/80 border border-slate-100 dark:border-slate-800 rounded-2xl flex items-center justify-between shadow-sm">
                             <div className="flex items-center gap-2">
