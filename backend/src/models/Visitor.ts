@@ -3,6 +3,7 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface IVisitor extends Document {
   ip?: string;
   userAgent?: string;
+  visitDateIst?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -11,6 +12,7 @@ const visitorSchema: Schema = new Schema(
   {
     ip: { type: String },
     userAgent: { type: String },
+    visitDateIst: { type: String },
   },
   { timestamps: true }
 );
