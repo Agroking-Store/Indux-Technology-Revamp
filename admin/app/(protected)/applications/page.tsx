@@ -210,8 +210,10 @@ function ApplicationsContent() {
     setPage(1); 
   }}
 >
-  <SelectTrigger className="mt-1 w-full px-3 py-1.5 h-9 border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-indigo-500 shadow-none">
-    <SelectValue placeholder="All Openings" />
+  <SelectTrigger className="mt-1 w-full px-3 py-1.5 h-9 border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-indigo-500 shadow-none cursor-pointer">
+    <SelectValue placeholder="All Openings">
+      {selectedJobId ? (jobs.find(j => j._id === selectedJobId)?.title || "Loading...") : undefined}
+    </SelectValue>
   </SelectTrigger>
   <SelectContent>
     <SelectItem value="ALL">All Openings</SelectItem>
@@ -232,7 +234,7 @@ function ApplicationsContent() {
     setPage(1); 
   }}
 >
-  <SelectTrigger className="mt-1 w-full px-3 py-1.5 h-9 border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-indigo-500 shadow-none">
+  <SelectTrigger className="mt-1 w-full px-3 py-1.5 h-9 border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-indigo-500 shadow-none cursor-pointer">
     <SelectValue placeholder="All Stages" />
   </SelectTrigger>
   <SelectContent>
@@ -280,7 +282,7 @@ function ApplicationsContent() {
       type="date"
       value={dateFilter}
       onChange={(e) => { setDateFilter(e.target.value); setPage(1); }}
-      className="mt-1 w-full px-3 py-1.5 h-9 border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus-visible:ring-indigo-500 shadow-none"
+      className="mt-1 w-full px-3 py-1.5 h-9 border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus-visible:ring-indigo-500 shadow-none cursor-pointer"
     />
   </div>
 
@@ -387,7 +389,7 @@ function ApplicationsContent() {
                       if (value) handleStatusChange(app._id, value);
                     }}
                   >
-                    <SelectTrigger className={`text-xs font-bold rounded-full px-3 py-1.5 h-auto w-auto border shadow-none ${getStatusBadgeClass(app.status)}`}>
+                    <SelectTrigger className={`text-xs font-bold rounded-full px-3 py-1.5 h-auto w-auto border shadow-none cursor-pointer ${getStatusBadgeClass(app.status)}`}>
                       <SelectValue placeholder="Select status" />
                     </SelectTrigger>
                     <SelectContent>
@@ -409,7 +411,7 @@ function ApplicationsContent() {
                     href={`${process.env.NEXT_PUBLIC_API_URL}/applications/${app._id}/resume?token=${token}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`${buttonVariants({ variant: "outline", size: "sm" })} h-7 text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 border-indigo-200 dark:border-indigo-900/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60`}
+                    className={`${buttonVariants({ variant: "outline", size: "sm" })} h-7 text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 border-indigo-200 dark:border-indigo-900/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 cursor-pointer`}
                   >
                     <Eye size={12} className="mr-1" /> Preview
                   </a>
@@ -420,7 +422,7 @@ function ApplicationsContent() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    className="h-8 w-8 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
                     onClick={() => router.push(`/applications/${app._id}`)}
                     title="View candidate profile details"
                   >
@@ -436,7 +438,7 @@ function ApplicationsContent() {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50"
+                        className="h-8 w-8 text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 cursor-pointer"
                         title="Delete application"
                       >
                         <Trash2 size={16} />
@@ -464,7 +466,7 @@ function ApplicationsContent() {
           size="sm"
           disabled={page === 1}
           onClick={() => setPage(page - 1)}
-          className="text-xs font-semibold h-8"
+          className="text-xs font-semibold h-8 cursor-pointer"
         >
           Previous
         </Button>
@@ -473,7 +475,7 @@ function ApplicationsContent() {
           size="sm"
           disabled={page === totalPages}
           onClick={() => setPage(page + 1)}
-          className="text-xs font-semibold h-8"
+          className="text-xs font-semibold h-8 cursor-pointer"
         >
           Next
         </Button>

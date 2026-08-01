@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getCareers, Career } from '@/lib/api';
 import Link from 'next/link';
-import { Briefcase, MapPin, DollarSign, Users, ArrowRight, Trophy, HeartHandshake, Activity } from 'lucide-react';
+import { Briefcase, MapPin, IndianRupee, Users, ArrowRight, Trophy, HeartHandshake, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { NumberTicker } from '@/components/ui/number-ticker';
@@ -162,13 +162,13 @@ export default function CareersPage() {
                   {['JD', 'AK', 'SM', 'RB'].map((initials) => (
                     <div
                       key={initials}
-                      className="font-mono w-11 h-11 rounded-full bg-white dark:bg-slate-800 border border-slate-205 dark:border-slate-700 shadow-sm flex items-center justify-center text-xs font-bold text-slate-700 dark:text-slate-350"
+                      className="font-mono w-11 h-11 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-xs font-bold text-slate-700 dark:text-slate-300"
                     >
                       {initials}
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-slate-505 dark:text-slate-450 font-semibold">+ 20 team members globally</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">+ 20 team members globally</p>
               </div>
             </motion.div>
             <div className="grid grid-cols-2 gap-4">
@@ -253,7 +253,7 @@ export default function CareersPage() {
                       <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-blue-600 transition-colors duration-300 leading-snug">
                         {job.title}
                       </h3>
-                      <p className="font-mono text-[10px] text-slate-505 dark:text-slate-450 mb-4 uppercase tracking-wider">
+                      <p className="font-mono text-[10px] text-slate-500 dark:text-slate-400 mb-4 uppercase tracking-wider">
                         {job.department}
                       </p>
 
@@ -270,7 +270,7 @@ export default function CareersPage() {
                         )}
                         {job.salary && (
                           <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-650 dark:text-slate-400 px-3 py-1 rounded-full transition-transform duration-300 hover:scale-105">
-                            <DollarSign className="w-3 h-3" />
+                            <IndianRupee className="w-3 h-3" />
                             {job.salary}
                           </span>
                         )}

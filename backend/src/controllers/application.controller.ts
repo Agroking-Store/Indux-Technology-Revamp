@@ -32,6 +32,15 @@ export const submitApplication = asyncHandler(async (req: Request, res: Response
     throw ApiError.notFound("Active job opening not found");
   }
 
+  // Check if candidate has already applied for this position
+  const existingApplication = await JobApplication.findOne({
+    jobId: targetJobId,
+    email: validated.email,
+  });
+  if (existingApplication) {
+    throw ApiError.conflict("You have already applied for this position using this email address");
+  }
+
   // Save relative static URL to the uploaded resume
   const resumeUrl = `/uploads/resumes/${req.file.filename}`;
 
