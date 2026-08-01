@@ -51,9 +51,21 @@ export default function EditBlogPage() {
     setLoading(true);
     try {
       const tagsArray = data.tags ? data.tags.split(',').map((t) => t.trim()).filter(Boolean) : [];
-      const payload = { ...data, tags: tagsArray };
+      
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === 'tags') {
+          formData.append(key, JSON.stringify(tagsArray));
+        } else if (value !== undefined && value !== null) {
+          // In edit mode, if the image wasn't changed, it might still be the URL string.
+          // FormData handles both strings and Files.
+          formData.append(key, value as string | Blob);
+        }
+      });
 
-      await api.put(`/blogs/${id}`, payload);
+      await api.put(`/blogs/${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
       toast.success('Article updated successfully');
       router.push('/blogs');
     } catch (error) {
