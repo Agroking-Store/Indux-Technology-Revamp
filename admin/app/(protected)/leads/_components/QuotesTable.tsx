@@ -2,9 +2,17 @@
 
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { toast } from 'react-toastify';
-import { Trash2, Search, X, CheckCircle } from 'lucide-react';
+import { Trash2, Search, X, CheckCircle, MessageSquare } from 'lucide-react';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse } from '@/lib/api';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import {
   ColumnDef,
   flexRender,
@@ -56,6 +64,7 @@ export default function QuotesTable() {
     pageIndex: 0,
     pageSize: 10,
   });
+  const [activeMessageQuote, setActiveMessageQuote] = useState<Quote | null>(null);
 
   const isMounted = useRef(true);
 
@@ -100,7 +109,7 @@ export default function QuotesTable() {
     return () => { isMounted.current = false; };
   }, [fetchQuotes]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     try {
       await api.delete(`/quotes/${id}`);
       toast.success('Quote deleted successfully');
@@ -108,9 +117,9 @@ export default function QuotesTable() {
     } catch {
       // handled
     }
-  };
+  }, [fetchQuotes]);
 
-  const handleUpdateStatus = async (id: string, currentStatus: string) => {
+  const handleUpdateStatus = useCallback(async (id: string, currentStatus: string) => {
     let newStatus = 'New';
     if (currentStatus === 'New') newStatus = 'Contacted';
     else if (currentStatus === 'Contacted') newStatus = 'Closed';
@@ -123,7 +132,7 @@ export default function QuotesTable() {
     } catch {
       // handled
     }
-  };
+  }, [fetchQuotes]);
 
   const handleClearFilters = () => {
     setStatusFilter('All');
@@ -137,18 +146,18 @@ export default function QuotesTable() {
       id: "serial",
       header: () => <div className="text-center">S.No</div>,
       cell: ({ row }) => (
-        <span className="text-muted-foreground font-medium text-sm pl-2">
+        <div className="text-center text-muted-foreground font-medium text-sm pr-2">
           {pagination.pageIndex * pagination.pageSize + row.index + 1}
-        </span>
+        </div>
       ),
     },
     {
       accessorKey: "name",
-      header: () => <div className="text-center">Client Details</div>,
+      header: () => <div className="text-left">Client Details</div>,
       cell: ({ row }) => {
         const quote = row.original;
         return (
-          <div className="flex flex-col gap-1 w-full pr-6">
+          <div className="flex flex-col gap-1 w-full text-left">
             <div className="text-sm font-semibold text-foreground truncate">{quote.name}</div>
             <div className="text-xs text-muted-foreground truncate">{quote.workEmail}</div>
             <div className="text-xs text-muted-foreground font-mono truncate">{quote.phone}</div>
@@ -163,7 +172,7 @@ export default function QuotesTable() {
     },
     {
       accessorKey: "serviceInterest",
-      header: () => <div className="text-center">Service Interest</div>,
+      header: () => <div className="text-left">Service Interest</div>,
       cell: ({ row }) => (
         <Badge variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-400 dark:border-indigo-900/40 font-bold whitespace-nowrap truncate max-w-[150px]">
           {row.getValue("serviceInterest")}
@@ -174,23 +183,32 @@ export default function QuotesTable() {
       accessorKey: "message",
       header: () => <div className="text-center">Message</div>,
       cell: ({ row }) => {
-        const msg = row.getValue("message") as string;
-        if (!msg) return <span className="text-muted-foreground text-sm">—</span>;
+        const quote = row.original;
+        if (!quote.message) return <div className="flex justify-center text-muted-foreground text-sm">—</div>;
         return (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger render={<div className="whitespace-nowrap text-sm text-muted-foreground truncate max-w-[150px] cursor-help">{msg}</div>} />
-              <TooltipContent className="max-w-[300px] whitespace-normal">
-                {msg}
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <div className="flex justify-center">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger render={
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setActiveMessageQuote(quote)}
+                    className="h-8 w-8 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-700 cursor-pointer"
+                  >
+                    <MessageSquare size={16} />
+                  </Button>
+                } />
+                <TooltipContent>View Message</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         );
       }
     },
     {
       accessorKey: "createdAt",
-      header: () => <div className="text-center">Date</div>,
+      header: () => <div className="text-left">Date</div>,
       cell: ({ row }) => (
         <div className="whitespace-nowrap text-sm text-muted-foreground">
           {new Date(row.getValue("createdAt")).toLocaleDateString(undefined, {
@@ -201,7 +219,7 @@ export default function QuotesTable() {
     },
     {
       accessorKey: "status",
-      header: () => <div className="text-center">Status</div>,
+      header: () => <div className="text-left">Status</div>,
       cell: ({ row }) => {
         const status = row.getValue("status") as string;
         let colorClass = 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-900/40'; // New
@@ -266,7 +284,7 @@ export default function QuotesTable() {
         );
       },
     },
-  ], [handleDelete, pagination]);
+  ], [handleDelete, handleUpdateStatus, pagination]);
 
   const table = useReactTable({
     data: quotes,
@@ -294,7 +312,7 @@ export default function QuotesTable() {
               className="pl-9 h-9"
             />
           </div>
-          <Select value={statusFilter} onValueChange={(value: any) => { setStatusFilter(value); setPagination(prev => ({ ...prev, pageIndex: 0 })); }}>
+          <Select value={statusFilter} onValueChange={(value) => { setStatusFilter(value as 'All' | 'New' | 'Contacted' | 'Closed'); setPagination(prev => ({ ...prev, pageIndex: 0 })); }}>
             <SelectTrigger className="w-[140px] h-9 cursor-pointer">
               <SelectValue placeholder="All Statuses" />
             </SelectTrigger>
@@ -327,8 +345,12 @@ export default function QuotesTable() {
               <TableRow key={headerGroup.id} className="hover:bg-transparent">
                 {headerGroup.headers.map((header) => {
                   let width = 'auto';
-                  if (header.id === 'serial') width = '60px';
-                  else if (header.id === 'name') width = '35%';
+                  if (header.id === 'serial') width = '70px';
+                  else if (header.id === 'name') width = '28%';
+                  else if (header.id === 'serviceInterest') width = '18%';
+                  else if (header.id === 'message') width = '100px';
+                  else if (header.id === 'createdAt') width = '140px';
+                  else if (header.id === 'status') width = '120px';
                   else if (header.id === 'actions') width = '100px';
                   
                   return (
@@ -416,6 +438,65 @@ export default function QuotesTable() {
           </div>
         )}
       </Card>
+
+      {/* Message Modal */}
+      <Dialog open={activeMessageQuote !== null} onOpenChange={(open) => { if (!open) setActiveMessageQuote(null); }}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold flex items-center gap-2">
+              <MessageSquare className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+              Quote Request Message
+            </DialogTitle>
+            <DialogDescription className="text-muted-foreground text-xs">
+              Submitted on {activeMessageQuote && new Date(activeMessageQuote.createdAt).toLocaleString()}
+            </DialogDescription>
+          </DialogHeader>
+
+          {activeMessageQuote && (
+            <div className="space-y-4 py-2">
+              {/* Sender Details Card */}
+              <div className="grid grid-cols-2 gap-3 text-sm bg-muted/40 p-3 rounded-lg border border-border">
+                <div>
+                  <div className="text-xs text-muted-foreground">From</div>
+                  <div className="font-semibold text-foreground">{activeMessageQuote.name}</div>
+                </div>
+                {activeMessageQuote.companyName && (
+                  <div>
+                    <div className="text-xs text-muted-foreground">Company</div>
+                    <div className="font-semibold text-foreground">{activeMessageQuote.companyName}</div>
+                  </div>
+                )}
+                <div>
+                  <div className="text-xs text-muted-foreground">Email</div>
+                  <div className="font-semibold text-foreground select-all">{activeMessageQuote.workEmail}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-muted-foreground">Phone</div>
+                  <div className="font-semibold text-foreground select-all">{activeMessageQuote.phone}</div>
+                </div>
+                <div className="col-span-2">
+                  <div className="text-xs text-muted-foreground">Service Interest</div>
+                  <div className="font-semibold text-foreground">
+                    <Badge variant="outline" className="mt-1 bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-400 dark:border-indigo-900/40 font-bold">
+                      {activeMessageQuote.serviceInterest}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+
+              {/* Message Box */}
+              <div className="space-y-1">
+                <div className="text-xs text-muted-foreground">Message</div>
+                <div className="bg-background border border-border rounded-lg p-3 text-sm text-foreground whitespace-pre-wrap max-h-[200px] overflow-y-auto leading-relaxed shadow-inner">
+                  {activeMessageQuote.message}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <DialogFooter showCloseButton={true} />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

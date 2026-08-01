@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import VisitorTracker from "@/components/VisitorTracker";
 import Script from "next/script";
 
 const roboto = Roboto({
@@ -117,6 +118,7 @@ export default function RootLayout({
         <Footer />
         <Toaster />
         <ScrollToTop />
+        <VisitorTracker />
 
         <Script
           src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"

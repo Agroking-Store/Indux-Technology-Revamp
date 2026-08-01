@@ -2,9 +2,17 @@
 
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { toast } from 'react-toastify';
-import { Trash2, Search, X, CheckCircle } from 'lucide-react';
+import { Trash2, Search, X, CheckCircle, MessageSquare } from 'lucide-react';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse } from '@/lib/api';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import {
   ColumnDef,
   flexRender,
@@ -57,6 +65,7 @@ export default function LeadsTable() {
     pageIndex: 0,
     pageSize: 10,
   });
+  const [activeMessageLead, setActiveMessageLead] = useState<Lead | null>(null);
 
   const isMounted = useRef(true);
 
@@ -101,7 +110,7 @@ export default function LeadsTable() {
     return () => { isMounted.current = false; };
   }, [fetchLeads]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     try {
       await api.delete(`/leads/${id}`);
       toast.success('Lead deleted successfully');
@@ -109,9 +118,9 @@ export default function LeadsTable() {
     } catch {
       // handled
     }
-  };
+  }, [fetchLeads]);
 
-  const handleUpdateStatus = async (id: string, currentStatus: string) => {
+  const handleUpdateStatus = useCallback(async (id: string, currentStatus: string) => {
     let newStatus = 'New';
     if (currentStatus === 'New') newStatus = 'Contacted';
     else if (currentStatus === 'Contacted') newStatus = 'Closed';
@@ -124,7 +133,7 @@ export default function LeadsTable() {
     } catch {
       // handled
     }
-  };
+  }, [fetchLeads]);
 
   const handleClearFilters = () => {
     setStatusFilter('All');
@@ -138,18 +147,18 @@ export default function LeadsTable() {
       id: "serial",
       header: () => <div className="text-center">S.No</div>,
       cell: ({ row }) => (
-        <span className="text-muted-foreground font-medium text-sm pl-2">
+        <div className="text-center text-muted-foreground font-medium text-sm pr-2">
           {pagination.pageIndex * pagination.pageSize + row.index + 1}
-        </span>
+        </div>
       ),
     },
     {
       accessorKey: "name",
-      header: () => <div className="text-center">Lead Details</div>,
+      header: () => <div className="text-left">Lead Details</div>,
       cell: ({ row }) => {
         const lead = row.original;
         return (
-          <div className="flex flex-col gap-1 w-full pr-6">
+          <div className="flex flex-col gap-1 w-full text-left">
             <div className="text-sm font-semibold text-foreground truncate">{lead.name}</div>
             <div className="text-xs text-muted-foreground truncate">{lead.email}</div>
             <div className="text-xs text-muted-foreground font-mono truncate">{lead.phone}</div>
@@ -159,7 +168,7 @@ export default function LeadsTable() {
     },
     {
       accessorKey: "service",
-      header: () => <div className="text-center">Service</div>,
+      header: () => <div className="text-left">Service</div>,
       cell: ({ row }) => (
         <Badge variant="outline" className="bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 font-bold whitespace-nowrap truncate max-w-[150px]">
           {row.getValue("service") || 'General Inquiry'}
@@ -169,20 +178,32 @@ export default function LeadsTable() {
     {
       accessorKey: "message",
       header: () => <div className="text-center">Message</div>,
-      cell: ({ row }) => (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger render={<div className="whitespace-nowrap text-sm text-muted-foreground truncate max-w-[150px] cursor-help">{row.getValue("message")}</div>} />
-            <TooltipContent className="max-w-[300px] whitespace-normal">
-              {row.getValue("message")}
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ),
+      cell: ({ row }) => {
+        const lead = row.original;
+        return (
+          <div className="flex justify-center">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger render={
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setActiveMessageLead(lead)}
+                    className="h-8 w-8 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-700 cursor-pointer"
+                  >
+                    <MessageSquare size={16} />
+                  </Button>
+                } />
+                <TooltipContent>View Message</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        );
+      }
     },
     {
       accessorKey: "createdAt",
-      header: () => <div className="text-center">Date</div>,
+      header: () => <div className="text-left">Date</div>,
       cell: ({ row }) => (
         <div className="whitespace-nowrap text-sm text-muted-foreground">
           {new Date(row.getValue("createdAt")).toLocaleDateString(undefined, {
@@ -193,7 +214,7 @@ export default function LeadsTable() {
     },
     {
       accessorKey: "status",
-      header: () => <div className="text-center">Status</div>,
+      header: () => <div className="text-left">Status</div>,
       cell: ({ row }) => {
         const status = row.getValue("status") as string;
         let colorClass = 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-900/40'; // New
@@ -215,6 +236,7 @@ export default function LeadsTable() {
         const status = row.getValue("status") as string;
       
         return (
+          <div className="flex items-center justify-end gap-1">
             <TooltipProvider>
               {status !== "Closed" && (
                 <Tooltip>
@@ -234,33 +256,35 @@ export default function LeadsTable() {
                 </Tooltip>
               )}
       
-      <Tooltip>
-  <ConfirmDialog
-    title="Are you sure you want to delete this lead?"
-    description="This action cannot be undone."
-    confirmText="Yes, delete"
-    onConfirm={() => handleDelete(lead._id)}
-    icon="trash"
-    trigger={
-      <Button
-        variant="ghost"
-        size="icon"
-        className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:text-rose-700 cursor-pointer"
-      >
-        <Trash2 size={16} />
-      </Button>
-    }
-  />
-
-  <TooltipContent>
-    Delete Lead
-  </TooltipContent>
-</Tooltip>
+              <ConfirmDialog
+                title="Are you sure you want to delete this lead?"
+                description="This action cannot be undone."
+                confirmText="Yes, delete"
+                onConfirm={() => handleDelete(lead._id)}
+                icon="trash"
+                trigger={
+                  <div className="inline-block">
+                    <Tooltip>
+                      <TooltipTrigger render={
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:text-rose-700 cursor-pointer"
+                        >
+                          <Trash2 size={16} />
+                        </Button>
+                      } />
+                      <TooltipContent>Delete Lead</TooltipContent>
+                    </Tooltip>
+                  </div>
+                }
+              />
             </TooltipProvider>
+          </div>
         );
       },
     },
-  ], [handleDelete, pagination]);
+  ], [handleDelete, handleUpdateStatus, pagination]);
 
   const table = useReactTable({
     data: leads,
@@ -288,7 +312,7 @@ export default function LeadsTable() {
               className="pl-9 h-9"
             />
           </div>
-          <Select value={statusFilter} onValueChange={(value: any) => { setStatusFilter(value); setPagination(prev => ({ ...prev, pageIndex: 0 })); }}>
+          <Select value={statusFilter} onValueChange={(value) => { setStatusFilter(value as 'All' | 'New' | 'Contacted' | 'Closed'); setPagination(prev => ({ ...prev, pageIndex: 0 })); }}>
             <SelectTrigger className="w-[140px] h-9 cursor-pointer">
               <SelectValue placeholder="All Statuses" />
             </SelectTrigger>
@@ -321,8 +345,12 @@ export default function LeadsTable() {
               <TableRow key={headerGroup.id} className="hover:bg-transparent">
                 {headerGroup.headers.map((header) => {
                   let width = 'auto';
-                  if (header.id === 'serial') width = '60px';
-                  else if (header.id === 'name') width = '35%';
+                  if (header.id === 'serial') width = '70px';
+                  else if (header.id === 'name') width = '28%';
+                  else if (header.id === 'service') width = '18%';
+                  else if (header.id === 'message') width = '100px';
+                  else if (header.id === 'createdAt') width = '140px';
+                  else if (header.id === 'status') width = '120px';
                   else if (header.id === 'actions') width = '100px';
                   
                   return (
@@ -410,6 +438,65 @@ export default function LeadsTable() {
           </div>
         )}
       </Card>
+
+      {/* Message Modal */}
+      <Dialog open={activeMessageLead !== null} onOpenChange={(open) => { if (!open) setActiveMessageLead(null); }}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold flex items-center gap-2">
+              <MessageSquare className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+              Lead Message
+            </DialogTitle>
+            <DialogDescription className="text-muted-foreground text-xs">
+              Submitted on {activeMessageLead && new Date(activeMessageLead.createdAt).toLocaleString()}
+            </DialogDescription>
+          </DialogHeader>
+
+          {activeMessageLead && (
+            <div className="space-y-4 py-2">
+              {/* Sender Details Card */}
+              <div className="grid grid-cols-2 gap-3 text-sm bg-muted/40 p-3 rounded-lg border border-border">
+                <div>
+                  <div className="text-xs text-muted-foreground">From</div>
+                  <div className="font-semibold text-foreground">{activeMessageLead.name}</div>
+                </div>
+                {activeMessageLead.companyName && (
+                  <div>
+                    <div className="text-xs text-muted-foreground">Company</div>
+                    <div className="font-semibold text-foreground">{activeMessageLead.companyName}</div>
+                  </div>
+                )}
+                <div>
+                  <div className="text-xs text-muted-foreground">Email</div>
+                  <div className="font-semibold text-foreground select-all">{activeMessageLead.email}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-muted-foreground">Phone</div>
+                  <div className="font-semibold text-foreground select-all">{activeMessageLead.phone}</div>
+                </div>
+                <div className="col-span-2">
+                  <div className="text-xs text-muted-foreground">Service Inquiry</div>
+                  <div className="font-semibold text-foreground">
+                    <Badge variant="outline" className="mt-1 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+                      {activeMessageLead.service || 'General Inquiry'}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+
+              {/* Message Box */}
+              <div className="space-y-1">
+                <div className="text-xs text-muted-foreground">Message</div>
+                <div className="bg-background border border-border rounded-lg p-3 text-sm text-foreground whitespace-pre-wrap max-h-[200px] overflow-y-auto leading-relaxed shadow-inner">
+                  {activeMessageLead.message}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <DialogFooter showCloseButton={true} />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

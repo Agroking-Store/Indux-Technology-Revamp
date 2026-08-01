@@ -173,3 +173,16 @@ input.text-white,
 textarea.text-white {
   color: #ffffff !important;
 }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Disable all CSS transitions and animations during view transition to prevent snapping */
+[data-theme-transitioning="active"],
+[data-theme-transitioning="active"] * {
+  transition: none !important;
+  animation-duration: 0s !important;
+}

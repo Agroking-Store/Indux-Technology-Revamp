@@ -26,7 +26,7 @@ import {
 import flags from "react-phone-number-input/flags";
 import en from "react-phone-number-input/locale/en.json";
 import "react-phone-number-input/style.css";
-import { submitLead } from "@/lib/api";
+import { submitQuote } from "@/lib/api";
 
 import {
   Dialog,
@@ -120,13 +120,12 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
         ? data.phone
         : `${countryCode} ${data.phone}`;
 
-      await submitLead({
+      await submitQuote({
         name: data.name,
-        email: data.workEmail,
+        workEmail: data.workEmail,
         phone: phoneWithCode,
         companyName: data.companyName,
-        service: data.serviceInterest,
-        source: "Get Quote",
+        serviceInterest: data.serviceInterest,
         message: data.message,
       });
       setOpen(false);
