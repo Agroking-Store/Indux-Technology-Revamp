@@ -6,6 +6,10 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ArrowLeft, FileText, User, CreditCard, ShieldCheck } from 'lucide-react';
 import api, { ApiResponse, EventRegistration, Event } from '@/lib/api';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function RegistrationDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -28,7 +32,8 @@ export default function RegistrationDetailsPage({ params }: { params: Promise<{ 
       setLoading(false);
     }
   }, [id, router]);
-  const statusStyles = {
+
+  const statusStyles: Record<string, string> = {
     Pending:
       "bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700",
     Approved:
@@ -38,9 +43,11 @@ export default function RegistrationDetailsPage({ params }: { params: Promise<{ 
     Rejected:
       "bg-rose-100 text-rose-700 border-rose-300 dark:bg-rose-900/30 dark:text-rose-300 dark:border-rose-700",
   };
+
   useEffect(() => {
     fetchRegistrationDetails();
   }, [fetchRegistrationDetails]);
+
   const handleSaveNotes = async () => {
     if (!registration) return;
     setUpdatingNotes(true);
@@ -73,16 +80,13 @@ export default function RegistrationDetailsPage({ params }: { params: Promise<{ 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <div className="flex items-center gap-3">
-          <Link
-            href="/events/registrations"
-            className="inline-flex items-center justify-center p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
-            title="Back to Registrations"
-          >
-            <ArrowLeft size={20} />
-          </Link>
+          <Button variant="outline" size="icon" className="rounded-xl h-10 w-10" >
+            <Link href="/events/registrations" title="Back to Registrations">
+              <ArrowLeft size={20} />
+            </Link>
+          </Button>
           <div>
-            <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
-              <User className="text-indigo-600 dark:text-indigo-400 size-7" />
+            <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               Registration Details
             </h1>
             <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
@@ -92,8 +96,9 @@ export default function RegistrationDetailsPage({ params }: { params: Promise<{ 
         </div>
 
         <div className="flex items-center gap-3">
-          <span
-            className={`px-3 py-1.5 inline-flex text-xs font-bold rounded-full border ${
+          <Badge
+            variant="outline"
+            className={`px-3 py-1.5 text-xs font-bold rounded-full ${
               registration.status === 'Approved' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border-emerald-200/60 dark:border-emerald-800/50' :
               registration.status === 'Rejected' ? 'bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-400 border-rose-200/60 dark:border-rose-800/50' :
               registration.status === 'Attended' ? 'bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400 border-blue-200/60 dark:border-blue-800/50' :
@@ -101,7 +106,7 @@ export default function RegistrationDetailsPage({ params }: { params: Promise<{ 
             }`}
           >
             {registration.status}
-          </span>
+          </Badge>
         </div>
       </div>
 
@@ -112,101 +117,107 @@ export default function RegistrationDetailsPage({ params }: { params: Promise<{ 
         <div className="lg:col-span-2 space-y-6">
           
           {/* Attendee Base Information Card */}
-          <div className="bg-white dark:bg-slate-900/60 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-6 space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-              <User className="text-indigo-600 dark:text-indigo-400 size-5" />
-              Attendee Information
-            </h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
-                <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Full Name</span>
-                <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{registration.name}</p>
-              </div>
-              <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
-                <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Email Address</span>
-                <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{registration.email}</p>
-              </div>
-              <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
-                <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Phone Number</span>
-                <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{registration.phone}</p>
-              </div>
-              <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
-                <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Registration Date</span>
-                <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{new Date(registration.createdAt).toLocaleString()}</p>
-              </div>
-            </div>
-
-            {registration.paymentStatus && registration.paymentStatus !== 'None' && (
-              <div className="pt-2">
-                <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                  <CreditCard size={14} className="text-indigo-600 dark:text-indigo-400" /> Payment Information
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Payment Status</span>
-                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{registration.paymentStatus}</p>
-                  </div>
-                  <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Amount Paid</span>
-                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{registration.amountPaid ? `₹${registration.amountPaid}` : '—'}</p>
-                  </div>
-                  {registration.razorpayOrderId && (
-                    <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800 sm:col-span-2">
-                      <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Razorpay Order ID</span>
-                      <p className="text-xs font-mono text-slate-700 dark:text-slate-300 mt-1">{registration.razorpayOrderId}</p>
-                    </div>
-                  )}
-                  {registration.razorpayPaymentId && (
-                    <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800 sm:col-span-2">
-                      <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Razorpay Payment ID</span>
-                      <p className="text-xs font-mono text-slate-700 dark:text-slate-300 mt-1">{registration.razorpayPaymentId}</p>
-                    </div>
-                  )}
+          <Card className="bg-white dark:bg-slate-900/60 rounded-2xl border-slate-200/80 dark:border-slate-800 shadow-sm">
+            <CardHeader className="border-b border-slate-100 dark:border-slate-800 pb-3">
+              <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <User className="text-indigo-600 dark:text-indigo-400 size-5" />
+                Attendee Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 pt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Full Name</span>
+                  <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{registration.name}</p>
+                </div>
+                <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Email Address</span>
+                  <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{registration.email}</p>
+                </div>
+                <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Phone Number</span>
+                  <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{registration.phone}</p>
+                </div>
+                <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Registration Date</span>
+                  <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{new Date(registration.createdAt).toLocaleString()}</p>
                 </div>
               </div>
-            )}
-          </div>
+
+              {registration.paymentStatus && registration.paymentStatus !== 'None' && (
+                <div className="pt-2">
+                  <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                    <CreditCard size={14} className="text-indigo-600 dark:text-indigo-400" /> Payment Information
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Payment Status</span>
+                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{registration.paymentStatus}</p>
+                    </div>
+                    <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
+                      <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Amount Paid</span>
+                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">{registration.amountPaid ? `₹${registration.amountPaid}` : '—'}</p>
+                    </div>
+                    {registration.razorpayOrderId && (
+                      <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800 sm:col-span-2">
+                        <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Razorpay Order ID</span>
+                        <p className="text-xs font-mono text-slate-700 dark:text-slate-300 mt-1">{registration.razorpayOrderId}</p>
+                      </div>
+                    )}
+                    {registration.razorpayPaymentId && (
+                      <div className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800 sm:col-span-2">
+                        <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">Razorpay Payment ID</span>
+                        <p className="text-xs font-mono text-slate-700 dark:text-slate-300 mt-1">{registration.razorpayPaymentId}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
           {/* Dynamic Form Responses Card */}
-          <div className="bg-white dark:bg-slate-900/60 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-6 space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-              <FileText className="text-indigo-600 dark:text-indigo-400 size-5" />
-              Dynamic Field Answers
-            </h3>
-            
-            {Object.keys(registration.answers || {}).length === 0 ? (
-              <p className="text-xs text-slate-400 dark:text-slate-500 italic py-4 text-center">No custom fields responses provided for this registration.</p>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {Object.entries(registration.answers).map(([key, val]) => {
-                  const fieldSchema = eventObj?.formFields?.find((f) => f.name === key);
-                  const displayLabel = fieldSchema?.label || key;
-                  const displayType = fieldSchema?.type;
+          <Card className="bg-white dark:bg-slate-900/60 rounded-2xl border-slate-200/80 dark:border-slate-800 shadow-sm">
+            <CardHeader className="border-b border-slate-100 dark:border-slate-800 pb-3">
+              <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <FileText className="text-indigo-600 dark:text-indigo-400 size-5" />
+                Dynamic Field Answers
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-4">
+              {Object.keys(registration.answers || {}).length === 0 ? (
+                <p className="text-xs text-slate-400 dark:text-slate-500 italic py-4 text-center">No custom fields responses provided for this registration.</p>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {Object.entries(registration.answers).map(([key, val]) => {
+                    const fieldSchema = eventObj?.formFields?.find((f) => f.name === key);
+                    const displayLabel = fieldSchema?.label || key;
+                    const displayType = fieldSchema?.type;
 
-                  return (
-                    <div key={key} className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
-                      <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">{displayLabel}</span>
-                      
-                      {displayType === 'file' && typeof val === 'string' && val.startsWith('data:') ? (
-                        <a
-                          href={val}
-                          download={`uploaded_file_${key}`}
-                          className="mt-1 flex items-center gap-1.5 text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-bold"
-                        >
-                          <FileText size={14} /> Download Uploaded File
-                        </a>
-                      ) : (
-                        <p className="text-sm text-slate-800 dark:text-slate-200 mt-1 break-words font-medium">
-                          {Array.isArray(val) ? val.join(', ') : String(val)}
-                        </p>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+                    return (
+                      <div key={key} className="bg-slate-50 dark:bg-slate-900/40 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">{displayLabel}</span>
+                        
+                        {displayType === 'file' && typeof val === 'string' && val.startsWith('data:') ? (
+                          <a
+                            href={val}
+                            download={`uploaded_file_${key}`}
+                            className="mt-1 flex items-center gap-1.5 text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-bold"
+                          >
+                            <FileText size={14} /> Download Uploaded File
+                          </a>
+                        ) : (
+                          <p className="text-sm text-slate-800 dark:text-slate-200 mt-1 break-words font-medium">
+                            {Array.isArray(val) ? val.join(', ') : String(val)}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
         </div>
 
@@ -214,48 +225,51 @@ export default function RegistrationDetailsPage({ params }: { params: Promise<{ 
         <div className="space-y-6">
           
           {/* Review Actions Card */}
-          <div className="bg-white dark:bg-slate-900/60 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-6 space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-              <ShieldCheck className="text-indigo-600 dark:text-indigo-400 size-5" />
-              Review Actions
-            </h3>
+          <Card className="bg-white dark:bg-slate-900/60 rounded-2xl border-slate-200/80 dark:border-slate-800 shadow-sm">
+            <CardHeader className="border-b border-slate-100 dark:border-slate-800 pb-3">
+              <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <ShieldCheck className="text-indigo-600 dark:text-indigo-400 size-5" />
+                Review Actions
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 pt-4">
+              <div className="space-y-2">
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Status</label>
+                <div className="grid grid-cols-1">
+                  <div className={`px-3 py-2 text-xs font-bold rounded-xl border text-center transition cursor-default ${
+                    statusStyles[registration.status] ??
+                    "bg-slate-100 text-slate-700 border-slate-300 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700"
+                  }`}>
+                    {registration.status}
+                  </div>
+                </div>
+              </div>
 
-            <div className="space-y-2">
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Status</label>
-              <div className="grid grid-cols-3 gap-2">
-  <button
-    type="button"
-    className={`px-3 py-2 text-xs font-bold rounded-xl border transition cursor-default ${
-      statusStyles[registration.status] ??
-      "bg-slate-100 text-slate-700 border-slate-300 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700"
-    }`}
-  >
-    {registration.status}
-  </button>
-</div>
-            </div>
+              <div className="space-y-2 pt-2">
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Internal Admin Notes</label>
+                <Textarea
+                  rows={4}
+                  value={adminNotes}
+                  onChange={(e) => setAdminNotes(e.target.value)}
+                  className="w-full p-3.5 border border-slate-300 dark:border-slate-700 rounded-xl text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus-visible:ring-indigo-500 shadow-none resize-none"
+                  placeholder="Enter internal reviews, interview marks, or notes..."
+                />
+                <Button
+                  type="button"
+                  disabled={updatingNotes}
+                  onClick={handleSaveNotes}
+                  className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold disabled:opacity-50 transition shadow-md shadow-indigo-600/10 cursor-pointer"
+                >
+                  {updatingNotes ? 'Saving Notes...' : 'Save Admin Notes'}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
 
-            <div className="space-y-2 pt-2">
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Internal Admin Notes</label>
-              <textarea
-                rows={4}
-                value={adminNotes}
-                onChange={(e) => setAdminNotes(e.target.value)}
-                className="w-full p-3.5 border border-slate-300 dark:border-slate-700 rounded-xl text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus-visible:outline-indigo-500 shadow-none resize-none"
-                placeholder="Enter internal reviews, interview marks, or notes..."
-              />
-              <button
-                type="button"
-                disabled={updatingNotes}
-                onClick={handleSaveNotes}
-                className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold disabled:opacity-50 transition shadow-md shadow-indigo-600/10 cursor-pointer"
-              >
-                {updatingNotes ? 'Saving Notes...' : 'Save Admin Notes'}
-              </button>
-            </div>
-          </div>
         </div>
+
       </div>
+
     </div>
   );
 }

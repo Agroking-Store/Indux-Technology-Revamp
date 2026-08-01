@@ -312,8 +312,8 @@ function RegistrationsContent() {
                 {registrations.map((reg) => {
                   const eventObj = reg.eventId as unknown as Event;
                   return (
-                    <tr key={reg._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors" onClick={()=>router.push(`/events/registrations/${reg._id}`)}>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                    <tr key={reg._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors" >
+                      <td className="px-6 py-4 whitespace-nowrap" onClick={()=>router.push(`/events/registrations/${reg._id}`)}>
                         <div className="text-sm font-semibold text-gray-900 dark:text-white">{reg.name}</div>
                         <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1 mt-0.5"><Mail size={12} /> {reg.email}</div>
                         <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1 mt-0.5"><Phone size={12} /> {reg.phone}</div>
