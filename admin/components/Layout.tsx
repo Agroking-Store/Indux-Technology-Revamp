@@ -95,7 +95,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
             <div className="flex items-center gap-4">
               <a
-                href="http://localhost:3000"
+                href={process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden md:flex items-center gap-1.5 px-3.5 py-2 bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-lg text-xs font-bold transition-all"

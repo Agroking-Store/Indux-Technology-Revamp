@@ -5,6 +5,16 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname,
   },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/admin",
+        basePath: false,
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
