@@ -120,11 +120,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         isActive={active}
                         tooltip={item.label}
                         className={
-                          active 
-                            ? 'data-[active=true]:bg-indigo-600 data-[active=true]:text-white hover:bg-indigo-600/95 dark:data-[active=true]:bg-indigo-600/90 dark:data-[active=true]:text-white dark:hover:bg-indigo-600/95 transition-all duration-200' 
-                            : 'text-muted-foreground hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800/60 dark:hover:text-slate-100 transition-all duration-200'
+                          active
+                            ? "bg-indigo-600 text-white hover:bg-indigo-600 hover:text-white dark:bg-indigo-600 dark:text-white dark:hover:bg-indigo-600"
+                            : "text-muted-foreground hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white"
                         }
                       >
+                        <item.icon />
                         <item.icon />
                         <span>{item.label}</span>
                       </SidebarMenuButton>
