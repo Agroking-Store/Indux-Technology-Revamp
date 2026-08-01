@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -49,10 +49,13 @@ export function ConfirmDialog({
   onOpenChange
 }: ConfirmDialogProps) {
   const Icon = icon === 'trash' ? Trash2 : icon === 'logout' ? LogOut : AlertCircle;
+  const isNativeButton = React.isValidElement(trigger) && (
+    trigger.type === 'button' || typeof trigger.type !== 'string'
+  );
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
-      {trigger && <AlertDialogTrigger render={trigger} />}
+      {trigger && <AlertDialogTrigger nativeButton={isNativeButton} render={trigger} />}
       
       {/* 
         We override the default p-4 and rounded-xl of AlertDialogContent 

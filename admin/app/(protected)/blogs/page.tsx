@@ -101,7 +101,7 @@ export default function BlogsPage() {
     return () => { isMounted.current = false; };
   }, [fetchBlogs]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     try {
       await api.delete(`/blogs/${id}`);
       toast.success('Blog deleted successfully');
@@ -109,9 +109,9 @@ export default function BlogsPage() {
     } catch {
       // handled
     }
-  };
+  }, [fetchBlogs]);
 
-  const handleToggleStatus = async (id: string, currentStatus: string) => {
+  const handleToggleStatus = useCallback(async (id: string, currentStatus: string) => {
     const newStatus = currentStatus === 'Published' ? 'Draft' : 'Published';
     try {
       await api.patch(`/blogs/${id}/status`, { status: newStatus });
@@ -122,7 +122,7 @@ export default function BlogsPage() {
     } catch {
       fetchBlogs();
     }
-  };
+  }, [fetchBlogs]);
 
   const handleClearFilters = () => {
     setStatusFilter('all');
@@ -136,18 +136,18 @@ export default function BlogsPage() {
       id: "serial",
       header: () => <div className="text-center">S.No</div>,
       cell: ({ row }) => (
-        <span className="text-muted-foreground font-medium text-sm pl-2">
+        <div className="text-center text-muted-foreground font-medium text-sm pr-2">
           {pagination.pageIndex * pagination.pageSize + row.index + 1}
-        </span>
+        </div>
       ),
     },
     {
       accessorKey: "title",
-      header: () => <div className="text-center">Article Title</div>,
+      header: () => <div className="text-left">Article Title</div>,
       cell: ({ row }) => {
         const blog = row.original;
         return (
-          <div className="flex flex-col gap-1 w-full pr-6">
+          <div className="flex flex-col gap-1 w-full text-left">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger render={<div className="text-sm font-semibold text-foreground truncate cursor-help">{blog.title}</div>} />
@@ -176,7 +176,7 @@ export default function BlogsPage() {
     },
     {
       accessorKey: "category",
-      header: () => <div className="text-center">Category</div>,
+      header: () => <div className="text-left">Category</div>,
       cell: ({ row }) => (
         <Badge variant="outline" className="bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 font-bold whitespace-nowrap truncate max-w-[120px]">
           {row.getValue("category") || 'Tech'}
@@ -185,7 +185,7 @@ export default function BlogsPage() {
     },
     {
       accessorKey: "author",
-      header: () => <div className="text-center">Author</div>,
+      header: () => <div className="text-left">Author</div>,
       cell: ({ row }) => (
         <div className="whitespace-nowrap text-sm font-medium truncate max-w-[120px]">
           {row.getValue("author") || '—'}
@@ -194,7 +194,7 @@ export default function BlogsPage() {
     },
     {
       accessorKey: "createdAt",
-      header: () => <div className="text-center">Date</div>,
+      header: () => <div className="text-left">Date</div>,
       cell: ({ row }) => (
         <div className="whitespace-nowrap text-sm text-muted-foreground">
           {new Date(row.getValue("createdAt")).toLocaleDateString(undefined, {
@@ -205,7 +205,7 @@ export default function BlogsPage() {
     },
     {
       accessorKey: "status",
-      header: () => <div className="text-center">Status</div>,
+      header: () => <div className="text-left">Status</div>,
       cell: ({ row }) => {
         const status = row.getValue("status") as string;
         const isPublished = status === 'Published';
@@ -269,31 +269,20 @@ export default function BlogsPage() {
                 onConfirm={() => handleDelete(blog._id)}
                 icon="trash"
                 trigger={
+                  <div className="inline-block">
                     <Tooltip>
-  <ConfirmDialog
-    title="Are you sure you want to delete this blog?"
-    description="This action cannot be undone. This will permanently delete the blog."
-    confirmText="Yes, delete"
-    onConfirm={() => handleDelete(blog._id)}
-    icon="trash"
-    trigger={
-      <TooltipTrigger
-        render={
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/50 cursor-pointer"
-          >
-            <Trash2 size={16} />
-          </Button>
-        }
-      />
-    }
-  />
-
-  <TooltipContent>Delete Article</TooltipContent>
-</Tooltip>
-                  
+                      <TooltipTrigger render={
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/50 cursor-pointer"
+                        >
+                          <Trash2 size={16} />
+                        </Button>
+                      } />
+                      <TooltipContent>Delete Article</TooltipContent>
+                    </Tooltip>
+                  </div>
                 }
               />
             </TooltipProvider>
@@ -301,7 +290,7 @@ export default function BlogsPage() {
         );
       },
     },
-  ], [handleToggleStatus, handleDelete, pagination]);
+  ], [handleDelete, handleToggleStatus, pagination]);
 
   const table = useReactTable({
     data: blogs,
@@ -352,7 +341,7 @@ export default function BlogsPage() {
               className="pl-9 h-9"
             />
           </div>
-          <Select value={statusFilter} onValueChange={(value: any) => { setStatusFilter(value); setPagination(prev => ({ ...prev, pageIndex: 0 })); }}>
+          <Select value={statusFilter} onValueChange={(value) => { setStatusFilter(value as 'all' | 'Published' | 'Draft'); setPagination(prev => ({ ...prev, pageIndex: 0 })); }}>
             <SelectTrigger className="w-[140px] h-9 cursor-pointer">
               <SelectValue placeholder="All Statuses" />
             </SelectTrigger>
@@ -384,8 +373,12 @@ export default function BlogsPage() {
               <TableRow key={headerGroup.id} className="hover:bg-transparent">
                 {headerGroup.headers.map((header) => {
                   let width = 'auto';
-                  if (header.id === 'serial') width = '60px';
-                  else if (header.id === 'title') width = '40%';
+                  if (header.id === 'serial') width = '70px';
+                  else if (header.id === 'title') width = '35%';
+                  else if (header.id === 'category') width = '15%';
+                  else if (header.id === 'author') width = '15%';
+                  else if (header.id === 'createdAt') width = '140px';
+                  else if (header.id === 'status') width = '120px';
                   else if (header.id === 'actions') width = '120px';
                   
                   return (
