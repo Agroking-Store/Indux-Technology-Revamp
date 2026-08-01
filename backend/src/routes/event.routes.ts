@@ -8,6 +8,7 @@ import {
   updateEventStatus,
 } from "../controllers/event.controller";
 import { protect } from "../middlewares/auth";
+import { uploadEventImages } from "../middlewares/upload";
 
 const router = Router();
 
@@ -18,8 +19,8 @@ router.get("/:id", getEventById);
 // ---- Protected routes (admin only) ----
 router.use(protect);
 
-router.post("/", createEvent);
-router.put("/:id", updateEvent);
+router.post("/", uploadEventImages, createEvent);
+router.put("/:id", uploadEventImages, updateEvent);
 router.delete("/:id", deleteEvent);
 router.patch("/:id/status", updateEventStatus);
 

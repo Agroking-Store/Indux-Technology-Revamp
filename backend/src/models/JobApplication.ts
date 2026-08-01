@@ -40,7 +40,6 @@ export interface IJobApplication extends Document {
   // Compatibility virtuals
   careerId: Types.ObjectId | string;
   fullName: string;
-  resumeUrl: string;
 }
 
 const JobApplicationSchema = new Schema<IJobApplication>(
@@ -57,7 +56,7 @@ const JobApplicationSchema = new Schema<IJobApplication>(
     noticePeriod: { type: String, trim: true },
     expectedCTC: { type: String, trim: true },
     answers: { type: Schema.Types.Mixed, default: {} },
-    resume: { type: String, required: true, select: false }, // Don't return massive base64 in default list queries
+    resume: { type: String, required: true },
     status: {
       type: String,
       enum: [
@@ -103,9 +102,6 @@ JobApplicationSchema.virtual("fullName")
     this.candidateName = val;
   });
 
-JobApplicationSchema.virtual("resumeUrl").get(function (this: IJobApplication) {
-  // Point to our secure local streaming endpoint
-  return `/api/v1/applications/${this._id}/resume`;
-});
+
 
 export default model<IJobApplication>("JobApplication", JobApplicationSchema);

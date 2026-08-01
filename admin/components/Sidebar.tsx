@@ -47,6 +47,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       items: [
         { href: '/blogs', label: 'Blogs Feed', icon: FileText },
         { href: '/leads', label: 'Contact Leads', icon: MessageSquare },
+        { href: '/quotes', label: 'Quote Requests', icon: Briefcase },
       ]
     },
     {

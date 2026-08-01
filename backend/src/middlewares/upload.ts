@@ -2,7 +2,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-// Store the uploaded file in memory instead of uploading to Cloudinary
+
 const storage = multer.memoryStorage();
 
 // Disk storage for blog images
@@ -11,9 +11,43 @@ if (!fs.existsSync(blogUploadDir)) {
   fs.mkdirSync(blogUploadDir, { recursive: true });
 }
 
+// Disk storage for resumes
+const resumeUploadDir = path.join(__dirname, "../../uploads/resumes");
+if (!fs.existsSync(resumeUploadDir)) {
+  fs.mkdirSync(resumeUploadDir, { recursive: true });
+}
+
+// Disk storage for events
+const eventUploadDir = path.join(__dirname, "../../uploads/events");
+if (!fs.existsSync(eventUploadDir)) {
+  fs.mkdirSync(eventUploadDir, { recursive: true });
+}
+
 const blogDiskStorage = multer.diskStorage({
   destination: function (_req, _file, cb) {
     cb(null, blogUploadDir);
+  },
+  filename: function (_req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
+  },
+});
+
+const resumeDiskStorage = multer.diskStorage({
+  destination: function (_req, _file, cb) {
+    cb(null, resumeUploadDir);
+  },
+  filename: function (_req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
+  },
+});
+
+const eventDiskStorage = multer.diskStorage({
+  destination: function (_req, _file, cb) {
+    cb(null, eventUploadDir);
   },
   filename: function (_req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -34,8 +68,8 @@ const uploadBlogDiskInstance = multer({
   },
 });
 
-const uploadImageInstance = multer({
-  storage,
+const uploadEventDiskInstance = multer({
+  storage: eventDiskStorage,
   limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
   fileFilter: (_req, file, cb) => {
     if (file.mimetype.startsWith("image/")) {
@@ -46,8 +80,8 @@ const uploadImageInstance = multer({
   },
 });
 
-const uploadResumeInstance = multer({
-  storage,
+const uploadResumeDiskInstance = multer({
+  storage: resumeDiskStorage,
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max
   fileFilter: (_req, file, cb) => {
     if (file.mimetype === "application/pdf") {
@@ -83,16 +117,16 @@ const uploadRegistrationFileInstance = multer({
 export const uploadBlogImage = uploadBlogDiskInstance.single("featuredImage");
 
 // Middleware for single event image upload (field name: "image")
-export const uploadEventImage = uploadImageInstance.single("image");
+export const uploadEventImage = uploadEventDiskInstance.single("image");
 
 // Middleware for multiple event images upload (field names: "coverImage", "bannerImage")
-export const uploadEventImages = uploadImageInstance.fields([
+export const uploadEventImages = uploadEventDiskInstance.fields([
   { name: "coverImage", maxCount: 1 },
   { name: "bannerImage", maxCount: 1 },
 ]);
 
 // Middleware for single PDF resume upload (field name: "resume")
-export const uploadResume = uploadResumeInstance.single("resume");
+export const uploadResume = uploadResumeDiskInstance.single("resume");
 
 // Middleware for single registration dynamic file upload (field name: "file")
 export const uploadRegistrationFile = uploadRegistrationFileInstance.single("file");

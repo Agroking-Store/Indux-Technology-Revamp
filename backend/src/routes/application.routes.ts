@@ -3,7 +3,6 @@ import {
   submitApplication,
   getApplications,
   getCandidateDetails,
-  getResumeStream,
   updateApplicationStatus,
   updateApplicationNotes,
   deleteApplication,
@@ -17,8 +16,6 @@ const router = Router();
 // ---- Public endpoint (submit application) ----
 router.post("/", uploadResume, submitApplication);
 
-// ---- Secure resume streaming (supports auth token in query param or auth headers) ----
-router.get("/:id/resume", getResumeStream);
 router.get("/export", exportApplications);
 
 // ---- Protected endpoints (admin only) ----

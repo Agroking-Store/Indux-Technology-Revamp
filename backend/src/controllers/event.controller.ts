@@ -34,14 +34,34 @@ export const createEvent = asyncHandler(async (req: AuthRequest, res: Response) 
     throw ApiError.conflict("Slug already exists");
   }
 
+  // Handle file uploads if they exist
+  const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+  
+  let parsedCoverImage = req.body.coverImage || "";
+  let parsedBannerImage = req.body.bannerImage || "";
+
+  if (files?.coverImage?.[0]) {
+    parsedCoverImage = `/uploads/events/${files.coverImage[0].filename}`;
+  }
+  if (files?.bannerImage?.[0]) {
+    parsedBannerImage = `/uploads/events/${files.bannerImage[0].filename}`;
+  }
+
+  if (!parsedCoverImage) {
+    throw ApiError.badRequest("Cover image is required");
+  }
+  if (!parsedBannerImage) {
+    throw ApiError.badRequest("Banner image is required");
+  }
+
   const event = await Event.create({
     title,
     slug: finalSlug,
     ...rest,
-    coverImage,
-    bannerImage,
+    coverImage: parsedCoverImage,
+    bannerImage: parsedBannerImage,
     // Backward compatibility fields
-    image: coverImage,
+    image: parsedCoverImage,
     date: rest.startDate,
     content: rest.description,
   });
@@ -132,9 +152,18 @@ export const updateEvent = asyncHandler(async (req: AuthRequest, res: Response) 
     }
   }
 
-  // coverImage/bannerImage are pasted URLs — use the new one if provided, else keep existing
-  const coverImageUrl = rest.coverImage || event.coverImage;
-  const bannerImageUrl = rest.bannerImage || event.bannerImage;
+  const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+  
+  let parsedCoverImage = rest.coverImage || event.coverImage;
+  let parsedBannerImage = rest.bannerImage || event.bannerImage;
+
+  if (files?.coverImage?.[0]) {
+    parsedCoverImage = `/uploads/events/${files.coverImage[0].filename}`;
+  }
+  if (files?.bannerImage?.[0]) {
+    parsedBannerImage = `/uploads/events/${files.bannerImage[0].filename}`;
+  }
+
   const { coverImage: _ci, bannerImage: _bi, ...restWithoutImages } = rest;
 
   const updatedEvent = await Event.findByIdAndUpdate(
@@ -143,10 +172,10 @@ export const updateEvent = asyncHandler(async (req: AuthRequest, res: Response) 
       ...(title && { title }),
       ...(finalSlug && { slug: finalSlug }),
       ...restWithoutImages,
-      coverImage: coverImageUrl,
-      bannerImage: bannerImageUrl,
+      coverImage: parsedCoverImage,
+      bannerImage: parsedBannerImage,
       // Update legacy fields
-      image: coverImageUrl,
+      image: parsedCoverImage,
       date: rest.startDate || event.startDate,
       content: rest.description || event.description,
     },
