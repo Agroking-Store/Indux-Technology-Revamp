@@ -758,19 +758,19 @@ export default function EventFormPage() {
 
               <div className="space-y-1.5">
                 <Label className="block text-xs font-bold text-slate-500 uppercase tracking-wide">Start Date & Time *</Label>
-                <Input type="datetime-local" {...register('startDate')} disabled={isViewMode} />
+                <Input type="datetime-local" className='cursor-pointer' {...register('startDate')} disabled={isViewMode} />
                 {errors.startDate && <p className="text-rose-500 text-xs mt-1">{errors.startDate.message}</p>}
               </div>
 
               <div className="space-y-1.5">
                 <Label className="block text-xs font-bold text-slate-500 uppercase tracking-wide">End Date & Time *</Label>
-                <Input type="datetime-local" {...register('endDate')} disabled={isViewMode} />
+                <Input type="datetime-local" className='cursor-pointer' {...register('endDate')} disabled={isViewMode} />
                 {errors.endDate && <p className="text-rose-500 text-xs mt-1">{errors.endDate.message}</p>}
               </div>
 
               <div className="space-y-1.5">
                 <Label className="block text-xs font-bold text-slate-500 uppercase tracking-wide">Registration Deadline *</Label>
-                <Input type="datetime-local" {...register('registrationDeadline')} disabled={isViewMode} />
+                <Input type="datetime-local" className='cursor-pointer' {...register('registrationDeadline')} disabled={isViewMode} />
                 {errors.registrationDeadline && <p className="text-rose-500 text-xs mt-1">{errors.registrationDeadline.message}</p>}
               </div>
 

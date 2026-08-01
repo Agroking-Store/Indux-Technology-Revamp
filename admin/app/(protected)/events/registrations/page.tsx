@@ -51,7 +51,7 @@ function RegistrationsContent() {
   const [registrations, setRegistrations] = useState<EventRegistration[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [opened,setopened]=useState(false);
   // Filters State
   const [selectedEventId, setSelectedEventId] = useState(searchParams.get('eventId') || '');
   const [selectedEventTitle,setselectedEventTitle]=useState("ALL");
@@ -176,7 +176,6 @@ function RegistrationsContent() {
           <button
             type="button"
             onClick={handleExportCSV}
-            disabled={!selectedEventId}
             className="flex items-center gap-1.5 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-xl transition font-semibold text-sm shadow-md shadow-indigo-600/10 cursor-pointer disabled:opacity-50"
           >
             <Download size={16} /> Export Registrations (CSV)
@@ -217,7 +216,7 @@ function RegistrationsContent() {
       setPage(1);
     }}
   >
-    <SelectTrigger className="h-11 w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none">
+    <SelectTrigger className="h-11 w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none cursor-pointer">
       <SelectValue placeholder="All Events" />
     </SelectTrigger>
 
@@ -242,7 +241,7 @@ function RegistrationsContent() {
               setPage(1); 
             }}
   >
-    <SelectTrigger className="h-11 w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none">
+    <SelectTrigger className="h-11 w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none cursor-pointer">
       <SelectValue placeholder="All Statuses" />
     </SelectTrigger>
 
@@ -256,11 +255,11 @@ function RegistrationsContent() {
   </Select>
 
   {/* Date */}
-  <Popover>
-  <PopoverTrigger>
+  <Popover open={opened} onOpenChange={setopened}> 
+  <PopoverTrigger >
     <Button
       variant="outline"
-      className="h-11 w-full justify-start text-left font-normal border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none"
+      className="h-11 w-full justify-start text-left font-normal border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none cursor-pointer"
     >
       <CalendarIcon className="mr-2 h-4 w-4" />
       {dateFilter ? format(dateFilter, "PPP") : "Select Date"}
@@ -276,6 +275,7 @@ function RegistrationsContent() {
       setDateFilter(date);
       setPage(1);
     }
+    setopened(false)
   }}
 />
   </PopoverContent>
@@ -356,7 +356,7 @@ function RegistrationsContent() {
   <div className="flex items-center gap-1.5">
     <Link
       href={`/events/registrations/${reg._id}`}
-      className="text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 p-1.5 rounded-lg transition"
+      className="text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 p-1.5 rounded-lg transition cursor-pointer"
       title="View Details"
     >
       <Eye size={16} />
@@ -366,7 +366,7 @@ function RegistrationsContent() {
       <button
         type="button"
         onClick={() => handleUpdateStatus(reg._id, 'Approved')}
-        className="text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/50 p-1.5 rounded-lg transition"
+        className="text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/50 p-1.5 rounded-lg transition cursor-pointer"
         title="Approve registration"
       >
         <Check size={16} />
@@ -377,7 +377,7 @@ function RegistrationsContent() {
       <button
         type="button"
         onClick={() => handleUpdateStatus(reg._id, 'Attended')}
-        className="text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 px-2 py-1 rounded-lg transition text-xs font-bold"
+        className="text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 px-2 py-1 rounded-lg transition text-xs font-bold cursor-pointer"
         title="Mark as Attended"
       >
         <Check size={16} />
@@ -388,7 +388,7 @@ function RegistrationsContent() {
       <button
         type="button"
         onClick={() => handleUpdateStatus(reg._id, 'Rejected')}
-        className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50 p-1.5 rounded-lg transition"
+        className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50 p-1.5 rounded-lg transition cursor-pointer"
         title="Reject registration"
       >
         <X size={16} />
