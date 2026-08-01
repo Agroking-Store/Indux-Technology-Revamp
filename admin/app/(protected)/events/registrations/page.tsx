@@ -217,7 +217,7 @@ function RegistrationsContent() {
       setPage(1);
     }}
   >
-    <SelectTrigger className="h-11 w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none">
+    <SelectTrigger className="h-11 w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none cursor-pointer">
       <SelectValue placeholder="All Events" />
     </SelectTrigger>
 
@@ -242,7 +242,7 @@ function RegistrationsContent() {
               setPage(1); 
             }}
   >
-    <SelectTrigger className="h-11 w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none">
+    <SelectTrigger className="h-11 w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none cursor-pointer">
       <SelectValue placeholder="All Statuses" />
     </SelectTrigger>
 
@@ -260,7 +260,7 @@ function RegistrationsContent() {
   <PopoverTrigger>
     <Button
       variant="outline"
-      className="h-11 w-full justify-start text-left font-normal border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none"
+      className="h-11 w-full justify-start text-left font-normal border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none cursor-pointer"
     >
       <CalendarIcon className="mr-2 h-4 w-4" />
       {dateFilter ? format(dateFilter, "PPP") : "Select Date"}

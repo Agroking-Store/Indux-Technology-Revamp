@@ -427,7 +427,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
             
             <div className="space-y-3.5 divide-y divide-slate-100 dark:divide-slate-800 text-sm font-medium">
               <div className="flex items-start gap-3 pt-0">
-                <Calendar className="text-blue-605 mt-0.5 shrink-0" size={18} />
+                <Calendar className="text-blue-600 mt-0.5 shrink-0" size={18} />
                 <div>
                   <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">Date</span>
                   <span className="text-slate-800 dark:text-slate-200 font-bold text-xs">{formatDateFull(event.startDate)}</span>
@@ -663,7 +663,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                             required={field.required}
                             value={fieldVal}
                             onChange={(e) => handleAnswerChange(field.name, e.target.value)}
-                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-505 text-slate-900 dark:text-white"
+                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 text-slate-900 dark:text-white"
                           />
                         )}
 

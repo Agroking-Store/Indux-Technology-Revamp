@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { submitApplication, Career } from "@/lib/api";
-import { ArrowLeft, Briefcase, MapPin, DollarSign, Users, Upload, CheckCircle2, Loader2, FileText, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowLeft, Briefcase, MapPin, IndianRupee, Users, Upload, CheckCircle2, Loader2, FileText, ChevronRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -127,7 +127,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
         
         <button
           onClick={() => router.push("/careers")}
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-555 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 mb-8 transition-colors group cursor-pointer"
+          className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 mb-8 transition-colors group cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
           Back to Open Opportunities
@@ -139,10 +139,10 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
             animate={{ opacity: 1, scale: 1 }}
             className="max-w-xl mx-auto bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-8 sm:p-12 text-center shadow-xl"
           >
-            <CheckCircle2 className="w-16 h-16 text-emerald-505 mx-auto mb-6" />
+            <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto mb-6" />
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">Application Submitted!</h2>
             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8">
-              Thank you for applying to the <strong className="text-slate-850 dark:text-slate-200">{career.title}</strong> position at Indux. Our engineering team will review your application and resume details and get in touch with you soon.
+              Thank you for applying to the <strong className="text-slate-800 dark:text-slate-200">{career.title}</strong> position at Indux. Our engineering team will review your application and resume details and get in touch with you soon.
             </p>
             <Button
               onClick={() => router.push("/careers")}
@@ -176,7 +176,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                   </span>
                   {career.salary && (
                     <span className="inline-flex items-center gap-1.5">
-                      <DollarSign className="w-3.5 h-3.5" />
+                      <IndianRupee className="w-3.5 h-3.5" />
                       {career.salary}
                     </span>
                   )}
@@ -199,7 +199,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                       <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2.5">Key Responsibilities</h3>
                       <ul className="space-y-2">
                         {career.responsibilities.map((resp, i) => (
-                          <li key={i} className="flex gap-2.5 text-slate-605 dark:text-slate-400 text-sm leading-relaxed">
+                          <li key={i} className="flex gap-2.5 text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                             <ChevronRight className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
                             <span>{resp}</span>
                           </li>
@@ -228,7 +228,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                       <ul className="space-y-2">
                         {career.benefits.map((benefit, i) => (
                           <li key={i} className="flex gap-2.5 text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                            <Sparkles className="w-4 h-4 text-amber-505 shrink-0 mt-0.5" />
+                            <Sparkles className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                             <span>{benefit}</span>
                           </li>
                         ))}
@@ -238,10 +238,13 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
 
                   {career.skills && career.skills.length > 0 && (
                     <div>
-                      <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2.5">Skills Required</h3>
+                      <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">Skills Required</h3>
                       <div className="flex flex-wrap gap-2">
                         {career.skills.map((skill, i) => (
-                          <span key={i} className="text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-805 text-slate-600 dark:text-slate-350">
+                          <span
+                            key={i}
+                            className="text-xs font-bold px-3.5 py-1.5 rounded-xl bg-blue-50/50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 border border-blue-100/40 dark:border-blue-900/30 hover:bg-blue-100/40 dark:hover:bg-blue-900/40 hover:scale-[1.04] transition-all duration-300 select-none cursor-default"
+                          >
                             {skill}
                           </span>
                         ))}
@@ -259,14 +262,14 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                 <p className="text-xs text-slate-500 mb-6">Complete the form below. Required fields are marked *</p>
 
                 {errorMsg && (
-                  <div className="bg-red-50 dark:bg-red-950/30 border border-red-205 dark:border-red-900 text-red-600 dark:text-red-400 text-xs rounded-xl p-3 mb-5 font-semibold">
+                  <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 text-xs rounded-xl p-3 mb-5 font-semibold">
                     {errorMsg}
                   </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-606 dark:text-slate-400 mb-1.5">Full Name *</label>
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Full Name *</label>
                     <input
                       type="text"
                       required
@@ -286,7 +289,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="name@domain.com"
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-505/50"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       />
                     </div>
                     <div>
@@ -368,7 +371,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={portfolio}
                         onChange={(e) => setPortfolio(e.target.value)}
                         placeholder="https://..."
-                        className="w-full bg-slate-50 dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       />
                     </div>
                     <div>
@@ -378,7 +381,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={linkedin}
                         onChange={(e) => setLinkedin(e.target.value)}
                         placeholder="https://linkedin.com/in/..."
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-505/50"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       />
                     </div>
                     <div>
@@ -394,7 +397,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-606 dark:text-slate-400 mb-1.5">Cover Letter / Intro</label>
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Cover Letter / Intro</label>
                     <textarea
                       rows={3}
                       value={coverLetter}
@@ -513,7 +516,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                           <FileText className="w-6 h-6" />
                           <div className="text-left">
                             <p className="text-xs font-bold line-clamp-1">{resumeFile.name}</p>
-                            <p className="text-[10px] text-slate-405">{(resumeFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                            <p className="text-[10px] text-slate-400">{(resumeFile.size / 1024 / 1024).toFixed(2)} MB</p>
                           </div>
                         </div>
                       ) : (
