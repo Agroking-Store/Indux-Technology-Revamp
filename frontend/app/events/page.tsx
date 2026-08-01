@@ -64,7 +64,7 @@ export default function EventsPage() {
   // Apply search query to the selected tab list
   const filteredEvents = useMemo(() => {
     const list = activeTab === 'Upcoming' ? categorizedEvents.upcoming : categorizedEvents.past;
-    
+
     // Sort upcoming events closest-first, past events recent-first
     const sorted = [...list].sort((a, b) => {
       const dateA = new Date(a.startDate || a.date || '').getTime();
@@ -84,7 +84,7 @@ export default function EventsPage() {
 
     return sorted;
   }, [categorizedEvents, activeTab, searchQuery]);
-
+console.log(process.env.NEXT_PUBLIC_IMAGE_RENDERING_URL);
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <main className="flex-1">
@@ -94,14 +94,13 @@ export default function EventsPage() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="flex flex-col gap-4 text-left max-w-xl"
               >
                 <div className="text-blue-600 dark:text-blue-500 font-bold tracking-wider text-xs sm:text-sm uppercase flex items-center gap-2">
-                  <Sparkles className="size-4 text-blue-500 animate-pulse" />
                   Events & Community
                 </div>
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
@@ -141,9 +140,8 @@ export default function EventsPage() {
             <div className="flex gap-4">
               <button
                 onClick={() => setActiveTab('Upcoming')}
-                className={`relative px-4 py-2 text-sm font-bold transition-all cursor-pointer ${
-                  activeTab === 'Upcoming' ? 'text-blue-650 dark:text-blue-500 font-extrabold' : 'text-slate-500 hover:text-slate-950 dark:hover:text-white'
-                }`}
+                className={`relative px-4 py-2 text-sm font-bold transition-all cursor-pointer ${activeTab === 'Upcoming' ? 'text-blue-650 dark:text-blue-500 font-extrabold' : 'text-slate-500 hover:text-slate-950 dark:hover:text-white'
+                  }`}
               >
                 Upcoming Events ({categorizedEvents.upcoming.length})
                 {activeTab === 'Upcoming' && (
@@ -156,9 +154,8 @@ export default function EventsPage() {
 
               <button
                 onClick={() => setActiveTab('Past')}
-                className={`relative px-4 py-2 text-sm font-bold transition-all cursor-pointer ${
-                  activeTab === 'Past' ? 'text-blue-650 dark:text-blue-500 font-extrabold' : 'text-slate-500 hover:text-slate-950 dark:hover:text-white'
-                }`}
+                className={`relative px-4 py-2 text-sm font-bold transition-all cursor-pointer ${activeTab === 'Past' ? 'text-blue-650 dark:text-blue-500 font-extrabold' : 'text-slate-500 hover:text-slate-950 dark:hover:text-white'
+                  }`}
               >
                 Past Events ({categorizedEvents.past.length})
                 {activeTab === 'Past' && (
@@ -189,7 +186,7 @@ export default function EventsPage() {
               <p className="mt-1 text-sm text-slate-450 dark:text-slate-400">There are no events matching your criteria at this moment.</p>
             </motion.div>
           ) : (
-            <motion.div 
+            <motion.div
               layout
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
@@ -209,12 +206,15 @@ export default function EventsPage() {
                         {/* Image & Type Badge */}
                         <div className="relative h-56 overflow-hidden">
                           <img
-                            src={event.coverImage || event.image || fallbackImg}
-                            alt={event.title}
+                            src={
+                              event.coverImage
+                                ? `${process.env.NEXT_PUBLIC_IMAGE_RENDERING_URL}${event.coverImage}`
+                                : event.image || fallbackImg
+                            } alt={event.title}
                             className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
-                          
+
                           {/* Date Badge */}
                           <div className="absolute top-4 left-4 bg-blue-600 dark:bg-blue-500 text-white font-bold px-3 py-1.5 rounded-full text-xs flex items-center gap-1.5 shadow-md">
                             <Calendar className="size-3.5" />
