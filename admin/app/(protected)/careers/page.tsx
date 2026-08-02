@@ -144,7 +144,7 @@ export default function CareersPage() {
         <div>
           <Label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Role</Label>
           <div className="mt-1">
-            <Select value={selectedRole} onValueChange={setSelectedRole}>
+            <Select value={selectedRole} onValueChange={(val) => setSelectedRole(val || "ALL")}>
               <SelectTrigger className="w-full px-3 py-1.5 h-9 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-indigo-500 shadow-none cursor-pointer">
                 <SelectValue placeholder="All Roles" />
               </SelectTrigger>
@@ -162,7 +162,7 @@ export default function CareersPage() {
         <div>
           <Label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Office Location</Label>
           <div className="mt-1">
-            <Select value={selectedLoc} onValueChange={setSelectedLoc}>
+            <Select value={selectedLoc} onValueChange={(val) => setSelectedLoc(val || "ALL")}>
               <SelectTrigger className="w-full px-3 py-1.5 h-9 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-indigo-500 shadow-none cursor-pointer">
                 <SelectValue placeholder="All Locations" />
               </SelectTrigger>
