@@ -14,10 +14,9 @@ export const getEmailBaseTemplate = (title: string, bodyContent: string) => {
     table { border-collapse: collapse; width: 100%; }
     
     /* Layout */
-    .container { max-w-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); margin-top: 40px; margin-bottom: 40px; }
-    .header { background-color: #0f2e4a; padding: 35px 40px; text-align: center; }
-    .header img { max-width: 180px; height: auto; }
-    .header h1 { color: #ffffff; font-size: 24px; font-weight: 700; margin-top: 15px; letter-spacing: 0.5px; }
+    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); margin-top: 40px; margin-bottom: 40px; }
+    .header { background-color: #ffffff; padding: 35px 40px 25px 40px; text-align: center; border-bottom: 1px solid #f1f5f9; }
+    .header img { max-width: 220px; height: auto; }
     
     /* Content */
     .content { padding: 40px; background-color: #ffffff; }
@@ -54,10 +53,9 @@ export const getEmailBaseTemplate = (title: string, bodyContent: string) => {
       <!-- Header -->
       <tr>
         <td class="header">
-          <!-- Fallback if logo URL is missing, we use a styled text logo for safety -->
-          <div style="color: #ffffff; font-size: 28px; font-weight: 800; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 10px;">
-            <span style="color: #3b82f6;">●</span> INDUX TECHNOLOGY
-          </div>
+          <a href="https://induxtechnology.com" target="_blank" style="text-decoration: none;">
+            <img src="https://www.induxtechnology.com/induxtechnologylogo_blue.webp" alt="Indux Technology" />
+          </a>
         </td>
       </tr>
       
@@ -76,6 +74,15 @@ export const getEmailBaseTemplate = (title: string, bodyContent: string) => {
       <!-- Footer -->
       <tr>
         <td class="footer">
+          <!-- Quick Links -->
+          <div style="margin-bottom: 25px; font-size: 14px;">
+            <a href="https://induxtechnology.com/events" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Events</a> 
+            <span style="color: #cbd5e1; margin: 0 10px;">|</span> 
+            <a href="https://induxtechnology.com/blogs" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Blogs</a> 
+            <span style="color: #cbd5e1; margin: 0 10px;">|</span> 
+            <a href="https://induxtechnology.com/products" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Products</a>
+          </div>
+
           <!-- Social Links -->
           <div class="social-icons">
             <a href="https://www.linkedin.com/company/indux-technology/" target="_blank">
@@ -102,7 +109,12 @@ export const getEmailBaseTemplate = (title: string, bodyContent: string) => {
           </div>
           
           <div class="copyright">
-            &copy; ${currentYear} Indux Technology. All rights reserved.
+            &copy; ${currentYear} Indux Technology. All rights reserved.<br>
+            <div style="margin-top: 8px;">
+              <a href="https://induxtechnology.com/privacy-policy" style="color: #94a3b8; text-decoration: underline;">Privacy Policy</a>
+              &nbsp;&nbsp;|&nbsp;&nbsp;
+              <a href="https://induxtechnology.com/terms-of-service" style="color: #94a3b8; text-decoration: underline;">Terms of Service</a>
+            </div>
           </div>
         </td>
       </tr>
@@ -176,4 +188,142 @@ export const getForgotPasswordEmailTemplate = (name: string, resetUrl: string) =
   `;
   
   return getEmailBaseTemplate("Password Reset Request - Indux Technology", bodyContent);
+};
+
+// Admin Alert Template (New Lead / Quote)
+export const getAdminAlertTemplate = (
+  type: "Lead" | "Quote",
+  name: string,
+  email: string,
+  phone: string,
+  details: Record<string, string>
+) => {
+  const detailsHtml = Object.entries(details)
+    .filter(([_, val]) => val) // Only include non-empty values
+    .map(
+      ([key, val]) =>
+        `<p style="margin-bottom: 8px;"><strong>${key}:</strong> ${val}</p>`
+    )
+    .join("");
+
+  const bodyContent = `
+    <h2 class="greeting">New ${type} Submission</h2>
+    <p class="text-body">
+      A new ${type.toLowerCase()} has been submitted via the website. Below are the details:
+    </p>
+    
+    <div class="highlight-box" style="border-left-color: #f59e0b; background-color: #fffbeb;">
+      <h3 style="margin-bottom: 15px; color: #b45309; font-size: 16px;">Contact Information</h3>
+      <p style="margin-bottom: 8px;"><strong>Name:</strong> ${name}</p>
+      <p style="margin-bottom: 8px;"><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+      <p style="margin-bottom: 8px;"><strong>Phone:</strong> <a href="tel:${phone}">${phone}</a></p>
+    </div>
+
+    <div class="highlight-box">
+      <h3 style="margin-bottom: 15px; color: #1e40af; font-size: 16px;">Submission Details</h3>
+      ${detailsHtml}
+    </div>
+    
+    <div class="cta-container">
+      <a href="${process.env.ADMIN_URL || 'https://admin.induxtechnology.com'}" class="cta-button">View in Admin Panel</a>
+    </div>
+  `;
+
+  return getEmailBaseTemplate(`[Alert] New ${type} Received - ${name}`, bodyContent);
+};
+
+// Job Application Template (Auto-reply to Candidate)
+export const getJobApplicationTemplate = (candidateName: string, jobTitle: string) => {
+  const bodyContent = `
+    <h2 class="greeting">Hi ${candidateName},</h2>
+    <p class="text-body">
+      Thank you for applying for the <strong>${jobTitle}</strong> position at Indux Technology.
+    </p>
+    <p class="text-body">
+      We have successfully received your application and resume. Our hiring team is currently reviewing your profile to see if it matches our requirements for this role.
+    </p>
+    <p class="text-body">
+      Due to the high volume of applications we receive, we are only able to contact shortlisted candidates. If your profile matches our needs, our HR team will reach out to you to discuss the next steps in our interview process.
+    </p>
+    <p class="text-body">
+      We appreciate your interest in joining our team and wish you the best in your career journey.
+    </p>
+  `;
+
+  return getEmailBaseTemplate(`Application Received: ${jobTitle} - Indux Technology`, bodyContent);
+};
+
+// Event Registration Template (Confirmation to End User)
+export const getEventRegistrationTemplate = (name: string, event: { title: string; startDate: Date; location: string }, isPaid: boolean) => {
+  const eventDate = new Date(event.startDate).toLocaleString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZoneName: 'short'
+  });
+
+  const bodyContent = `
+    <h2 class="greeting">Hi ${name},</h2>
+    <p class="text-body">
+      Thank you for registering for <strong>${event.title}</strong>!
+    </p>
+    <p class="text-body">
+      Your registration has been successfully confirmed. We are excited to have you join us for this event. 
+      ${isPaid ? 'We have successfully received your payment for this event.' : 'Your spot has been secured.'}
+    </p>
+
+    <!-- Event Details Box -->
+    <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 25px 0;">
+      <h3 style="margin-top: 0; color: #1e293b; font-size: 16px; margin-bottom: 15px;">Event Details</h3>
+      <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <td style="padding: 6px 0; color: #64748b; width: 80px; font-weight: 500;">When:</td>
+          <td style="padding: 6px 0; color: #334155; font-weight: 600;">${eventDate}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px 0; color: #64748b; width: 80px; font-weight: 500;">Where:</td>
+          <td style="padding: 6px 0; color: #334155; font-weight: 600;">${event.location}</td>
+        </tr>
+      </table>
+    </div>
+
+    <p class="text-body">
+      We will send you a reminder email closer to the event date with joining links and the final schedule.
+    </p>
+    
+    <div class="cta-container">
+      <a href="https://induxtechnology.com/events" class="cta-button">Explore More Events</a>
+    </div>
+  `;
+
+  return getEmailBaseTemplate(`Registration Confirmed: ${event.title}`, bodyContent);
+};
+
+// Newsletter Welcome Template
+export const getNewsletterWelcomeTemplate = (unsubscribeUrl: string) => {
+  const bodyContent = `
+    <h2 class="greeting">Welcome to Indux Technology!</h2>
+    <p class="text-body">
+      Thank you for subscribing to our newsletter. We're thrilled to have you on board!
+    </p>
+    <p class="text-body">
+      You'll now be among the first to receive our latest updates, industry insights, and exclusive announcements directly in your inbox.
+    </p>
+    <p class="text-body">
+      We promise to keep our emails valuable and relevant. 
+    </p>
+    
+    <div class="cta-container">
+      <a href="https://induxtechnology.com/blog" class="cta-button">Read Our Latest Blogs</a>
+    </div>
+
+    <p class="text-body" style="font-size: 13px; color: #94a3b8; text-align: center; margin-top: 50px;">
+      If you no longer wish to receive these emails, you can <a href="${unsubscribeUrl}" style="color: #64748b; text-decoration: underline;">unsubscribe here</a>.
+    </p>
+  `;
+
+  return getEmailBaseTemplate("Welcome to the Indux Technology Newsletter", bodyContent);
 };
