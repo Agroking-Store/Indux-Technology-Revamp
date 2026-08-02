@@ -39,7 +39,8 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());
 
 // Serve uploaded static files
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+// app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+app.use("/api/v1/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Health check route
 app.get("/api/v1/health", (_req: Request, res: Response) => {

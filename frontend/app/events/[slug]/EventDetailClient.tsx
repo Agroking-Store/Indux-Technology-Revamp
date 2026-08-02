@@ -275,7 +275,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
           <img
            src={
             event.bannerImage
-              ? `${process.env.NEXT_PUBLIC_IMAGE_RENDERING_URL}${event.bannerImage}`
+              ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.bannerImage}`
               : event.coverImage
                 ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.coverImage}`
                 : fallbackEventImages[0]
@@ -337,7 +337,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                       {speaker.avatar ? (
                         <img
                         src={
-                             `${process.env.NEXT_PUBLIC_IMAGE_RENDERING_URL}${speaker.avatar}`
+                             `${process.env.NEXT_PUBLIC_API_BASE_URL}${speaker.avatar}`
                         }
                         alt={speaker.name}
                         className="w-full h-full object-cover"

@@ -26,7 +26,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         url: `https://induxtechnology.com/events/${slug}`,
         images: [
           {
-            url: event.bannerImage || event.coverImage || "/images/default-event.jpg",
+            url: event.bannerImage 
+              ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ''}${event.bannerImage}`
+              : event.coverImage 
+                ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ''}${event.coverImage}` 
+                : "/images/default-event.jpg",
             alt: event.title,
           },
         ],
