@@ -1,13 +1,39 @@
 'use client';
 
-import { useEffect, useState, useCallback, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState, useCallback, Suspense, useMemo, useRef } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { Search, Download, Mail, Phone, User, Check, X, Trash2, Eye, CalendarIcon } from 'lucide-react';
+import { 
+  Search, 
+  Download, 
+  Mail, 
+  Phone, 
+  User, 
+  Check, 
+  X, 
+  Trash2, 
+  Eye, 
+  CalendarIcon,
+  CheckCircle
+} from 'lucide-react';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse, EventRegistration, Event } from '@/lib/api';
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+  PaginationState,
+} from "@tanstack/react-table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -19,23 +45,24 @@ import {
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Card } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { format } from 'date-fns';
-
-interface RegistrationQueryParams {
-  page: number;
-  limit: number;
-  eventId?: string;
-  status?: string;
-  search?: string;
-  date?: string;
-}
 
 function RegistrationsContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const isMounted = useRef(true);
   
-  // Theme State
+  // Theme State (Legacy check, kept from original file)
   const [isDarkMode, setIsDarkMode] = useState(false);
-
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -46,30 +73,34 @@ function RegistrationsContent() {
       document.documentElement.classList.remove('dark');
     }
   }, []);
-  const router = useRouter();
-  // Lists State
+
+  // Lists & Table State
   const [registrations, setRegistrations] = useState<EventRegistration[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
-  const [opened,setopened]=useState(false);
+  
   // Filters State
   const [selectedEventId, setSelectedEventId] = useState(searchParams.get('eventId') || '');
-  const [selectedEventTitle,setselectedEventTitle]=useState("ALL");
+  const [selectedEventTitle, setselectedEventTitle] = useState("ALL");
   const [statusFilter, setStatusFilter] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [dateFilter, setDateFilter] = useState<Date | undefined>();
+  const [datePopoverOpen, setDatePopoverOpen] = useState(false);
   
   // Pagination State
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
-  // Debounce search query (300ms)
+  // Debounce search query (500ms for consistency)
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(searchQuery);
-    }, 300);
+      setPagination(prev => ({ ...prev, pageIndex: 0 }));
+    }, 500);
     return () => clearTimeout(handler);
   }, [searchQuery]);
 
@@ -84,38 +115,42 @@ function RegistrationsContent() {
   const fetchRegistrations = useCallback(async () => {
     setLoading(true);
     try {
-      const params: RegistrationQueryParams = {
-        page,
-        limit: 10,
+      const params: Record<string, string | number> = {
+        page: pagination.pageIndex + 1,
+        limit: pagination.pageSize,
       };
-      const formattedDate = dateFilter
-      ? format(dateFilter, "yyyy-MM-dd")
-      : "";
+      
+      const formattedDate = dateFilter ? format(dateFilter, "yyyy-MM-dd") : "";
+      
       if (selectedEventId) params.eventId = selectedEventId;
       if (statusFilter) params.status = statusFilter;
       if (debouncedSearch) params.search = debouncedSearch;
       if (dateFilter) params.date = formattedDate;
 
-      const res = await api.get<ApiResponse<{ registrations: EventRegistration[], pagination: { pages: number; total: number } }>>(
+      const res = await api.get<ApiResponse<{ registrations: EventRegistration[], pagination: { total: number } }>>(
         '/event-registrations', 
         { params }
       );
-      setRegistrations(res.data.data.registrations);
-      setTotalPages(res.data.data.pagination.pages);
-      setTotalCount(res.data.data.pagination.total);
+      
+      if (isMounted.current) {
+        setRegistrations(res.data.data.registrations);
+        setTotalCount(res.data.data.pagination.total);
+      }
     } catch (error) {
       // handled globally or silenced
     } finally {
-      setLoading(false);
+      if (isMounted.current) setLoading(false);
     }
-  }, [page, selectedEventId, statusFilter, debouncedSearch, dateFilter]);
+  }, [pagination.pageIndex, pagination.pageSize, selectedEventId, statusFilter, debouncedSearch, dateFilter]);
 
   useEffect(() => {
+    isMounted.current = true;
     fetchRegistrations();
+    return () => { isMounted.current = false; };
   }, [fetchRegistrations]);
 
   // Actions
-  const handleUpdateStatus = async (id: string, newStatus: string) => {
+  const handleUpdateStatus = useCallback(async (id: string, newStatus: string) => {
     try {
       await api.patch(`/event-registrations/${id}/status`, { status: newStatus });
       toast.success(`Registration status updated to ${newStatus}`);
@@ -123,9 +158,9 @@ function RegistrationsContent() {
     } catch (error) {
       // handled
     }
-  };
+  }, [fetchRegistrations]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     try {
       await api.delete(`/event-registrations/${id}`);
       toast.success('Registration deleted');
@@ -133,9 +168,18 @@ function RegistrationsContent() {
     } catch (error) {
       // handled
     }
+  }, [fetchRegistrations]);
+
+  const handleClearFilters = () => {
+    setSearchQuery('');
+    setDebouncedSearch('');
+    setSelectedEventId('');
+    setselectedEventTitle('ALL');
+    setStatusFilter('');
+    setDateFilter(undefined);
+    setPagination({ pageIndex: 0, pageSize: 10 });
   };
 
-  // Secure CSV Export using Blob Stream
   const handleExportCSV = async () => {
     if (!selectedEventId) {
       toast.warning('Please select a specific Event in the filters to export its registrations.');
@@ -158,297 +202,462 @@ function RegistrationsContent() {
     }
   };
 
+  const columns: ColumnDef<EventRegistration>[] = useMemo(() => [
+    {
+      id: "serial",
+      header: () => <div className="text-center font-semibold">S.No</div>,
+      cell: ({ row }) => (
+        <div className="text-center text-muted-foreground font-medium text-sm pr-2">
+          {pagination.pageIndex * pagination.pageSize + row.index + 1}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "attendee",
+      header: () => <div className="text-left font-semibold">Attendee</div>,
+      cell: ({ row }) => {
+        const reg = row.original;
+        return (
+          <div className="text-left max-w-[220px]">
+            <div className="text-sm font-semibold text-foreground truncate">{reg.name}</div>
+            <div className="text-xs text-muted-foreground flex items-center gap-1 mt-1 truncate" title={reg.email}>
+              <Mail size={12} className="shrink-0" /> {reg.email}
+            </div>
+            <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5 truncate" title={reg.phone}>
+              <Phone size={12} className="shrink-0" /> {reg.phone}
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "event",
+      header: () => <div className="text-left font-semibold">Event Details</div>,
+      cell: ({ row }) => {
+        const reg = row.original;
+        const eventObj = reg.eventId as unknown as Event;
+        return (
+          <div className="text-left max-w-[180px]">
+            <div className="text-sm font-semibold text-foreground truncate" title={eventObj?.title}>
+              {eventObj?.title || 'Unknown Event'}
+            </div>
+            <div className="text-xs text-indigo-600 dark:text-indigo-400 font-medium mt-0.5 truncate">
+              {eventObj?.type || 'Standard'}
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "createdAt",
+      header: () => <div className="text-left font-semibold">Date</div>,
+      cell: ({ row }) => {
+        const reg = row.original;
+        return (
+          <div className="whitespace-nowrap text-sm text-muted-foreground text-left">
+            {new Date(reg.createdAt).toLocaleDateString(undefined, {
+              month: 'short', day: 'numeric', year: 'numeric',
+            })}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "paymentStatus",
+      header: () => <div className="text-center font-semibold">Payment</div>,
+      cell: ({ row }) => {
+        const reg = row.original;
+        let colorClass = 'bg-slate-50 text-slate-700 border-slate-200 dark:bg-slate-900 dark:text-slate-400 dark:border-slate-800';
+        if (reg.paymentStatus === 'Paid') colorClass = 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-900/40';
+        else if (reg.paymentStatus === 'Failed') colorClass = 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-900/40';
+        else if (reg.paymentStatus === 'Pending') colorClass = 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-900/40';
+
+        return (
+          <div className="text-center flex flex-col items-center gap-1">
+            <Badge variant="outline" className={`whitespace-nowrap ${colorClass}`}>
+              {reg.paymentStatus || 'None'}
+            </Badge>
+            {reg.amountPaid ? (
+              <span className="text-xs font-medium text-muted-foreground">₹{reg.amountPaid}</span>
+            ) : null}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "status",
+      header: () => <div className="text-center font-semibold">Status</div>,
+      cell: ({ row }) => {
+        const reg = row.original;
+        let colorClass = 'bg-yellow-50 text-yellow-700 border-yellow-200 dark:bg-yellow-950/40 dark:text-yellow-400 dark:border-yellow-900/40'; // Pending
+        if (reg.status === 'Approved') colorClass = 'bg-green-50 text-green-700 border-green-200 dark:bg-green-950/40 dark:text-green-400 dark:border-green-900/40';
+        else if (reg.status === 'Rejected') colorClass = 'bg-red-50 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-400 dark:border-red-900/40';
+        else if (reg.status === 'Attended') colorClass = 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-900/40';
+
+        return (
+          <div className="text-center">
+            <Badge variant="outline" className={`whitespace-nowrap ${colorClass}`}>
+              {reg.status || 'Pending'}
+            </Badge>
+          </div>
+        );
+      },
+    },
+    {
+      id: "actions",
+      header: () => <div className="text-center font-semibold pl-2">Actions</div>,
+      cell: ({ row }) => {
+        const reg = row.original;
+        return (
+          <div className="flex items-center justify-center gap-1 pl-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger render={
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={(e) => { e.stopPropagation(); router.push(`/events/registrations/${reg._id}`); }}
+                    className="h-8 w-8 p-1.5 rounded-lg text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition cursor-pointer"
+                  >
+                    <Eye size={16} />
+                  </Button>
+                }
+                />
+                <TooltipContent>View Details</TooltipContent>
+              </Tooltip>
+
+              {reg.status !== 'Approved' && reg.status !== 'Attended' && (
+                <Tooltip>
+                  <TooltipTrigger render={
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={(e) => { e.stopPropagation(); handleUpdateStatus(reg._id, 'Approved'); }}
+                      className="h-8 w-8 p-1.5 rounded-lg text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/50 transition cursor-pointer"
+                    >
+                      <Check size={16} />
+                    </Button>
+                  }
+                  />
+<TooltipContent>Approve</TooltipContent>
+                </Tooltip>
+              )}
+
+              {reg.status === 'Approved' && (
+                <Tooltip>
+                  <TooltipTrigger render={
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={(e) => { e.stopPropagation(); handleUpdateStatus(reg._id, 'Attended'); }}
+                      className="h-8 w-8 p-1.5 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition cursor-pointer"
+                    >
+                      <CheckCircle size={16} />
+                    </Button>
+                  }
+                  />
+                  <TooltipContent>Mark Attended</TooltipContent>
+                </Tooltip>
+              )}
+
+              {reg.status !== 'Approved' && reg.status !== 'Attended' && (
+                <Tooltip>
+                  <TooltipTrigger render={
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={(e) => { e.stopPropagation(); handleUpdateStatus(reg._id, 'Rejected'); }}
+                      className="h-8 w-8 p-1.5 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50 transition cursor-pointer"
+                    >
+                      <X size={16} />
+                    </Button>
+                  }
+                  />
+                  <TooltipContent>Reject</TooltipContent>
+                </Tooltip>
+              )}
+
+              <Tooltip>
+                <TooltipTrigger render={
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <ConfirmDialog
+                      title="Delete Registration?"
+                      description="This action cannot be undone."
+                      confirmText="Yes, delete"
+                      onConfirm={() => handleDelete(reg._id)}
+                      icon="trash"
+                      trigger={
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 p-1.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition cursor-pointer"
+                        >
+                          <Trash2 size={16} />
+                        </Button>
+                      }
+                    />
+                  </div>
+                }
+                />
+                <TooltipContent>Delete</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        );
+      },
+    },
+  ], [handleDelete, handleUpdateStatus, pagination, router]);
+
+  const table = useReactTable({
+    data: registrations,
+    columns,
+    pageCount: Math.ceil(totalCount / pagination.pageSize),
+    state: {
+      pagination,
+    },
+    onPaginationChange: setPagination,
+    manualPagination: true,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  const hasFilters = searchQuery || selectedEventId || statusFilter || dateFilter;
+
   return (
-    <div className="space-y-6 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    <div className="space-y-6 text-slate-900 dark:text-slate-100 transition-colors duration-300 max-w-7xl mx-auto">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-200 dark:border-gray-800 pb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-border pb-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">
             Event Registrations
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             Review registrations, manage statuses, and export CSV sheets.
           </p>
         </div>
         
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={handleExportCSV}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-xl transition font-semibold text-sm shadow-md shadow-indigo-600/10 cursor-pointer disabled:opacity-50"
-          >
-            <Download size={16} /> Export Registrations (CSV)
-          </button>
-        </div>
+        <Button
+          onClick={handleExportCSV}
+          
+          className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-xl transition shadow-md shadow-indigo-600/10"
+        >
+          <Download size={16} /> Export CSV
+        </Button>
       </div>
 
-      {/* Filters Bar */}
-      <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center transition-colors">
-  {/* Search */}
-  <div className="relative">
-    <Search
-      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 z-10"
-      size={16}
-    />
-    <Input
-      type="text"
-      placeholder="Search by name or email..."
-      value={searchQuery}
-      onChange={(e) => {
-        setSearchQuery(e.target.value);
-        setPage(1);
-      }}
-      className="h-11 w-full pl-9 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none"
-    />
-  </div>
-
-  {/* Event */}
-  <Select
-    value={selectedEventTitle}
-    onValueChange={(value) => {
-      if (!value) return;
-
-      const [id, title] = value.split("|");
-
-      setSelectedEventId(id === "ALL" ? "" : id);
-      setselectedEventTitle(title || "ALL");
-      setPage(1);
-    }}
-  >
-    <SelectTrigger className="h-11 w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none cursor-pointer">
-      <SelectValue placeholder="All Events" />
-    </SelectTrigger>
-
-    <SelectContent>
-      <SelectItem value="ALL">All Events</SelectItem>
-
-      {events.map((event) => (
-        <SelectItem
-          key={event._id}
-          value={`${event._id}|${event.title}`}
-        >
-          {event.title}
-        </SelectItem>
-      ))}
-    </SelectContent>
-  </Select>
-
-  <Select
-            value={statusFilter || "ALL"}
-            onValueChange={(value) => { 
-              setStatusFilter(!value || value === "ALL" ? "" : value); 
-              setPage(1); 
-            }}
-  >
-    <SelectTrigger className="h-11 w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none cursor-pointer">
-      <SelectValue placeholder="All Statuses" />
-    </SelectTrigger>
-
-    <SelectContent>
-      <SelectItem value="ALL">All Statuses</SelectItem>
-      <SelectItem value="Pending">Pending</SelectItem>
-      <SelectItem value="Approved">Approved</SelectItem>
-      <SelectItem value="Rejected">Rejected</SelectItem>
-      <SelectItem value="Attended">Attended</SelectItem>
-    </SelectContent>
-  </Select>
-
-  {/* Date */}
-  <Popover open={opened} onOpenChange={setopened}> 
-  <PopoverTrigger >
-    <Button
-      variant="outline"
-      className="h-11 w-full justify-start text-left font-normal border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-none cursor-pointer"
-    >
-      <CalendarIcon className="mr-2 h-4 w-4" />
-      {dateFilter ? format(dateFilter, "PPP") : "Select Date"}
-    </Button>
-  </PopoverTrigger>
-
-  <PopoverContent className="w-auto p-0" align="start">
-  <Calendar
-  mode="single"
-  selected={dateFilter}
-  onSelect={(date) => {
-    if (date) {
-      setDateFilter(date);
-      setPage(1);
-    }
-    setopened(false)
-  }}
-/>
-  </PopoverContent>
-</Popover>
-</div>
-
-      {/* Main Registrations Table */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow border border-gray-200/80 dark:border-gray-700 overflow-hidden transition-colors">
-        {loading ? (
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 dark:border-indigo-400"></div>
-          </div>
-        ) : registrations.length === 0 ? (
-          <div className="text-center py-20 text-gray-500 dark:text-gray-400">
-            <User className="size-12 mx-auto mb-3 opacity-30 text-gray-400 dark:text-gray-500" />
-            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200">No Registrations Found</h3>
-            <p className="text-sm mt-1 text-gray-400 dark:text-gray-500">Try adjustments to your search queries or filter categories.</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead className="bg-gray-50 dark:bg-gray-900/50">
-                <tr >
-                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Attendee</th>
-                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Event Details</th>
-                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Registration Date</th>
-                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Payment Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Paid Amount</th>
-                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {registrations.map((reg) => {
-                  const eventObj = reg.eventId as unknown as Event;
-                  return (
-                    <tr key={reg._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors" >
-                      <td className="px-6 py-4 whitespace-nowrap" onClick={()=>router.push(`/events/registrations/${reg._id}`)}>
-                        <div className="text-sm font-semibold text-gray-900 dark:text-white">{reg.name}</div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1 mt-0.5"><Mail size={12} /> {reg.email}</div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1 mt-0.5"><Phone size={12} /> {reg.phone}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        <div className="font-semibold text-gray-800 dark:text-gray-200 line-clamp-1">{eventObj?.title || 'Unknown Event'}</div>
-                        <div className="text-xs text-indigo-600 dark:text-indigo-400 font-medium mt-0.5">{eventObj?.type || 'Standard'}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        {new Date(reg.createdAt).toLocaleDateString(undefined, {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                        })}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-bold rounded-full border ${
-                          reg.paymentStatus === 'Paid' ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border-emerald-100 dark:border-emerald-800' :
-                          reg.paymentStatus === 'Failed' ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border-rose-100 dark:border-rose-800' :
-                          reg.paymentStatus === 'Pending' ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-100 dark:border-amber-800' :
-                          'bg-slate-50 dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-100 dark:border-slate-800'
-                        }`}>
-                          {reg.paymentStatus || 'None'}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 font-medium">
-                        {reg.amountPaid ? `₹${reg.amountPaid}` : '—'}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-bold rounded-full border ${
-                          reg.status === 'Approved' ? 'bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-400 border-green-100 dark:border-green-800' :
-                          reg.status === 'Rejected' ? 'bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-400 border-red-100 dark:border-red-800' :
-                          reg.status === 'Attended' ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border-blue-100 dark:border-blue-800' :
-                          'bg-yellow-50 dark:bg-yellow-950/40 text-yellow-700 dark:text-yellow-400 border-yellow-100 dark:border-yellow-800'
-                        }`}>
-                          {reg.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-  <div className="flex items-center gap-1.5">
-    <Link
-      href={`/events/registrations/${reg._id}`}
-      className="text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 p-1.5 rounded-lg transition cursor-pointer"
-      title="View Details"
-    >
-      <Eye size={16} />
-    </Link>
-
-    {reg.status !== 'Approved' && reg.status!=='Attended' && (
-      <button
-        type="button"
-        onClick={() => handleUpdateStatus(reg._id, 'Approved')}
-        className="text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/50 p-1.5 rounded-lg transition cursor-pointer"
-        title="Approve registration"
-      >
-        <Check size={16} />
-      </button>
-    )}
-
-    {reg.status === 'Approved' && (
-      <button
-        type="button"
-        onClick={() => handleUpdateStatus(reg._id, 'Attended')}
-        className="text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 px-2 py-1 rounded-lg transition text-xs font-bold cursor-pointer"
-        title="Mark as Attended"
-      >
-        <Check size={16} />
-      </button>
-    )}
-
-    {(reg.status !== 'Approved' && reg.status!=='Attended') && (
-      <button
-        type="button"
-        onClick={() => handleUpdateStatus(reg._id, 'Rejected')}
-        className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50 p-1.5 rounded-lg transition cursor-pointer"
-        title="Reject registration"
-      >
-        <X size={16} />
-      </button>
-    )}
-
-    <ConfirmDialog
-      title="Are you sure you want to delete this registration?"
-      description="This action cannot be undone. This will permanently delete the registration."
-      confirmText="Yes, delete"
-      onConfirm={() => handleDelete(reg._id)}
-      icon="trash"
-      trigger={
-        <button
-          type="button"
-          className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 p-1.5 rounded-lg transition cursor-pointer"
-          title="Delete"
-        >
-          <Trash2 size={16} />
-        </button>
-      }
-    />
-  </div>
-</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        {/* Pagination footer */}
-        {totalPages > 1 && (
-          <div className="bg-gray-50 dark:bg-gray-900/50 px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              Showing page {page} of {totalPages} ({totalCount} total registrations)
-            </span>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                disabled={page === 1}
-                onClick={() => setPage(page - 1)}
-                className="px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 rounded-lg text-xs font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition disabled:opacity-50"
-              >
-                Previous
-              </button>
-              <button
-                type="button"
-                disabled={page === totalPages}
-                onClick={() => setPage(page + 1)}
-                className="px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 rounded-lg text-xs font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition disabled:opacity-50"
-              >
-                Next
-              </button>
+      <div className="space-y-4">
+        {/* Filters Bar */}
+        <Card className="p-3 rounded-xl border border-border shadow-sm flex flex-col md:flex-row gap-3 items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 w-full">
+            {/* Search */}
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search by name or email..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9 h-10 w-full border-slate-200 dark:border-slate-800 focus-visible:ring-indigo-500 shadow-sm"
+              />
             </div>
-          </div>
-        )}
-      </div>
 
+            {/* Event Filter */}
+            <Select
+              value={selectedEventTitle}
+              onValueChange={(value) => {
+                if (!value) return;
+                const [id, title] = value.split("|");
+                setSelectedEventId(id === "ALL" ? "" : id);
+                setselectedEventTitle(title || "ALL");
+                setPagination(prev => ({ ...prev, pageIndex: 0 }));
+              }}
+            >
+              <SelectTrigger className="h-10 w-full border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer">
+                <SelectValue placeholder="All Events" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ALL" className="cursor-pointer">All Events</SelectItem>
+                {events.map((event) => (
+                  <SelectItem key={event._id} value={`${event._id}|${event.title}`} className="cursor-pointer">
+                    {event.title}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Status Filter */}
+            <Select
+              value={statusFilter || "ALL"}
+              onValueChange={(value) => { 
+                setStatusFilter(!value || value === "ALL" ? "" : value); 
+                setPagination(prev => ({ ...prev, pageIndex: 0 }));
+              }}
+            >
+              <SelectTrigger className="h-10 w-full border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer">
+                <SelectValue placeholder="All Statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ALL" className="cursor-pointer">All Statuses</SelectItem>
+                <SelectItem value="Pending" className="cursor-pointer">Pending</SelectItem>
+                <SelectItem value="Approved" className="cursor-pointer">Approved</SelectItem>
+                <SelectItem value="Attended" className="cursor-pointer">Attended</SelectItem>
+                <SelectItem value="Rejected" className="cursor-pointer">Rejected</SelectItem>
+              </SelectContent>
+            </Select>
+
+            {/* Date Picker */}
+            <Popover open={datePopoverOpen} onOpenChange={setDatePopoverOpen}> 
+              <PopoverTrigger 
+              render={
+                <Button
+                  variant="outline"
+                  className={`h-10 w-full justify-start text-left font-normal border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer ${!dateFilter && "text-muted-foreground"}`}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dateFilter ? format(dateFilter, "PPP") : "Select Date"}
+                </Button>
+              }
+              />
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dateFilter}
+                  onSelect={(date) => {
+                    if (date) {
+                      setDateFilter(date);
+                      setPagination(prev => ({ ...prev, pageIndex: 0 }));
+                    }
+                    setDatePopoverOpen(false);
+                  }}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+
+          {hasFilters && (
+            <Button 
+              variant="ghost" 
+              onClick={handleClearFilters}
+              className="text-muted-foreground hover:text-foreground md:shrink-0 h-10 w-full md:w-auto"
+            >
+              <X size={16} className="mr-1" /> Clear
+            </Button>
+          )}
+        </Card>
+
+        {/* Table Container */}
+        <Card className="overflow-hidden border-border bg-card shadow-sm">
+          <Table className="table-fixed w-full">
+            <TableHeader className="bg-muted/50">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id} className="hover:bg-transparent">
+                  {headerGroup.headers.map((header) => {
+                    let width = 'auto';
+                    if (header.id === 'serial') width = '70px';
+                    else if (header.id === 'attendee') width = '220px';
+                    else if (header.id === 'event') width = '200px';
+                    else if (header.id === 'createdAt') width = '120px';
+                    else if (header.id === 'paymentStatus') width = '120px';
+                    else if (header.id === 'status') width = '120px';
+                    else if (header.id === 'actions') width = '180px';
+                    
+                    return (
+                      <TableHead key={header.id} className="font-bold text-muted-foreground uppercase text-xs tracking-wider h-11 align-middle" style={{ width }}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {loading ? (
+                Array.from({ length: 5 }).map((_, idx) => (
+                  <TableRow key={idx}>
+                    <TableCell><div className="flex justify-center"><Skeleton className="h-4 w-6" /></div></TableCell>
+                    <TableCell>
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-[160px]" />
+                        <Skeleton className="h-3 w-[120px]" />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-[140px]" />
+                        <Skeleton className="h-3 w-[100px]" />
+                      </div>
+                    </TableCell>
+                    <TableCell><Skeleton className="h-4 w-[100px]" /></TableCell>
+                    <TableCell><div className="flex flex-col items-center gap-1"><Skeleton className="h-6 w-16 rounded-full" /><Skeleton className="h-3 w-10" /></div></TableCell>
+                    <TableCell><div className="flex justify-center"><Skeleton className="h-6 w-20 rounded-full" /></div></TableCell>
+                    <TableCell><div className="flex justify-center gap-2"><Skeleton className="h-8 w-8 rounded-md" /><Skeleton className="h-8 w-8 rounded-md" /><Skeleton className="h-8 w-8 rounded-md" /></div></TableCell>
+                  </TableRow>
+                ))
+              ) : table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group"
+                    onClick={() => router.push(`/events/registrations/${row.original._id}`)}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="py-3 px-4" onClick={(e) => {
+                        // Prevent row click if interacting with action buttons inside the cell
+                        if ((e.target as HTMLElement).closest('button')) e.stopPropagation();
+                      }}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="h-48 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <User className="h-10 w-10 text-muted-foreground/30 mb-3" />
+                      <h3 className="text-lg font-bold text-foreground">No Registrations Found</h3>
+                      <p className="text-sm mt-1 text-muted-foreground">
+                        {hasFilters ? 'Try adjusting your search or filters.' : 'There are no event registrations yet.'}
+                      </p>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+          
+          {/* Pagination Controls */}
+          {totalCount > 0 && (
+            <div className="flex items-center justify-between px-4 py-3 border-t border-border bg-muted/20">
+              <div className="text-sm text-muted-foreground">
+                Showing <span className="font-medium text-foreground">{pagination.pageIndex * pagination.pageSize + 1}</span> to <span className="font-medium text-foreground">{Math.min((pagination.pageIndex + 1) * pagination.pageSize, totalCount)}</span> of <span className="font-medium text-foreground">{totalCount}</span> results
+              </div>
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage() || loading}
+                  className="cursor-pointer"
+                >
+                  Previous
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage() || loading}
+                  className="cursor-pointer"
+                >
+                  Next
+                </Button>
+              </div>
+            </div>
+          )}
+        </Card>
+      </div>
     </div>
   );
 }
