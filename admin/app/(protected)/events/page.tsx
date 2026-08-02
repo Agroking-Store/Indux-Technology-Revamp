@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -221,38 +222,50 @@ export default function EventsPage() {
                       <Users size={12} />
                       {event.registrationsCount || 0}
                     </span>
+                    <Tooltip>
+                      <TooltipTrigger
+                      render={
                       <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => handleDuplicate(event)}
                         className="h-8 w-8 p-1.5 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/50 transition cursor-pointer"
-                        title="Duplicate Event"
-                        aria-label="Duplicate Event"
                       >
                         <Copy size={16} />
                       </Button>
-                
+                      }
+                      />
+                      <TooltipContent>Duplicate Event</TooltipContent>
+                </Tooltip>
                       {/* UPDATED ROUTE: Points to Edit Mode with query param */}
+                      <Tooltip>
+                        <TooltipTrigger
+                        render={
                       <Link
                         href={`/events/${event._id}?mode=edit`}
                         className={`${buttonVariants({ variant: "ghost", size: "icon" })} h-8 w-8 p-1.5 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition cursor-pointer`}
-                        title="Edit Event"
-                        aria-label="Edit Event"
-                      >
+                        >                      
                         <Pencil size={16} />
                       </Link>
-                
+                        }
+                        />
+                        <TooltipContent>Edit Event</TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        <TooltipTrigger render={
                       <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => handleToggleStatus(event._id, event.status)}
                         className="h-8 w-8 p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition cursor-pointer"
-                        title={event.status === 'Published' ? 'Unpublish Event' : 'Publish Event'}
-                        aria-label={event.status === 'Published' ? 'Unpublish Event' : 'Publish Event'}
                       >
                         {event.status === 'Published' ? <GlobeOff size={16} /> : <Globe size={16} />}
                       </Button>
-                
+                        }
+                        />
+                        <TooltipContent>{event.status === 'Published' ? 'Unpublish Event' : 'Publish Event'}</TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
                       <ConfirmDialog
                         title="Are you sure you want to delete this event?"
                         description="This action cannot be undone. This will also delete all of its registrations."
@@ -260,17 +273,21 @@ export default function EventsPage() {
                         onConfirm={() => handleDelete(event._id)}
                         icon="trash"
                         trigger={
+                          <TooltipTrigger
+                          render={
                           <Button
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 p-1.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition cursor-pointer"
-                            title="Delete Event"
-                            aria-label="Delete Event"
                           >
                             <Trash2 size={16} />
                           </Button>
                         }
+                        />
+                      }
                       />
+                      <TooltipContent>Delete Event</TooltipContent>
+                      </Tooltip>
                     </div>
                   </TableCell>
                 </TableRow>
