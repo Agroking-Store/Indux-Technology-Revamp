@@ -9,6 +9,8 @@ import asyncHandler from "../utils/asyncHandler";
 import { AuthRequest } from "../middlewares/auth";
 import { env } from "../config/env";
 import { computeMatchScore } from "../utils/matchScore";
+import { sendEmail } from "../utils/sendEmail";
+import { getJobApplicationTemplate } from "../utils/emailTemplates";
 
 // ============================
 // SUBMIT JOB APPLICATION (Public)
@@ -102,6 +104,18 @@ export const submitApplication = asyncHandler(async (req: Request, res: Response
     skills: candidateSkills,
     preferredLocation,
   });
+
+  // Send auto-reply to candidate
+  const emailHtml = getJobApplicationTemplate(
+    validated.candidateName || validated.fullName || "Candidate",
+    career.title
+  );
+
+  sendEmail({
+    to: validated.email,
+    subject: `Application Received: ${career.title} - Indux Technology`,
+    html: emailHtml,
+  }).catch(err => console.error("Job App Email error:", err));
 
   res.status(201).json(new ApiResponse(201, application, "Application submitted successfully"));
 });

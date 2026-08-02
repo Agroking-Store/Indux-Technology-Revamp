@@ -3,7 +3,8 @@ import Lead from "../models/Lead";
 import ApiError from "../utils/ApiError";
 import { createLeadSchema, updateLeadStatusSchema } from "../validators/lead.validator";
 import { sendEmail } from "../utils/sendEmail";
-import { getLeadEmailTemplate } from "../utils/emailTemplates";
+import { getLeadEmailTemplate, getAdminAlertTemplate } from "../utils/emailTemplates";
+import { env } from "../config/env";
 
 // @desc    Submit a new contact lead (Public)
 // @route   POST /api/v1/leads
@@ -27,12 +28,33 @@ export const createLead = async (
       html: emailHtml,
     }).catch(err => console.error("Email error:", err));
 
+    // Send admin alert
+    const adminHtml = getAdminAlertTemplate(
+      "Lead",
+      validatedData.name,
+      validatedData.email,
+      validatedData.phone,
+      {
+        Message: validatedData.message
+      }
+    );
+
+    sendEmail({
+      to: env.SMTP_USER,
+      subject: `New Lead Received: ${validatedData.name}`,
+      html: adminHtml,
+    }).catch(err => console.error("Admin Email error:", err));
+
     res.status(201).json({
       success: true,
       message: "Lead submitted successfully",
       data: lead,
     });
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 11000 && error.keyValue) {
+      const field = Object.keys(error.keyValue)[0];
+      return next(ApiError.conflict(`An inquiry with this ${field} has already been received. Please wait for our team to contact you, or reach out to us directly.`));
+    }
     next(error);
   }
 };
