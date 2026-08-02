@@ -64,6 +64,10 @@ function ApplicationsContent() {
     setToken(localStorage.getItem('token') || '');
   }, []);
 
+  const backendBaseUrl = process.env.NEXT_PUBLIC_API_URL 
+    ? new URL(process.env.NEXT_PUBLIC_API_URL).origin 
+    : 'http://localhost:5000';
+
   // Fetch job positions list for the filter dropdown
   useEffect(() => {
     api.get<ApiResponse<{ careers: Career[] }>>('/careers')
@@ -282,7 +286,7 @@ function ApplicationsContent() {
       type="date"
       value={dateFilter}
       onChange={(e) => { setDateFilter(e.target.value); setPage(1); }}
-      className="mt-1 w-full px-3 py-1.5 h-9 border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus-visible:ring-indigo-500 shadow-none cursor-pointer"
+      className="mt-1 w-full px-3 py-1.5 h-9 border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus-visible:ring-indigo-500 shadow-none [&::-webkit-calendar-picker-indicator]:cursor-pointer"
     />
   </div>
 
@@ -305,11 +309,11 @@ function ApplicationsContent() {
       <Table>
         <TableHeader className="bg-slate-50/80 dark:bg-slate-950/50">
           <TableRow className="hover:bg-transparent">
+            <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">S.No.</TableHead>
             <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Candidate</TableHead>
             <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Applied Position</TableHead>
             <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Experience</TableHead>
             <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Match Score</TableHead>
-            <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Rating</TableHead>
             <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Applied Date</TableHead>
             <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Hiring Pipeline</TableHead>
             <TableHead className="px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Resume PDF</TableHead>
@@ -317,10 +321,14 @@ function ApplicationsContent() {
           </TableRow>
         </TableHeader>
         <TableBody className="divide-y divide-slate-200/80 dark:divide-slate-800">
-          {applications.map((app) => {
+          {applications.map((app, index) => {
             const job = app.jobId as any;
             return (
               <TableRow key={app._id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
+                {/* S.No. */}
+                <TableCell className="px-6 py-4 whitespace-nowrap text-left text-sm text-slate-500 dark:text-slate-400 font-semibold">
+                  {(page - 1) * 10 + index + 1}
+                </TableCell>
                 {/* Name & Contact */}
                 <TableCell className="px-6 py-4 whitespace-nowrap text-left">
                   <div 
@@ -365,12 +373,7 @@ function ApplicationsContent() {
                   </span>
                 </TableCell>
 
-                {/* Rating */}
-                <TableCell className="px-6 py-4 whitespace-nowrap text-sm text-left">
-                  <span className="font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-900/40 flex items-center gap-1 w-fit">
-                    ⭐ {app.rating !== undefined ? app.rating.toFixed(1) : '0.0'}
-                  </span>
-                </TableCell>
+
 
                 {/* Applied Date */}
                 <TableCell className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-left">
@@ -408,7 +411,7 @@ function ApplicationsContent() {
                 {/* Resume PDF Actions */}
                 <TableCell className="px-6 py-4 whitespace-nowrap text-left space-x-1.5">
                   <a
-                    href={`${process.env.NEXT_PUBLIC_API_URL}/applications/${app._id}/resume?token=${token}`}
+                    href={app.resume ? `${backendBaseUrl}${app.resume}` : '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`${buttonVariants({ variant: "outline", size: "sm" })} h-7 text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 border-indigo-200 dark:border-indigo-900/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 cursor-pointer`}
