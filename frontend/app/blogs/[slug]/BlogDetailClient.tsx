@@ -182,7 +182,7 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
               {/* Featured Image with shine overlay on hover */}
               <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-800 group cursor-pointer">
                 <Image
-                  src={blog.featuredImage}
+                  src={blog.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}` : ""}
                   alt={blog.title}
                   fill
                   priority
@@ -297,7 +297,7 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
                       {/* Mini image with hover shine & zoom */}
                       <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 flex-shrink-0">
                         <Image 
-                          src={item.featuredImage} 
+                          src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
                           alt={item.title}
                           fill
                           sizes="64px"
@@ -403,7 +403,7 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
                     {/* Image with shine overlay on hover */}
                     <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/40">
                       <Image 
-                        src={item.featuredImage} 
+                        src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
                         alt={item.title}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

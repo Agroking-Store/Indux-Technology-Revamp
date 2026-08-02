@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         authors: [blog.author],
         images: [
           {
-            url: blog.featuredImage,
+            url: blog.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ''}${blog.featuredImage}` : "/images/unsplash/img-fbc3450c.webp",
             alt: blog.title,
           },
         ],
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         card: "summary_large_image",
         title,
         description,
-        images: [blog.featuredImage],
+        images: [blog.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ''}${blog.featuredImage}` : "/images/unsplash/img-fbc3450c.webp"],
       },
       alternates: {
         canonical: `https://induxtechnology.com/blogs/${slug}`,
@@ -75,7 +75,7 @@ export default async function Page({ params }: PageProps) {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: blog.title,
-    image: blog.featuredImage,
+    image: blog.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ''}${blog.featuredImage}` : "",
     datePublished: blog.createdAt,
     dateModified: blog.updatedAt,
     author: {
