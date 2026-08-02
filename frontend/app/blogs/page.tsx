@@ -211,7 +211,7 @@ export default function BlogsPage() {
                   >
                     <div className="lg:col-span-7 overflow-hidden min-h-[300px] relative bg-slate-100 dark:bg-slate-850">
                       <Image
-                        src={featured.featuredImage || fallbackImages[0]}
+                        src={featured.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${featured.featuredImage}` : fallbackImages[0]}
                         alt={featured.title}
                         fill
                         priority
@@ -268,7 +268,7 @@ export default function BlogsPage() {
                     >
                       <div className="overflow-hidden h-48 relative bg-slate-100 dark:bg-slate-850">
                         <Image
-                          src={blog.featuredImage || fallbackImages[i % fallbackImages.length]}
+                          src={blog.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}` : fallbackImages[i % fallbackImages.length]}
                           alt={blog.title}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

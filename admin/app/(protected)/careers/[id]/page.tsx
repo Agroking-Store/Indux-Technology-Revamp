@@ -41,8 +41,8 @@ export default function CareerDetailsPage() {
   const isMounted = useRef(true);
 
   const backendBaseUrl = process.env.NEXT_PUBLIC_API_URL 
-    ? new URL(process.env.NEXT_PUBLIC_API_URL).origin 
-    : 'http://localhost:5000';
+    ? process.env.NEXT_PUBLIC_API_URL 
+    : 'http://localhost:5000/api/v1';
 
   useEffect(() => {
     isMounted.current = true;

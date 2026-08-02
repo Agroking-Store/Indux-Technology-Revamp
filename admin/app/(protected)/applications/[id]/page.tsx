@@ -101,8 +101,8 @@ export default function CandidateDetailPage() {
 
   const job = application.jobId as any;
   const backendBaseUrl = process.env.NEXT_PUBLIC_API_URL 
-    ? new URL(process.env.NEXT_PUBLIC_API_URL).origin 
-    : 'http://localhost:5000';
+    ? process.env.NEXT_PUBLIC_API_URL 
+    : 'http://localhost:5000/api/v1';
   const secureResumeUrl = application.resume 
     ? `${backendBaseUrl}${application.resume}` 
     : '';
