@@ -208,7 +208,7 @@ console.log(process.env.NEXT_PUBLIC_IMAGE_RENDERING_URL);
                           <img
                             src={
                               event.coverImage
-                                ? `${process.env.NEXT_PUBLIC_IMAGE_RENDERING_URL}${event.coverImage}`
+                                ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.coverImage}`
                                 : event.image || fallbackImg
                             } alt={event.title}
                             className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500"
