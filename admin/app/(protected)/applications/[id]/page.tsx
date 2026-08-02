@@ -14,7 +14,8 @@ import {
   AlertTriangle, 
   MessageSquare, 
   Download, 
-  Settings 
+  Settings,
+  Eye
 } from 'lucide-react';
 import api, { ApiResponse, JobApplication } from '@/lib/api';
 
@@ -99,8 +100,12 @@ export default function CandidateDetailPage() {
   }
 
   const job = application.jobId as any;
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : '';
-  const secureResumeUrl = `${process.env.NEXT_PUBLIC_API_URL}/applications/${application._id}/resume?token=${token}`;
+  const backendBaseUrl = process.env.NEXT_PUBLIC_API_URL 
+    ? new URL(process.env.NEXT_PUBLIC_API_URL).origin 
+    : 'http://localhost:5000';
+  const secureResumeUrl = application.resume 
+    ? `${backendBaseUrl}${application.resume}` 
+    : '';
 
   return (
     <div className="space-y-6 text-slate-900 dark:text-slate-100 transition-colors duration-300">
@@ -214,6 +219,25 @@ export default function CandidateDetailPage() {
 
               {/* Profile Social Links */}
               <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-100 dark:border-slate-800/80">
+                {secureResumeUrl && (
+                  <>
+                    <a
+                      href={secureResumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-xs font-bold text-indigo-700 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/30 px-3 py-2 rounded-xl hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition shadow-sm cursor-pointer"
+                    >
+                      <Eye size={14} className="text-indigo-600 dark:text-indigo-400" /> Preview Resume
+                    </a>
+                    <a
+                      href={secureResumeUrl}
+                      download={`Resume-${(application.candidateName || application.fullName || 'Candidate').replace(/\s+/g, '_')}.pdf`}
+                      className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/40 px-3 py-2 rounded-xl hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition shadow-sm cursor-pointer"
+                    >
+                      <Download size={14} className="text-emerald-600 dark:text-emerald-400" /> Download Resume PDF
+                    </a>
+                  </>
+                )}
                 {application.portfolio && (
                   <a
                     href={application.portfolio}
@@ -284,30 +308,7 @@ export default function CandidateDetailPage() {
             </CardContent>
           </Card>
 
-          {/* Embedded Resume Viewer */}
-          <Card>
-            <CardHeader className="flex flex-row justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-800/80">
-              <CardTitle className="text-lg font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
-                <FileText className="text-indigo-600 dark:text-indigo-400" /> Resume PDF Document
-              </CardTitle>
-              <a
-                href={secureResumeUrl}
-                download={`Resume-${(application.candidateName || application.fullName || 'Candidate').replace(/\s+/g, '_')}.pdf`}
-                className="flex items-center gap-1 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow transition cursor-pointer"
-              >
-                <Download size={13} /> Download Resume PDF
-              </a>
-            </CardHeader>
-            <CardContent className="p-6">
-              <div className="w-full h-[600px] rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-inner">
-                <iframe
-                  src={secureResumeUrl}
-                  className="w-full h-full"
-                  title="Candidate PDF Resume Viewer"
-                />
-              </div>
-            </CardContent>
-          </Card>
+
 
         </div>
 
@@ -345,12 +346,7 @@ export default function CandidateDetailPage() {
                     {application.matchScore !== undefined ? `${application.matchScore}/100` : '0/100'}
                   </span>
                 </div>
-                <div className="flex justify-between items-center border-t border-slate-100 dark:border-slate-800 pt-3">
-                  <span className="text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider text-[10px]">Overall Rating</span>
-                  <span className="font-black text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30 px-2 py-0.5 rounded-lg border border-amber-100 dark:border-amber-900/40 flex items-center gap-1 w-fit">
-                    ⭐ {application.rating !== undefined ? `${application.rating.toFixed(1)}/10` : '0.0/10'}
-                  </span>
-                </div>
+
               </div>
             </CardContent>
           </Card>

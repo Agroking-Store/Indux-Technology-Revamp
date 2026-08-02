@@ -157,6 +157,7 @@ export interface JobApplication {
   noticePeriod?: string;
   expectedCTC?: string;
   answers?: Record<string, any>;
+  resume: string;
   resumeUrl: string;
   status: 'New' | 'Reviewed' | 'Shortlisted' | 'Interview Scheduled' | 'Interview Completed' | 'Offered' | 'Hired' | 'Rejected';
   notes?: string;

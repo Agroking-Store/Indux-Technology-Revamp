@@ -446,7 +446,7 @@ export default function CreateCareerPage() {
                 <Label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Salary / Package Range</Label>
                 <Input
                   {...register('salary')}
-                  placeholder="e.g. $80,000 - $100,000"
+                  placeholder="e.g. ₹6,00,000 - ₹12,00,000"
                 />
               </div>
 
