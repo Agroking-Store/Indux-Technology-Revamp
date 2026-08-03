@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { GetQuoteModal } from "@/components/GetQuoteModal";
 
 // Clocks Component
 const GlobalPresenceClocks = () => {
@@ -293,10 +294,12 @@ export default function ServicesPage() {
                     <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-10">
                         Transform your business operations with our enterprise-grade IT solutions. Let's build the future together.
                     </p>
-                    <button className="bg-background text-foreground hover:bg-muted px-8 py-4 rounded-full text-sm font-semibold shadow-lg transition-all flex items-center gap-2 mx-auto group">
-                        Get Free Quote
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    <GetQuoteModal>
+                        <button className="bg-background text-foreground hover:bg-muted px-8 py-4 rounded-full text-sm font-semibold shadow-lg transition-all flex items-center gap-2 mx-auto group cursor-pointer">
+                            Get Free Quote
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                    </GetQuoteModal>
                 </div>
             </section>
         </>
