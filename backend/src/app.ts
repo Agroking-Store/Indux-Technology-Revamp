@@ -18,7 +18,7 @@ import quoteRoutes from "./routes/quote.routes";
 import eventRoutes from "./routes/event.routes";
 import eventRegistrationRoutes from "./routes/event-registration.routes";
 import visitorRoutes from "./routes/visitor.routes";
-import newsLetterRoutes from "./routes/newsletter.routes"
+import newsLetterRoutes from "./routes/newsletter.routes";
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const app: Application = express();
 
@@ -32,7 +32,7 @@ app.use(
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" },
-  })
+  }),
 );
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
@@ -41,6 +41,7 @@ app.use(cookieParser());
 // Serve uploaded static files
 // app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/api/v1/uploads", express.static(path.join(__dirname, "../uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Health check route
 app.get("/api/v1/health", (_req: Request, res: Response) => {
@@ -58,7 +59,7 @@ app.use("/api/v1/quotes", quoteRoutes);
 app.use("/api/v1/events", eventRoutes);
 app.use("/api/v1/event-registrations", eventRegistrationRoutes);
 app.use("/api/v1/visitors", visitorRoutes);
-app.use("/api/v1/news-letter",newsLetterRoutes);
+app.use("/api/v1/news-letter", newsLetterRoutes);
 // 404 handler (for unmatched routes)
 app.use((_req: Request, res: Response) => {
   res.status(404).json({ success: false, message: "Route not found" });
