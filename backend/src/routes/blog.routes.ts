@@ -6,6 +6,7 @@ import {
   updateBlog,
   deleteBlog,
   updateBlogStatus,
+  getCategories,
 } from "../controllers/blog.controller";
 import { protect } from "../middlewares/auth";
 import { uploadBlogImage } from "../middlewares/upload";
@@ -14,6 +15,7 @@ const router = Router();
 
 // ---- Public routes (no authentication) ----
 router.get("/", getBlogs);
+router.get("/categories", getCategories);
 router.get("/:id", getBlogById);
 
 // ---- Protected routes (admin only) ----

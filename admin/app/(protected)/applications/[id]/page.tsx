@@ -25,6 +25,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function CandidateDetailPage() {
   const { id } = useParams() as { id: string };
@@ -77,8 +78,89 @@ export default function CandidateDetailPage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-96">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 dark:border-indigo-400"></div>
+      <div className="space-y-6">
+        {/* Header Skeleton */}
+        <div className="flex items-center gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <Skeleton className="h-10 w-10 rounded-xl" />
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-64" />
+            <Skeleton className="h-4 w-96" />
+          </div>
+        </div>
+
+        {/* Grid Layout Skeleton */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Column Skeleton */}
+          <div className="lg:col-span-8 space-y-6">
+            <Card>
+              <CardContent className="p-6 space-y-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-4 pb-6 border-b border-slate-100 dark:border-slate-800/80">
+                  <div className="flex items-center gap-4">
+                    <Skeleton className="size-16 rounded-2xl" />
+                    <div className="space-y-2">
+                      <Skeleton className="h-6 w-48" />
+                      <Skeleton className="h-4 w-32" />
+                    </div>
+                  </div>
+                  <Skeleton className="h-8 w-32 rounded-full" />
+                </div>
+                
+                {/* Stats Grid Skeleton */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <div key={i} className="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl space-y-2">
+                      <Skeleton className="h-3 w-16" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Social Links Skeleton */}
+                <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-100 dark:border-slate-800/80">
+                  <Skeleton className="h-10 w-32 rounded-xl" />
+                  <Skeleton className="h-10 w-40 rounded-xl" />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Q&A Skeleton */}
+            <Card>
+              <CardContent className="p-6 space-y-6">
+                <div className="space-y-4">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <div key={i} className="space-y-2">
+                      <Skeleton className="h-5 w-3/4" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-5/6" />
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Right Column Skeleton */}
+          <div className="lg:col-span-4 space-y-6">
+            <Card>
+              <CardHeader className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                <Skeleton className="h-6 w-40" />
+              </CardHeader>
+              <CardContent className="p-5 space-y-4 pt-5">
+                <Skeleton className="h-10 w-full rounded-xl" />
+                <Skeleton className="h-10 w-full rounded-xl" />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                <Skeleton className="h-6 w-40" />
+              </CardHeader>
+              <CardContent className="p-5 space-y-4 pt-5">
+                <Skeleton className="h-32 w-full rounded-xl" />
+                <Skeleton className="h-10 w-full rounded-xl" />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     );
   }

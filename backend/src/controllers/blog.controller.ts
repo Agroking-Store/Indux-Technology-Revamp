@@ -70,10 +70,14 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
   const limit = parseInt(req.query.limit as string) || 20;
   const status = req.query.status as string; // optional filter
   const search = req.query.search as string; // optional search filter
+  const category = req.query.category as string; // optional category filter
 
   const filter: any = {};
   if (status && (status === "Draft" || status === "Published")) {
     filter.status = status;
+  }
+  if (category) {
+    filter.category = category;
   }
 
   if (search) {
@@ -265,3 +269,15 @@ export const updateBlogStatus = asyncHandler(async (req: AuthRequest, res: Respo
   res.status(200).json(new ApiResponse(200, blog, `Blog status updated to ${status}`));
 });
 
+// @desc    Get all unique categories
+// @route   GET /api/v1/blogs/categories
+// @access  Public
+export const getCategories = asyncHandler(async (_req: Request, res: Response) => {
+  const categories = await Blog.distinct("category");
+  // Filter out any empty/null categories just in case
+  const validCategories = categories.filter(c => c && c.trim() !== "");
+  
+  res.status(200).json(
+    new ApiResponse(200, validCategories, "Categories fetched successfully")
+  );
+});

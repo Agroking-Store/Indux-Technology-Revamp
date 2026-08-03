@@ -71,6 +71,8 @@ export default function BlogsPage() {
   const [statusFilter, setStatusFilter] = useState<
     "all" | "Published" | "Draft"
   >("all");
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [categories, setCategories] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [totalCount, setTotalCount] = useState(0);
@@ -99,6 +101,7 @@ export default function BlogsPage() {
       };
 
       if (statusFilter !== "all") params.status = statusFilter;
+      if (categoryFilter !== "all") params.category = categoryFilter;
       if (debouncedSearch) params.search = debouncedSearch;
 
       const res = await api.get<
@@ -114,6 +117,7 @@ export default function BlogsPage() {
     }
   }, [
     statusFilter,
+    categoryFilter,
     debouncedSearch,
     pagination.pageIndex,
     pagination.pageSize,
@@ -121,7 +125,21 @@ export default function BlogsPage() {
 
   useEffect(() => {
     isMounted.current = true;
+    
+    const fetchCategories = async () => {
+      try {
+        const res = await api.get<ApiResponse<string[]>>("/blogs/categories");
+        if (isMounted.current) {
+          setCategories(res.data.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch categories");
+      }
+    };
+    
+    fetchCategories();
     fetchBlogs();
+    
     return () => {
       isMounted.current = false;
     };
@@ -162,6 +180,7 @@ export default function BlogsPage() {
 
   const handleClearFilters = () => {
     setStatusFilter("all");
+    setCategoryFilter("all");
     setSearchTerm("");
     setDebouncedSearch("");
     setPagination({ pageIndex: 0, pageSize: 10 });
@@ -171,25 +190,25 @@ export default function BlogsPage() {
     () => [
       {
         id: "serial",
-        header: () => <div className="text-center">S.No</div>,
+        header: () => <div className="text-center font-semibold">S.No</div>,
         cell: ({ row }) => (
-          <div className="text-center text-muted-foreground font-medium text-sm pr-2">
+          <div className="text-center text-muted-foreground font-medium text-sm">
             {pagination.pageIndex * pagination.pageSize + row.index + 1}
           </div>
         ),
       },
       {
         accessorKey: "title",
-        header: () => <div className="text-left">Article Title</div>,
+        header: () => <div className="text-left font-semibold">Article Details</div>,
         cell: ({ row }) => {
           const blog = row.original;
           return (
-            <div className="flex flex-col gap-1 w-full text-left">
+            <div className="flex flex-col gap-1 text-left max-w-[280px]">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger
                     render={
-                      <div className="text-sm font-semibold text-foreground truncate cursor-help">
+                      <div className="text-sm font-bold text-foreground truncate cursor-pointer w-full">
                         {blog.title}
                       </div>
                     }
@@ -228,30 +247,23 @@ export default function BlogsPage() {
       },
       {
         accessorKey: "category",
-        header: () => <div className="text-left">Category</div>,
+        header: () => <div className="text-left font-semibold">Category</div>,
         cell: ({ row }) => (
-          <Badge
-            variant="outline"
-            className="bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 font-bold whitespace-nowrap truncate max-w-[120px]"
-          >
-            {row.getValue("category") || "Tech"}
-          </Badge>
-        ),
-      },
-      {
-        accessorKey: "author",
-        header: () => <div className="text-left">Author</div>,
-        cell: ({ row }) => (
-          <div className="whitespace-nowrap text-sm font-medium truncate max-w-[120px]">
-            {row.getValue("author") || "—"}
+          <div className="flex items-start text-left max-w-[140px]">
+            <Badge
+              variant="outline"
+              className="bg-slate-100 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 font-bold whitespace-nowrap truncate max-w-full"
+            >
+              {row.getValue("category") || "Tech"}
+            </Badge>
           </div>
         ),
       },
       {
         accessorKey: "createdAt",
-        header: () => <div className="text-left">Date</div>,
+        header: () => <div className="text-center font-semibold px-4">Date</div>,
         cell: ({ row }) => (
-          <div className="whitespace-nowrap text-sm text-muted-foreground">
+          <div className="whitespace-nowrap text-sm text-muted-foreground text-center px-4">
             {new Date(row.getValue("createdAt")).toLocaleDateString(undefined, {
               month: "short",
               day: "numeric",
@@ -262,31 +274,33 @@ export default function BlogsPage() {
       },
       {
         accessorKey: "status",
-        header: () => <div className="text-left">Status</div>,
+        header: () => <div className="text-center font-semibold">Status</div>,
         cell: ({ row }) => {
           const status = row.getValue("status") as string;
           const isPublished = status === "Published";
           return (
-            <Badge
-              variant="outline"
-              className={`whitespace-nowrap ${
-                isPublished
-                  ? "bg-green-50 text-green-700 border-green-200 dark:bg-green-950/40 dark:text-green-400 dark:border-green-900/40"
-                  : "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-900/40"
-              }`}
-            >
-              {status}
-            </Badge>
+            <div className="text-center">
+              <Badge
+                variant="outline"
+                className={`whitespace-nowrap ${
+                  isPublished
+                    ? "bg-green-50 text-green-700 border-green-200 dark:bg-green-950/40 dark:text-green-400 dark:border-green-900/40"
+                    : "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-900/40"
+                }`}
+              >
+                {status}
+              </Badge>
+            </div>
           );
         },
       },
       {
         id: "actions",
-        header: () => <div className="text-right">Actions</div>,
+        header: () => <div className="text-center font-semibold pl-4">Actions</div>,
         cell: ({ row }) => {
           const blog = row.original;
           return (
-            <div className="flex items-center justify-end gap-1">
+            <div className="flex items-center justify-center gap-2 pl-4">
               <TooltipProvider>
                 {/* ── Edit ── */}
                 <Tooltip>
@@ -296,13 +310,12 @@ export default function BlogsPage() {
                         href={`/blogs/edit/${blog._id}`}
                         onClick={(e) => e.stopPropagation()}
                         className={buttonVariants({
-                          variant: "ghost",
+                          variant: "outline",
                           size: "icon",
-                          className:
-                            "h-8 w-8 text-indigo-600 dark:text-indigo-400 cursor-pointer",
+                          className: "h-10 w-10 cursor-pointer bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-colors shadow-sm",
                         })}
                       >
-                        <Edit2 size={16} />
+                        <Edit2 size={15} />
                       </Link>
                     }
                   />
@@ -314,22 +327,22 @@ export default function BlogsPage() {
                   <TooltipTrigger
                     render={
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="icon"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleToggleStatus(blog._id, blog.status);
                         }}
-                        className={`h-8 w-8 cursor-pointer ${
+                        className={`h-10 w-10 cursor-pointer bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 transition-colors shadow-sm ${
                           blog.status === "Published"
-                            ? "text-amber-600 dark:text-amber-400 hover:text-amber-700"
-                            : "text-green-600 dark:text-green-400 hover:text-green-700"
+                            ? "text-amber-600 dark:text-amber-400 hover:text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950/50 hover:border-amber-200 dark:hover:border-amber-900"
+                            : "text-green-600 dark:text-green-400 hover:text-green-700 hover:bg-green-50 dark:hover:bg-green-950/50 hover:border-green-200 dark:hover:border-green-900"
                         }`}
                       >
                         {blog.status === "Published" ? (
-                          <EyeOff size={16} />
+                          <EyeOff size={15} />
                         ) : (
-                          <Eye size={16} />
+                          <Eye size={15} />
                         )}
                       </Button>
                     }
@@ -342,35 +355,29 @@ export default function BlogsPage() {
                 </Tooltip>
 
                 {/* ── Delete ── */}
-                <div onClick={(e) => e.stopPropagation()}>
-                  {" "}
-                  {/* prevent row click */}
-                  <ConfirmDialog
-                    title="Are you sure you want to delete this blog?"
-                    description="This action cannot be undone. This will permanently delete the blog."
-                    confirmText="Yes, delete"
-                    onConfirm={() => handleDelete(blog._id)}
-                    icon="trash"
-                    trigger={
-                      <div className="inline-block">
-                        <Tooltip>
-                          <TooltipTrigger
-                            render={
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 text-rose-600 dark:text-rose-400 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/50 cursor-pointer"
-                              >
-                                <Trash2 size={16} />
-                              </Button>
-                            }
-                          />
-                          <TooltipContent>Delete Article</TooltipContent>
-                        </Tooltip>
-                      </div>
-                    }
-                  />
-                </div>
+                <Tooltip>
+                  <TooltipTrigger render={
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <ConfirmDialog
+                        title="Are you sure you want to delete this blog?"
+                        description="This action cannot be undone. This will permanently delete the blog."
+                        confirmText="Yes, delete"
+                        onConfirm={() => handleDelete(blog._id)}
+                        icon="trash"
+                        trigger={
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-10 w-10 cursor-pointer bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:border-rose-200 dark:hover:border-rose-900 transition-colors shadow-sm"
+                          >
+                            <Trash2 size={15} />
+                          </Button>
+                        }
+                      />
+                    </div>
+                  } />
+                  <TooltipContent>Delete Article</TooltipContent>
+                </Tooltip>
               </TooltipProvider>
             </div>
           );
@@ -438,12 +445,15 @@ export default function BlogsPage() {
               setPagination((prev) => ({ ...prev, pageIndex: 0 }));
             }}
           >
-            <SelectTrigger className="w-[140px] h-9 cursor-pointer">
-              <SelectValue placeholder="All Statuses" />
+            <SelectTrigger className="w-[180px] h-9 cursor-pointer">
+              <div className="flex gap-1 items-center truncate">
+                <span className="text-muted-foreground">Status:</span>
+                <SelectValue placeholder="All" />
+              </div>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all" className="cursor-pointer">
-                All Statuses
+                All
               </SelectItem>
               <SelectItem value="Published" className="cursor-pointer">
                 Published
@@ -453,9 +463,34 @@ export default function BlogsPage() {
               </SelectItem>
             </SelectContent>
           </Select>
+
+          <Select
+            value={categoryFilter}
+            onValueChange={(value) => {
+              setCategoryFilter(value as string);
+              setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+            }}
+          >
+            <SelectTrigger className="w-[230px] h-9 cursor-pointer">
+              <div className="flex gap-1 items-center truncate">
+                <span className="text-muted-foreground">Category:</span>
+                <SelectValue placeholder="All" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all" className="cursor-pointer">
+                All
+              </SelectItem>
+              {categories.map((cat) => (
+                <SelectItem key={cat} value={cat} className="cursor-pointer">
+                  {cat}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
-        {(statusFilter !== "all" || searchTerm !== "") && (
+        {(statusFilter !== "all" || categoryFilter !== "all" || searchTerm !== "") && (
           <Button
             variant="ghost"
             size="sm"
@@ -476,9 +511,8 @@ export default function BlogsPage() {
                 {headerGroup.headers.map((header) => {
                   let width = "auto";
                   if (header.id === "serial") width = "70px";
-                  else if (header.id === "title") width = "35%";
-                  else if (header.id === "category") width = "15%";
-                  else if (header.id === "author") width = "15%";
+                  else if (header.id === "title") width = "200px";
+                  else if (header.id === "category") width = "150px";
                   else if (header.id === "createdAt") width = "140px";
                   else if (header.id === "status") width = "120px";
                   else if (header.id === "actions") width = "120px";
