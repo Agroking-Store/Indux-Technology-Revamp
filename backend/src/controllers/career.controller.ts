@@ -47,11 +47,25 @@ export const createCareer = asyncHandler(async (req: AuthRequest, res: Response)
 export const getCareers = asyncHandler(async (req: Request, res: Response) => {
   const page = req.query.page ? parseInt(req.query.page as string) : undefined;
   const limit = req.query.limit ? parseInt(req.query.limit as string) : undefined;
-  const status = req.query.status as string; // "Active" or "Closed"
+  const status = req.query.status as string;
+  const search = req.query.search as string;
+  const role = req.query.role as string;
+  const location = req.query.location as string;
 
   const filter: any = {};
   if (status && (status === "Active" || status === "Closed")) {
     filter.status = status;
+  }
+  
+  if (role) filter.title = role;
+  if (location) filter.location = location;
+  
+  if (search) {
+    filter.$or = [
+      { title: { $regex: search, $options: "i" } },
+      { department: { $regex: search, $options: "i" } },
+      { location: { $regex: search, $options: "i" } },
+    ];
   }
 
   const total = await Career.countDocuments(filter);
@@ -83,6 +97,21 @@ export const getCareers = asyncHandler(async (req: Request, res: Response) => {
         pages: limit ? Math.ceil(total / limit) : 1,
       },
     }, "Careers fetched successfully")
+  );
+});
+
+// ============================
+// GET DISTINCT FILTERS (Roles & Locations)
+// ============================
+export const getCareerFilters = asyncHandler(async (_req: Request, res: Response) => {
+  const roles = await Career.distinct("title");
+  const locations = await Career.distinct("location");
+
+  const validRoles = roles.filter(c => c && c.trim() !== "");
+  const validLocations = locations.filter(l => l && l.trim() !== "");
+
+  res.status(200).json(
+    new ApiResponse(200, { roles: validRoles, locations: validLocations }, "Filters fetched successfully")
   );
 });
 

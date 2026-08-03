@@ -77,12 +77,12 @@ export default function DashboardPage() {
 
   // Website Traffic Analytics States
   const [visitorRange, setVisitorRange] = useState<'week' | 'month'>('week');
-  const [visitorData, setVisitorData] = useState<{ total: number; chartData: Array<{ label: string; count: number }> } | null>(null);
+  const [visitorData, setVisitorData] = useState<{ totalRange: number; totalToday: number; totalAllTime: number; chartData: Array<{ label: string; count: number }> } | null>(null);
   const [loadingVisitors, setLoadingVisitors] = useState(false);
 
   useEffect(() => {
     setLoadingVisitors(true);
-    api.get<ApiResponse<{ total: number; chartData: Array<{ label: string; count: number }> }>>(`/dashboard/visitor-stats?range=${visitorRange}`)
+    api.get<ApiResponse<{ totalRange: number; totalToday: number; totalAllTime: number; chartData: Array<{ label: string; count: number }> }>>(`/dashboard/visitor-stats?range=${visitorRange}`)
       .then(res => setVisitorData(res.data.data))
       .catch(console.error)
       .finally(() => setLoadingVisitors(false));
@@ -282,18 +282,40 @@ export default function DashboardPage() {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   {/* Left: Highlight Total */}
-                  <div className="space-y-4 flex flex-col justify-center border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 pb-6 md:pb-0 md:pr-8">
-                    <span className="text-[11px] uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">
-                      Total Visitors ({visitorRange === 'week' ? 'Past 7 Days' : 'Past 30 Days'})
-                    </span>
+                  <div className="space-y-6 flex flex-col justify-center border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 pb-6 md:pb-0 md:pr-8">
+                    
+                    {/* All Time Total */}
                     <div className="space-y-1">
-                      <h2 className="text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-                        {visitorData.total}
+                      <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider">
+                        All-Time Visitors
+                      </span>
+                      <h2 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
+                        {visitorData.totalAllTime.toLocaleString()}
                       </h2>
-                      <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1">
-                        <TrendingUp size={10} className="text-emerald-500 animate-pulse" /> Active user traffic log
-                      </p>
                     </div>
+
+                    <div className="grid grid-cols-2 gap-4 pt-2">
+                      {/* Today's Total */}
+                      <div className="space-y-1 bg-emerald-50 dark:bg-emerald-950/20 p-3 rounded-xl border border-emerald-100 dark:border-emerald-900/30">
+                        <span className="text-[10px] uppercase font-bold text-emerald-600 dark:text-emerald-400 tracking-wider flex items-center gap-1">
+                          <TrendingUp size={10} className="animate-pulse" /> Today
+                        </span>
+                        <div className="text-xl font-bold text-emerald-700 dark:text-emerald-300">
+                          {visitorData.totalToday.toLocaleString()}
+                        </div>
+                      </div>
+
+                      {/* Range Total */}
+                      <div className="space-y-1 bg-indigo-50 dark:bg-indigo-950/20 p-3 rounded-xl border border-indigo-100 dark:border-indigo-900/30">
+                        <span className="text-[10px] uppercase font-bold text-indigo-600 dark:text-indigo-400 tracking-wider">
+                          {visitorRange === 'week' ? 'Past 7D' : 'Past 30D'}
+                        </span>
+                        <div className="text-xl font-bold text-indigo-700 dark:text-indigo-300">
+                          {visitorData.totalRange.toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
 
                   {/* Right: Trend Chart */}
@@ -303,21 +325,30 @@ export default function DashboardPage() {
                     {visitorData.chartData.length === 0 ? (
                       <div className="h-32 flex items-center justify-center text-xs text-slate-400 italic">No traffic recorded yet.</div>
                     ) : (
-                      <div className="flex items-end justify-around h-36 pt-6 px-2">
+                      <div className="flex items-end justify-around h-40 pt-6 px-2">
                         {visitorData.chartData.map((item, idx) => {
                           const maxVal = Math.max(...visitorData.chartData.map(x => x.count), 1);
-                          const heightPct = `${Math.round((item.count / maxVal) * 100)}%`;
+                          // Ensure a small minimum height (e.g. 8%) if count > 0 so it's always visible
+                          const heightPct = item.count === 0 ? '0%' : `${Math.max(8, Math.round((item.count / maxVal) * 100))}%`;
+                          
                           return (
-                            <div key={idx} className="flex flex-col items-center gap-2 group relative flex-1 max-w-[64px]">
-                              <div className="flex-1 w-full bg-slate-50 dark:bg-slate-950/40 rounded-xl relative overflow-hidden flex items-end min-h-[100px] border border-slate-100 dark:border-slate-800">
+                            <div key={idx} className="flex flex-col items-center gap-2 group relative flex-1 max-w-[50px] mx-1">
+                              
+                              {/* Hover Tooltip */}
+                              <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-black text-white font-extrabold text-[10px] px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                {item.count} {item.count === 1 ? 'view' : 'views'}
+                              </div>
+
+                              {/* Bar Container (Slot) */}
+                              <div className="w-full bg-slate-100 dark:bg-slate-800/50 rounded-xl relative overflow-hidden flex items-end h-[100px] border border-slate-200 dark:border-slate-700 shadow-inner group-hover:border-indigo-300 dark:group-hover:border-indigo-600/50 transition-colors">
+                                {/* Actual Bar */}
                                 <div
                                   style={{ height: heightPct }}
-                                  className="w-full bg-gradient-to-t from-indigo-600 to-indigo-400 dark:from-indigo-500 dark:to-indigo-300 rounded-t-xl group-hover:scale-y-105 transition-all duration-300 origin-bottom"
+                                  className="w-full bg-gradient-to-t from-indigo-600 to-indigo-400 dark:from-indigo-500 dark:to-indigo-300 rounded-t-xl group-hover:from-indigo-500 group-hover:to-indigo-300 transition-all duration-500 ease-out"
                                 />
-                                <span className="absolute top-1 left-1/2 -translate-x-1/2 bg-slate-900 text-white font-extrabold text-[9px] px-1.5 py-0.5 rounded shadow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                                  {item.count} views
-                                </span>
                               </div>
+                              
+                              {/* Label */}
                               <span className="text-[9px] font-bold text-slate-500 dark:text-slate-400 line-clamp-1 w-full text-center">
                                 {item.label}
                               </span>

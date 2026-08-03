@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { Edit2, Eye, EyeOff, Trash2, Plus, Briefcase, Search } from 'lucide-react';
+import { Edit2, Eye, EyeOff, Trash2, Plus, Briefcase, Search, Check, ChevronsUpDown, X } from 'lucide-react';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import api, { ApiResponse, Career } from '@/lib/api';
 import {
@@ -24,6 +24,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 
 export default function CareersPage() {
   const router = useRouter();
@@ -32,33 +37,58 @@ export default function CareersPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRole, setSelectedRole] = useState('ALL');
   const [selectedLoc, setSelectedLoc] = useState('ALL');
-  const isMounted = useRef(true);
+  const [roles, setRoles] = useState<string[]>([]);
+  const [locations, setLocations] = useState<string[]>([]);
+  const [locComboboxOpen, setLocComboboxOpen] = useState(false);
+  const [roleComboboxOpen, setRoleComboboxOpen] = useState(false);
+  
+  // Pagination State
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const fetchCareers = useCallback(async () => {
+  const fetchFilters = useCallback(async () => {
     try {
-      const res = await api.get<ApiResponse<{ careers: Career[] }>>('/careers');
-      if (isMounted.current) {
-        setCareers(res.data.data.careers);
-      }
+      const res = await api.get<ApiResponse<{ roles: string[], locations: string[] }>>('/careers/filters');
+      setRoles(res.data.data.roles);
+      setLocations(res.data.data.locations);
     } catch (error) {
-      // handled
-    } finally {
-      if (isMounted.current) {
-        setLoading(false);
-      }
+      console.error(error);
     }
   }, []);
 
+  const fetchCareers = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params: any = {
+        page,
+        limit: 10,
+      };
+      if (searchTerm) params.search = searchTerm;
+      if (selectedRole && selectedRole !== 'ALL') params.role = selectedRole;
+      if (selectedLoc && selectedLoc !== 'ALL') params.location = selectedLoc;
+
+      const res = await api.get<ApiResponse<{ careers: Career[], pagination: any }>>('/careers', { params });
+      setCareers(res.data.data.careers);
+      setTotalPages(res.data.data.pagination.pages || 1);
+      setTotalCount(res.data.data.pagination.total || 0);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, searchTerm, selectedRole, selectedLoc]);
+
   useEffect(() => {
-    isMounted.current = true;
+    fetchFilters();
+  }, [fetchFilters]);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       fetchCareers();
-    }, 0);
+    }, 300);
 
-    return () => {
-      isMounted.current = false;
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(timer);
   }, [fetchCareers]);
 
   const handleDelete = async (id: string) => {
@@ -82,28 +112,7 @@ export default function CareersPage() {
     }
   };
 
-  // Get unique roles (titles) and locations for filter options
-  const roles = Array.from(new Set(careers.map(c => c.title).filter(Boolean)));
-  const locations = Array.from(new Set(careers.map(c => c.location).filter(Boolean)));
 
-  const filteredCareers = careers.filter(career => {
-    const matchesSearch = career.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (career.department && career.department.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (career.location && career.location.toLowerCase().includes(searchTerm.toLowerCase()));
-
-    const matchesRole = selectedRole === 'ALL' || career.title === selectedRole;
-    const matchesLoc = selectedLoc === 'ALL' || career.location === selectedLoc;
-
-    return matchesSearch && matchesRole && matchesLoc;
-  });
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 dark:border-indigo-400"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6 text-slate-900 dark:text-slate-100 transition-colors duration-300">
@@ -123,10 +132,10 @@ export default function CareersPage() {
       </div>
 
       {/* Filters Bar */}
-      <div className="bg-white dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+      <div className="bg-white dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col md:flex-row gap-4 items-end text-left">
         
         {/* Search */}
-        <div className="relative">
+        <div className="relative w-full md:w-64">
           <Label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Search</Label>
           <div className="relative mt-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 z-10" size={14} />
@@ -134,48 +143,165 @@ export default function CareersPage() {
               type="text"
               placeholder="Search by title..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => { setSearchTerm(e.target.value); setPage(1); }}
               className="w-full pl-9 pr-3 py-1.5 h-9 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-indigo-500 shadow-none cursor-text animate-none"
             />
           </div>
         </div>
 
-        {/* Role Selector */}
-        <div>
+        {/* Role Combobox */}
+        <div className="w-full md:w-56">
           <Label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Role</Label>
-          <div className="mt-1">
-            <Select value={selectedRole} onValueChange={(val) => setSelectedRole(val || "ALL")}>
-              <SelectTrigger className="w-full px-3 py-1.5 h-9 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-indigo-500 shadow-none cursor-pointer">
-                <SelectValue placeholder="All Roles" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ALL">All Roles</SelectItem>
-                {roles.map(role => (
-                  <SelectItem key={role} value={role}>{role}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <Popover open={roleComboboxOpen} onOpenChange={setRoleComboboxOpen}>
+            <PopoverTrigger render={
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={roleComboboxOpen}
+                className="w-full justify-between mt-1 h-9 px-3 py-1.5 border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-indigo-500 shadow-none font-normal cursor-pointer"
+              />
+            }>
+                <span className="truncate pr-2">
+                  {selectedRole === "ALL"
+                    ? "All Roles"
+                    : selectedRole}
+                </span>
+                <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+            </PopoverTrigger>
+            <PopoverContent className="w-full p-0 max-h-[300px]" align="start">
+              <Command>
+                <CommandInput placeholder="Search role..." className="h-9 text-xs" />
+                <CommandList className="max-h-48 overflow-y-auto">
+                  <CommandEmpty>No role found.</CommandEmpty>
+                  <CommandGroup>
+                    <CommandItem
+                      value="ALL"
+                      onSelect={() => {
+                        setSelectedRole("ALL");
+                        setRoleComboboxOpen(false);
+                        setPage(1);
+                      }}
+                      className="text-xs cursor-pointer"
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          selectedRole === "ALL" ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      All Roles
+                    </CommandItem>
+                    {roles.map((role) => (
+                      <CommandItem
+                        key={role}
+                        value={role}
+                        onSelect={() => {
+                          setSelectedRole(role);
+                          setRoleComboboxOpen(false);
+                          setPage(1);
+                        }}
+                        className="text-xs cursor-pointer"
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            selectedRole === role ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        {role}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
 
-        {/* Location Selector */}
-        <div>
+        {/* Location Combobox */}
+        <div className="w-full md:w-56">
           <Label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Office Location</Label>
-          <div className="mt-1">
-            <Select value={selectedLoc} onValueChange={(val) => setSelectedLoc(val || "ALL")}>
-              <SelectTrigger className="w-full px-3 py-1.5 h-9 border border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-indigo-500 shadow-none cursor-pointer">
-                <SelectValue placeholder="All Locations" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ALL">All Locations</SelectItem>
-                {locations.map(loc => (
-                  <SelectItem key={loc} value={loc}>{loc}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <Popover open={locComboboxOpen} onOpenChange={setLocComboboxOpen}>
+            <PopoverTrigger render={
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={locComboboxOpen}
+                className="w-full justify-between mt-1 h-9 px-3 py-1.5 border-slate-200 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-indigo-500 shadow-none font-normal cursor-pointer"
+              />
+            }>
+                <span className="truncate pr-2">
+                  {selectedLoc === "ALL"
+                    ? "All Locations"
+                    : selectedLoc}
+                </span>
+                <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+            </PopoverTrigger>
+            <PopoverContent className="w-full p-0 max-h-[300px]" align="start">
+              <Command>
+                <CommandInput placeholder="Search location..." className="h-9 text-xs" />
+                <CommandList className="max-h-48 overflow-y-auto">
+                  <CommandEmpty>No location found.</CommandEmpty>
+                  <CommandGroup>
+                    <CommandItem
+                      value="ALL"
+                      onSelect={() => {
+                        setSelectedLoc("ALL");
+                        setLocComboboxOpen(false);
+                        setPage(1);
+                      }}
+                      className="text-xs cursor-pointer"
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          selectedLoc === "ALL" ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      All Locations
+                    </CommandItem>
+                    {locations.map((loc) => (
+                      <CommandItem
+                        key={loc}
+                        value={loc}
+                        onSelect={() => {
+                          setSelectedLoc(loc);
+                          setLocComboboxOpen(false);
+                          setPage(1);
+                        }}
+                        className="text-xs cursor-pointer"
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            selectedLoc === loc ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        {loc}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
 
+        {/* Clear Filters */}
+        {(searchTerm || selectedRole !== 'ALL' || selectedLoc !== 'ALL') && (
+          <Button
+            variant="ghost"
+            onClick={() => {
+              setSearchTerm('');
+              setSelectedRole('ALL');
+              setSelectedLoc('ALL');
+              setPage(1);
+            }}
+            className="h-9 px-4 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 cursor-pointer w-full md:w-auto"
+          >
+            <X size={14} className="mr-1.5" /> Clear Filters
+          </Button>
+        )}
       </div>
 
       {/* Table Container */}
@@ -205,16 +331,28 @@ export default function CareersPage() {
               </TableRow>
             </TableHeader>
             <TableBody className="divide-y divide-slate-200 dark:divide-slate-800 text-left">
-              {filteredCareers.map((career, index) => (
-                <TableRow key={career._id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+              {loading ? (
+                Array.from({ length: 5 }).map((_, idx) => (
+                  <TableRow key={idx}>
+                    <TableCell><div className="flex justify-start"><Skeleton className="h-4 w-6" /></div></TableCell>
+                    <TableCell><Skeleton className="h-4 w-[180px]" /></TableCell>
+                    <TableCell><Skeleton className="h-4 w-[120px]" /></TableCell>
+                    <TableCell><Skeleton className="h-4 w-[140px]" /></TableCell>
+                    <TableCell><div className="flex justify-center"><Skeleton className="h-6 w-16 rounded-full" /></div></TableCell>
+                    <TableCell><div className="flex justify-center gap-1.5"><Skeleton className="h-9 w-9 rounded-md" /><Skeleton className="h-9 w-9 rounded-md" /><Skeleton className="h-9 w-9 rounded-md" /></div></TableCell>
+                  </TableRow>
+                ))
+              ) : careers.map((career, index) => (
+                <TableRow 
+                  key={career._id} 
+                  className="hover:bg-slate-200 dark:hover:bg-slate-800/70 transition-colors cursor-pointer"
+                  onClick={() => router.push(`/careers/${career._id}`)}
+                >
                   <TableCell className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 font-semibold">
-                    {index + 1}
+                    {(page - 1) * 10 + index + 1}
                   </TableCell>
                   <TableCell className="px-6 py-4 whitespace-nowrap">
-                    <div
-                      className="text-sm font-semibold text-slate-900 dark:text-slate-100 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                      onClick={() => router.push(`/careers/${career._id}`)}
-                    >
+                    <div className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">
                       {career.title}
                     </div>
                   </TableCell>
@@ -236,49 +374,65 @@ export default function CareersPage() {
                     </span>
                   </TableCell>
                   <TableCell className="px-6 py-4 whitespace-nowrap text-center">
-                    <div className="flex items-center justify-center gap-1.5">
-                      <Link
-                        href={`/careers/edit/${career._id}`}
-                        className={`${buttonVariants({ variant: "outline", size: "icon" })} h-9 w-9 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-colors shadow-sm`}
-                        title="Edit posting"
-                      >
-                        <Edit2 size={15} />
-                      </Link>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() => handleToggleStatus(career._id, career.status)}
-                        className={`h-9 w-9 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 transition-colors shadow-sm ${
-                          career.status === 'Active' 
-                            ? 'text-amber-600 dark:text-amber-400 hover:text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950/50' 
-                            : 'text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-950/50'
-                        }`}
-                        title={career.status === 'Active' ? 'Close job' : 'Reopen job'}
-                      >
-                        {career.status === 'Active' ? <EyeOff size={15} /> : <Eye size={15} />}
-                      </Button>
-                      <ConfirmDialog
-                        title="Are you sure you want to delete this job?"
-                        description="This action cannot be undone. This will permanently delete the job and all its applications."
-                        confirmText="Yes, delete"
-                        onConfirm={() => handleDelete(career._id)}
-                        icon="trash"
-                        trigger={
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-9 w-9 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:border-rose-200 dark:hover:border-rose-900 transition-colors shadow-sm"
-                            title="Delete"
-                          >
-                            <Trash2 size={15} />
-                          </Button>
-                        }
-                      />
+                    <div className="flex items-center justify-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger render={
+                            <Link
+                              href={`/careers/edit/${career._id}`}
+                              className={`${buttonVariants({ variant: "outline", size: "icon" })} h-9 w-9 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-colors shadow-sm`}
+                            />
+                          }>
+                              <Edit2 size={15} />
+                          </TooltipTrigger>
+                          <TooltipContent>Edit posting</TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                          <TooltipTrigger render={
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              onClick={() => handleToggleStatus(career._id, career.status)}
+                              className={`h-9 w-9 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 transition-colors shadow-sm ${
+                                career.status === 'Active' 
+                                  ? 'text-amber-600 dark:text-amber-400 hover:text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950/50' 
+                                  : 'text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-950/50'
+                              }`}
+                            />
+                          }>
+                              {career.status === 'Active' ? <EyeOff size={15} /> : <Eye size={15} />}
+                          </TooltipTrigger>
+                          <TooltipContent>{career.status === 'Active' ? 'Close job' : 'Reopen job'}</TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                          <TooltipTrigger render={<div />}>
+                              <ConfirmDialog
+                                title="Are you sure you want to delete this job?"
+                                description="This action cannot be undone. This will permanently delete the job and all its applications."
+                                confirmText="Yes, delete"
+                                onConfirm={() => handleDelete(career._id)}
+                                icon="trash"
+                                trigger={
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-9 w-9 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:border-rose-200 dark:hover:border-rose-900 transition-colors shadow-sm"
+                                  >
+                                    <Trash2 size={15} />
+                                  </Button>
+                                }
+                              />
+                          </TooltipTrigger>
+                          <TooltipContent>Delete job</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
                   </TableCell>
                 </TableRow>
               ))}
-              {filteredCareers.length === 0 && (
+              {!loading && careers.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={6} className="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
                     <Briefcase className="size-12 mx-auto mb-3 opacity-40 text-slate-400 dark:text-slate-500" />
@@ -290,6 +444,35 @@ export default function CareersPage() {
             </TableBody>
           </Table>
         </div>
+
+        {/* Pagination Controls */}
+        {totalCount > 0 && (
+          <div className="flex items-center justify-between px-4 py-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20">
+            <div className="text-sm text-slate-500 dark:text-slate-400">
+              Showing <span className="font-medium text-slate-900 dark:text-slate-100">{(page - 1) * 10 + 1}</span> to <span className="font-medium text-slate-900 dark:text-slate-100">{Math.min(page * 10, totalCount)}</span> of <span className="font-medium text-slate-900 dark:text-slate-100">{totalCount}</span> results
+            </div>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+                className="cursor-pointer"
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={page === totalPages || totalPages === 0}
+                onClick={() => setPage(page + 1)}
+                className="cursor-pointer"
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
 
     </div>

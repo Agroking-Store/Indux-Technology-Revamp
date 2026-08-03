@@ -176,7 +176,20 @@ export const getVisitorStats = asyncHandler(async (req: Request, res: Response) 
   const { range = "week" } = req.query;
 
   const data: Array<{ label: string; count: number }> = [];
-  let totalCount = 0;
+  let totalRangeCount = 0;
+
+  // Calculate today
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  const endOfToday = new Date();
+  endOfToday.setHours(23, 59, 59, 999);
+  
+  const totalToday = await Visitor.countDocuments({
+    createdAt: { $gte: startOfToday, $lte: endOfToday },
+  });
+
+  // Calculate all time
+  const totalAllTime = await Visitor.countDocuments();
 
   if (range === "week") {
     // Past 7 days (including today)
@@ -193,7 +206,7 @@ export const getVisitorStats = asyncHandler(async (req: Request, res: Response) 
         createdAt: { $gte: start, $lte: end },
       });
 
-      totalCount += count;
+      totalRangeCount += count;
 
       const dayLabel = start.toLocaleDateString("en-US", { weekday: "short" });
       data.push({ label: dayLabel, count });
@@ -213,18 +226,17 @@ export const getVisitorStats = asyncHandler(async (req: Request, res: Response) 
         createdAt: { $gte: start, $lte: end },
       });
 
-      totalCount += count;
+      totalRangeCount += count;
 
       data.push({ label: `Week ${4 - i}`, count });
     }
-  } else {
-    // All time (fallback / total)
-    totalCount = await Visitor.countDocuments();
   }
 
   res.status(200).json(
     new ApiResponse(200, {
-      total: totalCount,
+      totalRange: totalRangeCount,
+      totalAllTime,
+      totalToday,
       chartData: data,
     }, "Visitor statistics fetched successfully")
   );
