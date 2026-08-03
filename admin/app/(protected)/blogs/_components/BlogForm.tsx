@@ -110,7 +110,9 @@ export default function BlogForm({
         ...initialValues,
       });
       if (initialValues.featuredImage) {
-        setImagePreview(initialValues.featuredImage);
+        setImagePreview(initialValues.featuredImage as string);
+      } else {
+        setImagePreview("");
       }
     }
   }, [initialValues, reset]);
@@ -402,20 +404,27 @@ export default function BlogForm({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2">
-              {/* Image preview */}
+            <div className="space-y-3">
+              {/* ── Image Preview ── */}
               {imagePreview ? (
                 <div className="relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800">
                   <img
-                    src={
-                      imagePreview.startsWith("blob:") ||
-                      imagePreview.startsWith("http")
-                        ? imagePreview
-                        : `${process.env.NEXT_PUBLIC_API_URL}${imagePreview}`
-                    }
+                    src={imagePreview}
                     alt="Featured image preview"
-                    className="w-full h-40 object-cover"
+                    className="w-full h-44 object-cover rounded-xl"
+                    onError={(e) => {
+                      console.error("Image failed to load:", imagePreview);
+                      (e.target as HTMLImageElement).style.border =
+                        "2px solid red";
+                      (e.target as HTMLImageElement).style.minHeight = "80px";
+                      (e.target as HTMLImageElement).alt =
+                        `FAILED: ${imagePreview}`;
+                    }}
+                    onLoad={() => {
+                      console.log("Image loaded successfully:", imagePreview);
+                    }}
                   />
+                  {/* Remove button — only in edit/create mode */}
                   {!isViewMode && (
                     <button
                       type="button"
@@ -423,20 +432,28 @@ export default function BlogForm({
                         setImagePreview("");
                         setValue("featuredImage", "");
                       }}
-                      className="absolute top-2 right-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2 py-1 rounded-lg cursor-pointer"
+                      className="absolute top-2 right-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2.5 py-1 rounded-lg cursor-pointer shadow transition"
                     >
                       Remove
                     </button>
                   )}
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-900/50 text-slate-400 dark:text-slate-500">
-                  <ImageIcon size={24} className="mb-1.5 opacity-40" />
-                  <span className="text-xs font-medium">No image selected</span>
+                /* Placeholder when no image */
+                <div className="flex flex-col items-center justify-center h-36 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-900/50 text-slate-400 dark:text-slate-500">
+                  <ImageIcon size={26} className="mb-2 opacity-40" />
+                  <span className="text-xs font-medium">
+                    {isViewMode ? "No image available" : "No image selected"}
+                  </span>
+                  {!isViewMode && (
+                    <span className="text-[10px] mt-1 opacity-60">
+                      Recommended: 1200 × 630 px
+                    </span>
+                  )}
                 </div>
               )}
 
-              {/* Upload input (hidden in view mode) */}
+              {/* ── File Upload Input — hidden in view mode ── */}
               {!isViewMode && (
                 <>
                   <Label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
@@ -448,10 +465,14 @@ export default function BlogForm({
                     onChange={handleImageSelect}
                     className="cursor-pointer file:cursor-pointer file:text-indigo-600 dark:file:text-indigo-400"
                   />
+                  <p className="text-[10px] text-slate-400 dark:text-slate-500">
+                    Supported: JPG, PNG, WebP. Max recommended: 3 MB.
+                  </p>
                 </>
               )}
 
               <input type="hidden" {...register("featuredImage")} />
+
               {errors.featuredImage && !isViewMode && (
                 <p className="text-destructive text-xs mt-1">
                   {errors.featuredImage.message as string}

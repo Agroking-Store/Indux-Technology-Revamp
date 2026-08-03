@@ -1,18 +1,19 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { toast } from 'react-toastify';
-import { ArrowLeft } from 'lucide-react';
-import api, { ApiResponse } from '@/lib/api';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
-import BlogForm, { BlogFormData } from '../../_components/BlogForm';
+import { useEffect, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { toast } from "react-toastify";
+import { ArrowLeft } from "lucide-react";
+import api, { ApiResponse } from "@/lib/api";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import BlogForm, { BlogFormData } from "../../_components/BlogForm";
 
 export default function EditBlogPage() {
   const { id } = useParams() as { id: string };
   const router = useRouter();
-  const [initialValues, setInitialValues] = useState<Partial<BlogFormData> | null>(null);
+  const [initialValues, setInitialValues] =
+    useState<Partial<BlogFormData> | null>(null);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
 
@@ -22,23 +23,27 @@ export default function EditBlogPage() {
         const res = await api.get<ApiResponse<any>>(`/blogs/${id}`);
         const blog = res.data.data;
 
-        const tagsString = blog.tags?.join(', ') || '';
+        const tagsString = blog.tags?.join(", ") || "";
 
         setInitialValues({
           title: blog.title,
-          slug: blog.slug || '',
-          shortDescription: blog.shortDescription || '',
-          content: blog.content || '',
-          category: blog.category || 'Technology',
+          slug: blog.slug || "",
+          shortDescription: blog.shortDescription || "",
+          content: blog.content || "",
+          category: blog.category || "Technology",
           tags: tagsString,
-          author: blog.author || 'Indux Team',
-          status: blog.status || 'Draft',
-          seoTitle: blog.seoTitle || '',
-          seoDescription: blog.seoDescription || '',
-          featuredImage: blog.featuredImage || '',
+          author: blog.author || "Indux Team",
+          status: blog.status || "Draft",
+          seoTitle: blog.seoTitle || "",
+          seoDescription: blog.seoDescription || "",
+          featuredImage: blog.featuredImage
+            ? blog.featuredImage.startsWith("http")
+              ? blog.featuredImage
+              : `http://localhost:5000${blog.featuredImage}`
+            : "",
         });
       } catch (error) {
-        toast.error('Failed to load article details.');
+        toast.error("Failed to load article details.");
       } finally {
         setFetching(false);
       }
@@ -50,11 +55,16 @@ export default function EditBlogPage() {
   const onSubmit = async (data: BlogFormData) => {
     setLoading(true);
     try {
-      const tagsArray = data.tags ? data.tags.split(',').map((t) => t.trim()).filter(Boolean) : [];
-      
+      const tagsArray = data.tags
+        ? data.tags
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean)
+        : [];
+
       const formData = new FormData();
       Object.entries(data).forEach(([key, value]) => {
-        if (key === 'tags') {
+        if (key === "tags") {
           formData.append(key, JSON.stringify(tagsArray));
         } else if (value !== undefined && value !== null) {
           // In edit mode, if the image wasn't changed, it might still be the URL string.
@@ -64,10 +74,10 @@ export default function EditBlogPage() {
       });
 
       await api.put(`/blogs/${id}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: { "Content-Type": "multipart/form-data" },
       });
-      toast.success('Article updated successfully');
-      router.push('/blogs');
+      toast.success("Article updated successfully");
+      router.push("/blogs");
     } catch (error) {
       // Handled
     } finally {
@@ -110,20 +120,27 @@ export default function EditBlogPage() {
           type="button"
           variant="ghost"
           size="icon"
-          onClick={() => router.push('/blogs')}
+          onClick={() => router.push("/blogs")}
           className="text-muted-foreground cursor-pointer"
         >
           <ArrowLeft size={20} />
         </Button>
         <div>
-          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Edit Article</h1>
+          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">
+            Edit Article
+          </h1>
           <p className="text-muted-foreground text-sm mt-1">
             Compose article content, categories, and SEO configurations.
           </p>
         </div>
       </div>
 
-      <BlogForm initialValues={initialValues || undefined} onSubmit={onSubmit} loading={loading} isEditing={true} />
+      <BlogForm
+        initialValues={initialValues || undefined}
+        onSubmit={onSubmit}
+        loading={loading}
+        isEditing={true}
+      />
     </div>
   );
 }
