@@ -100,13 +100,13 @@ export default function CandidateDetailPage() {
   }
 
   const job = application.jobId as any;
-  const backendBaseUrl = process.env.NEXT_PUBLIC_API_URL 
+  const backendBaseUrl = process.env.NEXT_PUBLIC_API_URL
     ? process.env.NEXT_PUBLIC_API_URL 
     : 'http://localhost:5000/api/v1';
   const secureResumeUrl = application.resume 
     ? `${backendBaseUrl}${application.resume}` 
     : '';
-
+console.log(backendBaseUrl)
   return (
     <div className="space-y-6 text-slate-900 dark:text-slate-100 transition-colors duration-300">
       

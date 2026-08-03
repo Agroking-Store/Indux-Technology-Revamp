@@ -40,10 +40,10 @@ export default function CareerDetailsPage() {
   const [token, setToken] = useState<string>('');
   const isMounted = useRef(true);
 
-  const backendBaseUrl = process.env.NEXT_PUBLIC_API_URL 
-    ? process.env.NEXT_PUBLIC_API_URL 
+  const backendBaseUrl = process.env.NEXT_PUBLIC_API_URL
+    ? process.env.NEXT_PUBLIC_API_URL
     : 'http://localhost:5000/api/v1';
-
+console.log(backendBaseUrl)
   useEffect(() => {
     isMounted.current = true;
     if (typeof window !== 'undefined') {

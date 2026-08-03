@@ -864,7 +864,7 @@ export default function EventFormPage() {
                 )}
                 <input type="hidden" {...register('coverImage')} />
                 {coverPreview && (
-                  <img src={coverPreview} alt="Cover preview" className="mt-2 w-full h-32 object-cover rounded-xl border border-slate-200 dark:border-slate-800" />
+                  <img src={`${process.env.NEXT_PUBLIC_API_URL}${coverPreview}`} alt="Cover preview" className="mt-2 w-full h-32 object-cover rounded-xl border border-slate-200 dark:border-slate-800" />
                 )}
                 {/* {errors.coverImage && <p className="text-rose-500 text-xs mt-1">{errors.coverImage.message}</p>} */}
               </div>
@@ -876,7 +876,7 @@ export default function EventFormPage() {
                 )}
                 <input type="hidden" {...register('bannerImage')} />
                 {bannerPreview && (
-                  <img src={bannerPreview} alt="Banner preview" className="mt-2 w-full h-24 object-cover rounded-xl border border-slate-200 dark:border-slate-800" />
+                  <img src={`${process.env.NEXT_PUBLIC_API_URL}${bannerPreview}`} alt="Banner preview" className="mt-2 w-full h-24 object-cover rounded-xl border border-slate-200 dark:border-slate-800" />
                 )}
                 {/* {errors.bannerImage && <p className="text-rose-500 text-xs mt-1">{errors.bannerImage.message}</p>} */}
               </div>
