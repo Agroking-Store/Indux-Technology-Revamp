@@ -43,7 +43,11 @@ export default function ViewBlogPage() {
           seoTitle: blog.seoTitle || "",
           seoDescription: blog.seoDescription || "",
           // featuredImage is already a full URL from the backend
-          featuredImage: blog.featuredImage || "",
+          featuredImage: blog.featuredImage
+            ? blog.featuredImage.startsWith("http")
+              ? blog.featuredImage
+              : `http://localhost:5000${blog.featuredImage}`
+            : "",
         });
       } catch {
         toast.error("Failed to load article details.");
