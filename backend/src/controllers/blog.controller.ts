@@ -162,14 +162,7 @@ export const getBlogById = asyncHandler(async (req: Request, res: Response) => {
     throw ApiError.notFound("Blog not found");
   }
 
-  const host = req.get("host") || "";
-const isLocal =
-  host.includes("localhost") || host.startsWith("127.0.0.1");
-const protocol = isLocal ? "http" : "https";
 const blogObj = { ...blog };
-if (blogObj.featuredImage && blogObj.featuredImage.startsWith("/uploads/")) {
-  blogObj.featuredImage = `${protocol}://${host}${blogObj.featuredImage}`;
-}
   res.status(200).json(new ApiResponse(200, blogObj, "Blog fetched successfully"));
 });
 

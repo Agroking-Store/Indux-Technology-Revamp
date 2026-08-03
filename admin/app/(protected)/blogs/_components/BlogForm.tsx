@@ -271,7 +271,7 @@ export default function BlogForm({
               />
               <input type="hidden" {...register('featuredImage')} />
               {imagePreview && (
-                <img src={imagePreview} alt="Featured image preview" className="mt-4 w-full h-32 object-cover rounded-lg border border-border" />
+                <img src={`${process.env.NEXT_PUBLIC_API_URL}${imagePreview}`} alt="Featured image preview" className="mt-4 w-full h-32 object-cover rounded-lg border border-border" />
               )}
               {errors.featuredImage && <p className="text-destructive text-xs mt-1">{errors.featuredImage.message as string}</p>}
             </div>

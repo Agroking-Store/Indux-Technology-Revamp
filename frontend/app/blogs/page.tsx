@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getBlogs, Blog } from '@/lib/api';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Calendar, User, ArrowRight, Newspaper, Search, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -210,14 +209,11 @@ export default function BlogsPage() {
                     className="group grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-xl dark:shadow-none transition-all duration-350 mb-12"
                   >
                     <div className="lg:col-span-7 overflow-hidden min-h-[300px] relative bg-slate-100 dark:bg-slate-850">
-                      <Image
+                      <img
                         src={featured.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${featured.featuredImage}` : fallbackImages[0]}
                         alt={featured.title}
-                        fill
-                        priority
                         sizes="(max-width: 1024px) 100vw, 58vw"
-                        unoptimized={typeof (featured.featuredImage || fallbackImages[0]) === 'string' && (featured.featuredImage || fallbackImages[0]).startsWith('data:')}
-                        className="object-cover transition-transform duration-700 group-hover:scale-103"
+                        className="w-full h-75 object-cover transition-transform duration-700 group-hover:scale-103"
                       />
                     </div>
                     <div className="lg:col-span-5 p-8 sm:p-10 flex flex-col justify-center">
@@ -267,13 +263,11 @@ export default function BlogsPage() {
                       className="group flex flex-col rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-lg transition-all duration-300 h-full"
                     >
                       <div className="overflow-hidden h-48 relative bg-slate-100 dark:bg-slate-850">
-                        <Image
+                        <img
                           src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
                           alt={blog.title}
-                          fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          unoptimized={typeof (blog.featuredImage || fallbackImages[i % fallbackImages.length]) === 'string' && (blog.featuredImage || fallbackImages[i % fallbackImages.length]).startsWith('data:')}
-                          className="object-cover transition-transform duration-700 group-hover:scale-103"
+                          className="w-full h-75 object-cover transition-transform duration-700 group-hover:scale-103"
                         />
                       </div>
                       <div className="p-6 flex flex-col flex-1">

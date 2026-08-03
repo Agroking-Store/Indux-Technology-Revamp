@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Blog } from '@/lib/api';
-import Image from 'next/image';
 import { ArrowLeft, Calendar, User, Clock, Tag, Share2, Search, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -180,19 +179,13 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
             >
               
               {/* Featured Image with shine overlay on hover */}
-              <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-800 group cursor-pointer">
-                <Image
-                  src={ `${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
-                  alt={blog.title}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 66vw"
-                  unoptimized={typeof blog.featuredImage === 'string' && blog.featuredImage.startsWith('data:')}
-                  className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-105"
-                />
-                {/* Swipe shine transition */}
-                <div className="absolute top-0 -left-full w-[50%] h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -skew-x-[25deg] pointer-events-none group-hover:animate-shine" />
-              </div>
+              <div className="relative h-80 w-full rounded-2xl overflow-hidden">
+  <img
+    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
+    alt={blog.title}
+    className="w-full h-full object-cover"
+  />
+</div>
 
               {/* Short description Intro */}
               <div className="border-l-4 border-blue-600 pl-5 text-left">
@@ -296,12 +289,10 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
                     >
                       {/* Mini image with hover shine & zoom */}
                       <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 flex-shrink-0">
-                        <Image 
+                        <img
                           src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
                           alt={item.title}
-                          fill
                           sizes="64px"
-                          unoptimized={typeof item.featuredImage === 'string' && item.featuredImage.startsWith('data:')}
                           className="object-cover group-hover:scale-110 transition-transform duration-[800ms]"
                         />
                         <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-[25deg] pointer-events-none group-hover:animate-shine" />
@@ -402,12 +393,10 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
                   <div className="space-y-4">
                     {/* Image with shine overlay on hover */}
                     <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/40">
-                      <Image 
+                      <img 
                         src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
                         alt={item.title}
-                        fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        unoptimized={typeof item.featuredImage === 'string' && item.featuredImage.startsWith('data:')}
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-[25deg] pointer-events-none group-hover:animate-shine" />
