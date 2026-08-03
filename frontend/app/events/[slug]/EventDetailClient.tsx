@@ -2,10 +2,37 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { registerForEvent, Event, verifyPaymentSignature, cancelRegistration } from "@/lib/api";
-import { Calendar, MapPin, Clock, ShieldAlert, Award, FileText, CheckCircle, ChevronDown, User, Sparkles, Building, ArrowLeft } from "lucide-react";
+import {
+  registerForEvent,
+  Event,
+  verifyPaymentSignature,
+  cancelRegistration,
+} from "@/lib/api";
+import {
+  Calendar,
+  MapPin,
+  Clock,
+  ShieldAlert,
+  Award,
+  FileText,
+  CheckCircle,
+  Check,
+  ChevronDown,
+  ChevronsUpDown,
+  User,
+  Sparkles,
+  Building,
+  ArrowLeft,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import {
+  getCountries,
+  getCountryCallingCode,
+  parsePhoneNumber,
+} from "react-phone-number-input";
+import flags from "react-phone-number-input/flags";
+import en from "react-phone-number-input/locale/en.json";
 
 // High-quality fallback event image URLs
 const fallbackEventImages = [
@@ -26,6 +53,10 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState<any>("IN");
+  const [countryOpen, setCountryOpen] = useState(false);
+  const [countrySearch, setCountrySearch] = useState("");
+
   const [answers, setAnswers] = useState<Record<string, any>>({});
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined);
 
@@ -51,7 +82,8 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
       });
       setSuccess(true);
     } catch (err: any) {
-      const msg = err.response?.data?.message || "Mock payment verification failed.";
+      const msg =
+        err.response?.data?.message || "Mock payment verification failed.";
       alert(msg);
     } finally {
       setRegistering(false);
@@ -84,8 +116,14 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
   };
 
   // Handle checkbox group selection changes
-  const handleCheckboxGroupChange = (fieldName: string, option: string, checked: boolean) => {
-    const currentList = Array.isArray(answers[fieldName]) ? [...answers[fieldName]] : [];
+  const handleCheckboxGroupChange = (
+    fieldName: string,
+    option: string,
+    checked: boolean,
+  ) => {
+    const currentList = Array.isArray(answers[fieldName])
+      ? [...answers[fieldName]]
+      : [];
     if (checked) {
       currentList.push(option);
     } else {
@@ -120,16 +158,41 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
     }
 
     if (!fullName.trim()) return alert("Full Name is required");
-    if (!email.trim() || !email.includes("@")) return alert("Valid email address is required");
+    if (!email.trim() || !email.includes("@"))
+      return alert("Valid email address is required");
     if (!phone.trim()) return alert("Phone number is required");
+
+    let formattedPhone = phone;
+    try {
+      const parsed = parsePhoneNumber(phone, country);
+      if (parsed) {
+        formattedPhone = `+${parsed.countryCallingCode} ${parsed.nationalNumber}`;
+      } else {
+        const clean = phone.replace(/[^\d+]/g, "");
+        formattedPhone = clean.startsWith("+")
+          ? clean
+          : `+${getCountryCallingCode(country)} ${clean}`;
+      }
+    } catch {
+      formattedPhone = `+${getCountryCallingCode(country)} ${phone}`;
+    }
 
     // Dynamic fields validations
     for (const field of event.formFields) {
-      if (field.name === "name" || field.name === "email" || field.name === "phone") continue;
-      
+      if (
+        field.name === "name" ||
+        field.name === "email" ||
+        field.name === "phone"
+      )
+        continue;
+
       const val = answers[field.name];
-      const hasValue = val !== undefined && val !== null && val !== "" && !(Array.isArray(val) && val.length === 0);
-      
+      const hasValue =
+        val !== undefined &&
+        val !== null &&
+        val !== "" &&
+        !(Array.isArray(val) && val.length === 0);
+
       if (field.required && !hasValue && field.type !== "file") {
         return alert(`"${field.label}" is required.`);
       }
@@ -145,7 +208,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
         eventId: event._id,
         name: fullName,
         email,
-        phone,
+        phone: formattedPhone,
         answers,
         file: uploadFile,
       });
@@ -158,7 +221,9 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
         // Load Razorpay SDK script
         const isLoaded = await loadRazorpayScript();
         if (!isLoaded) {
-          throw new Error("Razorpay SDK failed to load. Please check your internet connection.");
+          throw new Error(
+            "Razorpay SDK failed to load. Please check your internet connection.",
+          );
         }
 
         const isStubOrder = razorpayOrderId.startsWith("order_stub_");
@@ -173,8 +238,11 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
           orderSuccess = true; // Prevents loader from turning off immediately
         } else {
           // Live/Test Checkout Overlay
-          const razorpayKey = regData?.razorpayKeyId || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_stub_key";
-          
+          const razorpayKey =
+            regData?.razorpayKeyId ||
+            process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
+            "rzp_test_stub_key";
+
           const options = {
             key: razorpayKey,
             amount: (regData?.amountPaid || event.registrationFee || 0) * 100, // Razorpay works in paise
@@ -193,7 +261,10 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                 });
                 setSuccess(true);
               } catch (err: any) {
-                alert(err.response?.data?.message || "Payment verification failed. Please contact support.");
+                alert(
+                  err.response?.data?.message ||
+                    "Payment verification failed. Please contact support.",
+                );
               } finally {
                 setRegistering(false);
               }
@@ -212,10 +283,13 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                 try {
                   await cancelRegistration(razorpayOrderId);
                 } catch (e) {
-                  console.error("Failed to clean up dismissed registration:", e);
+                  console.error(
+                    "Failed to clean up dismissed registration:",
+                    e,
+                  );
                 }
-              }
-            }
+              },
+            },
           };
 
           const rzp = new (window as any).Razorpay(options);
@@ -227,7 +301,10 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
         setSuccess(true);
       }
     } catch (err: any) {
-      const msg = err.response?.data?.message || err.message || "Failed to submit registration. Please check inputs.";
+      const msg =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to submit registration. Please check inputs.";
       alert(msg);
     } finally {
       if (!orderSuccess) {
@@ -237,7 +314,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
   };
 
   const toggleFaq = (index: number) => {
-    setFaqExpanded(prev => ({ ...prev, [index]: !prev[index] }));
+    setFaqExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   // Helper date formatters
@@ -259,9 +336,8 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 pb-20">
-      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 text-left">
-        <button 
+        <button
           onClick={() => router.push("/events")}
           className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white transition cursor-pointer"
         >
@@ -273,18 +349,18 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <div className="relative h-[300px] md:h-[420px] rounded-3xl overflow-hidden shadow-xl border border-slate-200/40 dark:border-slate-800">
           <img
-           src={
-            event.bannerImage
-              ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.bannerImage}`
-              : event.coverImage
-                ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.coverImage}`
-                : fallbackEventImages[0]
-          }
+            src={
+              event.bannerImage
+                ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.bannerImage}`
+                : event.coverImage
+                  ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.coverImage}`
+                  : fallbackEventImages[0]
+            }
             alt={event.title}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-900/10"></div>
-          
+
           <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-white pr-6 text-left">
             <div className="flex flex-wrap items-center gap-3 mb-4">
               <span className="bg-blue-600 text-white border border-blue-500 font-extrabold px-3 py-1 rounded-full text-xs uppercase tracking-wide">
@@ -294,7 +370,9 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                 {event.category}
               </span>
             </div>
-            <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.2] max-w-4xl text-slate-100">{event.title}</h1>
+            <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.2] max-w-4xl text-slate-100">
+              {event.title}
+            </h1>
             <div className="flex items-center gap-2 mt-4 text-xs md:text-sm font-semibold text-slate-300">
               <Building size={16} className="text-blue-500" />
               <span>Organizer: {event.organizer}</span>
@@ -305,10 +383,8 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
 
       {/* ===== CONTENT LAYOUT ===== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
-        
         {/* Left Side */}
         <div className="lg:col-span-2 space-y-12 text-left">
-          
           <div className="bg-white dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800 space-y-4">
             <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
               <FileText className="text-blue-600" /> About The Event
@@ -316,7 +392,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
             <p className="text-base text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
               {event.shortDescription}
             </p>
-            <div 
+            <div
               className="prose dark:prose-invert max-w-none text-slate-650 dark:text-slate-300 leading-relaxed text-sm pt-4 border-t border-slate-100 dark:border-slate-800"
               dangerouslySetInnerHTML={{ __html: event.description }}
             />
@@ -329,26 +405,28 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {event.speakers.map((speaker, idx) => (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="flex items-center gap-4 bg-white dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-200/50 dark:border-slate-800 hover:shadow-md transition"
                   >
                     <div className="size-14 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-650 overflow-hidden border">
                       {speaker.avatar ? (
                         <img
-                        src={
-                             `${process.env.NEXT_PUBLIC_API_BASE_URL}${speaker.avatar}`
-                        }
-                        alt={speaker.name}
-                        className="w-full h-full object-cover"
-                      />
+                          src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${speaker.avatar}`}
+                          alt={speaker.name}
+                          className="w-full h-full object-cover"
+                        />
                       ) : (
                         <User size={24} />
                       )}
                     </div>
                     <div>
-                      <h4 className="font-extrabold text-slate-900 dark:text-white text-base">{speaker.name}</h4>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">{speaker.role}</p>
+                      <h4 className="font-extrabold text-slate-900 dark:text-white text-base">
+                        {speaker.name}
+                      </h4>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">
+                        {speaker.role}
+                      </p>
                       {speaker.company && (
                         <p className="text-[10px] text-blue-600 dark:text-blue-400 font-bold bg-blue-500/10 w-fit px-1.5 py-0.5 rounded-md mt-1.5">
                           {speaker.company}
@@ -366,19 +444,23 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
               <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                 <Calendar className="text-blue-600 size-5" /> Event Schedule
               </h3>
-              
+
               <div className="relative border-l-2 border-blue-500/25 pl-6 ml-4 space-y-6">
                 {event.schedule.map((slot, idx) => (
                   <div key={idx} className="relative group">
                     <div className="absolute top-1 -left-[32px] size-4 rounded-full bg-blue-600 border-4 border-slate-50 dark:border-slate-950 group-hover:scale-115 transition" />
-                    
+
                     <div className="bg-white dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-200/50 dark:border-slate-800">
                       <span className="text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1">
                         <Clock size={12} /> {slot.time}
                       </span>
-                      <h4 className="font-extrabold text-slate-900 dark:text-white text-base mt-1.5">{slot.title}</h4>
+                      <h4 className="font-extrabold text-slate-900 dark:text-white text-base mt-1.5">
+                        {slot.title}
+                      </h4>
                       {slot.description && (
-                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{slot.description}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                          {slot.description}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -392,11 +474,11 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
               <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                 <Award className="text-blue-600 size-5" /> FAQs
               </h3>
-              
+
               <div className="space-y-3">
                 {event.faqs.map((faq, idx) => (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="bg-white dark:bg-slate-900/50 rounded-2xl border border-slate-200/50 dark:border-slate-800 overflow-hidden"
                   >
                     <button
@@ -404,12 +486,12 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                       className="w-full px-6 py-4 text-left flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 hover:text-blue-600 transition cursor-pointer"
                     >
                       <span>{faq.question}</span>
-                      <ChevronDown 
-                        size={18} 
-                        className={`text-slate-400 transition-transform ${faqExpanded[idx] ? "rotate-180 text-blue-600" : ""}`} 
+                      <ChevronDown
+                        size={18}
+                        className={`text-slate-400 transition-transform ${faqExpanded[idx] ? "rotate-180 text-blue-600" : ""}`}
                       />
                     </button>
-                    
+
                     <AnimatePresence initial={false}>
                       {faqExpanded[idx] && (
                         <motion.div
@@ -429,27 +511,34 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
               </div>
             </div>
           )}
-
         </div>
 
         {/* Right Side Sticky Panel */}
         <div className="space-y-6">
           <div className="bg-white dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-200/50 dark:border-slate-800 space-y-4 text-left">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Quick Details</h4>
-            
+            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
+              Quick Details
+            </h4>
+
             <div className="space-y-3.5 divide-y divide-slate-100 dark:divide-slate-800 text-sm font-medium">
               <div className="flex items-start gap-3 pt-0">
                 <Calendar className="text-blue-600 mt-0.5 shrink-0" size={18} />
                 <div>
-                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">Date</span>
-                  <span className="text-slate-800 dark:text-slate-200 font-bold text-xs">{formatDateFull(event.startDate)}</span>
+                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                    Date
+                  </span>
+                  <span className="text-slate-800 dark:text-slate-200 font-bold text-xs">
+                    {formatDateFull(event.startDate)}
+                  </span>
                 </div>
               </div>
 
               <div className="flex items-start gap-3 pt-3.5">
                 <Clock className="text-blue-600 mt-0.5 shrink-0" size={18} />
                 <div>
-                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">Time</span>
+                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                    Time
+                  </span>
                   <span className="text-slate-800 dark:text-slate-200 font-bold text-xs">
                     {formatTime(event.startDate)} - {formatTime(event.endDate)}
                   </span>
@@ -459,16 +548,27 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
               <div className="flex items-start gap-3 pt-3.5">
                 <MapPin className="text-blue-600 mt-0.5 shrink-0" size={18} />
                 <div>
-                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">Location / Venue</span>
-                  <span className="text-slate-800 dark:text-slate-200 font-bold text-xs">{event.location}</span>
+                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                    Location / Venue
+                  </span>
+                  <span className="text-slate-800 dark:text-slate-200 font-bold text-xs">
+                    {event.location}
+                  </span>
                 </div>
               </div>
 
               <div className="flex items-start gap-3 pt-3.5">
-                <ShieldAlert className="text-amber-500 mt-0.5 shrink-0" size={18} />
+                <ShieldAlert
+                  className="text-amber-500 mt-0.5 shrink-0"
+                  size={18}
+                />
                 <div>
-                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">Registration Deadline</span>
-                  <span className={`font-bold text-xs ${isDeadlinePassed ? "text-rose-500" : "text-slate-800 dark:text-slate-200"}`}>
+                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                    Registration Deadline
+                  </span>
+                  <span
+                    className={`font-bold text-xs ${isDeadlinePassed ? "text-rose-500" : "text-slate-800 dark:text-slate-200"}`}
+                  >
                     {formatDateFull(event.registrationDeadline)}
                   </span>
                 </div>
@@ -477,7 +577,9 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
               <div className="flex items-start gap-3 pt-3.5">
                 <Award className="text-blue-600 mt-0.5 shrink-0" size={18} />
                 <div>
-                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">Registration Fee</span>
+                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                    Registration Fee
+                  </span>
                   <span className="text-slate-850 dark:text-slate-200 font-extrabold text-sm">
                     {event.isPaid ? `₹${event.registrationFee}` : "Free"}
                   </span>
@@ -487,9 +589,8 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
           </div>
 
           <div className="bg-white dark:bg-slate-900/60 p-6 rounded-3xl border border-slate-200/50 dark:border-slate-800 shadow-xl space-y-4">
-            
             {success ? (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-6 space-y-4"
@@ -498,15 +599,19 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                   <CheckCircle size={36} />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-black text-slate-900 dark:text-slate-100">Registered!</h3>
+                  <h3 className="text-2xl font-black text-slate-900 dark:text-slate-100">
+                    Registered!
+                  </h3>
                   <p className="text-slate-550 dark:text-slate-400 text-sm leading-relaxed mt-2 px-3">
-                    Congratulations! Your application for <strong>{event.title}</strong> was submitted successfully.
+                    Congratulations! Your application for{" "}
+                    <strong>{event.title}</strong> was submitted successfully.
                   </p>
                 </div>
                 <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                  We sent a confirmation email copy to <strong>{email}</strong>. Our organizing team will review details shortly.
+                  We sent a confirmation email copy to <strong>{email}</strong>.
+                  Our organizing team will review details shortly.
                 </div>
-                <Button 
+                <Button
                   onClick={() => router.push("/events")}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold"
                 >
@@ -517,14 +622,17 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
               <div className="text-center py-8 space-y-4">
                 <ShieldAlert className="size-14 text-rose-550 mx-auto opacity-70" />
                 <div>
-                  <h3 className="text-xl font-extrabold text-slate-800 dark:text-slate-200">Registrations Closed</h3>
+                  <h3 className="text-xl font-extrabold text-slate-800 dark:text-slate-200">
+                    Registrations Closed
+                  </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1 px-4">
-                    The registration deadline for this event has passed. Follow our page for upcoming sessions!
+                    The registration deadline for this event has passed. Follow
+                    our page for upcoming sessions!
                   </p>
                 </div>
-                <Button 
-                  onClick={() => router.push("/events")} 
-                  variant="outline" 
+                <Button
+                  onClick={() => router.push("/events")}
+                  variant="outline"
                   className="w-full rounded-full text-xs font-bold"
                 >
                   Explore Other Events
@@ -533,13 +641,19 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
             ) : (
               <div className="space-y-4">
                 <div className="text-left">
-                  <h3 className="text-lg font-black text-slate-900 dark:text-slate-100">Reserve Your Spot</h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs mt-0.5">Please fill out details to request registration.</p>
+                  <h3 className="text-lg font-black text-slate-900 dark:text-slate-100">
+                    Reserve Your Spot
+                  </h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs mt-0.5">
+                    Please fill out details to request registration.
+                  </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4 text-left">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Full Name *</label>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                      Full Name *
+                    </label>
                     <input
                       type="text"
                       required
@@ -551,7 +665,9 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Email Address *</label>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                      Email Address *
+                    </label>
                     <input
                       type="email"
                       required
@@ -563,19 +679,152 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Phone Number *</label>
-                    <input
-                      type="tel"
-                      required
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      className="mt-1 w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
-                      placeholder="+123456789"
-                    />
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                      Phone Number *
+                    </label>
+                    <div className="relative mt-1">
+                      {/* Main input row */}
+                      <div className="flex h-10 w-full rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus-within:ring-1 focus-within:ring-blue-600 focus-within:border-blue-500 transition-colors overflow-hidden items-center">
+                        {/* Country selector button */}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setCountryOpen((prev) => !prev);
+                          }}
+                          className="flex items-center justify-center px-2.5 h-full bg-slate-100/50 dark:bg-slate-800/90 border-r border-slate-200 dark:border-slate-700 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 transition-colors shrink-0 outline-none cursor-pointer"
+                        >
+                          {country && (flags as any)[country] ? (
+                            (() => {
+                              const FlagComp = (flags as any)[country];
+                              return (
+                                <FlagComp
+                                  title={country}
+                                  className="w-5 h-4 rounded-sm object-cover"
+                                />
+                              );
+                            })()
+                          ) : (
+                            <div className="w-5 h-4 bg-slate-200 dark:bg-slate-700 rounded-sm" />
+                          )}
+                          <ChevronsUpDown className="w-3 h-3 ml-1 text-slate-400" />
+                        </button>
+
+                        {/* Country code display */}
+                        <span className="pl-2.5 pr-1 text-sm text-slate-500 dark:text-slate-400 select-none font-medium shrink-0">
+                          +{country ? getCountryCallingCode(country) : ""}
+                        </span>
+
+                        {/* Phone number input */}
+                        <input
+                          type="tel"
+                          required
+                          value={phone}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/\D/g, "");
+                            setPhone(val);
+                          }}
+                          maxLength={country === "IN" ? 10 : 12}
+                          placeholder="Enter number"
+                          className="flex-1 pr-3 py-2 bg-transparent outline-none text-sm text-slate-900 dark:text-white placeholder:text-slate-400 min-w-0 h-full"
+                        />
+                      </div>
+
+                      {/* Custom dropdown — no Popover, no scroll issues */}
+                      {countryOpen && (
+                        <>
+                          {/* Backdrop to close on outside click */}
+                          <div
+                            className="fixed inset-0 z-40"
+                            onClick={() => {
+                              setCountryOpen(false);
+                              setCountrySearch("");
+                            }}
+                          />
+
+                          {/* Dropdown panel */}
+                          <div className="absolute left-0 top-[calc(100%+4px)] z-50 w-full min-w-[260px] rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
+                            {/* Search input */}
+                            <div className="p-2 border-b border-slate-100 dark:border-slate-800">
+                              <input
+                                type="text"
+                                placeholder="Search country..."
+                                autoFocus={false}
+                                value={countrySearch}
+                                onChange={(e) =>
+                                  setCountrySearch(e.target.value)
+                                }
+                                className="w-full px-3 py-2 text-xs rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 outline-none focus:ring-1 focus:ring-blue-500"
+                              />
+                            </div>
+
+                            {/* Country list */}
+                            <div className="max-h-48 overflow-y-auto">
+                              {getCountries()
+                                .filter((c) => {
+                                  if (!countrySearch) return true;
+                                  const name = (
+                                    (en as any)[c] || ""
+                                  ).toLowerCase();
+                                  const code = `+${getCountryCallingCode(c)}`;
+                                  return (
+                                    name.includes(
+                                      countrySearch.toLowerCase(),
+                                    ) ||
+                                    code.includes(countrySearch) ||
+                                    c
+                                      .toLowerCase()
+                                      .includes(countrySearch.toLowerCase())
+                                  );
+                                })
+                                .map((c) => {
+                                  const ItemFlag = (flags as any)[c];
+                                  return (
+                                    <button
+                                      key={c}
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setCountry(c);
+                                        setCountryOpen(false);
+                                        setCountrySearch("");
+                                      }}
+                                      className="w-full flex items-center gap-2 px-3 py-2 text-xs text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                                    >
+                                      {ItemFlag && (
+                                        <ItemFlag
+                                          title={c}
+                                          className="w-4 h-3 rounded-sm object-cover shrink-0"
+                                        />
+                                      )}
+                                      <span className="flex-1 truncate text-slate-900 dark:text-slate-100">
+                                        {(en as any)[c]}
+                                      </span>
+                                      <span className="text-slate-400 dark:text-slate-500 shrink-0">
+                                        +{getCountryCallingCode(c)}
+                                      </span>
+                                      {country === c && (
+                                        <Check className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                                      )}
+                                    </button>
+                                  );
+                                })}
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
                   </div>
 
                   {event.formFields.map((field) => {
-                    if (field.name === "name" || field.name === "email" || field.name === "phone") return null;
+                    if (
+                      field.name === "name" ||
+                      field.name === "email" ||
+                      field.name === "phone"
+                    )
+                      return null;
 
                     const fieldVal = answers[field.name] || "";
 
@@ -584,14 +833,27 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                         <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">
                           {field.label} {field.required && "*"}
                         </label>
-                        
-                        {(field.type === "text" || field.type === "email" || field.type === "phone" || field.type === "url") && (
+
+                        {(field.type === "text" ||
+                          field.type === "email" ||
+                          field.type === "phone" ||
+                          field.type === "url") && (
                           <input
-                            type={field.type === "url" ? "url" : field.type === "email" ? "email" : "text"}
+                            type={
+                              field.type === "url"
+                                ? "url"
+                                : field.type === "email"
+                                  ? "email"
+                                  : "text"
+                            }
                             required={field.required}
                             value={fieldVal}
-                            onChange={(e) => handleAnswerChange(field.name, e.target.value)}
-                            placeholder={field.placeholder || `Enter ${field.label}`}
+                            onChange={(e) =>
+                              handleAnswerChange(field.name, e.target.value)
+                            }
+                            placeholder={
+                              field.placeholder || `Enter ${field.label}`
+                            }
                             className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
                           />
                         )}
@@ -601,7 +863,9 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                             type="number"
                             required={field.required}
                             value={fieldVal}
-                            onChange={(e) => handleAnswerChange(field.name, e.target.value)}
+                            onChange={(e) =>
+                              handleAnswerChange(field.name, e.target.value)
+                            }
                             placeholder={field.placeholder || "Enter value"}
                             className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
                           />
@@ -611,8 +875,12 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                           <textarea
                             required={field.required}
                             value={fieldVal}
-                            onChange={(e) => handleAnswerChange(field.name, e.target.value)}
-                            placeholder={field.placeholder || `Write ${field.label}`}
+                            onChange={(e) =>
+                              handleAnswerChange(field.name, e.target.value)
+                            }
+                            placeholder={
+                              field.placeholder || `Write ${field.label}`
+                            }
                             rows={3}
                             className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
                           />
@@ -622,26 +890,37 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                           <select
                             required={field.required}
                             value={fieldVal}
-                            onChange={(e) => handleAnswerChange(field.name, e.target.value)}
+                            onChange={(e) =>
+                              handleAnswerChange(field.name, e.target.value)
+                            }
                             className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 text-slate-900 dark:text-white"
                           >
-                            <option value="">{field.placeholder || "Select option"}</option>
-                            {field.options?.map(opt => (
-                              <option key={opt} value={opt}>{opt}</option>
+                            <option value="">
+                              {field.placeholder || "Select option"}
+                            </option>
+                            {field.options?.map((opt) => (
+                              <option key={opt} value={opt}>
+                                {opt}
+                              </option>
                             ))}
                           </select>
                         )}
 
                         {field.type === "radio" && (
                           <div className="space-y-1.5 pt-1">
-                            {field.options?.map(opt => (
-                              <label key={opt} className="flex items-center gap-2 cursor-pointer select-none text-xs font-semibold text-slate-700 dark:text-slate-355">
+                            {field.options?.map((opt) => (
+                              <label
+                                key={opt}
+                                className="flex items-center gap-2 cursor-pointer select-none text-xs font-semibold text-slate-700 dark:text-slate-355"
+                              >
                                 <input
                                   type="radio"
                                   name={field.name}
                                   required={field.required && !fieldVal}
                                   checked={fieldVal === opt}
-                                  onChange={() => handleAnswerChange(field.name, opt)}
+                                  onChange={() =>
+                                    handleAnswerChange(field.name, opt)
+                                  }
                                   className="text-blue-600 focus:ring-blue-500 border-slate-300"
                                 />
                                 <span>{opt}</span>
@@ -652,14 +931,25 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
 
                         {field.type === "checkbox" && (
                           <div className="space-y-1.5 pt-1">
-                            {field.options?.map(opt => {
-                              const list = Array.isArray(fieldVal) ? fieldVal : [];
+                            {field.options?.map((opt) => {
+                              const list = Array.isArray(fieldVal)
+                                ? fieldVal
+                                : [];
                               return (
-                                <label key={opt} className="flex items-center gap-2 cursor-pointer select-none text-xs font-semibold text-slate-700 dark:text-slate-350">
+                                <label
+                                  key={opt}
+                                  className="flex items-center gap-2 cursor-pointer select-none text-xs font-semibold text-slate-700 dark:text-slate-350"
+                                >
                                   <input
                                     type="checkbox"
                                     checked={list.includes(opt)}
-                                    onChange={(e) => handleCheckboxGroupChange(field.name, opt, e.target.checked)}
+                                    onChange={(e) =>
+                                      handleCheckboxGroupChange(
+                                        field.name,
+                                        opt,
+                                        e.target.checked,
+                                      )
+                                    }
                                     className="rounded text-blue-600 focus:ring-blue-500 border-slate-300"
                                   />
                                   <span>{opt}</span>
@@ -674,7 +964,9 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                             type="date"
                             required={field.required}
                             value={fieldVal}
-                            onChange={(e) => handleAnswerChange(field.name, e.target.value)}
+                            onChange={(e) =>
+                              handleAnswerChange(field.name, e.target.value)
+                            }
                             className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 text-slate-900 dark:text-white"
                           />
                         )}
@@ -690,7 +982,8 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                             />
                             {uploadFile && (
                               <p className="text-[10px] text-emerald-600 font-bold">
-                                Selected: {uploadFile.name} ({Math.round(uploadFile.size / 1024)} KB)
+                                Selected: {uploadFile.name} (
+                                {Math.round(uploadFile.size / 1024)} KB)
                               </p>
                             )}
                           </div>
@@ -704,11 +997,16 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                     disabled={registering}
                     className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold shadow-lg shadow-blue-500/20 transition disabled:opacity-50 mt-6 cursor-pointer"
                   >
-                    {registering ? "Processing..." : event.isPaid ? `Pay ₹${event.registrationFee} & Register` : "Register / RSVP"}
+                    {registering
+                      ? "Processing..."
+                      : event.isPaid
+                        ? `Pay ₹${event.registrationFee} & Register`
+                        : "Register / RSVP"}
                   </Button>
                   {event.isPaid && (
                     <p className="text-center text-[10px] text-slate-400 mt-2 font-semibold">
-                      Secured by Razorpay. Includes immediate access to all event sessions.
+                      Secured by Razorpay. Includes immediate access to all
+                      event sessions.
                     </p>
                   )}
                 </form>
@@ -716,21 +1014,20 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
             )}
           </div>
         </div>
-
       </section>
 
       {/* ===== CUSTOM MOCK PAYMENT DIALOG (SLICK GLASSMORPHISM OVERLAY) ===== */}
       <AnimatePresence>
         {showMockPayment && mockPaymentData && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
               onClick={handleCancelMockPayment}
             ></motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -740,39 +1037,54 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
               <div className="size-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-full flex items-center justify-center mx-auto border border-blue-200/50">
                 <Sparkles size={32} />
               </div>
-              
+
               <div className="space-y-2">
-                <h3 className="text-2xl font-black text-slate-900 dark:text-slate-100">Simulate Payment</h3>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-slate-100">
+                  Simulate Payment
+                </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  This is a test environment order simulation. No real money will be charged.
+                  This is a test environment order simulation. No real money
+                  will be charged.
                 </p>
               </div>
 
               <div className="bg-slate-50 dark:bg-slate-950 p-5 rounded-2xl border border-slate-150 dark:border-slate-850 space-y-3.5 text-left text-sm">
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400 font-bold text-xs uppercase tracking-wide">Order ID</span>
-                  <span className="font-mono text-xs text-slate-750 dark:text-slate-300">{mockPaymentData.orderId}</span>
+                  <span className="text-slate-400 font-bold text-xs uppercase tracking-wide">
+                    Order ID
+                  </span>
+                  <span className="font-mono text-xs text-slate-750 dark:text-slate-300">
+                    {mockPaymentData.orderId}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center border-t border-slate-100 dark:border-slate-800 pt-3">
-                  <span className="text-slate-400 font-bold text-xs uppercase tracking-wide">Event</span>
-                  <span className="font-extrabold text-slate-800 dark:text-slate-200 text-xs line-clamp-1">{event.title}</span>
+                  <span className="text-slate-400 font-bold text-xs uppercase tracking-wide">
+                    Event
+                  </span>
+                  <span className="font-extrabold text-slate-800 dark:text-slate-200 text-xs line-clamp-1">
+                    {event.title}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center border-t border-slate-100 dark:border-slate-800 pt-3">
-                  <span className="text-slate-400 font-bold text-xs uppercase tracking-wide">Amount Due</span>
-                  <span className="font-black text-slate-900 dark:text-slate-100 text-lg">₹{mockPaymentData.amount}</span>
+                  <span className="text-slate-400 font-bold text-xs uppercase tracking-wide">
+                    Amount Due
+                  </span>
+                  <span className="font-black text-slate-900 dark:text-slate-100 text-lg">
+                    ₹{mockPaymentData.amount}
+                  </span>
                 </div>
               </div>
 
               <div className="flex gap-4 pt-2">
-                <Button 
-                  onClick={handleCancelMockPayment} 
-                  variant="outline" 
+                <Button
+                  onClick={handleCancelMockPayment}
+                  variant="outline"
                   className="flex-1 rounded-full py-6 font-bold cursor-pointer"
                 >
                   Cancel
                 </Button>
-                <Button 
-                  onClick={handleSimulatePaymentSuccess} 
+                <Button
+                  onClick={handleSimulatePaymentSuccess}
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-full py-6 font-bold shadow-lg shadow-blue-500/20 cursor-pointer"
                 >
                   Confirm Payment
