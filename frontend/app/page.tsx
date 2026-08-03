@@ -1209,16 +1209,19 @@ export default function Home() {
                   className="bg-[#153a5c] rounded-3xl overflow-hidden group border border-white/5 hover:border-blue-400/30 transition-all flex flex-col shadow-xl cursor-pointer"
                 >
                   {/* Image Container */}
+                  <Link
+                        href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`}
+                        className="inline-flex items-center text-blue-400 font-bold text-xs sm:text-sm hover:text-blue-300 transition-colors group/link cursor-pointer"
+                      >
                   <div className="w-full h-48 sm:h-56 md:h-64 overflow-hidden relative p-3">
                     <div className="w-full h-full relative rounded-2xl overflow-hidden bg-slate-800">
-                      <Image
+                      <img
                         src={
                           blog.featuredImage 
                             ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ''}${blog.featuredImage}`
                             : "/images/unsplash/img-62ae3366.webp"
                         }
                         alt={blog.title}
-                        fill
                         sizes="(max-width: 768px) 100vw, 33vw"
                         className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-in-out"
                       />
@@ -1238,16 +1241,13 @@ export default function Home() {
                     <p className="text-blue-100/70 text-xs sm:text-sm md:text-base leading-relaxed mb-6 sm:mb-8 flex-1 line-clamp-3">
                       {blog.shortDescription}
                     </p>
-                    <div className="mt-auto">
-                      <Link
-                        href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`}
-                        className="inline-flex items-center text-blue-400 font-bold text-xs sm:text-sm hover:text-blue-300 transition-colors group/link cursor-pointer"
-                      >
+                    <div className="mt-auto">                      
                         Read More{" "}
                         <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
-                      </Link>
+
                     </div>
                   </div>
+                  </Link>
                 </div>
               ))}
             </div>
