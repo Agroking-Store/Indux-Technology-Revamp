@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { Calendar, User, ArrowRight, Newspaper, Search, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 // Fallback high-quality internet image URLs
 const fallbackImages = [
@@ -35,7 +37,9 @@ export default function BlogsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
- console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
+  const [subscribing, setSubscribing] = useState(false);
+  
+  const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL + "/api/v1";
   useEffect(() => {
     getBlogs()
       .then(setBlogs)
@@ -71,11 +75,28 @@ export default function BlogsPage() {
 
   const [featured, ...rest] = filteredBlogs;
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-    setSubscribed(true);
-    setEmail('');
+    if (!email.trim()) {
+      toast.error("Please enter your email address.");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    try {
+      setSubscribing(true);
+      const response = await axios.post(`${API_URL}/news-letter/subscribe`, { email });
+      toast.success(response.data.message || "Successfully subscribed!");
+      setSubscribed(true);
+      setEmail('');
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to subscribe. Please try again.");
+    } finally {
+      setSubscribing(false);
+    }
   };
   
   return (
@@ -342,9 +363,10 @@ export default function BlogsPage() {
                   />
                   <Button
                     type="submit"
-                    className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 font-bold tracking-wider text-xs uppercase transition-all shadow-lg shadow-blue-700/20 active:scale-95"
+                    disabled={subscribing}
+                    className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 font-bold tracking-wider text-xs uppercase transition-all shadow-lg shadow-blue-700/20 active:scale-95 cursor-pointer"
                   >
-                    Subscribe
+                    {subscribing ? "Subscribing..." : "Subscribe"}
                   </Button>
                 </form>
               )}

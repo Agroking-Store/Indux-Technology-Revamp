@@ -124,7 +124,7 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
           </nav>
 
           {/* Category Badge */}
-          <span className="inline-flex items-center text-[10px] sm:text-xs uppercase tracking-widest font-extrabold bg-blue-600/10 dark:bg-blue-500/10 text-blue-450 dark:text-blue-400 border border-blue-500/20 px-3.5 py-1.5 rounded-full mb-6">
+          <span className="inline-flex items-center text-[10px] sm:text-xs uppercase tracking-widest font-extrabold bg-blue-500 text-white border border-blue-400/30 px-3.5 py-1.5 rounded-full mb-6 shadow-sm">
             {blog.category}
           </span>
 
