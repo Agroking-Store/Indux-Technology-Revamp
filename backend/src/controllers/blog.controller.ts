@@ -108,14 +108,8 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
     }
   ]);
 
-  const host = req.get("host") || "";
-  const isLocal =host.includes("localhost") || host.startsWith("127.0.0.1");
-const protocol = isLocal ? "http" : "https";
   const mappedBlogs = blogs.map(blog => {
     const blogObj = { ...blog };
-    if (blogObj.featuredImage && blogObj.featuredImage.startsWith("/uploads/")) {
-      blogObj.featuredImage = `${protocol}://${host}${blogObj.featuredImage}`;
-    }
     return blogObj;
   });
 
@@ -277,4 +271,4 @@ export const updateBlogStatus = asyncHandler(async (req: AuthRequest, res: Respo
 
   res.status(200).json(new ApiResponse(200, blog, `Blog status updated to ${status}`));
 });
-
+
