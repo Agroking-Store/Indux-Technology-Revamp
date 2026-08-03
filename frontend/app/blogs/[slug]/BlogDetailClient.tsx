@@ -182,7 +182,7 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
               {/* Featured Image with shine overlay on hover */}
               <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-800 group cursor-pointer">
                 <Image
-                  src={blog.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}` : ""}
+                  src={ `${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
                   alt={blog.title}
                   fill
                   priority
