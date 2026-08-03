@@ -1203,54 +1203,49 @@ export default function Home() {
 
             {/* Blog Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {displayedBlogs.map((blog, idx) => (
-                <div
-                  key={blog._id || idx}
-                  className="bg-[#153a5c] rounded-3xl overflow-hidden group border border-white/5 hover:border-blue-400/30 transition-all flex flex-col shadow-xl cursor-pointer"
-                >
-                  {/* Image Container */}
-                  <Link
-                        href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`}
-                        className="inline-flex items-center text-blue-400 font-bold text-xs sm:text-sm hover:text-blue-300 transition-colors group/link cursor-pointer"
-                      >
-                  <div className="w-full h-48 sm:h-56 md:h-64 overflow-hidden relative p-3">
-                    <div className="w-full h-full relative rounded-2xl overflow-hidden bg-slate-800">
-                      <img
-                        src={
-                          blog.featuredImage 
-                            ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ''}${blog.featuredImage}`
-                            : "/images/unsplash/img-62ae3366.webp"
-                        }
-                        alt={blog.title}
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-in-out"
-                      />
-                    </div>
-                  </div>
+  {displayedBlogs.map((blog, idx) => (
+    <Link
+      key={blog._id || idx}
+      href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`}
+      className="bg-[#153a5c] rounded-3xl overflow-hidden border border-white/5 hover:border-blue-400/30 transition-all shadow-xl group flex flex-col h-full"
+    >
+      {/* Image */}
+      <div className="p-3">
+        <div className="h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden bg-slate-800">
+          <img
+            src={
+              blog.featuredImage
+                ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${blog.featuredImage}`
+                : "/images/unsplash/img-62ae3366.webp"
+            }
+            alt={blog.title}
+            className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+          />
+        </div>
+      </div>
 
-                  {/* Content */}
-                  <div className="p-5 sm:p-6 md:p-8 flex flex-col flex-1">
-                    <div className="mb-4 sm:mb-5">
-                      <span className="bg-blue-500 text-white text-[10px] sm:text-xs font-bold px-3.5 py-1.5 rounded-md tracking-wide uppercase shadow-sm">
-                        {blog.category}
-                      </span>
-                    </div>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 leading-snug group-hover:text-blue-300 transition-colors line-clamp-2">
-                      {blog.title}
-                    </h3>
-                    <p className="text-blue-100/70 text-xs sm:text-sm md:text-base leading-relaxed mb-6 sm:mb-8 flex-1 line-clamp-3">
-                      {blog.shortDescription}
-                    </p>
-                    <div className="mt-auto">                      
-                        Read More{" "}
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
+      {/* Content */}
+      <div className="p-6 flex flex-col flex-1">
+        <span className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-md w-fit uppercase">
+          {blog.category}
+        </span>
 
-                    </div>
-                  </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
+        <h3 className="mt-4 text-xl font-bold text-white group-hover:text-blue-300 transition-colors line-clamp-2">
+          {blog.title}
+        </h3>
+
+        <p className="mt-3 text-blue-100/70 text-sm flex-1 line-clamp-3">
+          {blog.shortDescription}
+        </p>
+
+        <div className="mt-6 inline-flex items-center text-blue-400 font-bold hover:text-blue-300">
+          Read More
+          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+        </div>
+      </div>
+    </Link>
+  ))}
+</div>
           </div>
         </section>
 
