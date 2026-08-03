@@ -1213,8 +1213,9 @@ export default function Home() {
                     <div className="w-full h-full relative rounded-2xl overflow-hidden bg-slate-800">
                       <Image
                         src={
-                          blog.featuredImage ||
-                          "/images/unsplash/img-62ae3366.webp"
+                          blog.featuredImage 
+                            ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ''}${blog.featuredImage}`
+                            : "/images/unsplash/img-62ae3366.webp"
                         }
                         alt={blog.title}
                         fill
