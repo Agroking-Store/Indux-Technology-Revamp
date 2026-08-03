@@ -36,7 +36,7 @@ export default function BlogsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
-
+ console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
   useEffect(() => {
     getBlogs()
       .then(setBlogs)
@@ -268,7 +268,7 @@ export default function BlogsPage() {
                     >
                       <div className="overflow-hidden h-48 relative bg-slate-100 dark:bg-slate-850">
                         <Image
-                          src={blog.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}` : fallbackImages[i % fallbackImages.length]}
+                          src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
                           alt={blog.title}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
