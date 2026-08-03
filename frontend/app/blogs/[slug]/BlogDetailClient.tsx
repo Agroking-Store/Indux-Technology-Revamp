@@ -179,16 +179,13 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
             >
               
               {/* Featured Image with shine overlay on hover */}
-              <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-800 group cursor-pointer">
-                <img
-                  src={ `${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
-                  alt={blog.title}
-                  sizes="(max-width: 1024px) 100vw, 66vw"
-                  className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-105"
-                />
-                {/* Swipe shine transition */}
-                <div className="absolute top-0 -left-full w-[50%] h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -skew-x-[25deg] pointer-events-none group-hover:animate-shine" />
-              </div>
+              <div className="relative h-80 w-full rounded-2xl overflow-hidden">
+  <img
+    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
+    alt={blog.title}
+    className="w-full h-full object-cover"
+  />
+</div>
 
               {/* Short description Intro */}
               <div className="border-l-4 border-blue-600 pl-5 text-left">

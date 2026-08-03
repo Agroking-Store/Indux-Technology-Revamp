@@ -213,7 +213,7 @@ export default function BlogsPage() {
                         src={featured.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${featured.featuredImage}` : fallbackImages[0]}
                         alt={featured.title}
                         sizes="(max-width: 1024px) 100vw, 58vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-103"
+                        className="w-full h-75 object-cover transition-transform duration-700 group-hover:scale-103"
                       />
                     </div>
                     <div className="lg:col-span-5 p-8 sm:p-10 flex flex-col justify-center">
@@ -267,7 +267,7 @@ export default function BlogsPage() {
                           src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
                           alt={blog.title}
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-103"
+                          className="w-full h-75 object-cover transition-transform duration-700 group-hover:scale-103"
                         />
                       </div>
                       <div className="p-6 flex flex-col flex-1">
