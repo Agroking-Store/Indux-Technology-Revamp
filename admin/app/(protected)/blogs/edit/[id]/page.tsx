@@ -36,7 +36,7 @@ export default function EditBlogPage() {
           status: blog.status || "Draft",
           seoTitle: blog.seoTitle || "",
           seoDescription: blog.seoDescription || "",
-          featuredImage:  `${process.env.NEXT_PUBLIC_API_URL}${blog.blog.featuredImage}`,
+          featuredImage:  `${process.env.NEXT_PUBLIC_API_URL}${blog.featuredImage}`,
         });
       } catch (error) {
         toast.error("Failed to load article details.");

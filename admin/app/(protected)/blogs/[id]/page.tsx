@@ -30,7 +30,7 @@ export default function ViewBlogPage() {
 
         const tagsString = Array.isArray(blog.tags) ? blog.tags.join(", ") : "";
         setBlogTitle(blog.title || "Article Details");
-
+        const imageUrl=`${process.env.NEXT_PUBLIC_API_URL}${blog.featuredImage}`
         setInitialValues({
           title: blog.title || "",
           slug: blog.slug || "",
@@ -43,7 +43,7 @@ export default function ViewBlogPage() {
           seoTitle: blog.seoTitle || "",
           seoDescription: blog.seoDescription || "",
           // featuredImage is already a full URL from the backend
-          featuredImage:  `${process.env.NEXT_PUBLIC_API_URL}${blog.blog.featuredImage}`,
+          featuredImage: imageUrl ,
         });
       } catch {
         toast.error("Failed to load article details.");
