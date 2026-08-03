@@ -149,14 +149,20 @@ export function ContactForm() {
               return (
                 <div className="flex h-14 w-full rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 shadow-sm focus-within:ring-1 focus-within:ring-blue-500 transition-colors relative overflow-hidden items-center">
                   <Popover open={countryOpen} onOpenChange={setCountryOpen}>
-                    <PopoverTrigger type="button" className="flex items-center justify-center px-4 h-full bg-slate-100/50 dark:bg-slate-800/90 border-r border-slate-200 dark:border-slate-700 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 transition-colors shrink-0 outline-none cursor-pointer">
-                      {FlagComponent ? (
-                        <FlagComponent title={country} className="w-6 h-5 rounded-sm object-cover" />
-                      ) : (
-                        <div className="w-6 h-5 bg-slate-200 dark:bg-slate-700 rounded-sm" />
-                      )}
-                      <ChevronsUpDown className="w-4 h-4 text-slate-500 dark:text-slate-400 opacity-70 ml-2" />
-                    </PopoverTrigger>
+                  <PopoverTrigger render={
+  <button
+    type="button"
+    className="flex items-center justify-center px-4 h-full bg-slate-100/50 dark:bg-slate-800/90 border-r border-slate-200 dark:border-slate-700 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 transition-colors shrink-0 outline-none cursor-pointer"
+  >
+    {FlagComponent ? (
+      <FlagComponent title={country} className="w-6 h-5 rounded-sm object-cover" />
+    ) : (
+      <div className="w-6 h-5 bg-slate-200 dark:bg-slate-700 rounded-sm" />
+    )}
+    <ChevronsUpDown className="w-4 h-4 ml-2" />
+  </button>
+                  }
+                  />
                     <PopoverContent 
                       className="w-[300px] p-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800" 
                       align="start"
