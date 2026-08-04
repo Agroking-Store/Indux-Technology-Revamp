@@ -54,7 +54,7 @@ export const getEmailBaseTemplate = (title: string, bodyContent: string) => {
       <tr>
         <td class="header">
           <a href="https://induxtechnology.com" target="_blank" style="text-decoration: none;">
-            <img src="https://www.induxtechnology.com/induxtechnologylogo_blue.webp" alt="Indux Technology" />
+            <img src="https://www.induxtechnology.com/indux%20technology%20brand%20logo.png" alt="Indux Technology" />
           </a>
         </td>
       </tr>
