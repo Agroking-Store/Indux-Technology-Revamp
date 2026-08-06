@@ -163,13 +163,28 @@ export default function CRMServicePage() {
                     Start Your Project
                   </Button>
                   <Button
-                    nativeButton={false}
-                    variant="ghost"
-                    className="w-full sm:w-auto px-8 py-6 rounded-full font-medium text-base text-slate-700 dark:text-slate-350 hover:bg-slate-200/50 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-800/80 transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2"
-                    render={<a href="#capabilities" />}
-                  >
-                    Explore Capabilities
-                  </Button>
+  nativeButton={false}
+  variant="ghost"
+  className="
+    w-full sm:w-auto
+    px-8 py-6
+    rounded-full
+    font-medium
+    text-base
+    text-slate-700 dark:text-slate-200
+    bg-transparent
+    border border-slate-300 dark:border-slate-700
+    hover:bg-slate-100 dark:hover:bg-slate-800
+    hover:text-slate-900 dark:hover:text-white
+    transition-all duration-300
+    hover:scale-105
+    cursor-pointer
+    flex items-center justify-center gap-2
+  "
+  render={<a href="#capabilities" />}
+>
+  Explore Capabilities
+</Button>
                 </div>
               </motion.div>
 

@@ -31,7 +31,7 @@ const contactSchema = z.object({
   email: z.string().email("Please enter a valid email address."),
   phone: z
     .string()
-    .regex(/^\d{8,12}$/, "Phone number must be between 8 to 12 digits"),
+    .regex(/^\d{8,12}$/, "Please Enter valid number of digits acording to your country code"),
   message: z.string().min(10, "Message must be at least 10 characters."),
 });
 
@@ -133,141 +133,148 @@ export function ContactForm() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label className="text-sm font-semibold text-slate-700 dark:text-slate-500">
-            Phone *
-          </Label>
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field }) => {
-              const FlagComponent = country ? (flags as any)[country] : null;
-              return (
-                <div className="relative">
-                  {/* Main input row */}
-                  <div className="flex h-14 w-full rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 shadow-sm focus-within:ring-1 focus-within:ring-blue-500 transition-colors overflow-hidden items-center">
-                    {/* Country selector button */}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setCountryOpen((prev) => !prev);
-                      }}
-                      className="flex items-center justify-center px-4 h-full bg-slate-100/50 dark:bg-slate-800/90 border-r border-slate-200 dark:border-slate-700 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 transition-colors shrink-0 outline-none cursor-pointer"
-                    >
-                      {FlagComponent ? (
-                        <FlagComponent
-                          title={country}
-                          className="w-6 h-5 rounded-sm object-cover"
-                        />
-                      ) : (
-                        <div className="w-6 h-5 bg-slate-200 dark:bg-slate-700 rounded-sm" />
-                      )}
-                      <ChevronsUpDown className="w-4 h-4 ml-2" />
-                    </button>
+  <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+    Phone *
+  </Label>
+  <Controller
+    name="phone"
+    control={control}
+    render={({ field }) => {
+      const FlagComponent = country ? (flags as any)[country] : null;
+      return (
+        <div className="flex h-14 w-full rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm items-center transition-all duration-200 focus-within:ring-2 focus-within:ring-blue-500/20 dark:focus-within:ring-blue-500/30 focus-within:border-blue-500 dark:focus-within:border-blue-500">
+          
+          {/* Flag Section (Hover strictly scoped to this button container) */}
+          <div
+            className="relative h-full flex items-center shrink-0"
+            onMouseEnter={() => setCountryOpen(true)}
+            onMouseLeave={() => {
+              setCountryOpen(false);
+              setCountrySearch("");
+            }}
+          >
+            {/* Country Selector Button */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCountryOpen((prev) => !prev);
+              }}
+              className="flex items-center justify-center px-4 h-full bg-slate-100/80 dark:bg-slate-800/80 border-r border-slate-200 dark:border-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 transition-colors duration-150 cursor-pointer rounded-l-xl shrink-0"
+            >
+              {FlagComponent ? (
+                <FlagComponent
+                  title={country}
+                  className="w-6 h-4.5 rounded-xs object-cover shadow-xs"
+                />
+              ) : (
+                <div className="w-6 h-4.5 bg-slate-200 dark:bg-slate-700 rounded-xs" />
+              )}
+              <ChevronsUpDown className="w-4 h-4 ml-2 opacity-60" />
+            </button>
 
-                    {/* Country code display */}
-                    <span className="pl-4 pr-1 text-base text-slate-600 dark:text-slate-300 select-none font-medium">
-                      +{country ? getCountryCallingCode(country) : ""}
-                    </span>
-
-                    {/* Phone number input */}
+            {/* Custom Dropdown Menu */}
+            {countryOpen && (
+              <div className="absolute left-0 top-full pt-1 z-50 w-72 before:absolute before:top-0 before:left-0 before:w-full before:h-2">
+                <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl shadow-slate-200/60 dark:shadow-slate-950/60 overflow-hidden">
+                  {/* Search input */}
+                  <div className="p-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
                     <input
-                      {...field}
-                      onChange={(e) => {
-                        const val = e.target.value.replace(/\D/g, "");
-                        field.onChange(val);
-                      }}
-                      maxLength={country === "IN" ? 10 : 12}
-                      id="phone"
-                      type="tel"
-                      placeholder="Enter number"
-                      className="flex-1 pr-4 py-2 bg-transparent outline-none text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-400 min-w-0 h-full"
+                      type="text"
+                      placeholder="Search country or code..."
+                      value={countrySearch}
+                      onChange={(e) => setCountrySearch(e.target.value)}
+                      className="w-full px-3 py-2 text-sm rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none focus:ring-1 focus:ring-blue-500"
                     />
                   </div>
 
-                  {/* Custom dropdown*/}
-                  {countryOpen && (
-                    <>
-                      {/* Backdrop to close on outside click */}
-                      <div
-                        className="fixed inset-0 z-40"
-                        onClick={() => setCountryOpen(false)}
-                      />
-
-                      {/* Dropdown panel */}
-                      <div className="absolute left-0 top-[calc(100%+4px)] z-50 w-75 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
-                        {/* Search input */}
-                        <div className="p-2 border-b border-slate-100 dark:border-slate-800">
-                          <input
-                            type="text"
-                            placeholder="Search country..."
-                            autoFocus={false}
-                            onChange={(e) => setCountrySearch(e.target.value)}
-                            className="w-full px-3 py-2 text-sm rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 outline-none focus:ring-1 focus:ring-blue-500"
-                          />
-                        </div>
-
-                        {/* Country list */}
-                        <div className="max-h-64 overflow-y-auto">
-                          {getCountries()
-                            .filter((c) => {
-                              if (!countrySearch) return true;
-                              const name = (en as any)[c]?.toLowerCase() || "";
-                              const code = `+${getCountryCallingCode(c)}`;
-                              return (
-                                name.includes(countrySearch.toLowerCase()) ||
-                                code.includes(countrySearch) ||
-                                c
-                                  .toLowerCase()
-                                  .includes(countrySearch.toLowerCase())
-                              );
-                            })
-                            .map((c) => {
-                              const ItemFlag = (flags as any)[c];
-                              return (
-                                <button
-                                  key={c}
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    setCountry(c);
-                                    setCountryOpen(false);
-                                    setCountrySearch("");
-                                  }}
-                                  className="w-full flex items-center gap-2 px-3 py-2 text-sm text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
-                                >
-                                  {ItemFlag && (
-                                    <ItemFlag
-                                      title={c}
-                                      className="w-5 h-4 rounded-sm object-cover shrink-0"
-                                    />
-                                  )}
-                                  <span className="flex-1 truncate text-slate-900 dark:text-slate-100">
-                                    {(en as any)[c]}
-                                  </span>
-                                  <span className="text-slate-500 dark:text-slate-400 shrink-0">
-                                    +{getCountryCallingCode(c)}
-                                  </span>
-                                  {country === c && (
-                                    <Check className="w-4 h-4 text-blue-500 shrink-0" />
-                                  )}
-                                </button>
-                              );
-                            })}
-                        </div>
-                      </div>
-                    </>
-                  )}
+                  {/* Country list */}
+                  <div className="max-h-60 overflow-y-auto p-1 space-y-0.5">
+                    {getCountries()
+                      .filter((c) => {
+                        if (!countrySearch) return true;
+                        const name = (en as any)[c]?.toLowerCase() || "";
+                        const code = `+${getCountryCallingCode(c)}`;
+                        return (
+                          name.includes(countrySearch.toLowerCase()) ||
+                          code.includes(countrySearch) ||
+                          c.toLowerCase().includes(countrySearch.toLowerCase())
+                        );
+                      })
+                      .map((c) => {
+                        const ItemFlag = (flags as any)?.[c];
+                        const isSelected = country === c;
+                        return (
+                          <button
+                            key={c}
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setCountry(c);
+                              setCountryOpen(false);
+                              setCountrySearch("");
+                            }}
+                            className={`
+                              w-full flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg text-left transition-colors cursor-pointer
+                              ${
+                                isSelected
+                                  ? "bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-medium"
+                                  : "text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                              }
+                            `}
+                          >
+                            {ItemFlag && (
+                              <ItemFlag
+                                title={c}
+                                className="w-5 h-3.5 rounded-xs object-cover shrink-0 shadow-xs"
+                              />
+                            )}
+                            <span className="flex-1 truncate">
+                              {(en as any)[c]}
+                            </span>
+                            <span className="text-slate-400 dark:text-slate-500 text-xs shrink-0 font-mono">
+                              +{getCountryCallingCode(c)}
+                            </span>
+                            {isSelected && (
+                              <Check className="w-4 h-4 text-blue-500 shrink-0" />
+                            )}
+                          </button>
+                        );
+                      })}
+                  </div>
                 </div>
-              );
+              </div>
+            )}
+          </div>
+
+          {/* Country code display */}
+          <span className="pl-4 pr-1 text-base text-slate-600 dark:text-slate-300 select-none font-medium shrink-0">
+            +{country ? getCountryCallingCode(country) : ""}
+          </span>
+
+          {/* Phone number input (Hovering here will NOT trigger dropdown) */}
+          <input
+            {...field}
+            onChange={(e) => {
+              const val = e.target.value.replace(/\D/g, "");
+              field.onChange(val);
             }}
+            maxLength={country === "IN" ? 10 : 12}
+            id="phone"
+            type="tel"
+            placeholder="Enter number"
+            className="flex-1 pr-4 py-2 bg-transparent outline-none text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 min-w-0 h-full"
           />
-          {errors.phone && (
-            <p className="text-red-500 text-xs ml-1">{errors.phone.message}</p>
-          )}
         </div>
+      );
+    }}
+  />
+  {errors.phone && (
+    <p className="text-red-500 text-xs ml-1">{errors.phone.message}</p>
+  )}
+</div>
 
         <div className="flex flex-col gap-2">
           <Label className="text-sm font-semibold text-slate-700 dark:text-slate-500">

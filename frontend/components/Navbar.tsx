@@ -535,31 +535,32 @@ function MobileNav({ pathname }: { pathname: string }) {
         </div>
 
         <div className="flex-1 overflow-y-auto py-6 px-6 sm:px-8 flex flex-col gap-5">
+          {/* Products Link */}
+          <SheetClose
+            render={
+              <Link
+                href="/products"
+                className="block text-xl sm:text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+              />
+            }
+          >
+            Products
+          </SheetClose>
+
           {/* Services Accordion */}
           <div>
-            <div className="flex items-center justify-between w-full mb-2">
-              <SheetClose
-                render={
-                  <Link
-                    href="/services"
-                    className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
-                  />
-                }
-              >
-                Services
-              </SheetClose>
-              <button
-                onClick={() => toggleSection("services")}
-                className="p-2 -mr-2"
-              >
-                <ChevronDown
-                  className={cn(
-                    "size-6 text-slate-900 dark:text-white transition-transform",
-                    openSection === "services" && "rotate-180",
-                  )}
-                />
-              </button>
-            </div>
+            <button
+              onClick={() => toggleSection("services")}
+              className="flex items-center justify-between w-full text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 cursor-pointer"
+            >
+              Services
+              <ChevronDown
+                className={cn(
+                  "size-6 transition-transform",
+                  openSection === "services" && "rotate-180",
+                )}
+              />
+            </button>
             {openSection === "services" && (
               <div className="flex flex-col gap-3 mt-3 ml-4 border-l-2 dark:border-slate-800 pl-4">
                 {servicesData.main.map((item) => (
@@ -568,11 +569,12 @@ function MobileNav({ pathname }: { pathname: string }) {
                     render={
                       <Link
                         href={item.href || "#"}
-                        className="text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                       />
                     }
                   >
-                    {item.title}
+                    <item.icon className="size-5 shrink-0 text-blue-600 dark:text-blue-400" />
+                    <span>{item.title}</span>
                   </SheetClose>
                 ))}
               </div>
@@ -583,7 +585,7 @@ function MobileNav({ pathname }: { pathname: string }) {
           <div>
             <button
               onClick={() => toggleSection("company")}
-              className="flex items-center justify-between w-full text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2"
+              className="flex items-center justify-between w-full text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 cursor-pointer"
             >
               Company
               <ChevronDown
@@ -601,27 +603,19 @@ function MobileNav({ pathname }: { pathname: string }) {
                     render={
                       <Link
                         href={item.href || "#"}
-                        className="text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                       />
                     }
                   >
-                    {item.title}
+                    <item.icon className="size-5 shrink-0 text-blue-600 dark:text-blue-400" />
+                    <span>{item.title}</span>
                   </SheetClose>
                 ))}
               </div>
             )}
           </div>
 
-          <SheetClose
-            render={
-              <Link
-                href="/products"
-                className="block text-xl sm:text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
-              />
-            }
-          >
-            Products
-          </SheetClose>
+          {/* Contact Us Link */}
           <SheetClose
             render={
               <Link

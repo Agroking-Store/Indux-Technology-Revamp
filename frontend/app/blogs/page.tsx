@@ -322,57 +322,7 @@ export default function BlogsPage() {
         </section>
 
         {/* ===== NEWSLETTER BANNER (Solid Deep Blue Theme) ===== */}
-        <section className="bg-[#0f2e4a] dark:bg-slate-900 w-full py-16 md:py-20 text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:30px_30px]" />
-          
-          <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-blue-300 mb-3">
-                {"// Newsletter Subscription"}
-              </p>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
-                Get the latest updates in your inbox.
-              </h2>
-              <p className="text-blue-100/70 text-sm leading-relaxed mt-3 mb-8 max-w-md mx-auto">
-                Subscribe to stay up-to-date with our regular publications, developer tips, and technology deep-dives.
-              </p>
-
-              {subscribed ? (
-                <div className="bg-blue-900/30 border border-blue-500/20 rounded-full py-3.5 px-8 max-w-md mx-auto">
-                  <p className="text-blue-300 font-semibold text-sm">
-                    ✓ Successfully subscribed! Thank you for joining.
-                  </p>
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleSubscribe}
-                  className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-                >
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="name@company.com"
-                    className="flex-1 rounded-full border border-blue-800/60 bg-blue-950/40 px-6 py-4 text-sm text-white placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all"
-                  />
-                  <Button
-                    type="submit"
-                    disabled={subscribing}
-                    className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 font-bold tracking-wider text-xs uppercase transition-all shadow-lg shadow-blue-700/20 active:scale-95 cursor-pointer"
-                  >
-                    {subscribing ? "Subscribing..." : "Subscribe"}
-                  </Button>
-                </form>
-              )}
-            </motion.div>
-          </div>
-        </section>
+        
       </main>
     </div>
   );
