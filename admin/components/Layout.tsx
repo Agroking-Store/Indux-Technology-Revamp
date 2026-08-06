@@ -20,11 +20,50 @@ export const Layout = ({ children }: LayoutProps) => {
   const pathname = usePathname();
   const { admin, logout } = useAuth();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [notifData, setNotifData] = useState<{ leads: number; applications: number; registrations: number; total: number } | null>(null);
+
+  // 1. Raw notification data from API
+  const [serverData, setServerData] = useState<{ leads: number; applications: number; registrations: number; total: number } | null>(null);
+  
+  // 2. Initialize clearedCounts from localStorage so it persists across refreshes
+  const [clearedCounts, setClearedCounts] = useState<{ leads: number; applications: number; registrations: number }>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('admin_cleared_notifs');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          console.error('Failed to parse cleared notifications', e);
+        }
+      }
+    }
+    return { leads: 0, applications: 0, registrations: 0 };
+  });
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [hasViewed, setHasViewed] = useState(false);
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
-  const prevTotalRef = useRef<number>(0);
+  const prevEffectiveTotalRef = useRef<number>(0);
+
+  // Calculate effective counts by subtracting cleared counts from server data
+  const effectiveLeads = Math.max(0, (serverData?.leads || 0) - clearedCounts.leads);
+  const effectiveApplications = Math.max(0, (serverData?.applications || 0) - clearedCounts.applications);
+  const effectiveRegistrations = Math.max(0, (serverData?.registrations || 0) - clearedCounts.registrations);
+  const effectiveTotal = effectiveLeads + effectiveApplications + effectiveRegistrations;
+
+  const notifData = serverData ? {
+    leads: effectiveLeads,
+    applications: effectiveApplications,
+    registrations: effectiveRegistrations,
+    total: effectiveTotal
+  } : null;
+
+  // Trigger red badge ping animation ONLY when NEW notifications arrive
+  useEffect(() => {
+    if (effectiveTotal > prevEffectiveTotalRef.current) {
+      setHasViewed(false);
+    }
+    prevEffectiveTotalRef.current = effectiveTotal;
+  }, [effectiveTotal]);
 
   useEffect(() => {
     if (admin) {
@@ -33,12 +72,20 @@ export const Layout = ({ children }: LayoutProps) => {
           const res = await api.get<ApiResponse<{ leads: number; applications: number; registrations: number; total: number }>>('/dashboard/notifications');
           const newData = res.data.data;
 
-          if (newData.total > prevTotalRef.current) {
-            setHasViewed(false);
-          }
+          setServerData(newData);
 
-          prevTotalRef.current = newData.total;
-          setNotifData(newData);
+          // If database count is lower than cleared count (e.g., cleared on backend), reset cleared count
+          setClearedCounts((prev) => {
+            const updated = {
+              leads: Math.min(prev.leads, newData.leads),
+              applications: Math.min(prev.applications, newData.applications),
+              registrations: Math.min(prev.registrations, newData.registrations),
+            };
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('admin_cleared_notifs', JSON.stringify(updated));
+            }
+            return updated;
+          });
         } catch (e) {
           console.error('Failed to load notifications counts:', e);
         }
@@ -50,12 +97,29 @@ export const Layout = ({ children }: LayoutProps) => {
     }
   }, [admin, pathname]);
 
+  const handleNotifClick = (type: 'leads' | 'applications' | 'registrations') => {
+    setDropdownOpen(false);
+    if (!serverData) return;
+
+    // Save cleared state locally & persist in localStorage
+    const updatedCleared = {
+      ...clearedCounts,
+      [type]: serverData[type]
+    };
+
+    setClearedCounts(updatedCleared);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('admin_cleared_notifs', JSON.stringify(updatedCleared));
+    }
+  };
+
   const toggleDropdown = () => {
     if (!dropdownOpen) {
       setHasViewed(true);
     }
     setDropdownOpen((prev) => !prev);
   };
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -72,6 +136,7 @@ export const Layout = ({ children }: LayoutProps) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownOpen]);
+
   const pathSegments = pathname.split('/').filter(Boolean);
   const sectionName = pathSegments.length > 0
     ? pathSegments[pathSegments.length - 1].charAt(0).toUpperCase() + pathSegments[pathSegments.length - 1].slice(1)
@@ -124,71 +189,72 @@ export const Layout = ({ children }: LayoutProps) => {
                 </button>
 
                 {dropdownOpen && (
-                  <>                    
-                    <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-4 z-50 space-y-3">
-                      <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-800">
-                        <span className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Notifications</span>
-                        {notifData && notifData.total > 0 && (
-                          <span className="bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-extrabold text-[10px] px-2 py-0.5 rounded-full">
-                            {notifData.total} Total
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
-                        {!notifData || notifData.total === 0 ? (
-                          <p className="text-center py-6 text-slate-400 dark:text-slate-500 italic">No new notifications.</p>
-                        ) : (
-                          <>
-                            {notifData.leads > 0 && (
-                              <Link 
-                                href="/leads" 
-                                onClick={() => setDropdownOpen(false)}
-                                className="flex items-center justify-between p-2.5 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/20 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition cursor-pointer text-slate-700 dark:text-slate-200 font-bold"
-                              >
-                                <span>New Contact Messages</span>
-                                <span className="bg-slate-100 dark:bg-slate-800 font-extrabold px-2 py-0.5 rounded text-slate-600 dark:text-slate-400">
-                                  {notifData.leads}
-                                </span>
-                              </Link>
-                            )}
-
-                            {notifData.applications > 0 && (
-                              <Link 
-                                href="/applications" 
-                                onClick={() => setDropdownOpen(false)}
-                                className="flex items-center justify-between p-2.5 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/20 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition cursor-pointer text-slate-700 dark:text-slate-200 font-bold"
-                              >
-                                <span>New Job Applications</span>
-                                <span className="bg-slate-100 dark:bg-slate-800 font-extrabold px-2 py-0.5 rounded text-slate-600 dark:text-slate-400">
-                                  {notifData.applications}
-                                </span>
-                              </Link>
-                            )}
-
-                            {notifData.registrations > 0 && (
-                              <Link 
-                                href="/events/registrations" 
-                                onClick={() => setDropdownOpen(false)}
-                                className="flex items-center justify-between p-2.5 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/20 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition cursor-pointer text-slate-700 dark:text-slate-200 font-bold"
-                              >
-                                <span>Pending RSVPs</span>
-                                <span className="bg-slate-100 dark:bg-slate-800 font-extrabold px-2 py-0.5 rounded text-slate-600 dark:text-slate-400">
-                                  {notifData.registrations}
-                                </span>
-                              </Link>
-                            )}
-                          </>
-                        )}
-                      </div>
+                  <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-4 z-50 space-y-3">
+                    <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-800">
+                      <span className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                        Notifications
+                      </span>
+                      {notifData && notifData.total > 0 && (
+                        <span className="bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-extrabold text-[10px] px-2 py-0.5 rounded-full">
+                          {notifData.total} Total
+                        </span>
+                      )}
                     </div>
-                  </>
+
+                    <div className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
+                      {!notifData || notifData.total === 0 ? (
+                        <p className="text-center py-6 text-slate-400 dark:text-slate-500 italic">
+                          No new notifications.
+                        </p>
+                      ) : (
+                        <>
+                          {notifData.leads > 0 && (
+                            <Link 
+                              href="/leads" 
+                              onClick={() => handleNotifClick('leads')}
+                              className="flex items-center justify-between p-2.5 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/20 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition cursor-pointer text-slate-700 dark:text-slate-200 font-bold"
+                            >
+                              <span>New Contact Messages</span>
+                              <span className="bg-slate-100 dark:bg-slate-800 font-extrabold px-2 py-0.5 rounded text-slate-600 dark:text-slate-400">
+                                {notifData.leads}
+                              </span>
+                            </Link>
+                          )}
+
+                          {notifData.applications > 0 && (
+                            <Link 
+                              href="/applications" 
+                              onClick={() => handleNotifClick('applications')}
+                              className="flex items-center justify-between p-2.5 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/20 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition cursor-pointer text-slate-700 dark:text-slate-200 font-bold"
+                            >
+                              <span>New Job Applications</span>
+                              <span className="bg-slate-100 dark:bg-slate-800 font-extrabold px-2 py-0.5 rounded text-slate-600 dark:text-slate-400">
+                                {notifData.applications}
+                              </span>
+                            </Link>
+                          )}
+
+                          {notifData.registrations > 0 && (
+                            <Link 
+                              href="/events/registrations" 
+                              onClick={() => handleNotifClick('registrations')}
+                              className="flex items-center justify-between p-2.5 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/20 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition cursor-pointer text-slate-700 dark:text-slate-200 font-bold"
+                            >
+                              <span>Pending RSVPs</span>
+                              <span className="bg-slate-100 dark:bg-slate-800 font-extrabold px-2 py-0.5 rounded text-slate-600 dark:text-slate-400">
+                                {notifData.registrations}
+                              </span>
+                            </Link>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </div>
                 )}
               </div>
 
               <div className="h-6 w-px bg-border hidden md:block" />
 
-              {/* User Dropdown Menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-2 p-1 rounded-full hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring cursor-pointer">
                   <div className="size-8 rounded-full bg-secondary flex items-center justify-center text-muted-foreground border border-border">
