@@ -186,11 +186,11 @@ export default function AboutPage() {
           >
             {/* Image 1 (Back/Top Left) */}
             <div className="absolute top-0 left-0 w-[65%] h-[70%] rounded-3xl overflow-hidden shadow-2xl z-10 border-4 border-white dark:border-slate-950">
-              <Image src="/images/unsplash/img-9799f8ae.webp" alt="Team Collaboration" fill className="object-cover" unoptimized />
+              <Image src="/images/unsplash/img-9799f8ae.webp" alt="Team Collaboration at Indux Technology" fill className="object-cover" unoptimized />
             </div>
             {/* Image 2 (Front/Bottom Right) */}
             <div className="absolute bottom-0 right-0 w-[65%] h-[70%] rounded-3xl overflow-hidden shadow-2xl z-20 border-4 border-white dark:border-slate-950">
-              <Image src="/images/unsplash/img-b27e33a3.webp" alt="Mission Execution" fill className="object-cover" unoptimized />
+              <Image src="/images/unsplash/img-b27e33a3.webp" alt="Mission Execution at Indux Technology" fill className="object-cover" unoptimized />
             </div>
             {/* Decorative dot pattern */}
             <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-[radial-gradient(#3b82f6_2px,transparent_2px)] [background-size:12px_12px] opacity-30 z-0"></div>

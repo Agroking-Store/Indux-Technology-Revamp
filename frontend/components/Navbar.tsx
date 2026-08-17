@@ -287,7 +287,7 @@ export default function Navbar() {
           >
             <Image
               src="/induxtechnologylogo_blue.webp"
-              alt="Indux Technology"
+              alt="Indux Technology Logo"
               width={390}
               height={113}
               className="w-[125px] md:w-[160px] h-auto object-contain dark:hidden"
@@ -295,7 +295,7 @@ export default function Navbar() {
             />
             <Image
               src="/induxtechnologylogo_white.webp"
-              alt="Indux Technology"
+              alt="Indux Technology Logo"
               width={390}
               height={113}
               className="w-[125px] md:w-[160px] h-auto object-contain hidden dark:block"

@@ -195,7 +195,7 @@ export default function ERPServicePage() {
                   {/* Illustration Image */}
                   <img
                     src="/images/unsplash/img-0fc06b38.webp"
-                    alt="ERP Dashboard Analytics"
+                    alt="ERP Dashboard Analytics with Graphs and Charts showing real-time data insights and performance metrics"
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
                   />
                 </div>
@@ -430,7 +430,7 @@ export default function ERPServicePage() {
             >
               <Image
                 src="/images/unsplash/img-354f8fd9.webp"
-                alt="ERP Data Analytics"
+                alt="ERP Data Analytics Dashboard with Graphs and Charts"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"
               />

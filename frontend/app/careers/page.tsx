@@ -85,7 +85,7 @@ export default function CareersPage() {
                 {/* Thick border-8 frame matching home page aesthetic */}
                 <img
                   src={heroImage}
-                  alt="Team collaborating in a meeting"
+                  alt="Team collaborating in a meeting at Indux Technology"
                   className="rounded-[2.5rem] w-full h-72 sm:h-96 object-cover border-8 border-white dark:border-slate-900 shadow-2xl transition-transform duration-500 group-hover:scale-[1.01]"
                 />
                 <span className="absolute -bottom-4 -left-4 flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-4.5 py-3 shadow-xl">

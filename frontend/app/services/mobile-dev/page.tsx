@@ -203,7 +203,7 @@ export default function MobileDevServicePage() {
                   {/* Mockup screen content */}
                   <img
                     src="/images/unsplash/img-204a4aa2.webp"
-                    alt="Mobile App Interface mockup"
+                    alt="Mobile App Interface mockup showing a dashboard with charts and analytics"
                     className="w-full h-full object-cover opacity-90"
                   />
                 </div>
@@ -438,7 +438,7 @@ export default function MobileDevServicePage() {
             >
               <Image
                 src="/images/unsplash/img-5ef227c4.webp"
-                alt="Mobile Code App"
+                alt="Mobile Code App Development Interface"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"
               />
