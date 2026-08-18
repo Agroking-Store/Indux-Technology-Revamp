@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Blog } from '@/lib/api';
+import { Blog, incrementBlogView } from '@/lib/api';
 import { ArrowLeft, Calendar, User, Clock, Tag, Share2, Search, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -93,6 +93,17 @@ interface BlogDetailClientProps {
 
 export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetailClientProps) {
   const router = useRouter();
+
+  useEffect(() => {
+    if (!blog?._id) return;
+    
+    // Check if we've already tracked a view for this blog in the current session
+    const viewedKey = `viewed_blog_${blog._id}`;
+    if (!sessionStorage.getItem(viewedKey)) {
+      incrementBlogView(blog._id).catch(console.error);
+      sessionStorage.setItem(viewedKey, 'true');
+    }
+  }, [blog?._id]);
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
