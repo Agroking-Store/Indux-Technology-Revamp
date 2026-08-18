@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { submitApplication, Career } from "@/lib/api";
+import { submitApplication, Career, incrementCareerView } from "@/lib/api";
 import { ArrowLeft, Briefcase, MapPin, IndianRupee, Users, Upload, CheckCircle2, Loader2, FileText, ChevronRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,17 @@ interface CareerDetailClientProps {
 export default function CareerDetailClient({ career }: CareerDetailClientProps) {
   const router = useRouter();
   const id = career._id;
+
+  useEffect(() => {
+    if (!id) return;
+    
+    // Check if we've already tracked a view for this career in the current session
+    const viewedKey = `viewed_career_${id}`;
+    if (!sessionStorage.getItem(viewedKey)) {
+      incrementCareerView(id).catch(console.error);
+      sessionStorage.setItem(viewedKey, 'true');
+    }
+  }, [id]);
 
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);

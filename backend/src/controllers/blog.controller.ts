@@ -281,3 +281,29 @@ export const getCategories = asyncHandler(async (_req: Request, res: Response) =
     new ApiResponse(200, validCategories, "Categories fetched successfully")
   );
 });
+
+
+// ============================
+// INCREMENT BLOG VIEWS
+// ============================
+export const incrementBlogViews = asyncHandler(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const query = typeof id === "string" && /^[0-9a-fA-F]{24}$/.test(id)
+    ? { _id: new mongoose.Types.ObjectId(id) }
+    : { slug: id };
+
+  const blog = await Blog.findOneAndUpdate(
+    query,
+    { $inc: { views: 1 } },
+    { new: true }
+  );
+
+  if (!blog) {
+    throw ApiError.notFound("Blog not found");
+  }
+
+  res.status(200).json(
+    new ApiResponse(200, { views: blog.views }, "Blog views incremented successfully")
+  );
+});

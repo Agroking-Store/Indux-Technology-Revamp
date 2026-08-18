@@ -7,6 +7,7 @@ import {
   deleteBlog,
   updateBlogStatus,
   getCategories,
+  incrementBlogViews,
 } from "../controllers/blog.controller";
 import { protect } from "../middlewares/auth";
 import { uploadBlogImage } from "../middlewares/upload";
@@ -17,6 +18,7 @@ const router = Router();
 router.get("/", getBlogs);
 router.get("/categories", getCategories);
 router.get("/:id", getBlogById);
+router.patch("/:id/view", incrementBlogViews);
 
 // ---- Protected routes (admin only) ----
 router.use(protect);
