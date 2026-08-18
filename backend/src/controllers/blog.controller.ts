@@ -105,6 +105,7 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
         tags: 1,
         author: 1,
         status: 1,
+        views: 1,
         createdAt: 1,
         updatedAt: 1,
         featuredImage: 1
@@ -151,6 +152,7 @@ export const getBlogById = asyncHandler(async (req: Request, res: Response) => {
         tags: 1,
         author: 1,
         status: 1,
+        views: 1,
         seoTitle: 1,
         seoDescription: 1,
         createdAt: 1,
