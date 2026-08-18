@@ -706,7 +706,7 @@ export default function Home() {
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
                       src="/images/unsplash/img-3516b3f9.webp"
-                      alt="CRM Solutions"
+                      alt="Custom CRM Software Development Company in Pune"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"

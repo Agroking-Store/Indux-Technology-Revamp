@@ -207,7 +207,7 @@ export default function AiSolutionsServicePage() {
                   {/* Illustration Image */}
                   <img
                     src="/images/unsplash/img-1dfc46ab.webp"
-                    alt="AI Solutions Mockup"
+                    alt="AI Solutions Mockup showing a dashboard with charts, analytics, and AI-driven insights for business decision-making"
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
                   />
                 </div>
@@ -442,7 +442,7 @@ export default function AiSolutionsServicePage() {
             >
               <Image
                 src="/images/unsplash/img-45690b6c.webp"
-                alt="AI Development Coding screen"
+                alt="AI Solutions Quality Guarantee Image and Visual Representation of Pipeline Uptime and Accuracy"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"
               />

@@ -3,33 +3,33 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { 
-  Users, 
-  BarChart3, 
-  Settings, 
-  Database, 
-  Cloud, 
-  ShieldCheck, 
-  Target, 
-  Zap, 
-  Server, 
-  MessageSquare, 
-  Workflow, 
+import {
+  Users,
+  BarChart3,
+  Settings,
+  Database,
+  Cloud,
+  ShieldCheck,
+  Target,
+  Zap,
+  Server,
+  MessageSquare,
+  Workflow,
   ArrowRight,
   Activity,
   Sparkles,
   Briefcase
 } from 'lucide-react';
-import { 
-  FaPython, 
-  FaJava, 
+import {
+  FaPython,
+  FaJava,
   FaNodeJs,
   FaDatabase,
   FaSalesforce,
   FaHubspot
 } from 'react-icons/fa';
-import { 
-  TbBrandTypescript, 
+import {
+  TbBrandTypescript,
   TbBrandMongodb
 } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
@@ -122,7 +122,7 @@ const processSteps = [
 export default function CRMServicePage() {
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 relative font-sans">
-      
+
       {/* Decorative Blur Background Blobs */}
       <div className="absolute top-[10%] left-[-15%] w-[450px] h-[450px] rounded-full bg-blue-500/10 dark:bg-blue-600/5 blur-3xl pointer-events-none"></div>
       <div className="absolute top-[50%] right-[-15%] w-[450px] h-[450px] rounded-full bg-indigo-500/10 dark:bg-indigo-600/5 blur-3xl pointer-events-none"></div>
@@ -135,7 +135,7 @@ export default function CRMServicePage() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 font-sans">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              
+
               {/* Left Column: Text & CTAs */}
               <motion.div
                 initial={{ opacity: 0, x: -60 }}
@@ -152,8 +152,10 @@ export default function CRMServicePage() {
                   <span className="text-blue-600">Redefined.</span>
                 </h1>
                 <p className="text-lg text-slate-555 dark:text-slate-400 leading-relaxed mt-2 font-sans">
-                  We design, implement, and customize Customer Relationship Management platforms that empower your sales, marketing, and support teams to build lasting connections.
-                </p>
+                  Indux Technology builds custom CRM software for businesses in Pune and
+                  across India. We develop CRM systems for lead management, sales pipelines,
+                  customer management, workflow automation, analytics, WhatsApp integration,
+                  and business operations.                </p>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4">
                   <Button
                     nativeButton={false}
@@ -163,9 +165,9 @@ export default function CRMServicePage() {
                     Start Your Project
                   </Button>
                   <Button
-  nativeButton={false}
-  variant="ghost"
-  className="
+                    nativeButton={false}
+                    variant="ghost"
+                    className="
     w-full sm:w-auto
     px-8 py-6
     rounded-full
@@ -181,10 +183,10 @@ export default function CRMServicePage() {
     cursor-pointer
     flex items-center justify-center gap-2
   "
-  render={<a href="#capabilities" />}
->
-  Explore Capabilities
-</Button>
+                    render={<a href="#capabilities" />}
+                  >
+                    Explore Capabilities
+                  </Button>
                 </div>
               </motion.div>
 
@@ -209,7 +211,7 @@ export default function CRMServicePage() {
                   {/* Illustration Image */}
                   <img
                     src="/images/unsplash/img-4a096fc5.webp"
-                    alt="CRM Dashboard Mockup"
+                    alt="CRM Dashboard Visualization with Graphs and Charts showing real-time data insights and performance metrics for business decision-making and customer relationship management."
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
                   />
                 </div>
@@ -222,9 +224,9 @@ export default function CRMServicePage() {
         {/* ===== CAPABILITIES SECTION ===== */}
         <section id="capabilities" className="relative overflow-visible border-t border-slate-200/60 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-950/50">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
-            
+
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start relative">
-              
+
               {/* Left Column: Sticky Title & Info */}
               <div className="w-full lg:w-5/12 lg:sticky lg:top-28 z-10 text-left">
                 <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-6">
@@ -234,17 +236,17 @@ export default function CRMServicePage() {
                   </div>
                   Capabilities
                 </div>
-                
+
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6 font-sans">
                   What we build <br className="hidden md:block" />
                   and deliver
                 </h2>
-                
+
                 <p className="text-slate-555 dark:text-slate-400 leading-relaxed text-lg max-w-md mb-10 font-sans">
                   We cover everything from initial implementation and data migration to complex workflow automation and custom portal development.
                 </p>
 
-                <Button 
+                <Button
                   nativeButton={false}
                   className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 group"
                   render={<Link href="/contact-us" />}
@@ -259,7 +261,7 @@ export default function CRMServicePage() {
                   const Icon = cap.icon;
                   const numStr = String(idx + 1).padStart(2, '0');
                   return (
-                    <motion.div 
+                    <motion.div
                       key={idx}
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -363,12 +365,12 @@ export default function CRMServicePage() {
                   >
                     {/* Process Card */}
                     <div className="w-full md:w-[45%] bg-white dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 hover:border-blue-500/30 hover:shadow-2xl dark:hover:shadow-none transition-all duration-300 relative overflow-hidden group">
-                      
+
                       {/* Stylized background number */}
                       <span className="absolute right-6 top-6 text-7xl font-extrabold text-slate-100 dark:text-slate-800/80 select-none group-hover:scale-110 transition-transform duration-500">
                         {step.step}
                       </span>
-                      
+
                       <div className="relative z-10 text-left space-y-3">
                         <div className="inline-flex items-center justify-center px-3 py-1 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide">
                           Phase {step.step}
@@ -399,7 +401,7 @@ export default function CRMServicePage() {
         {/* ===== WHY INDUX SECTION ===== */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-16 border-t border-slate-200/60 dark:border-slate-900">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
+
             {/* Value columns */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -444,7 +446,7 @@ export default function CRMServicePage() {
             >
               <Image
                 src="/images/unsplash/img-bbad54bc.webp"
-                alt="CRM Data Dashboard"
+                alt="CRM Data Dashboard Visualization with Graphs and Charts showing real-time data insights and performance metrics for business decision-making and customer relationship management."
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"
               />
@@ -469,12 +471,12 @@ export default function CRMServicePage() {
           >
             {/* High-tech Glowing Background Accents */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-gradient-to-r from-blue-600/20 to-indigo-600/20 blur-[100px] pointer-events-none"></div>
-            
+
             {/* Subtle Grid overlay */}
             <div className="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
-            
+
             <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-              
+
               {/* Left Column: Heading and description */}
               <div className="text-left lg:max-w-2xl space-y-4">
                 <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.15] text-white">

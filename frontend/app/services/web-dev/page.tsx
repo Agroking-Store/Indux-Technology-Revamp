@@ -207,7 +207,7 @@ export default function WebDevServicePage() {
                   {/* Illustration Image */}
                   <img
                     src="/images/unsplash/img-09ddb758.webp"
-                    alt="Web Application Mockup"
+                    alt="Web Application Development Screenshot"
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
                   />
                 </div>
@@ -442,7 +442,7 @@ export default function WebDevServicePage() {
             >
               <Image
                 src="/images/unsplash/img-325f90ce.webp"
-                alt="Web Development Code"
+                alt="Web Development Computer Screen"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"
               />

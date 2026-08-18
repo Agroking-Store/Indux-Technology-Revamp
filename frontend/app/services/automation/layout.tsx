@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Business Process Automation & Workflows | Indux Technology",
-  description: "Automate repetitive tasks and scale operations. Indux Technology in Pune provides custom sales automation, WhatsApp APIs, scraper integrations, and data synchronization.",
+  title: "Business Process Automation Company in Pune | Indux Technology",
+  description:
+    "Indux Technology provides business process automation, workflow automation, WhatsApp automation, API integrations, web scraping, and custom automation solutions for businesses in Pune and across India.",
   alternates: {
     canonical: "https://induxtechnology.com/services/automation",
   },
@@ -16,25 +17,28 @@ export default function AutomationLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": "Business Process Automation & Integration Solutions",
-    "description": "Streamlining administrative, sales, and backend processes using secure API integrations, web scrapers, WhatsApp automation, and custom scheduling workers.",
-    "provider": {
+    name: "Business Process Automation & Integration Solutions",
+    description:
+      "Custom business process automation using API integrations, workflow automation, WhatsApp automation, web scraping, and backend integrations.",
+    provider: {
       "@type": "Organization",
-      "name": "Indux Technology",
-      "url": "https://induxtechnology.com"
+      name: "Indux Technology",
+      url: "https://induxtechnology.com",
     },
-    "areaServed": {
+    areaServed: {
       "@type": "Country",
-      "name": "India"
+      name: "India",
     },
-    "serviceType": "Business Process Automation"
+    serviceType: "Business Process Automation",
   };
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd),
+        }}
       />
       {children}
     </>
