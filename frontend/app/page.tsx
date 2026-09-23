@@ -455,7 +455,7 @@ export default function Home() {
                       src="/images/unsplash/img-f787f12c.webp"
                       alt="Team working"
                       fill
-                      loading="eager"
+                      priority={true}
                       sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
@@ -466,7 +466,7 @@ export default function Home() {
                     <Image
                       src="/images/unsplash/img-4dddf9a5.webp"
                       alt="Discussion"
-                      loading="eager"
+                      priority={true}
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
@@ -478,6 +478,7 @@ export default function Home() {
                     <Image
                       src="/images/unsplash/img-9040528a.webp"
                       alt="Meeting"
+                      priority={true}
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
@@ -489,6 +490,7 @@ export default function Home() {
                     <Image
                       src="/images/unsplash/img-931d0d20.webp"
                       alt="Collaboration"
+                      priority={true}
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
@@ -1133,20 +1135,26 @@ export default function Home() {
 
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mt-2">
                       <div className="flex -space-x-3 justify-center sm:justify-start">
-                        <img
+                        <Image
                           className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
                           src="https://i.pravatar.cc/150?u=1"
                           alt="avatar"
+                          width={40}
+                          height={40}
                         />
-                        <img
+                        <Image
                           className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
                           src="https://i.pravatar.cc/150?u=2"
                           alt="avatar"
+                          width={40}
+                          height={40}
                         />
-                        <img
+                        <Image
                           className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
                           src="https://i.pravatar.cc/150?u=3"
                           alt="avatar"
+                          width={40}
+                          height={40}
                         />
                         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] bg-blue-600 flex items-center justify-center text-white font-bold text-xs z-10">
                           +37
@@ -1225,15 +1233,17 @@ export default function Home() {
     >
       {/* Image */}
       <div className="p-3">
-        <div className="h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden bg-slate-800">
-          <img
+        <div className="relative h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden bg-slate-800">
+          <Image
+            fill
             src={
               blog.featuredImage
                 ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${blog.featuredImage}`
                 : "/images/unsplash/img-62ae3366.webp"
             }
             alt={blog.title}
-            className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+            className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+            sizes="(max-width: 768px) 100vw, 33vw"
           />
         </div>
       </div>

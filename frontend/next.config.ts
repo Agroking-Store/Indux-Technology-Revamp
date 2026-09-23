@@ -23,6 +23,16 @@ const apiConfig = getApiConfig();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: false,
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.induxtechnology.com' }],
+        destination: 'https://induxtechnology.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
   turbopack: {
     root: __dirname,
   },
@@ -32,6 +42,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'flagcdn.com',
       },
       {
         protocol: 'https',
