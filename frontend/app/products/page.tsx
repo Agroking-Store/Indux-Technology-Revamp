@@ -21,6 +21,39 @@ export default function ProductsZigzagShowcase() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        id="products-schema"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "InduxCRM",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "All"
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://induxtechnology.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Products",
+                  "item": "https://induxtechnology.com/products"
+                }
+              ]
+            }
+          ])
+        }}
+      />
       <main className="flex-grow pt-20 pb-20">
         {/* HERO SECTION - Matching Service Page Style */}
         <section className="relative py-20 overflow-hidden">
@@ -93,6 +126,13 @@ export default function ProductsZigzagShowcase() {
                       <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed mb-8">
                         {project.shortDescription}
                       </p>
+                      
+                      {/* TODO: Marketing to supply expanded use-case blurbs here to fix thin content */}
+                      <div className="mb-6 p-4 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-dashed border-slate-300 dark:border-slate-700">
+                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 italic">
+                          [Placeholder: Insert detailed use-case blurbs and industry applications here to improve page depth]
+                        </p>
+                      </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
                         {project.features
