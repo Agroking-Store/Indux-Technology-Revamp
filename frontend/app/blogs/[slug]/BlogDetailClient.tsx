@@ -46,8 +46,8 @@ function renderRichContent(content: string) {
   html = html.replace(/^### (.*?)$/gm, '<h3 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-6 mb-3 leading-snug">$1</h3>');
   // ## Title -> <h2>Title</h2>
   html = html.replace(/^## (.*?)$/gm, '<h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-8 mb-4 border-b border-slate-100 dark:border-slate-800 pb-2 leading-snug">$1</h2>');
-  // # Title -> <h1>Title</h1>
-  html = html.replace(/^# (.*?)$/gm, '<h1 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-10 mb-4 leading-tight">$1</h1>');
+  // # Title -> <h2>Title</h2> (Demoted from H1 to avoid SEO duplicate)
+  html = html.replace(/^# (.*?)$/gm, '<h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-10 mb-4 leading-tight">$1</h2>');
 
   // Bold: **text** -> <strong>text</strong>
   html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="font-extrabold text-slate-900 dark:text-white">$1</strong>');

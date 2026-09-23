@@ -78,6 +78,33 @@ const GlobalPresenceClocks = () => {
 export default function ServicesPage() {
     return (
         <>
+            <script
+                type="application/ld+json"
+                id="services-schema"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Service",
+                        "serviceType": "IT Services",
+                        "provider": {
+                            "@type": "Organization",
+                            "name": "Indux Technology"
+                        },
+                        "hasOfferCatalog": {
+                            "@type": "OfferCatalog",
+                            "name": "IT Services",
+                            "itemListElement": [
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "CRM Solutions" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Development" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mobile Apps" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Chatbots" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business Automation" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "ERP Systems" } }
+                            ]
+                        }
+                    })
+                }}
+            />
             {/* Hero Section */}
             <section className="relative pt-20 sm:pt-24 pb-20 sm:pb-32 overflow-hidden">
                 <div className="absolute inset-0 w-full h-full z-0">

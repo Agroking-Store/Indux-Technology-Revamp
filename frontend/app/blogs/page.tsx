@@ -101,6 +101,30 @@ export default function BlogsPage() {
   
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        id="blogs-breadcrumb-schema"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://induxtechnology.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blogs",
+                "item": "https://induxtechnology.com/blogs"
+              }
+            ]
+          })
+        }}
+      />
       <main className="flex-1">
         {/* ===== HERO SECTION ===== */}
         <section className="relative overflow-hidden pt-16 pb-20 lg:pt-20 lg:pb-28">
@@ -123,9 +147,17 @@ export default function BlogsPage() {
                   Our Blog &<br />
                   <span className="italic text-slate-600 dark:text-slate-400 font-serif">Insights.</span>
                 </h1>
-                <p className="text-lg text-slate-505 dark:text-slate-400 leading-relaxed mt-2">
-                  Stay updated with corporate announcements, technical guides, cloud updates, and modern engineering practices from the Indux team.
-                </p>
+                <div className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mt-2 space-y-4">
+                  <p>
+                    Stay updated with corporate announcements, technical guides, cloud updates, and modern engineering practices from the Indux team.
+                  </p>
+                  <p className="hidden md:block">
+                    Our experts share deep dives into CRM implementation strategies, ERP modernization workflows, and how AI can transform standard business operations. Whether you are a technical founder or a business leader, you'll find actionable insights to accelerate your digital growth.
+                  </p>
+                  <p className="hidden md:block text-sm italic">
+                    Explore our latest articles below, or use the category filters to find topics most relevant to your industry.
+                  </p>
+                </div>
               </motion.div>
 
               {/* Interactive Search Bar */}

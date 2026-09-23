@@ -18,8 +18,32 @@ export default function AboutPage() {
     },
   };
 
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Indux Technology",
+    "url": "https://induxtechnology.com",
+    "logo": "https://induxtechnology.com/induxtechnologylogo_white.webp",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Kharadi, Pune",
+      "addressRegion": "MH",
+      "addressCountry": "IN"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/induxtechnology",
+      "https://www.facebook.com/885831577953764/",
+      "https://x.com/induxtechnology"
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans overflow-hidden">
+      <script
+        type="application/ld+json"
+        id="about-org-schema"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+      />
 
       {/* Hero Section (Blue Background) */}
       <section className="relative pt-32 md:pt-25 pb-64 px-6 bg-blue-600">
