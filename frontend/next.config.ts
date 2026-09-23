@@ -1,7 +1,7 @@
 const getApiConfig = () => {
   try {
-    if (process.env.NEXT_PUBLIC_API_URL) {
-      const parsed = new URL(process.env.NEXT_PUBLIC_API_URL);
+    if (process.env.NEXT_PUBLIC_API_BASE_URL) {
+      const parsed = new URL(process.env.NEXT_PUBLIC_API_BASE_URL);
       return {
         protocol: parsed.protocol.replace(':', '') as 'http' | 'https',
         hostname: parsed.hostname,
