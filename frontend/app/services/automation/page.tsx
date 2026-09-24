@@ -200,7 +200,7 @@ export default function BusinessAutomationServicePage() {
                     </div>
                   </div>
                   {/* Illustration Image */}
-                  <img
+                  <img width={800} height={600}
                     src="/images/unsplash/img-f53fe912.webp"
                     alt="Automation Workflow Illustration and Data Accuracy Guarantee with Robotic Process Automation and API Integration Solutions"
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"

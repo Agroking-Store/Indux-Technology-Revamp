@@ -348,7 +348,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
       {/* ===== HERO BANNER ===== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <div className="relative h-[300px] md:h-[420px] rounded-3xl overflow-hidden shadow-xl border border-slate-200/40 dark:border-slate-800">
-          <img
+          <img width={800} height={600}
             src={
               event.bannerImage
                 ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.bannerImage}`
@@ -411,7 +411,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                   >
                     <div className="size-14 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-650 overflow-hidden border">
                       {speaker.avatar ? (
-                        <img
+                        <img width={800} height={600}
                           src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${speaker.avatar}`}
                           alt={speaker.name}
                           className="w-full h-full object-cover"

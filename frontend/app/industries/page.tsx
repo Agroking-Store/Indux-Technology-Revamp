@@ -197,6 +197,8 @@ export default function IndustriesShowcase() {
                       <img 
                         src={industry.image} 
                         alt={industry.title} 
+                        width={800}
+                        height={600}
                         className="h-64 w-full object-cover sm:h-80 lg:h-96"
                       />
                     </motion.div>

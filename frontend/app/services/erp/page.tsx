@@ -193,7 +193,7 @@ export default function ERPServicePage() {
                     </div>
                   </div>
                   {/* Illustration Image */}
-                  <img
+                  <img width={800} height={600}
                     src="/images/unsplash/img-0fc06b38.webp"
                     alt="ERP Dashboard Analytics with Graphs and Charts showing real-time data insights and performance metrics"
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"

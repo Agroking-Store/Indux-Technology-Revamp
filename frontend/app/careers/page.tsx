@@ -83,7 +83,7 @@ export default function CareersPage() {
                 className="relative group max-w-lg md:ml-auto"
               >
                 {/* Thick border-8 frame matching home page aesthetic */}
-                <img
+                <img width={800} height={600}
                   src={heroImage}
                   alt="Team collaborating in a meeting at Indux Technology"
                   className="rounded-[2.5rem] w-full h-72 sm:h-96 object-cover border-8 border-white dark:border-slate-900 shadow-2xl transition-transform duration-500 group-hover:scale-[1.01]"
@@ -181,7 +181,7 @@ export default function CareersPage() {
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                   className={`overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-md ${i % 2 === 1 ? 'mt-6' : ''}`}
                 >
-                  <img
+                  <img width={800} height={600}
                     src={img.src}
                     alt={img.alt}
                     className="w-full h-40 sm:h-48 object-cover transition-transform duration-700 ease-out hover:scale-105"

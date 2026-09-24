@@ -205,7 +205,7 @@ export default function AiSolutionsServicePage() {
                     </div>
                   </div>
                   {/* Illustration Image */}
-                  <img
+                  <img width={800} height={600}
                     src="/images/unsplash/img-1dfc46ab.webp"
                     alt="AI Solutions Mockup showing a dashboard with charts, analytics, and AI-driven insights for business decision-making"
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"

@@ -209,7 +209,7 @@ export default function CRMServicePage() {
                     </div>
                   </div>
                   {/* Illustration Image */}
-                  <img
+                  <img width={800} height={600}
                     src="/images/unsplash/img-4a096fc5.webp"
                     alt="CRM Dashboard Visualization with Graphs and Charts showing real-time data insights and performance metrics for business decision-making and customer relationship management."
                     className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
