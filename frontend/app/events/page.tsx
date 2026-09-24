@@ -205,7 +205,7 @@ console.log(process.env.NEXT_PUBLIC_IMAGE_RENDERING_URL);
                       >
                         {/* Image & Type Badge */}
                         <div className="relative h-56 overflow-hidden">
-                          <img
+                          <img width={800} height={600}
                             src={
                               event.coverImage
                                 ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.coverImage}`

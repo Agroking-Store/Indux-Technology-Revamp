@@ -191,7 +191,7 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
               
               {/* Featured Image with shine overlay on hover */}
               <div className="relative h-80 w-full rounded-2xl overflow-hidden">
-  <img
+  <img width={800} height={600}
     src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
     alt={blog.title}
     className="w-full h-full object-cover"
@@ -300,7 +300,7 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
                     >
                       {/* Mini image with hover shine & zoom */}
                       <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 flex-shrink-0">
-                        <img
+                        <img width={800} height={600}
                           src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
                           alt={item.title}
                           sizes="64px"
@@ -407,8 +407,10 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
                       <img 
                         src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
                         alt={item.title}
+                        width={800}
+                        height={500}
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500 w-full h-full"
                       />
                       <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-[25deg] pointer-events-none group-hover:animate-shine" />
                     </div>
