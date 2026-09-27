@@ -269,6 +269,7 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Indux Technology",
+    "description": "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
     "url": "https://induxtechnology.com",
     "logo": "https://induxtechnology.com/induxtechnologylogo_white.webp",
     "sameAs": [
@@ -289,7 +290,9 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Indux Technology",
+    "description": "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
     "image": "https://induxtechnology.com/images/og-image.jpg",
+    "openingHours": "Mo-Fr 09:00-18:00",
     "@id": "https://induxtechnology.com/#localbusiness",
     "url": "https://induxtechnology.com",
     "telephone": "+918421538753",
