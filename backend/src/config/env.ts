@@ -15,8 +15,11 @@ interface EnvConfig {
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
 
+  SMTP_HOST: string;
+  SMTP_PORT: number;
   SMTP_USER: string;
   SMTP_PASS: string;
+  SENDER_EMAIL: string;
 
   RAZORPAY_KEY_ID: string;
   RAZORPAY_KEY_SECRET: string;
@@ -44,8 +47,11 @@ export const env: EnvConfig = {
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || "",
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || "",
 
+  SMTP_HOST: process.env.SMTP_HOST || "",
+  SMTP_PORT: Number(process.env.SMTP_PORT) || 587,
   SMTP_USER: process.env.SMTP_USER || "",
   SMTP_PASS: process.env.SMTP_PASS || "",
+  SENDER_EMAIL: process.env.SENDER_EMAIL || "",
 
   RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID || "",
   RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET || "",

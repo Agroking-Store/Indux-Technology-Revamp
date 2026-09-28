@@ -15,6 +15,8 @@ import asyncHandler from "../utils/asyncHandler";
 import { AuthRequest } from "../middlewares/auth";
 import { env } from "../config/env";
 import razorpay from "../config/razorpay";
+import { sendEmail } from "../utils/sendEmail";
+import { getEventRegistrationTemplate } from "../utils/emailTemplates";
 
 // ============================
 // PUBLIC: CREATE EVENT REGISTRATION
@@ -125,6 +127,15 @@ export const createRegistration = asyncHandler(async (req: Request, res: Respons
     razorpayOrderId,
     amountPaid: isPaidEvent ? event.registrationFee : 0,
   });
+
+  if (!isPaidEvent) {
+    const emailHtml = getEventRegistrationTemplate(name, event, false);
+    sendEmail({
+      to: email,
+      subject: `Registration Confirmed: ${event.title}`,
+      html: emailHtml,
+    }).catch(err => console.error("Event Email error:", err));
+  }
 
   res.status(201).json(
     new ApiResponse(
@@ -352,6 +363,17 @@ export const verifyPayment = asyncHandler(async (req: Request, res: Response) =>
   registration.razorpaySignature = razorpaySignature;
 
   await registration.save();
+
+  // Send confirmation email for paid event
+  const event = await Event.findById(registration.eventId);
+  if (event) {
+    const emailHtml = getEventRegistrationTemplate(registration.name, event, true);
+    sendEmail({
+      to: registration.email,
+      subject: `Registration Confirmed: ${event.title}`,
+      html: emailHtml,
+    }).catch(err => console.error("Event Email error:", err));
+  }
 
   res.status(200).json(new ApiResponse(200, registration, "Payment verified and registration approved successfully"));
 });

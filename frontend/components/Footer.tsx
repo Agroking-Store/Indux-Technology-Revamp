@@ -89,7 +89,7 @@ export default function Footer() {
             >
               <Image
                 src="/induxtechnologylogo_white.webp"
-                alt="Indux Technology"
+                alt="Indux Technology Logo"
                 width={390}
                 height={113}
                 className="w-[145px] md:w-[180px] h-auto object-contain"

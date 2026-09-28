@@ -20,6 +20,7 @@ export interface ICareer extends Document {
   status: CareerStatus;
   formFields: any[];
   lastDate: Date;
+  views: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -103,6 +104,10 @@ const CareerSchema = new Schema<ICareer>(
     lastDate: {
       type: Date,
       required: [true, "Last date to apply is required"],
+    },
+    views: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

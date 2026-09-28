@@ -3,7 +3,8 @@ import Quote from "../models/Quote";
 import ApiError from "../utils/ApiError";
 import { createQuoteSchema, updateQuoteStatusSchema } from "../validators/quote.validator";
 import { sendEmail } from "../utils/sendEmail";
-import { getQuoteEmailTemplate } from "../utils/emailTemplates";
+import { getQuoteEmailTemplate, getAdminAlertTemplate } from "../utils/emailTemplates";
+import { env } from "../config/env";
 
 // @desc    Submit a new quote request (Public)
 // @route   POST /api/v1/quotes
@@ -26,12 +27,35 @@ export const createQuote = async (
       html: emailHtml,
     }).catch(err => console.error("Email error:", err));
 
+    // Send admin alert
+    const adminHtml = getAdminAlertTemplate(
+      "Quote",
+      validatedData.name,
+      validatedData.workEmail,
+      validatedData.phone,
+      {
+        "Company Name": validatedData.companyName || "N/A",
+        "Service Interest": validatedData.serviceInterest,
+        "Project Brief": validatedData.message || "N/A"
+      }
+    );
+
+    sendEmail({
+      to: env.SMTP_USER,
+      subject: `New Quote Request: ${validatedData.name} - ${validatedData.serviceInterest}`,
+      html: adminHtml,
+    }).catch(err => console.error("Admin Email error:", err));
+
     res.status(201).json({
       success: true,
       message: "Quote request submitted successfully",
       data: quote,
     });
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 11000 && error.keyValue) {
+      const field = Object.keys(error.keyValue)[0];
+      return next(ApiError.conflict(`A quote request with this ${field} is already in progress. We will contact you regarding your previous request shortly.`));
+    }
     next(error);
   }
 };

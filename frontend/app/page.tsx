@@ -19,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { getBlogs, submitLead, Blog } from "@/lib/api";
 
 import { NumberTicker } from "@/components/ui/number-ticker";
@@ -179,6 +180,7 @@ const fallbackBlogs = [
 ];
 
 export default function Home() {
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -267,6 +269,7 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Indux Technology",
+    "description": "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
     "url": "https://induxtechnology.com",
     "logo": "https://induxtechnology.com/induxtechnologylogo_white.webp",
     "sameAs": [
@@ -287,7 +290,9 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Indux Technology",
+    "description": "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
     "image": "https://induxtechnology.com/images/og-image.jpg",
+    "openingHours": "Mo-Fr 09:00-18:00",
     "@id": "https://induxtechnology.com/#localbusiness",
     "url": "https://induxtechnology.com",
     "telephone": "+918421538753",
@@ -453,7 +458,7 @@ export default function Home() {
                       src="/images/unsplash/img-f787f12c.webp"
                       alt="Team working"
                       fill
-                      loading="eager"
+                      priority={true}
                       sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
@@ -464,7 +469,7 @@ export default function Home() {
                     <Image
                       src="/images/unsplash/img-4dddf9a5.webp"
                       alt="Discussion"
-                      loading="eager"
+                      priority={true}
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
@@ -476,6 +481,7 @@ export default function Home() {
                     <Image
                       src="/images/unsplash/img-9040528a.webp"
                       alt="Meeting"
+                      priority={true}
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
@@ -487,6 +493,7 @@ export default function Home() {
                     <Image
                       src="/images/unsplash/img-931d0d20.webp"
                       alt="Collaboration"
+                      priority={true}
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
@@ -696,13 +703,15 @@ export default function Home() {
             {/* Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {/* Card 1: CRM */}
-              <div className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
+              <div 
+                onClick={() => router.push('/services/crm')}
+                className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
                       src="/images/unsplash/img-3516b3f9.webp"
-                      alt="CRM Solutions"
+                      alt="Custom CRM Software Development Company in Pune"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
@@ -726,7 +735,9 @@ export default function Home() {
               </div>
 
               {/* Card 2: Manufacturing ERP */}
-              <div className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
+              <div 
+                onClick={() => router.push('/services/erp')}
+                className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
                 <div className="p-6 sm:p-8 pb-2 sm:pb-4 flex flex-col flex-grow order-2 md:order-1">
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-white mb-2 sm:mb-3 transition-colors">
@@ -755,7 +766,9 @@ export default function Home() {
               </div>
 
               {/* Card 3: Sales Automation */}
-              <div className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
+              <div 
+                onClick={() => router.push('/services/automation')}
+                className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
@@ -1000,25 +1013,31 @@ export default function Home() {
                   title: "Indux CRM",
                   category: "Business Intelligence",
                   img: "/induxcrm.webp",
+                  link: "/products/indux-crm",
                 },
                 {
                   title: "HRMS",
                   category: "Human Resources",
                   img: "/hrms.webp",
+                  link: "/products/hrms-suite",
                 },
                 {
                   title: "Jemsoft",
                   category: "Insurance ERP",
                   img: "/jemsoft.webp",
+                  link: "/products/jem-soft",
                 },
                 {
                   title: "InduxERP",
                   category: "Enterprise Software",
                   img: "/indux_erp.webp",
+                  link: "/products/indux-erp",
                 },
               ].map((project, idx) => (
                 <div
-                  key={idx} className="group bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-500 cursor-pointer flex flex-col"
+                  key={idx} 
+                  onClick={() => router.push(project.link)}
+                  className="group bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-500 cursor-pointer flex flex-col"
                 >
                   {/* Image Container */}
                   <div className="p-3 sm:p-4 md:p-6 pb-0">
@@ -1119,20 +1138,26 @@ export default function Home() {
 
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mt-2">
                       <div className="flex -space-x-3 justify-center sm:justify-start">
-                        <img
+                        <Image
                           className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
                           src="https://i.pravatar.cc/150?u=1"
                           alt="avatar"
+                          width={40}
+                          height={40}
                         />
-                        <img
+                        <Image
                           className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
                           src="https://i.pravatar.cc/150?u=2"
                           alt="avatar"
+                          width={40}
+                          height={40}
                         />
-                        <img
+                        <Image
                           className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
                           src="https://i.pravatar.cc/150?u=3"
                           alt="avatar"
+                          width={40}
+                          height={40}
                         />
                         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] bg-blue-600 flex items-center justify-center text-white font-bold text-xs z-10">
                           +37
@@ -1203,53 +1228,51 @@ export default function Home() {
 
             {/* Blog Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {displayedBlogs.map((blog, idx) => (
-                <div
-                  key={blog._id || idx}
-                  className="bg-[#153a5c] rounded-3xl overflow-hidden group border border-white/5 hover:border-blue-400/30 transition-all flex flex-col shadow-xl cursor-pointer"
-                >
-                  {/* Image Container */}
-                  <div className="w-full h-48 sm:h-56 md:h-64 overflow-hidden relative p-3">
-                    <div className="w-full h-full relative rounded-2xl overflow-hidden bg-slate-800">
-                      <Image
-                        src={
-                          blog.featuredImage ||
-                          "/images/unsplash/img-62ae3366.webp"
-                        }
-                        alt={blog.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-in-out"
-                      />
-                    </div>
-                  </div>
+  {displayedBlogs.map((blog, idx) => (
+    <Link
+      key={blog._id || idx}
+      href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`}
+      className="bg-[#153a5c] rounded-3xl overflow-hidden border border-white/5 hover:border-blue-400/30 transition-all shadow-xl group flex flex-col h-full"
+    >
+      {/* Image */}
+      <div className="p-3">
+        <div className="relative h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden bg-slate-800">
+          <Image
+            fill
+            src={
+              blog.featuredImage
+                ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${blog.featuredImage}`
+                : "/images/unsplash/img-62ae3366.webp"
+            }
+            alt={blog.title}
+            className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        </div>
+      </div>
 
-                  {/* Content */}
-                  <div className="p-5 sm:p-6 md:p-8 flex flex-col flex-1">
-                    <div className="mb-4 sm:mb-5">
-                      <span className="bg-blue-500 text-white text-[10px] sm:text-xs font-bold px-3.5 py-1.5 rounded-md tracking-wide uppercase shadow-sm">
-                        {blog.category}
-                      </span>
-                    </div>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 leading-snug group-hover:text-blue-300 transition-colors line-clamp-2">
-                      {blog.title}
-                    </h3>
-                    <p className="text-blue-100/70 text-xs sm:text-sm md:text-base leading-relaxed mb-6 sm:mb-8 flex-1 line-clamp-3">
-                      {blog.shortDescription}
-                    </p>
-                    <div className="mt-auto">
-                      <Link
-                        href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`}
-                        className="inline-flex items-center text-blue-400 font-bold text-xs sm:text-sm hover:text-blue-300 transition-colors group/link cursor-pointer"
-                      >
-                        Read More{" "}
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Content */}
+      <div className="p-6 flex flex-col flex-1">
+        <span className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-md w-fit uppercase">
+          {blog.category}
+        </span>
+
+        <h3 className="mt-4 text-xl font-bold text-white group-hover:text-blue-300 transition-colors line-clamp-2">
+          {blog.title}
+        </h3>
+
+        <p className="mt-3 text-blue-100/70 text-sm flex-1 line-clamp-3">
+          {blog.shortDescription}
+        </p>
+
+        <div className="mt-6 inline-flex items-center text-blue-400 font-bold hover:text-blue-300">
+          Read More
+          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+        </div>
+      </div>
+    </Link>
+  ))}
+</div>
           </div>
         </section>
 

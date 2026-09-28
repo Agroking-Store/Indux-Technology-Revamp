@@ -70,10 +70,14 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
   const limit = parseInt(req.query.limit as string) || 20;
   const status = req.query.status as string; // optional filter
   const search = req.query.search as string; // optional search filter
+  const category = req.query.category as string; // optional category filter
 
   const filter: any = {};
   if (status && (status === "Draft" || status === "Published")) {
     filter.status = status;
+  }
+  if (category) {
+    filter.category = category;
   }
 
   if (search) {
@@ -101,6 +105,7 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
         tags: 1,
         author: 1,
         status: 1,
+        views: 1,
         createdAt: 1,
         updatedAt: 1,
         featuredImage: 1
@@ -108,14 +113,8 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
     }
   ]);
 
-  const host = req.get("host") || "";
-  const isLocal =host.includes("localhost") || host.startsWith("127.0.0.1");
-const protocol = isLocal ? "http" : "https";
   const mappedBlogs = blogs.map(blog => {
     const blogObj = { ...blog };
-    if (blogObj.featuredImage && blogObj.featuredImage.startsWith("/uploads/")) {
-      blogObj.featuredImage = `${protocol}://${host}${blogObj.featuredImage}`;
-    }
     return blogObj;
   });
 
@@ -153,6 +152,7 @@ export const getBlogById = asyncHandler(async (req: Request, res: Response) => {
         tags: 1,
         author: 1,
         status: 1,
+        views: 1,
         seoTitle: 1,
         seoDescription: 1,
         createdAt: 1,
@@ -168,14 +168,7 @@ export const getBlogById = asyncHandler(async (req: Request, res: Response) => {
     throw ApiError.notFound("Blog not found");
   }
 
-  const host = req.get("host") || "";
-const isLocal =
-  host.includes("localhost") || host.startsWith("127.0.0.1");
-const protocol = isLocal ? "http" : "https";
 const blogObj = { ...blog };
-if (blogObj.featuredImage && blogObj.featuredImage.startsWith("/uploads/")) {
-  blogObj.featuredImage = `${protocol}://${host}${blogObj.featuredImage}`;
-}
   res.status(200).json(new ApiResponse(200, blogObj, "Blog fetched successfully"));
 });
 
@@ -277,4 +270,42 @@ export const updateBlogStatus = asyncHandler(async (req: AuthRequest, res: Respo
 
   res.status(200).json(new ApiResponse(200, blog, `Blog status updated to ${status}`));
 });
-
+
+// @desc    Get all unique categories
+// @route   GET /api/v1/blogs/categories
+// @access  Public
+export const getCategories = asyncHandler(async (_req: Request, res: Response) => {
+  const categories = await Blog.distinct("category");
+  // Filter out any empty/null categories just in case
+  const validCategories = categories.filter(c => c && c.trim() !== "");
+  
+  res.status(200).json(
+    new ApiResponse(200, validCategories, "Categories fetched successfully")
+  );
+});
+
+
+// ============================
+// INCREMENT BLOG VIEWS
+// ============================
+export const incrementBlogViews = asyncHandler(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const query = typeof id === "string" && /^[0-9a-fA-F]{24}$/.test(id)
+    ? { _id: new mongoose.Types.ObjectId(id) }
+    : { slug: id };
+
+  const blog = await Blog.findOneAndUpdate(
+    query,
+    { $inc: { views: 1 } },
+    { new: true }
+  );
+
+  if (!blog) {
+    throw ApiError.notFound("Blog not found");
+  }
+
+  res.status(200).json(
+    new ApiResponse(200, { views: blog.views }, "Blog views incremented successfully")
+  );
+});

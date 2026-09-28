@@ -21,23 +21,23 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://induxtechnology.com"),
   title: {
-    default: "CRM Development Company in Pune & ERP Software | Indux Technology",
+    default: "Indux Technology | Custom CRM, ERP & AI Development Pune",
     template: "%s | Indux Technology"
   },
-  description: "Indux Technology is a leading IT solutions & software development company in Pune, India. We build custom CRM software, manufacturing ERP systems, web development, mobile apps, and AI solutions.",
+  description: "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
   keywords: [
-    "Indux Technology", 
+    "Indux Technology",
     "CRM Development Company Pune",
     "ERP Software Pune",
     "AI Software Development India",
     "software company Pune",
-    "custom CRM systems", 
-    "manufacturing ERP software", 
-    "sales automation", 
-    "IT consultancy", 
-    "software development company", 
-    "cloud migration", 
-    "cybersecurity solutions", 
+    "custom CRM systems",
+    "manufacturing ERP software",
+    "sales automation",
+    "IT consultancy",
+    "software development company",
+    "cloud migration",
+    "cybersecurity solutions",
     "enterprise software solutions"
   ],
   authors: [{ name: "Indux Technology" }],
@@ -58,8 +58,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://induxtechnology.com",
-    title: "CRM Development Company in Pune & ERP Software | Indux Technology",
-    description: "Indux Technology is a leading IT solutions & software development company in Pune, India. We build custom CRM software, manufacturing ERP systems, web development, mobile apps, and AI solutions.",
+    title: "Indux Technology | Custom CRM, ERP & AI Development Pune",
+    description: "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
     siteName: "Indux Technology",
     images: [
       {
@@ -72,8 +72,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CRM Development Company in Pune & ERP Software | Indux Technology",
-    description: "Indux Technology is a leading IT solutions & software development company in Pune, India. We build custom CRM software, manufacturing ERP systems, web development, mobile apps, and AI solutions.",
+    title: "Indux Technology | Custom CRM, ERP & AI Development Pune",
+    description: "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
     images: ["/images/og-image.jpg"],
     creator: "@InduxTech",
   },
@@ -108,6 +108,22 @@ export default function RootLayout({
                   document.documentElement.classList.add('dark');
                 }
               } catch (e) {}
+            `,
+          }}
+        />
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-Z6FCN27VB3`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-Z6FCN27VB3');
             `,
           }}
         />

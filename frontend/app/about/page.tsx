@@ -18,8 +18,32 @@ export default function AboutPage() {
     },
   };
 
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Indux Technology",
+    "url": "https://induxtechnology.com",
+    "logo": "https://induxtechnology.com/induxtechnologylogo_white.webp",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Kharadi, Pune",
+      "addressRegion": "MH",
+      "addressCountry": "IN"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/induxtechnology",
+      "https://www.facebook.com/885831577953764/",
+      "https://x.com/induxtechnology"
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans overflow-hidden">
+      <script
+        type="application/ld+json"
+        id="about-org-schema"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+      />
 
       {/* Hero Section (Blue Background) */}
       <section className="relative pt-32 md:pt-25 pb-64 px-6 bg-blue-600">
@@ -128,7 +152,7 @@ export default function AboutPage() {
           >
             <div className="relative aspect-square md:aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&w=800&q=80"
+                src="/images/unsplash/img-4dddf9a5.webp"
                 alt="Founder"
                 fill
                 className="object-cover"
@@ -186,11 +210,11 @@ export default function AboutPage() {
           >
             {/* Image 1 (Back/Top Left) */}
             <div className="absolute top-0 left-0 w-[65%] h-[70%] rounded-3xl overflow-hidden shadow-2xl z-10 border-4 border-white dark:border-slate-950">
-              <Image src="/images/unsplash/img-9799f8ae.webp" alt="Team Collaboration" fill className="object-cover" unoptimized />
+              <Image src="/images/unsplash/img-9799f8ae.webp" alt="Team Collaboration at Indux Technology" fill className="object-cover" unoptimized />
             </div>
             {/* Image 2 (Front/Bottom Right) */}
             <div className="absolute bottom-0 right-0 w-[65%] h-[70%] rounded-3xl overflow-hidden shadow-2xl z-20 border-4 border-white dark:border-slate-950">
-              <Image src="/images/unsplash/img-b27e33a3.webp" alt="Mission Execution" fill className="object-cover" unoptimized />
+              <Image src="/images/unsplash/img-b27e33a3.webp" alt="Mission Execution at Indux Technology" fill className="object-cover" unoptimized />
             </div>
             {/* Decorative dot pattern */}
             <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-[radial-gradient(#3b82f6_2px,transparent_2px)] [background-size:12px_12px] opacity-30 z-0"></div>

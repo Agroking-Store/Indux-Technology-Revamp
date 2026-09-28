@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { submitApplication, Career } from "@/lib/api";
+import { submitApplication, Career, incrementCareerView } from "@/lib/api";
 import { ArrowLeft, Briefcase, MapPin, IndianRupee, Users, Upload, CheckCircle2, Loader2, FileText, ChevronRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { z } from "zod";
 
 interface CareerDetailClientProps {
   career: Career;
@@ -14,6 +15,17 @@ interface CareerDetailClientProps {
 export default function CareerDetailClient({ career }: CareerDetailClientProps) {
   const router = useRouter();
   const id = career._id;
+
+  useEffect(() => {
+    if (!id) return;
+    
+    // Check if we've already tracked a view for this career in the current session
+    const viewedKey = `viewed_career_${id}`;
+    if (!sessionStorage.getItem(viewedKey)) {
+      incrementCareerView(id).catch(console.error);
+      sessionStorage.setItem(viewedKey, 'true');
+    }
+  }, [id]);
 
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -37,6 +49,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
   // Custom Answers State
   const [answers, setAnswers] = useState<Record<string, any>>({});
   const [errorMsg, setErrorMsg] = useState("");
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const handleAnswerChange = (fieldName: string, value: any) => {
     setAnswers((prev) => ({ ...prev, [fieldName]: value }));
@@ -74,22 +87,48 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!fullName || !email || !phone || !experience || !skills || !resumeFile) {
-      setErrorMsg("Please fill in all required fields and upload your resume.");
+    setFormErrors({});
+    setErrorMsg("");
+
+    // Dynamic Zod Schema Generation
+    const schemaShape: any = {
+      fullName: z.string().min(2, "Full Name is required"),
+      email: z.string().email("Valid email address is required"),
+      phone: z.string().min(8, "Valid phone number is required"),
+      experience: z.string().min(1, "Experience is required"),
+      skills: z.string().min(1, "Key Skills are required"),
+    };
+
+    if (career.formFields) {
+      career.formFields.forEach((field) => {
+        if (field.name === "name" || field.name === "email" || field.name === "phone") return;
+        if (field.required) {
+          if (field.type === "checkbox") {
+            schemaShape[field.name] = z.array(z.string()).min(1, `${field.label} is required`);
+          } else {
+            schemaShape[field.name] = z.string().min(1, `${field.label} is required`);
+          }
+        }
+      });
+    }
+
+    const schema = z.object(schemaShape);
+    const result = schema.safeParse({ fullName, email, phone, experience, skills, ...answers });
+
+    if (!result.success) {
+      const errs: Record<string, string> = {};
+      result.error.issues.forEach(e => {
+        if (e.path[0]) errs[e.path[0].toString()] = e.message;
+      });
+      setFormErrors(errs);
+      setErrorMsg("Please fix the validation errors below.");
       return;
     }
 
-    // Custom form builder validation
-    if (career.formFields) {
-      for (const field of career.formFields) {
-        if (field.name === "name" || field.name === "email" || field.name === "phone") continue;
-        const val = answers[field.name];
-        const hasValue = val !== undefined && val !== null && val !== "" && !(Array.isArray(val) && val.length === 0);
-        if (field.required && !hasValue) {
-          setErrorMsg(`"${field.label}" is a required question.`);
-          return;
-        }
-      }
+    if (!resumeFile) {
+      setFormErrors({ resumeFile: "Resume file is required" });
+      setErrorMsg("Please upload your resume.");
+      return;
     }
 
     setSubmitting(true);
@@ -276,8 +315,9 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="e.g. John Doe"
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.fullName ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
                     />
+                    {formErrors.fullName && <p className="text-red-500 text-xs mt-1.5 px-2">{formErrors.fullName}</p>}
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -289,8 +329,9 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="name@domain.com"
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.email ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
                       />
+                      {formErrors.email && <p className="text-red-500 text-xs mt-1.5 px-2">{formErrors.email}</p>}
                     </div>
                     <div>
                       <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Phone Number *</label>
@@ -300,8 +341,9 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="10-digit number"
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.phone ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
                       />
+                      {formErrors.phone && <p className="text-red-500 text-xs mt-1.5 px-2">{formErrors.phone}</p>}
                     </div>
                   </div>
 
@@ -314,8 +356,9 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={experience}
                         onChange={(e) => setExperience(e.target.value)}
                         placeholder="e.g. 3 Years"
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.experience ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
                       />
+                      {formErrors.experience && <p className="text-red-500 text-xs mt-1.5 px-2">{formErrors.experience}</p>}
                     </div>
                     <div>
                       <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Notice Period</label>
@@ -348,8 +391,9 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={skills}
                         onChange={(e) => setSkills(e.target.value)}
                         placeholder="e.g. React, Next.js, Node.js, MongoDB"
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.skills ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
                       />
+                      {formErrors.skills && <p className="text-red-500 text-xs mt-1.5 px-2">{formErrors.skills}</p>}
                     </div>
                     <div>
                       <label className="block text-xs font-semibold text-slate-605 dark:text-slate-400 mb-1.5">Preferred Work Location</label>
@@ -489,11 +533,12 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                                     </label>
                                   );
                                 })}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
+                                </div>
+                              )}
+                              {formErrors[field.name] && <p className="text-red-500 text-xs mt-1.5 px-2">{formErrors[field.name]}</p>}
+                            </div>
+                          );
+                        })}
                     </div>
                   )}
 

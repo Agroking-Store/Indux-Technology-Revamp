@@ -11,7 +11,15 @@ router.get(
 
     if (shouldLog) {
       try {
-        const ip = req.ip || req.socket.remoteAddress || "unknown";
+        const forwarded = req.headers["x-forwarded-for"];
+        const realIp = req.headers["x-real-ip"];
+        let ip = req.ip || req.socket.remoteAddress || "unknown";
+        
+        if (forwarded) {
+          ip = typeof forwarded === "string" ? forwarded.split(",")[0].trim() : forwarded[0];
+        } else if (realIp) {
+          ip = typeof realIp === "string" ? realIp : realIp[0];
+        }
         
         // Calculate the current date in IST (Indian Standard Time)
         const now = new Date();

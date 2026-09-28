@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Blog } from '@/lib/api';
-import Image from 'next/image';
+import { Blog, incrementBlogView } from '@/lib/api';
 import { ArrowLeft, Calendar, User, Clock, Tag, Share2, Search, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -47,8 +46,8 @@ function renderRichContent(content: string) {
   html = html.replace(/^### (.*?)$/gm, '<h3 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-6 mb-3 leading-snug">$1</h3>');
   // ## Title -> <h2>Title</h2>
   html = html.replace(/^## (.*?)$/gm, '<h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-8 mb-4 border-b border-slate-100 dark:border-slate-800 pb-2 leading-snug">$1</h2>');
-  // # Title -> <h1>Title</h1>
-  html = html.replace(/^# (.*?)$/gm, '<h1 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-10 mb-4 leading-tight">$1</h1>');
+  // # Title -> <h2>Title</h2> (Demoted from H1 to avoid SEO duplicate)
+  html = html.replace(/^# (.*?)$/gm, '<h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-10 mb-4 leading-tight">$1</h2>');
 
   // Bold: **text** -> <strong>text</strong>
   html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="font-extrabold text-slate-900 dark:text-white">$1</strong>');
@@ -94,6 +93,24 @@ interface BlogDetailClientProps {
 
 export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetailClientProps) {
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && searchQuery.trim()) {
+      router.push(`/blogs?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
+  useEffect(() => {
+    if (!blog?._id) return;
+    
+    // Check if we've already tracked a view for this blog in the current session
+    const viewedKey = `viewed_blog_${blog._id}`;
+    if (!sessionStorage.getItem(viewedKey)) {
+      incrementBlogView(blog._id).catch(console.error);
+      sessionStorage.setItem(viewedKey, 'true');
+    }
+  }, [blog?._id]);
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
@@ -125,7 +142,7 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
           </nav>
 
           {/* Category Badge */}
-          <span className="inline-flex items-center text-[10px] sm:text-xs uppercase tracking-widest font-extrabold bg-blue-600/10 dark:bg-blue-500/10 text-blue-450 dark:text-blue-400 border border-blue-500/20 px-3.5 py-1.5 rounded-full mb-6">
+          <span className="inline-flex items-center text-[10px] sm:text-xs uppercase tracking-widest font-extrabold bg-blue-500 text-white border border-blue-400/30 px-3.5 py-1.5 rounded-full mb-6 shadow-sm">
             {blog.category}
           </span>
 
@@ -180,19 +197,13 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
             >
               
               {/* Featured Image with shine overlay on hover */}
-              <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-800 group cursor-pointer">
-                <Image
-                  src={blog.featuredImage}
-                  alt={blog.title}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 66vw"
-                  unoptimized={typeof blog.featuredImage === 'string' && blog.featuredImage.startsWith('data:')}
-                  className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-105"
-                />
-                {/* Swipe shine transition */}
-                <div className="absolute top-0 -left-full w-[50%] h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -skew-x-[25deg] pointer-events-none group-hover:animate-shine" />
-              </div>
+              <div className="relative h-80 w-full rounded-2xl overflow-hidden">
+  <img width={800} height={600}
+    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
+    alt={blog.title}
+    className="w-full h-full object-cover"
+  />
+</div>
 
               {/* Short description Intro */}
               <div className="border-l-4 border-blue-600 pl-5 text-left">
@@ -241,7 +252,10 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Search articles..."
+                  placeholder="Search articles... (Press Enter)"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleSearch}
                   className="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/25 focus:border-blue-500 dark:text-slate-200"
                 />
                 <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -296,12 +310,10 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
                     >
                       {/* Mini image with hover shine & zoom */}
                       <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 flex-shrink-0">
-                        <Image 
-                          src={item.featuredImage} 
+                        <img width={800} height={600}
+                          src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
                           alt={item.title}
-                          fill
                           sizes="64px"
-                          unoptimized={typeof item.featuredImage === 'string' && item.featuredImage.startsWith('data:')}
                           className="object-cover group-hover:scale-110 transition-transform duration-[800ms]"
                         />
                         <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-[25deg] pointer-events-none group-hover:animate-shine" />
@@ -402,13 +414,13 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
                   <div className="space-y-4">
                     {/* Image with shine overlay on hover */}
                     <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/40">
-                      <Image 
-                        src={item.featuredImage} 
+                      <img 
+                        src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
                         alt={item.title}
-                        fill
+                        width={800}
+                        height={500}
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        unoptimized={typeof item.featuredImage === 'string' && item.featuredImage.startsWith('data:')}
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500 w-full h-full"
                       />
                       <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-[25deg] pointer-events-none group-hover:animate-shine" />
                     </div>

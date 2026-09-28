@@ -8,7 +8,9 @@ interface EmailOptions {
 }
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: env.SMTP_HOST || "smtp.gmail.com",
+  port: env.SMTP_PORT || 587,
+  secure: env.SMTP_PORT === 465, // true for 465, false for other ports
   auth: {
     user: env.SMTP_USER,
     pass: env.SMTP_PASS,
@@ -23,7 +25,7 @@ export const sendEmail = async (options: EmailOptions) => {
   }
 
   const mailOptions = {
-    from: `"Indux Technology" <${env.SMTP_USER}>`,
+    from: `"Indux Technology" <${env.SENDER_EMAIL || env.SMTP_USER}>`,
     to: options.to,
     subject: options.subject,
     html: options.html,

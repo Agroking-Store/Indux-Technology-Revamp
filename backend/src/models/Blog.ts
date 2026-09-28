@@ -15,6 +15,7 @@ export interface IBlog extends Document {
   status: BlogStatus;
   seoTitle?: string;
   seoDescription?: string;
+  views: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -80,6 +81,10 @@ const BlogSchema = new Schema<IBlog>(
     seoDescription: {
       type: String,
       trim: true,
+    },
+    views: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

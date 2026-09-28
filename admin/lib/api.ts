@@ -136,6 +136,7 @@ export interface Career {
   status: 'Active' | 'Closed';
   formFields?: FormField[];
   applicationsCount?: number;
+  views?: number;
   lastDate: string;
   createdAt: string;
   updatedAt: string;

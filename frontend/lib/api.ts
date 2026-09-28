@@ -6,7 +6,7 @@ console.log(
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1",
 );
 
-const api = axios.create({
+export const api = axios.create({
   baseURL:
     process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1",
   headers: { "Content-Type": "application/json" },
@@ -38,6 +38,16 @@ export interface Career {
 export const getCareers = async (): Promise<Career[]> => {
   const res = await api.get("/careers?status=Active");
   return res.data.data.careers;
+};
+
+export const updateCareerStatus = async (id: string, status: "Active" | "Closed") => {
+  const res = await api.patch(`/careers/${id}/status`, { status });
+  return res.data;
+};
+
+export const incrementCareerView = async (id: string) => {
+  const res = await api.patch(`/careers/${id}/view`);
+  return res.data;
 };
 
 export const getCareerById = async (id: string): Promise<Career> => {
@@ -74,6 +84,11 @@ export const getBlogBySlug = async (slug: string): Promise<Blog> => {
   // (content, featuredImage, etc.) without needing to fetch all blogs first.
   const res = await api.get(`/blogs/${slug}`);
   return res.data.data;
+};
+
+export const incrementBlogView = async (id: string) => {
+  const res = await api.patch(`/blogs/${id}/view`);
+  return res.data;
 };
 
 // ===== Job Application Types & API =====

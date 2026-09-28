@@ -9,6 +9,12 @@ import asyncHandler from "../utils/asyncHandler";
 import { AuthRequest } from "../middlewares/auth";
 import { env } from "../config/env";
 import { computeMatchScore } from "../utils/matchScore";
+import { sendEmail } from "../utils/sendEmail";
+import { 
+  getJobApplicationTemplate,
+  getCandidateHiredTemplate,
+  getCandidateRejectedTemplate 
+} from "../utils/emailTemplates";
 
 // ============================
 // SUBMIT JOB APPLICATION (Public)
@@ -103,6 +109,18 @@ export const submitApplication = asyncHandler(async (req: Request, res: Response
     preferredLocation,
   });
 
+  // Send auto-reply to candidate
+  const emailHtml = getJobApplicationTemplate(
+    validated.candidateName || validated.fullName || "Candidate",
+    career.title
+  );
+
+  sendEmail({
+    to: validated.email,
+    subject: `Application Received: ${career.title} - Indux Technology`,
+    html: emailHtml,
+  }).catch(err => console.error("Job App Email error:", err));
+
   res.status(201).json(new ApiResponse(201, application, "Application submitted successfully"));
 });
 
@@ -152,7 +170,7 @@ export const getApplications = asyncHandler(async (req: AuthRequest, res: Respon
 
   const applications = await JobApplication.find(query)
     .populate("jobId", "title department location")
-    .sort({ matchScore: -1, createdAt: -1 })
+    .sort({ createdAt: -1 })
     .skip(skip)
     .limit(limit);
 
@@ -194,13 +212,34 @@ export const updateApplicationStatus = asyncHandler(async (req: AuthRequest, res
   const { id } = req.params;
   const validated = updateApplicationStatusSchema.parse(req.body);
 
-  const application = await JobApplication.findById(id);
+  const application = await JobApplication.findById(id).populate("jobId");
   if (!application) {
     throw ApiError.notFound("Application not found");
   }
 
+  const previousStatus = application.status;
   application.status = validated.status as any;
   await application.save();
+
+  // Send Email Notification if status changed to Hired or Rejected
+  if (previousStatus !== application.status) {
+    const job = application.jobId as any; // populated
+    const jobTitle = job ? job.title : "a position";
+    
+    if (application.status === "Hired") {
+      await sendEmail({
+        to: application.email,
+        subject: `Congratulations! You're hired for ${jobTitle}`,
+        html: getCandidateHiredTemplate(application.fullName, jobTitle)
+      }).catch(e => console.error("Failed to send Hired email:", e));
+    } else if (application.status === "Rejected") {
+      await sendEmail({
+        to: application.email,
+        subject: `Update regarding your application for ${jobTitle}`,
+        html: getCandidateRejectedTemplate(application.fullName, jobTitle)
+      }).catch(e => console.error("Failed to send Rejected email:", e));
+    }
+  }
 
   res.status(200).json(new ApiResponse(200, application, `Application status updated to ${validated.status}`));
 });

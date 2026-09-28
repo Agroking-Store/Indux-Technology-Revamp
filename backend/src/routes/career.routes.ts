@@ -2,19 +2,23 @@ import { Router } from "express";
 import {
   createCareer,
   getCareers,
+  getCareerFilters,
   getCareerById,
   updateCareer,
   deleteCareer,
   updateCareerStatus,
   duplicateCareer,
+  incrementCareerViews,
 } from "../controllers/career.controller";
 import { protect } from "../middlewares/auth";
 
 const router = Router();
 
 // ---- Public routes (no authentication) ----
+router.get("/filters", getCareerFilters);
 router.get("/", getCareers);
 router.get("/:id", getCareerById);
+router.patch("/:id/view", incrementCareerViews);
 
 // ---- Protected routes (admin only) ----
 router.use(protect); // all routes below this require authentication

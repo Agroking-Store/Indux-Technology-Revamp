@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { projects } from "@/lib/products-data";
 import { Button } from "@/components/ui/button";
 
@@ -21,6 +22,39 @@ export default function ProductsZigzagShowcase() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        id="products-schema"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "InduxCRM",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "All"
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://induxtechnology.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Products",
+                  "item": "https://induxtechnology.com/products"
+                }
+              ]
+            }
+          ])
+        }}
+      />
       <main className="flex-grow pb-20">
         {/* HERO SECTION - Matching Service Page Style */}
         <section className="relative pt-6 pb-12 sm:pt-8 sm:pb-14 lg:pt-10 lg:pb-16 overflow-hidden">
@@ -72,11 +106,13 @@ export default function ProductsZigzagShowcase() {
                     {/* Image Column */}
                     <div className="w-full lg:w-1/2 relative">
                       <div className="absolute -inset-4 rounded-[2.5rem] bg-blue-600/5 dark:bg-blue-600/10 blur-2xl"></div>
-                      <div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xl group">
-                        <img
+                      <div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xl group aspect-[16/10]">
+                        <Image
                           src={project.image}
                           alt={project.title}
-                          className="w-full aspect-[16/10] object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                         />
                       </div>
                     </div>
@@ -93,6 +129,13 @@ export default function ProductsZigzagShowcase() {
                       <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed mb-8">
                         {project.shortDescription}
                       </p>
+                      
+                      {/* TODO: Marketing to supply expanded use-case blurbs here to fix thin content */}
+                      <div className="mb-6 p-4 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-dashed border-slate-300 dark:border-slate-700">
+                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 italic">
+                          [Placeholder: Insert detailed use-case blurbs and industry applications here to improve page depth]
+                        </p>
+                      </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
                         {project.features

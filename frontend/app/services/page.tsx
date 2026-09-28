@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { GetQuoteModal } from "@/components/GetQuoteModal";
 
 // Clocks Component
 const GlobalPresenceClocks = () => {
@@ -41,7 +43,7 @@ const GlobalPresenceClocks = () => {
                     </div>
                     
 <h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
-                        <img src="https://flagcdn.com/w40/in.png" alt="India Flag" className="w-8 h-auto mr-3" />
+                        <Image src="https://flagcdn.com/w40/in.png" alt="India Flag with Indux Technology Office to Showcase the Global Presence" width={32} height={32} className="w-8 h-auto mr-3" />
                         India
 </h3>
                     <div className="flex items-center gap-2 text-muted-foreground">
@@ -58,7 +60,7 @@ const GlobalPresenceClocks = () => {
                         {uaeTime || "00:00"}
                     </div>
                     <h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
-                        <img src="https://flagcdn.com/w40/ae.png" alt="UAE Flag" className="w-8 h-auto mr-3" />
+                        <Image src="https://flagcdn.com/w40/ae.png" alt="UAE Flag with Indux Technology Office to Showcase the Global Presence and Innovation" width={32} height={32} className="w-8 h-auto mr-3" />
                         UAE
 </h3>
                     <div className="flex items-center gap-2 text-muted-foreground">
@@ -77,13 +79,42 @@ const GlobalPresenceClocks = () => {
 export default function ServicesPage() {
     return (
         <>
+            <script
+                type="application/ld+json"
+                id="services-schema"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Service",
+                        "serviceType": "IT Services",
+                        "provider": {
+                            "@type": "Organization",
+                            "name": "Indux Technology"
+                        },
+                        "hasOfferCatalog": {
+                            "@type": "OfferCatalog",
+                            "name": "IT Services",
+                            "itemListElement": [
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "CRM Solutions" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Development" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mobile Apps" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Chatbots" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business Automation" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "ERP Systems" } }
+                            ]
+                        }
+                    })
+                }}
+            />
             {/* Hero Section */}
             <section className="relative pt-20 sm:pt-24 pb-20 sm:pb-32 overflow-hidden">
                 <div className="absolute inset-0 w-full h-full z-0">
-                    <img
+                    <Image
                         alt="High-tech professional IT background"
                         className="w-full h-full object-cover opacity-10"
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdepPcUqWQb-AvSbx-mPzI5Crwpvmi02OxS4GFzCKt-h2KiecG9Rys_cgYTOJTyjLYS7llW3Q8vb9irsUttkpKJoKBQvydmhMh7a9-RsZ8FIlFNlrcXMAvF4Q5W9DVPCu3zVA7g_yvrp67UA3nBclcMDbQDW_QAPOhd-Y5TEF8DOEx4q5csZaAVW5TjhXtHmRiMu-GbkmD34QiOflsK4kIODgdYtodC87c_6g1eBst_xOQPkYq_Rx2fQ"
+                        fill
+                        priority={true}
                     />
                 </div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 text-center">
@@ -132,7 +163,7 @@ export default function ServicesPage() {
                             <div className="relative shrink-0">
                                 <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">01</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="CRM Solutions" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/crm.webp" />
+                                    <Image alt="CRM Solutions for Growing Business" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/crm.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">
@@ -151,7 +182,7 @@ export default function ServicesPage() {
                             <div className="relative shrink-0">
                                 <span className="absolute -right-24 md:-right-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">02</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="Web Development" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/web-dev.webp" />
+                                    <Image alt="Web Development Responsive Design and User Experience for Modern Businesses and Startups" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/web-dev.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-right relative z-10">
@@ -168,7 +199,7 @@ export default function ServicesPage() {
                             <div className="relative shrink-0">
                                 <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">03</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="Mobile Apps" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/mobile-app.webp" />
+                                    <Image alt="Mobile Apps for Seamless User Experience and Cross-Platform Compatibility" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/mobile-app.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">
@@ -185,7 +216,7 @@ export default function ServicesPage() {
                             <div className="relative shrink-0">
                                 <span className="absolute -right-24 md:-right-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">04</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="AI Chatbots" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpOfD-HUh1A0TcZXeh7hxBmcwDvb6q-JukYYCzkg_XDOtcIHUbam8aFwJ-clUcayjSbpIZU9QvV6c1S0RUdhqxQp686QxgLvyM9X3655zZPh-giNp8Ch80KqcRGaKs59sBt1lLipvNg7KrTyRAjKqnroPOXtKF2zs_tTwuT9Oftw__zvas8ZEmtEFC0JqQwfPeI2mufjgY-KFr6Z3f_V0xXVGSABJHRtVwLTvW42XdtMV2xDe-J47DQQ" />
+                                    <Image alt="AI Chatbots for Customer Support and Automated Responses for Growing Businesses" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpOfD-HUh1A0TcZXeh7hxBmcwDvb6q-JukYYCzkg_XDOtcIHUbam8aFwJ-clUcayjSbpIZU9QvV6c1S0RUdhqxQp686QxgLvyM9X3655zZPh-giNp8Ch80KqcRGaKs59sBt1lLipvNg7KrTyRAjKqnroPOXtKF2zs_tTwuT9Oftw__zvas8ZEmtEFC0JqQwfPeI2mufjgY-KFr6Z3f_V0xXVGSABJHRtVwLTvW42XdtMV2xDe-J47DQQ" fill sizes="(max-width: 768px) 100vw, 300px" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-right relative z-10">
@@ -202,7 +233,7 @@ export default function ServicesPage() {
                             <div className="relative shrink-0">
                                 <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">05</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="Business Automation" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/business-automation.webp" />
+                                    <Image alt="Business Automation Workflow Illustration and Data Accuracy Guarantee" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/business-automation.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">
@@ -219,7 +250,7 @@ export default function ServicesPage() {
                             <div className="relative shrink-0">
                                 <span className="absolute -right-24 md:-right-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">06</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="ERP Systems" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/erp.avif" />
+                                    <Image alt="ERP Systems Dashboard with Graphs and Charts showing real-time data insights and performance metrics for business decision-making and operational efficiency" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/erp.avif" fill sizes="(max-width: 768px) 100vw, 300px" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-right relative z-10">
@@ -293,10 +324,12 @@ export default function ServicesPage() {
                     <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-10">
                         Transform your business operations with our enterprise-grade IT solutions. Let's build the future together.
                     </p>
-                    <button className="bg-background text-foreground hover:bg-muted px-8 py-4 rounded-full text-sm font-semibold shadow-lg transition-all flex items-center gap-2 mx-auto group">
-                        Get Free Quote
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    <GetQuoteModal>
+                        <button className="bg-background text-foreground hover:bg-muted px-8 py-4 rounded-full text-sm font-semibold shadow-lg transition-all flex items-center gap-2 mx-auto group cursor-pointer">
+                            Get Free Quote
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                    </GetQuoteModal>
                 </div>
             </section>
         </>

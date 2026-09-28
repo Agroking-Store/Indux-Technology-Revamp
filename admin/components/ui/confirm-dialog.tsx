@@ -57,48 +57,50 @@ export function ConfirmDialog({
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
       {trigger && <AlertDialogTrigger nativeButton={isNativeButton} render={trigger} />}
       
-      {/* 
-        We override the default p-4 and rounded-xl of AlertDialogContent 
-        to achieve a premium edge-to-edge footer and larger border radius.
-      */}
-      <AlertDialogContent className="sm:max-w-md p-0 overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl rounded-3xl !gap-0">
-        <div className="p-8 pb-6 flex flex-col items-center text-center">
-          <div className={cn(
-            "size-16 rounded-full flex items-center justify-center mb-5", 
-            variant === 'destructive' 
-              ? "bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-500" 
-              : "bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400"
-          )}>
-            <Icon className="size-8" strokeWidth={1.5} />
-          </div>
-          
+      <AlertDialogContent className="sm:max-w-[400px] p-0 border border-slate-100 dark:border-slate-800 shadow-2xl rounded-2xl !gap-0 overflow-visible mt-8 bg-white dark:bg-slate-950">
+        
+        {/* Top accent bar */}
+        <div className={cn(
+          "w-full h-3 rounded-t-2xl absolute top-0 left-0",
+          variant === 'destructive' ? "bg-red-500" : "bg-indigo-500"
+        )} />
+
+        {/* Overlapping Icon */}
+        <div className={cn(
+          "absolute -top-10 left-1/2 -translate-x-1/2 size-20 rounded-full flex items-center justify-center border-[6px] border-white dark:border-slate-950 z-10", 
+          variant === 'destructive' ? "bg-red-500 text-white" : "bg-indigo-500 text-white"
+        )}>
+          <Icon className="size-9" strokeWidth={2} />
+        </div>
+
+        <div className="pt-14 pb-8 px-8 flex flex-col items-center text-center relative z-0">
           <AlertDialogHeader className="mb-2 !space-y-0 w-full flex flex-col items-center">
-            <AlertDialogTitle className="text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white text-center w-full">
+            <AlertDialogTitle className="text-xl md:text-2xl font-bold text-slate-800 dark:text-slate-100 text-center w-full">
               {title}
             </AlertDialogTitle>
           </AlertDialogHeader>
           
-          <AlertDialogDescription className="text-sm md:text-base text-slate-500 dark:text-slate-400 max-w-[280px] mx-auto leading-relaxed mt-2">
+          <AlertDialogDescription className="text-sm md:text-base text-slate-500 dark:text-slate-400 max-w-[280px] mx-auto leading-relaxed mt-1">
             {description}
           </AlertDialogDescription>
+          
+          <AlertDialogFooter className="flex w-full gap-4 mt-8 sm:justify-center !m-0">
+            <AlertDialogCancel className="w-full sm:w-1/2 h-12 px-4 rounded-lg text-slate-600 dark:text-slate-300 font-semibold border-2 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all m-0 text-base cursor-pointer">
+              {cancelText}
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={onConfirm} 
+              className={cn(
+                "w-full sm:w-1/2 h-12 px-4 rounded-lg font-semibold text-white shadow-sm transition-all m-0 border-0 text-base cursor-pointer",
+                variant === 'destructive' 
+                  ? "bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700" 
+                  : "bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700"
+              )}
+            >
+              {confirmText}
+            </AlertDialogAction>
+          </AlertDialogFooter>
         </div>
-        
-        <AlertDialogFooter className="bg-slate-50/80 dark:bg-slate-900/50 px-6 py-5 border-t border-slate-100 dark:border-slate-800 flex sm:justify-center gap-3 w-full !m-0 !rounded-none">
-          <AlertDialogCancel className="w-full sm:w-1/2 px-6 py-3.5 rounded-xl text-slate-600 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all m-0 text-base cursor-pointer">
-            {cancelText}
-          </AlertDialogCancel>
-          <AlertDialogAction 
-            onClick={onConfirm} 
-            className={cn(
-              "w-full sm:w-1/2 px-6 py-3.5 rounded-xl font-bold text-white shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0 m-0 text-base cursor-pointer",
-              variant === 'destructive' 
-                ? "bg-rose-600 hover:bg-rose-700 dark:bg-rose-600 dark:hover:bg-rose-700 hover:shadow-rose-600/25" 
-                : "bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700 hover:shadow-indigo-600/25"
-            )}
-          >
-            {confirmText}
-          </AlertDialogAction>
-        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm, useFormContext } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'react-toastify';
@@ -27,6 +27,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { DateTimePicker } from '@/components/ui/datetimepicker';
+import { Tooltip } from '@base-ui/react';
+import { TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 const eventSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -93,7 +96,7 @@ export default function EventFormPage() {
   const searchParams = useSearchParams();
 
   const rawId = params?.id as string | undefined;
-  const isCreation = !rawId || rawId === 'new';
+  const isCreation = !rawId || rawId === 'new' || rawId === 'create';
   const eventId = isCreation ? null : rawId;
 
   // Determine mode: 'create', 'edit', or 'view'
@@ -120,6 +123,7 @@ export default function EventFormPage() {
     handleSubmit,
     reset,
     setValue,
+    control,
     watch,
     formState: { errors },
   } = useForm<EventFormData>({
@@ -240,7 +244,6 @@ export default function EventFormPage() {
     }
     setFormFields(updated);
   };
-
   const moveField = (index: number, direction: 'up' | 'down') => {
     if (isViewMode) return;
     const nextIndex = direction === 'up' ? index - 1 : index + 1;
@@ -464,7 +467,7 @@ export default function EventFormPage() {
                     <SelectTrigger className="cursor-pointer font-bold">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent >
                       <SelectItem value="Webinar">Webinar</SelectItem>
                       <SelectItem value="Hackathon">Hackathon</SelectItem>
                       <SelectItem value="Workshop">Workshop</SelectItem>
@@ -757,22 +760,72 @@ export default function EventFormPage() {
               </div>
 
               <div className="space-y-1.5">
-                <Label className="block text-xs font-bold text-slate-500 uppercase tracking-wide">Start Date & Time *</Label>
-                <Input type="datetime-local" {...register('startDate')} disabled={isViewMode} />
-                {errors.startDate && <p className="text-rose-500 text-xs mt-1">{errors.startDate.message}</p>}
-              </div>
+  <Label className="block text-xs font-bold text-slate-500 uppercase tracking-wide">
+    Start Date & Time *
+  </Label>
 
-              <div className="space-y-1.5">
-                <Label className="block text-xs font-bold text-slate-500 uppercase tracking-wide">End Date & Time *</Label>
-                <Input type="datetime-local" {...register('endDate')} disabled={isViewMode} />
-                {errors.endDate && <p className="text-rose-500 text-xs mt-1">{errors.endDate.message}</p>}
-              </div>
+  <Controller
+    name="startDate"
+    control={control}
+    render={({ field }) => (
+      <DateTimePicker
+        field={field}
+        disabled={isViewMode}
+      />
+    )}
+  />
 
-              <div className="space-y-1.5">
-                <Label className="block text-xs font-bold text-slate-500 uppercase tracking-wide">Registration Deadline *</Label>
-                <Input type="datetime-local" {...register('registrationDeadline')} disabled={isViewMode} />
-                {errors.registrationDeadline && <p className="text-rose-500 text-xs mt-1">{errors.registrationDeadline.message}</p>}
-              </div>
+  {errors.startDate && (
+    <p className="text-xs text-rose-500">
+      {errors.startDate.message}
+    </p>
+  )}
+</div>
+
+<div className="space-y-1.5">
+  <Label className="block text-xs font-bold text-slate-500 uppercase tracking-wide">
+    End Date & Time *
+  </Label>
+
+  <Controller
+    name="endDate"
+    control={control}
+    render={({ field }) => (
+      <DateTimePicker
+        field={field}
+        disabled={isViewMode}
+      />
+    )}
+  />
+
+  {errors.endDate && (
+    <p className="text-xs text-rose-500">
+      {errors.endDate.message}
+    </p>
+  )}
+</div>
+<div className="space-y-1.5">
+  <Label className="block text-xs font-bold text-slate-500 uppercase tracking-wide">
+    Registration Deadline *
+  </Label>
+
+  <Controller
+    name="registrationDeadline"
+    control={control}
+    render={({ field }) => (
+      <DateTimePicker
+        field={field}
+        disabled={isViewMode}
+      />
+    )}
+  />
+
+  {errors.registrationDeadline && (
+    <p className="text-xs text-rose-500">
+      {errors.registrationDeadline.message}
+    </p>
+  )}
+</div>
 
               <div className="space-y-1.5">
                 <Label className="block text-xs font-bold text-slate-500 uppercase tracking-wide">Location / Venue *</Label>
@@ -811,7 +864,7 @@ export default function EventFormPage() {
                 )}
                 <input type="hidden" {...register('coverImage')} />
                 {coverPreview && (
-                  <img src={coverPreview} alt="Cover preview" className="mt-2 w-full h-32 object-cover rounded-xl border border-slate-200 dark:border-slate-800" />
+                  <img src={`${process.env.NEXT_PUBLIC_API_URL}${coverPreview}`} alt="Cover preview" className="mt-2 w-full h-32 object-cover rounded-xl border border-slate-200 dark:border-slate-800" />
                 )}
                 {/* {errors.coverImage && <p className="text-rose-500 text-xs mt-1">{errors.coverImage.message}</p>} */}
               </div>
@@ -823,7 +876,7 @@ export default function EventFormPage() {
                 )}
                 <input type="hidden" {...register('bannerImage')} />
                 {bannerPreview && (
-                  <img src={bannerPreview} alt="Banner preview" className="mt-2 w-full h-24 object-cover rounded-xl border border-slate-200 dark:border-slate-800" />
+                  <img src={`${process.env.NEXT_PUBLIC_API_URL}${bannerPreview}`} alt="Banner preview" className="mt-2 w-full h-24 object-cover rounded-xl border border-slate-200 dark:border-slate-800" />
                 )}
                 {/* {errors.bannerImage && <p className="text-rose-500 text-xs mt-1">{errors.bannerImage.message}</p>} */}
               </div>
@@ -832,6 +885,7 @@ export default function EventFormPage() {
 
           {/* Action Buttons */}
           <div className="flex gap-3">
+            
             <Button
               type="button"
               variant="outline"
