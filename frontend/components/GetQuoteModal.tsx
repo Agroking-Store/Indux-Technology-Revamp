@@ -266,7 +266,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
     <div className="space-y-1.5">
       <Label
         htmlFor="phone"
-        className="text-sm font-semibold flex items-center gap-2 text-slate-700 dark:text-slate-300"
+        className="text-sm font-semibold flex items-center gap-2"
       >
         <Phone className="w-4 h-4 text-blue-600" /> Phone Number{" "}
         <span className="text-red-500">*</span>
@@ -416,7 +416,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
 <div className="space-y-1.5">
   <Label
     htmlFor="serviceInterest"
-    className="text-sm font-semibold flex items-center gap-2 text-slate-700 dark:text-slate-300"
+    className="text-sm font-semibold flex items-center gap-2"
   >
     <Briefcase className="w-4 h-4 text-blue-600" /> Service Interest{" "}
     <span className="text-red-500">*</span>
@@ -441,7 +441,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
             e.stopPropagation();
             setServiceOpen((prev) => !prev);
           }}
-          className="flex h-11 w-full items-center justify-between rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 text-sm text-slate-900 dark:text-slate-100 shadow-sm cursor-pointer outline-none hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-all focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+          className="flex h-11 w-full items-center justify-between rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/60 px-3 text-sm text-slate-900 dark:text-slate-100 shadow-sm cursor-pointer outline-none hover:bg-slate-100/60 dark:hover:bg-slate-800/50 transition-all focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
         >
           {field.value ? (
             services.find((s) => s.value === field.value)?.label

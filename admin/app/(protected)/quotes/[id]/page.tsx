@@ -219,14 +219,18 @@ export default function QuoteDetailsPage() {
             <CardContent className="pt-4 space-y-4">
               <div>
                 <div className="text-xs text-muted-foreground mb-1">Full Name</div>
-                <div className="font-semibold text-foreground text-sm">{quote.name}</div>
+                <div className="font-semibold text-foreground text-sm break-words">{quote.name}</div>
               </div>
               
               <div>
                 <div className="text-xs text-muted-foreground mb-1">Work Email</div>
-                <div className="font-medium text-foreground text-sm flex items-center gap-2">
-                  <Mail size={14} className="text-muted-foreground" />
-                  <a href={`mailto:${quote.workEmail}`} className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all">
+                <div className="font-medium text-foreground text-sm flex items-start gap-2 min-w-0">
+                  <Mail size={14} className="text-muted-foreground shrink-0 mt-0.5" />
+                  <a
+                    href={`mailto:${quote.workEmail}`}
+                    className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all break-all min-w-0"
+                    title={quote.workEmail}
+                  >
                     {quote.workEmail}
                   </a>
                 </div>
@@ -234,9 +238,9 @@ export default function QuoteDetailsPage() {
 
               <div>
                 <div className="text-xs text-muted-foreground mb-1">Phone Number</div>
-                <div className="font-medium text-foreground text-sm flex items-center gap-2">
-                  <Phone size={14} className="text-muted-foreground" />
-                  <a href={`tel:${quote.phone}`} className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all font-mono">
+                <div className="font-medium text-foreground text-sm flex items-center gap-2 min-w-0">
+                  <Phone size={14} className="text-muted-foreground shrink-0" />
+                  <a href={`tel:${quote.phone}`} className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all font-mono break-all min-w-0">
                     {quote.phone}
                   </a>
                 </div>
@@ -245,9 +249,9 @@ export default function QuoteDetailsPage() {
               {quote.companyName && (
                 <div>
                   <div className="text-xs text-muted-foreground mb-1">Company</div>
-                  <div className="font-medium text-foreground text-sm flex items-center gap-2">
-                    <Building size={14} className="text-muted-foreground" />
-                    {quote.companyName}
+                  <div className="font-medium text-foreground text-sm flex items-start gap-2 min-w-0">
+                    <Building size={14} className="text-muted-foreground shrink-0 mt-0.5" />
+                    <span className="break-words min-w-0">{quote.companyName}</span>
                   </div>
                 </div>
               )}
