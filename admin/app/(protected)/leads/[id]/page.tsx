@@ -211,9 +211,13 @@ export default function LeadDetailsPage() {
               
               <div>
                 <div className="text-xs text-muted-foreground mb-1">Email Address</div>
-                <div className="font-medium text-foreground text-sm flex items-center gap-2">
-                  <Mail size={14} className="text-muted-foreground" />
-                  <a href={`mailto:${lead.email}`} className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all">
+                <div className="font-medium text-foreground text-sm flex items-start gap-2 min-w-0">
+                  <Mail size={14} className="text-muted-foreground shrink-0 mt-0.5" />
+                  <a
+                    href={`mailto:${lead.email}`}
+                    className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all break-all min-w-0"
+                    title={lead.email}
+                  >
                     {lead.email}
                   </a>
                 </div>
@@ -221,9 +225,9 @@ export default function LeadDetailsPage() {
 
               <div>
                 <div className="text-xs text-muted-foreground mb-1">Phone Number</div>
-                <div className="font-medium text-foreground text-sm flex items-center gap-2">
-                  <Phone size={14} className="text-muted-foreground" />
-                  <a href={`tel:${lead.phone}`} className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all font-mono">
+                <div className="font-medium text-foreground text-sm flex items-center gap-2 min-w-0">
+                  <Phone size={14} className="text-muted-foreground shrink-0" />
+                  <a href={`tel:${lead.phone}`} className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all font-mono break-all min-w-0">
                     {lead.phone}
                   </a>
                 </div>
