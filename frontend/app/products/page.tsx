@@ -21,16 +21,16 @@ export default function ProductsZigzagShowcase() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-      <main className="flex-grow pt-20 pb-20">
+      <main className="flex-grow pb-20">
         {/* HERO SECTION - Matching Service Page Style */}
-        <section className="relative py-20 overflow-hidden">
+        <section className="relative pt-6 pb-12 sm:pt-8 sm:pb-14 lg:pt-10 lg:pb-16 overflow-hidden">
           <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none bg-[radial-gradient(#cbd5e1_2px,transparent_2px)] dark:bg-[radial-gradient(#334155_2px,transparent_2px)] bg-[size:32px_32px]"></div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide mb-6"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide mb-4"
             >
               <Package className="size-4" /> Our Innovative Products
             </motion.div>
@@ -38,7 +38,7 @@ export default function ProductsZigzagShowcase() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 dark:text-white mb-6"
+              className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 sm:mb-6"
             >
               Built for <span className="text-blue-600">Performance.</span>
             </motion.h1>
