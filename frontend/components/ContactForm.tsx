@@ -31,7 +31,7 @@ const contactSchema = z.object({
   email: z.string().email("Please enter a valid email address."),
   phone: z
     .string()
-    .regex(/^\d{8,12}$/, "Please Enter valid number of digits acording to your country code"),
+    .regex(/^\d{8,12}$/, "Please Enter valid number of digits according to your country code"),
   message: z.string().min(10, "Message must be at least 10 characters."),
 });
 

@@ -33,6 +33,7 @@ import {
 } from "react-phone-number-input";
 import flags from "react-phone-number-input/flags";
 import en from "react-phone-number-input/locale/en.json";
+import { z } from "zod";
 
 // High-quality fallback event image URLs
 const fallbackEventImages = [
@@ -62,6 +63,8 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
 
   const [registering, setRegistering] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   // Mock Payment Modal States
   const [showMockPayment, setShowMockPayment] = useState(false);
@@ -84,7 +87,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
     } catch (err: any) {
       const msg =
         err.response?.data?.message || "Mock payment verification failed.";
-      alert(msg);
+      setErrorMsg(msg);
     } finally {
       setRegistering(false);
     }
@@ -93,6 +96,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
   const handleCancelMockPayment = async () => {
     setShowMockPayment(false);
     setRegistering(false);
+    setErrorMsg("");
     if (mockPaymentData) {
       try {
         await cancelRegistration(mockPaymentData.orderId);
@@ -151,16 +155,61 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg("");
 
     if (isDeadlinePassed) {
-      alert("Registrations are closed for this event.");
+      setErrorMsg("Registrations are closed for this event.");
       return;
     }
 
-    if (!fullName.trim()) return alert("Full Name is required");
-    if (!email.trim() || !email.includes("@"))
-      return alert("Valid email address is required");
-    if (!phone.trim()) return alert("Phone number is required");
+    setFormErrors({});
+
+    // Dynamic Zod Schema Generation
+    const schemaShape: any = {
+      fullName: z.string().min(2, "Full Name is required"),
+      email: z.string().email("Valid email address is required"),
+      phone: z.string().min(8, "Valid phone number is required"),
+    };
+
+    if (event.formFields) {
+      event.formFields.forEach((field) => {
+        if (field.name === "name" || field.name === "email" || field.name === "phone") return;
+        if (field.required && field.type !== "file") {
+          if (field.type === "checkbox") {
+            schemaShape[field.name] = z.array(z.string()).min(1, `${field.label} is required`);
+          } else {
+            schemaShape[field.name] = z.string().min(1, `${field.label} is required`);
+          }
+        }
+      });
+    }
+
+    const schema = z.object(schemaShape);
+    const result = schema.safeParse({ fullName, email, phone, ...answers });
+
+    if (!result.success) {
+      const errs: Record<string, string> = {};
+      result.error.issues.forEach(e => {
+        if (e.path[0]) errs[e.path[0].toString()] = e.message;
+      });
+      setFormErrors(errs);
+      setErrorMsg("Please fix the validation errors below.");
+      return;
+    }
+
+    let hasFileError = false;
+    if (event.formFields) {
+      event.formFields.forEach((field) => {
+        if (field.type === "file" && field.required && !uploadFile) {
+          setFormErrors((prev) => ({ ...prev, [field.name]: `${field.label} upload is required` }));
+          hasFileError = true;
+        }
+      });
+    }
+    if (hasFileError) {
+      setErrorMsg("Please upload all required files.");
+      return;
+    }
 
     let formattedPhone = phone;
     try {
@@ -175,30 +224,6 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
       }
     } catch {
       formattedPhone = `+${getCountryCallingCode(country)} ${phone}`;
-    }
-
-    // Dynamic fields validations
-    for (const field of event.formFields) {
-      if (
-        field.name === "name" ||
-        field.name === "email" ||
-        field.name === "phone"
-      )
-        continue;
-
-      const val = answers[field.name];
-      const hasValue =
-        val !== undefined &&
-        val !== null &&
-        val !== "" &&
-        !(Array.isArray(val) && val.length === 0);
-
-      if (field.required && !hasValue && field.type !== "file") {
-        return alert(`"${field.label}" is required.`);
-      }
-      if (field.type === "file" && field.required && !uploadFile) {
-        return alert(`"${field.label}" upload is required.`);
-      }
     }
 
     setRegistering(true);
@@ -305,7 +330,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
         err.response?.data?.message ||
         err.message ||
         "Failed to submit registration. Please check inputs.";
-      alert(msg);
+      setErrorMsg(msg);
     } finally {
       if (!orderSuccess) {
         setRegistering(false);
@@ -644,9 +669,15 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                   <h3 className="text-lg font-black text-slate-900 dark:text-slate-100">
                     Reserve Your Spot
                   </h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs mt-0.5">
+                  <p className="text-slate-500 dark:text-slate-400 text-xs mt-0.5 mb-4">
                     Please fill out details to request registration.
                   </p>
+                  
+                  {errorMsg && (
+                    <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 text-xs rounded-xl p-3 mb-2 font-semibold">
+                      {errorMsg}
+                    </div>
+                  )}
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4 text-left">
@@ -659,9 +690,10 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                       required
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="mt-1 w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
+                      className={`mt-1 w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border ${formErrors.fullName ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white`}
                       placeholder="John Doe"
                     />
+                    {formErrors.fullName && <p className="text-red-500 text-[10px] mt-1 px-1">{formErrors.fullName}</p>}
                   </div>
 
                   <div>
@@ -673,9 +705,10 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="mt-1 w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
+                      className={`mt-1 w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border ${formErrors.email ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white`}
                       placeholder="john@example.com"
                     />
+                    {formErrors.email && <p className="text-red-500 text-[10px] mt-1 px-1">{formErrors.email}</p>}
                   </div>
 
                   <div>
@@ -684,7 +717,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                     </label>
                     <div className="relative mt-1">
                       {/* Main input row */}
-                      <div className="flex h-10 w-full rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus-within:ring-1 focus-within:ring-blue-600 focus-within:border-blue-500 transition-colors overflow-hidden items-center">
+                      <div className={`flex h-10 w-full rounded-xl bg-slate-50 dark:bg-slate-900 border ${formErrors.phone ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} focus-within:ring-1 focus-within:ring-blue-600 focus-within:border-blue-500 transition-colors overflow-hidden items-center`}>
                         {/* Country selector button */}
                         <button
                           type="button"

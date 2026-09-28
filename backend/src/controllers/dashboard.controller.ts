@@ -5,6 +5,7 @@ import Lead from "../models/Lead";
 import Event from "../models/Event";
 import JobApplication from "../models/JobApplication";
 import EventRegistration from "../models/EventRegistration";
+import Quote from "../models/Quote";
 import { Visitor } from "../models/Visitor";
 import ApiResponse from "../utils/ApiResponse";
 import asyncHandler from "../utils/asyncHandler";
@@ -249,13 +250,15 @@ export const getNotifications = asyncHandler(async (_req: Request, res: Response
   const newLeads = await Lead.countDocuments({ status: "New" });
   const newApplications = await JobApplication.countDocuments({ status: "New" });
   const pendingRegistrations = await EventRegistration.countDocuments({ status: "Pending" });
+  const newQuotes = await Quote.countDocuments({ status: "New" });
 
   res.status(200).json(
     new ApiResponse(200, {
       leads: newLeads,
       applications: newApplications,
       registrations: pendingRegistrations,
-      total: newLeads + newApplications + pendingRegistrations,
+      quotes: newQuotes,
+      total: newLeads + newApplications + pendingRegistrations + newQuotes,
     }, "Notifications counts fetched successfully")
   );
 });

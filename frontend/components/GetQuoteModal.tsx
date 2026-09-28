@@ -73,7 +73,7 @@ const formSchema = z.object({
   workEmail: z.string().email("Please Enter valid email address"),
   phone: z
     .string()
-    .regex(/^\d{8,12}$/, "Please Enter valid number of digits acording to your country code"),
+    .regex(/^\d{8,12}$/, "Please Enter valid number of digits according to your country code"),
   serviceInterest: z.string().min(1, "Please select a service"),
   message: z.string().min(5, "Message must be at least 5 characters"),
 });

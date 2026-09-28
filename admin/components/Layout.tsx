@@ -22,10 +22,10 @@ export const Layout = ({ children }: LayoutProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // 1. Raw notification data from API
-  const [serverData, setServerData] = useState<{ leads: number; applications: number; registrations: number; total: number } | null>(null);
+  const [serverData, setServerData] = useState<{ leads: number; applications: number; registrations: number; quotes: number; total: number } | null>(null);
   
   // 2. Initialize clearedCounts from localStorage so it persists across refreshes
-  const [clearedCounts, setClearedCounts] = useState<{ leads: number; applications: number; registrations: number }>(() => {
+  const [clearedCounts, setClearedCounts] = useState<{ leads: number; applications: number; registrations: number; quotes: number }>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('admin_cleared_notifs');
       if (saved) {
@@ -36,7 +36,7 @@ export const Layout = ({ children }: LayoutProps) => {
         }
       }
     }
-    return { leads: 0, applications: 0, registrations: 0 };
+    return { leads: 0, applications: 0, registrations: 0, quotes: 0 };
   });
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -48,12 +48,14 @@ export const Layout = ({ children }: LayoutProps) => {
   const effectiveLeads = Math.max(0, (serverData?.leads || 0) - clearedCounts.leads);
   const effectiveApplications = Math.max(0, (serverData?.applications || 0) - clearedCounts.applications);
   const effectiveRegistrations = Math.max(0, (serverData?.registrations || 0) - clearedCounts.registrations);
-  const effectiveTotal = effectiveLeads + effectiveApplications + effectiveRegistrations;
+  const effectiveQuotes = Math.max(0, (serverData?.quotes || 0) - clearedCounts.quotes);
+  const effectiveTotal = effectiveLeads + effectiveApplications + effectiveRegistrations + effectiveQuotes;
 
   const notifData = serverData ? {
     leads: effectiveLeads,
     applications: effectiveApplications,
     registrations: effectiveRegistrations,
+    quotes: effectiveQuotes,
     total: effectiveTotal
   } : null;
 
@@ -69,7 +71,7 @@ export const Layout = ({ children }: LayoutProps) => {
     if (admin) {
       const fetchNotifications = async () => {
         try {
-          const res = await api.get<ApiResponse<{ leads: number; applications: number; registrations: number; total: number }>>('/dashboard/notifications');
+          const res = await api.get<ApiResponse<{ leads: number; applications: number; registrations: number; quotes: number; total: number }>>('/dashboard/notifications');
           const newData = res.data.data;
 
           setServerData(newData);
@@ -80,6 +82,7 @@ export const Layout = ({ children }: LayoutProps) => {
               leads: Math.min(prev.leads, newData.leads),
               applications: Math.min(prev.applications, newData.applications),
               registrations: Math.min(prev.registrations, newData.registrations),
+              quotes: Math.min(prev.quotes, newData.quotes),
             };
             if (typeof window !== 'undefined') {
               localStorage.setItem('admin_cleared_notifs', JSON.stringify(updated));
@@ -97,7 +100,7 @@ export const Layout = ({ children }: LayoutProps) => {
     }
   }, [admin, pathname]);
 
-  const handleNotifClick = (type: 'leads' | 'applications' | 'registrations') => {
+  const handleNotifClick = (type: 'leads' | 'applications' | 'registrations' | 'quotes') => {
     setDropdownOpen(false);
     if (!serverData) return;
 
@@ -243,6 +246,19 @@ export const Layout = ({ children }: LayoutProps) => {
                               <span>Pending RSVPs</span>
                               <span className="bg-slate-100 dark:bg-slate-800 font-extrabold px-2 py-0.5 rounded text-slate-600 dark:text-slate-400">
                                 {notifData.registrations}
+                              </span>
+                            </Link>
+                          )}
+
+                          {notifData.quotes > 0 && (
+                            <Link 
+                              href="/quotes" 
+                              onClick={() => handleNotifClick('quotes')}
+                              className="flex items-center justify-between p-2.5 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/20 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition cursor-pointer text-slate-700 dark:text-slate-200 font-bold"
+                            >
+                              <span>New Quote Requests</span>
+                              <span className="bg-slate-100 dark:bg-slate-800 font-extrabold px-2 py-0.5 rounded text-slate-600 dark:text-slate-400">
+                                {notifData.quotes}
                               </span>
                             </Link>
                           )}
