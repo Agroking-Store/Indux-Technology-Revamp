@@ -83,8 +83,8 @@ export default function LeadDetailsPage() {
           </div>
           <Skeleton className="h-10 w-32" />
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-1 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1 space-y-6 min-w-0">
             <Card>
               <CardHeader className="pb-3 border-b border-border/50">
                 <Skeleton className="h-5 w-24" />
@@ -99,7 +99,7 @@ export default function LeadDetailsPage() {
               </CardContent>
             </Card>
           </div>
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-2 space-y-6 min-w-0">
             <Card>
               <CardHeader className="pb-3 border-b border-border/50">
                 <Skeleton className="h-5 w-32" />
@@ -193,29 +193,29 @@ export default function LeadDetailsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Left Col - Client Details */}
-        <div className="lg:col-span-1 space-y-6">
-          <Card className="bg-card border-border shadow-sm">
+        <div className="lg:col-span-1 space-y-6 min-w-0">
+          <Card className="bg-card border-border shadow-sm overflow-hidden min-w-0">
             <CardHeader className="pb-3 border-b border-border/50">
               <CardTitle className="text-sm font-semibold flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
                 <User size={16} /> Contact Info
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-4 space-y-4">
-              <div>
+            <CardContent className="pt-4 space-y-4 min-w-0">
+              <div className="min-w-0">
                 <div className="text-xs text-muted-foreground mb-1">Full Name</div>
-                <div className="font-semibold text-foreground text-sm">{lead.name}</div>
+                <div className="font-semibold text-foreground text-sm break-words min-w-0">{lead.name}</div>
               </div>
               
-              <div>
+              <div className="min-w-0">
                 <div className="text-xs text-muted-foreground mb-1">Email Address</div>
                 <div className="font-medium text-foreground text-sm flex items-start gap-2 min-w-0">
                   <Mail size={14} className="text-muted-foreground shrink-0 mt-0.5" />
                   <a
                     href={`mailto:${lead.email}`}
-                    className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all break-all min-w-0"
+                    className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all break-all min-w-0 block"
                     title={lead.email}
                   >
                     {lead.email}
@@ -223,11 +223,11 @@ export default function LeadDetailsPage() {
                 </div>
               </div>
 
-              <div>
+              <div className="min-w-0">
                 <div className="text-xs text-muted-foreground mb-1">Phone Number</div>
                 <div className="font-medium text-foreground text-sm flex items-center gap-2 min-w-0">
                   <Phone size={14} className="text-muted-foreground shrink-0" />
-                  <a href={`tel:${lead.phone}`} className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all font-mono break-all min-w-0">
+                  <a href={`tel:${lead.phone}`} className="hover:text-indigo-600 dark:hover:text-indigo-400 underline-offset-4 hover:underline select-all font-mono break-all min-w-0 block">
                     {lead.phone}
                   </a>
                 </div>
@@ -239,7 +239,7 @@ export default function LeadDetailsPage() {
         </div>
 
         {/* Right Col - Request Details */}
-        <div className="lg:col-span-3 space-y-6">
+        <div className="lg:col-span-2 space-y-6 min-w-0">
           <Card className="bg-card border-border shadow-sm">
             <CardHeader className="pb-3 border-b border-border/50">
               <CardTitle className="text-sm font-semibold flex items-center gap-2 text-indigo-600 dark:text-indigo-400">

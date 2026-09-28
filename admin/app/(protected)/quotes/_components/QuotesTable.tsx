@@ -203,9 +203,13 @@ export default function QuotesTable() {
       cell: ({ row }) => {
         const quote = row.original;
         return (
-          <div className="flex flex-col gap-1 text-left max-w-[160px]">
-            <div className="text-xs text-muted-foreground truncate" title={quote.workEmail}>{quote.workEmail}</div>
-            <div className="text-xs text-muted-foreground font-mono truncate" title={quote.phone}>{quote.phone}</div>
+          <div className="flex flex-col gap-1 text-left max-w-[200px]">
+            <div className="text-sm font-medium text-slate-800 dark:text-slate-200 truncate" title={quote.workEmail}>
+              {quote.workEmail}
+            </div>
+            <div className="text-xs font-medium text-slate-500 dark:text-slate-400 font-mono truncate" title={quote.phone}>
+              {quote.phone}
+            </div>
           </div>
         );
       },
