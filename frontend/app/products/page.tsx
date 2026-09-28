@@ -129,13 +129,6 @@ export default function ProductsZigzagShowcase() {
                       <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed mb-8">
                         {project.shortDescription}
                       </p>
-                      
-                      {/* TODO: Marketing to supply expanded use-case blurbs here to fix thin content */}
-                      <div className="mb-6 p-4 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-dashed border-slate-300 dark:border-slate-700">
-                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 italic">
-                          [Placeholder: Insert detailed use-case blurbs and industry applications here to improve page depth]
-                        </p>
-                      </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
                         {project.features
