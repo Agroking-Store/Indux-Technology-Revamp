@@ -152,7 +152,7 @@ export default function AboutPage() {
           >
             <div className="relative aspect-square md:aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&w=800&q=80"
+                src="/images/unsplash/img-4dddf9a5.webp"
                 alt="Founder"
                 fill
                 className="object-cover"

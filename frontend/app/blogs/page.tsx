@@ -46,6 +46,15 @@ export default function BlogsPage() {
       .then(setBlogs)
       .catch(console.error)
       .finally(() => setLoading(false));
+
+    // Support incoming search queries from other pages
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const search = params.get('search');
+      if (search) {
+        setSearchQuery(search);
+      }
+    }
   }, []);
 
   const publishedBlogs = useMemo(() => blogs.filter((b) => b.status === 'Published'), [blogs]);

@@ -170,7 +170,7 @@ export const getApplications = asyncHandler(async (req: AuthRequest, res: Respon
 
   const applications = await JobApplication.find(query)
     .populate("jobId", "title department location")
-    .sort({ matchScore: -1, createdAt: -1 })
+    .sort({ createdAt: -1 })
     .skip(skip)
     .limit(limit);
 
