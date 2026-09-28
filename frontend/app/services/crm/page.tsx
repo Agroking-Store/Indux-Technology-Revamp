@@ -167,22 +167,7 @@ export default function CRMServicePage() {
                   <Button
                     nativeButton={false}
                     variant="ghost"
-                    className="
-    w-full sm:w-auto
-    px-8 py-6
-    rounded-full
-    font-medium
-    text-base
-    text-slate-700 dark:text-slate-200
-    bg-transparent
-    border border-slate-300 dark:border-slate-700
-    hover:bg-slate-100 dark:hover:bg-slate-800
-    hover:text-slate-900 dark:hover:text-white
-    transition-all duration-300
-    hover:scale-105
-    cursor-pointer
-    flex items-center justify-center gap-2
-  "
+                    className="px-8 py-6 rounded-full text-base font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200/50 dark:hover:bg-slate-900 cursor-pointer"
                     render={<a href="#capabilities" />}
                   >
                     Explore Capabilities
