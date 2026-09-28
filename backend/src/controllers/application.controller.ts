@@ -10,7 +10,11 @@ import { AuthRequest } from "../middlewares/auth";
 import { env } from "../config/env";
 import { computeMatchScore } from "../utils/matchScore";
 import { sendEmail } from "../utils/sendEmail";
-import { getJobApplicationTemplate } from "../utils/emailTemplates";
+import { 
+  getJobApplicationTemplate,
+  getCandidateHiredTemplate,
+  getCandidateRejectedTemplate 
+} from "../utils/emailTemplates";
 
 // ============================
 // SUBMIT JOB APPLICATION (Public)
@@ -208,13 +212,34 @@ export const updateApplicationStatus = asyncHandler(async (req: AuthRequest, res
   const { id } = req.params;
   const validated = updateApplicationStatusSchema.parse(req.body);
 
-  const application = await JobApplication.findById(id);
+  const application = await JobApplication.findById(id).populate("jobId");
   if (!application) {
     throw ApiError.notFound("Application not found");
   }
 
+  const previousStatus = application.status;
   application.status = validated.status as any;
   await application.save();
+
+  // Send Email Notification if status changed to Hired or Rejected
+  if (previousStatus !== application.status) {
+    const job = application.jobId as any; // populated
+    const jobTitle = job ? job.title : "a position";
+    
+    if (application.status === "Hired") {
+      await sendEmail({
+        to: application.email,
+        subject: `Congratulations! You're hired for ${jobTitle}`,
+        html: getCandidateHiredTemplate(application.fullName, jobTitle)
+      }).catch(e => console.error("Failed to send Hired email:", e));
+    } else if (application.status === "Rejected") {
+      await sendEmail({
+        to: application.email,
+        subject: `Update regarding your application for ${jobTitle}`,
+        html: getCandidateRejectedTemplate(application.fullName, jobTitle)
+      }).catch(e => console.error("Failed to send Rejected email:", e));
+    }
+  }
 
   res.status(200).json(new ApiResponse(200, application, `Application status updated to ${validated.status}`));
 });
