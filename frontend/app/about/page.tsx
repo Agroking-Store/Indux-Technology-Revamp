@@ -150,15 +150,16 @@ export default function AboutPage() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative"
           >
-            <div className="relative aspect-square md:aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl">
-              <Image
-                src="/images/unsplash/img-4dddf9a5.webp"
+            <div className="relative aspect-[3/4] md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl bg-slate-200 dark:bg-slate-800">
+              <img
+                src="/owner.jpeg"
                 alt="Founder"
-                fill
-                className="object-cover"
-                unoptimized
+                width="800"
+                height="600"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
                 <button className="w-20 h-20 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-600 transition-colors">
                   <Play fill="currentColor" size={32} className="ml-2" />
                 </button>

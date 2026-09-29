@@ -454,49 +454,25 @@ export default function Home() {
                 <div className="grid grid-cols-12 grid-rows-12 gap-2.5 sm:gap-4 w-full h-full relative z-10 p-2 sm:p-6 md:p-8">
                   {/* Left Tall Image */}
                   <div className="col-span-5 row-span-10 row-start-2 bg-slate-300 rounded-2xl sm:rounded-[2rem] rounded-tl-xl overflow-hidden relative shadow-lg">
-                    <Image
-                      src="/images/unsplash/img-f787f12c.webp"
-                      alt="Team working"
-                      fill
-                      priority={true}
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                    <img src="/images/unsplash/img-f787f12c.webp" alt="Team working" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
 
                   {/* Right Top Image */}
                   <div className="col-span-7 row-span-4 bg-slate-300 rounded-2xl sm:rounded-[2rem] rounded-tr-xl overflow-hidden relative shadow-lg">
-                    <Image
-                      src="/images/unsplash/img-4dddf9a5.webp"
-                      alt="Discussion"
-                      priority={true}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 40vw"
-                      className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                    <img src="/images/unsplash/img-4dddf9a5.webp" alt="Discussion" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
 
                   {/* Right Middle Image */}
                   <div className="col-span-7 row-span-4 bg-slate-300 rounded-xl sm:rounded-2xl overflow-hidden relative shadow-lg">
-                    <Image
-                      src="/images/unsplash/img-9040528a.webp"
-                      alt="Meeting"
-                      priority={true}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 40vw"
-                      className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                    <img src="/images/unsplash/img-9040528a.webp" alt="Meeting" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
 
                   {/* Right Bottom Image */}
                   <div className="col-span-7 row-span-4 bg-slate-300 rounded-2xl sm:rounded-[2rem] rounded-br-xl overflow-hidden relative shadow-lg">
-                    <Image
-                      src="/images/unsplash/img-931d0d20.webp"
-                      alt="Collaboration"
-                      priority={true}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 40vw"
-                      className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                    <img src="/images/unsplash/img-931d0d20.webp" alt="Collaboration" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
                 </div>
@@ -754,12 +730,7 @@ export default function Home() {
                 </div>
                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64 order-1 md:order-2">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                    <Image
-                      src="/images/unsplash/img-8afc3801.webp"
-                      alt="Manufacturing ERP"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                    <img src="/images/unsplash/img-8afc3801.webp" alt="Manufacturing ERP" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                     />
                   </div>
                 </div>
@@ -772,12 +743,7 @@ export default function Home() {
               >
                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                    <Image
-                      src="/images/unsplash/img-1bd55875.webp"
-                      alt="Sales Automation"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                    <img src="/images/unsplash/img-1bd55875.webp" alt="Sales Automation" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                     />
                   </div>
                 </div>
