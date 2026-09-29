@@ -31,6 +31,42 @@ const nextConfig = {
         destination: 'https://induxtechnology.com/:path*',
         permanent: true,
       },
+      // Old SEO URLs mapped to New Structure
+      {
+        source: '/services/artificial-intelligence',
+        destination: '/services/ai-chatbots',
+        permanent: true,
+      },
+      {
+        source: '/services/web-ecommerce-development',
+        destination: '/services/web-dev',
+        permanent: true,
+      },
+      {
+        source: '/prisma-migrations-for-production-best-practices-and-tips',
+        destination: '/blogs/prisma-migrations-for-production-best-practices-and-tips',
+        permanent: true,
+      },
+      {
+        source: '/about-us',
+        destination: '/about',
+        permanent: true,
+      },
+      {
+        source: '/services/digital-marketing-branding',
+        destination: '/services',
+        permanent: true,
+      },
+      {
+        source: '/services/cloud-deployment',
+        destination: '/services',
+        permanent: true,
+      },
+      {
+        source: '/themes/astra',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
   turbopack: {
