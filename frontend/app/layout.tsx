@@ -21,10 +21,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://induxtechnology.com"),
   title: {
-    default: "Indux Technology | Custom CRM, ERP & AI Development Pune",
+    default: "Custom CRM & ERP Development Pune | Indux Technology",
     template: "%s | Indux Technology"
   },
-  description: "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
+  description: "Indux Technology helps businesses simplify everyday work with custom CRM, ERP, AI, automation, and web & mobile app development built around their needs.",
   keywords: [
     "Indux Technology",
     "CRM Development Company Pune",
@@ -58,8 +58,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://induxtechnology.com",
-    title: "Indux Technology | Custom CRM, ERP & AI Development Pune",
-    description: "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
+    title: "Custom CRM & ERP Development Pune | Indux Technology",
+    description: "Indux Technology helps businesses simplify everyday work with custom CRM, ERP, AI, automation, and web & mobile app development built around their needs.",
     siteName: "Indux Technology",
     images: [
       {
@@ -72,8 +72,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Indux Technology | Custom CRM, ERP & AI Development Pune",
-    description: "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
+    title: "Custom CRM & ERP Development Pune | Indux Technology",
+    description: "Indux Technology helps businesses simplify everyday work with custom CRM, ERP, AI, automation, and web & mobile app development built around their needs.",
     images: ["/images/og-image.jpg"],
     creator: "@InduxTech",
   },
