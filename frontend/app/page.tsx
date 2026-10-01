@@ -492,7 +492,7 @@ export default function Home() {
                 <div className="absolute top-0 left-0 w-3/4 h-[80%] sm:h-[85%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-md">
                   <Image
                     src="/images/unsplash/img-4dddf9a5.webp"
-                    alt="Team Discussion"
+                    alt="IT team discussing software development and business solutions" width="800" height="600"
                     fill
                     loading="eager"
                     sizes="(max-width: 768px) 75vw, 35vw"
@@ -504,7 +504,7 @@ export default function Home() {
                 <div className="absolute bottom-0 right-0 w-[65%] h-[58%] sm:h-[60%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-2xl border-4 sm:border-8 border-white dark:border-slate-950">
                   <Image
                     src="/images/unsplash/img-51707ed2.webp"
-                    alt="IT Professional"
+                    alt="IT professional working on a computer for software development" width="800" height="600"
                     fill
                     sizes="(max-width: 768px) 65vw, 30vw"
                     className="object-cover"
@@ -687,7 +687,7 @@ export default function Home() {
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
                       src="/images/unsplash/img-3516b3f9.webp"
-                      alt="Custom CRM Software Development Company in Pune"
+                      alt="Custom CRM software development team working on business solutions" width="800" height="600"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
@@ -977,24 +977,28 @@ export default function Home() {
               {[
                 {
                   title: "Indux CRM",
+                  alt: "Indux CRM dashboard for managing customers and business operations",
                   category: "Business Intelligence",
                   img: "/induxcrm.webp",
                   link: "/products/indux-crm",
                 },
                 {
                   title: "HRMS",
+                  alt: "HRMS software dashboard for managing employee information and HR operations",
                   category: "Human Resources",
                   img: "/hrms.webp",
                   link: "/products/hrms-suite",
                 },
                 {
                   title: "Jemsoft",
+                  alt: "Jemsoft business software solution by Indux Technology",
                   category: "Insurance ERP",
                   img: "/jemsoft.webp",
                   link: "/products/jem-soft",
                 },
                 {
                   title: "InduxERP",
+                  alt: "InduxERP dashboard for managing business processes and operations",
                   category: "Enterprise Software",
                   img: "/indux_erp.webp",
                   link: "/products/indux-erp",
@@ -1008,12 +1012,13 @@ export default function Home() {
                   {/* Image Container */}
                   <div className="p-3 sm:p-4 md:p-6 pb-0">
                     <div className="relative w-full h-[200px] xs:h-[250px] sm:h-[300px] rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800">
-                      <Image
+                      <img
                         src={project.img}
-                        alt={project.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                        alt={project.alt || project.title}
+                        width="800"
+                        height="600"
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                       />
                     </div>
                   </div>
@@ -1203,16 +1208,25 @@ export default function Home() {
       {/* Image */}
       <div className="p-3">
         <div className="relative h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden bg-slate-800">
-          <Image
-            fill
+          <img
             src={
               blog.featuredImage
                 ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${blog.featuredImage}`
                 : "/images/unsplash/img-62ae3366.webp"
             }
-            alt={blog.title}
-            className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-            sizes="(max-width: 768px) 100vw, 33vw"
+            alt={
+              blog.title.includes("Cloud Migration") 
+                ? "Cloud migration guide for businesses and enterprise applications" 
+                : blog.title.includes("Cybersecurity") 
+                ? "Cybersecurity threats and protection strategies for businesses" 
+                : blog.title.includes("AI is Revolutionizing") 
+                ? "AI technology transforming custom enterprise software solutions" 
+                : blog.title
+            }
+            width="800"
+            height="600"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
           />
         </div>
       </div>
