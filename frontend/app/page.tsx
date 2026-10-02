@@ -132,11 +132,10 @@ const ReviewCard = ({
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
-                className={`w-3.5 h-3.5 ${
-                  i < rating
+                className={`w-3.5 h-3.5 ${i < rating
                     ? "text-yellow-400 fill-yellow-400"
                     : "text-slate-200 dark:text-slate-700"
-                }`}
+                  }`}
               />
             ))}
           </div>
@@ -198,25 +197,25 @@ export default function Home() {
       }
 
       if (!containerRef.current || !trackRef.current) return;
-      
+
       const containerTop = containerRef.current.offsetTop;
       const scrollPosition = window.scrollY;
-      
+
       // If we haven't reached the container, don't move horizontal track
       if (scrollPosition < containerTop) {
         trackRef.current.style.transform = `translateX(0px)`;
         return;
       }
-      
+
       // Calculate how far we've scrolled inside the container
       const scrolledPastContainer = scrollPosition - containerTop;
-      
+
       // Calculate the max distance we can scroll vertically for this effect
       const maxScroll = scrollRange;
-      
+
       // Calculate the translation (clamp between 0 and maxScroll)
       const xTranslate = Math.min(Math.max(scrolledPastContainer, 0), maxScroll);
-      
+
       // Apply the negative translation to the track
       trackRef.current.style.transform = `translateX(-${xTranslate}px)`;
     };
@@ -240,7 +239,7 @@ export default function Home() {
     const timer = setTimeout(calculateRange, 100);
     window.addEventListener("resize", calculateRange);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     return () => {
       clearTimeout(timer);
       window.removeEventListener("resize", calculateRange);
@@ -454,7 +453,7 @@ export default function Home() {
                 <div className="grid grid-cols-12 grid-rows-12 gap-2.5 sm:gap-4 w-full h-full relative z-10 p-2 sm:p-6 md:p-8">
                   {/* Left Tall Image */}
                   <div className="col-span-5 row-span-10 row-start-2 bg-slate-300 rounded-2xl sm:rounded-[2rem] rounded-tl-xl overflow-hidden relative shadow-lg">
-                    <img src="/images/unsplash/img-f787f12c.webp" alt="Team working" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                    <img src="/images/unsplash/img-f787f12c.webp" alt="Team working" width="800" height="600" fetchPriority="high" loading="eager" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
 
@@ -679,7 +678,7 @@ export default function Home() {
             {/* Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {/* Card 1: CRM */}
-              <div 
+              <div
                 onClick={() => router.push('/services/crm')}
                 className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
@@ -711,7 +710,7 @@ export default function Home() {
               </div>
 
               {/* Card 2: Manufacturing ERP */}
-              <div 
+              <div
                 onClick={() => router.push('/services/erp')}
                 className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
@@ -737,7 +736,7 @@ export default function Home() {
               </div>
 
               {/* Card 3: Sales Automation */}
-              <div 
+              <div
                 onClick={() => router.push('/services/automation')}
                 className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
@@ -1005,7 +1004,7 @@ export default function Home() {
                 },
               ].map((project, idx) => (
                 <div
-                  key={idx} 
+                  key={idx}
                   onClick={() => router.push(project.link)}
                   className="group bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-500 cursor-pointer flex flex-col"
                 >
@@ -1199,60 +1198,60 @@ export default function Home() {
 
             {/* Blog Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-  {displayedBlogs.map((blog, idx) => (
-    <Link
-      key={blog._id || idx}
-      href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`}
-      className="bg-[#153a5c] rounded-3xl overflow-hidden border border-white/5 hover:border-blue-400/30 transition-all shadow-xl group flex flex-col h-full"
-    >
-      {/* Image */}
-      <div className="p-3">
-        <div className="relative h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden bg-slate-800">
-          <img
-            src={
-              blog.featuredImage
-                ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${blog.featuredImage}`
-                : "/images/unsplash/img-62ae3366.webp"
-            }
-            alt={
-              blog.title.includes("Cloud Migration") 
-                ? "Cloud migration guide for businesses and enterprise applications" 
-                : blog.title.includes("Cybersecurity") 
-                ? "Cybersecurity threats and protection strategies for businesses" 
-                : blog.title.includes("AI is Revolutionizing") 
-                ? "AI technology transforming custom enterprise software solutions" 
-                : blog.title
-            }
-            width="800"
-            height="600"
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-          />
-        </div>
-      </div>
+              {displayedBlogs.map((blog, idx) => (
+                <Link
+                  key={blog._id || idx}
+                  href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`}
+                  className="bg-[#153a5c] rounded-3xl overflow-hidden border border-white/5 hover:border-blue-400/30 transition-all shadow-xl group flex flex-col h-full"
+                >
+                  {/* Image */}
+                  <div className="p-3">
+                    <div className="relative h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden bg-slate-800">
+                      <img
+                        src={
+                          blog.featuredImage
+                            ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${blog.featuredImage}`
+                            : "/images/unsplash/img-62ae3366.webp"
+                        }
+                        alt={
+                          blog.title.includes("Cloud Migration")
+                            ? "Cloud migration guide for businesses and enterprise applications"
+                            : blog.title.includes("Cybersecurity")
+                              ? "Cybersecurity threats and protection strategies for businesses"
+                              : blog.title.includes("AI is Revolutionizing")
+                                ? "AI technology transforming custom enterprise software solutions"
+                                : blog.title
+                        }
+                        width="800"
+                        height="600"
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                      />
+                    </div>
+                  </div>
 
-      {/* Content */}
-      <div className="p-6 flex flex-col flex-1">
-        <span className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-md w-fit uppercase">
-          {blog.category}
-        </span>
+                  {/* Content */}
+                  <div className="p-6 flex flex-col flex-1">
+                    <span className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-md w-fit uppercase">
+                      {blog.category}
+                    </span>
 
-        <h3 className="mt-4 text-xl font-bold text-white group-hover:text-blue-300 transition-colors line-clamp-2">
-          {blog.title}
-        </h3>
+                    <h3 className="mt-4 text-xl font-bold text-white group-hover:text-blue-300 transition-colors line-clamp-2">
+                      {blog.title}
+                    </h3>
 
-        <p className="mt-3 text-blue-100/70 text-sm flex-1 line-clamp-3">
-          {blog.shortDescription}
-        </p>
+                    <p className="mt-3 text-blue-100/70 text-sm flex-1 line-clamp-3">
+                      {blog.shortDescription}
+                    </p>
 
-        <div className="mt-6 inline-flex items-center text-blue-400 font-bold hover:text-blue-300">
-          Read More
-          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-        </div>
-      </div>
-    </Link>
-  ))}
-</div>
+                    <div className="mt-6 inline-flex items-center text-blue-400 font-bold hover:text-blue-300">
+                      Read More
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
 
