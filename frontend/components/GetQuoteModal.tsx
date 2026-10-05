@@ -167,9 +167,9 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
       // </button>
       <Button
         onClick={() => setOpen(true)}
-        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer"
+        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group"
       >
-        Get Quote
+        Get Quote <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
       </Button>
     );
   };

@@ -79,7 +79,7 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.2fr] gap-12 lg:gap-16 mb-16">
           
           {/* Left Section: Brand & Links */}
           <div className="flex flex-col gap-6 text-left">
@@ -122,9 +122,9 @@ export default function Footer() {
 
           {/* Middle Section: Contact Info */}
           <div className="flex flex-col gap-6 text-left">
-            <h4 className="text-white font-bold text-xl tracking-wide">
+            <h3 className="text-white font-bold text-xl tracking-wide">
               Contact Us
-            </h4>
+            </h3>
 
             <div className="flex flex-col gap-5 mt-2">
               <a
@@ -179,10 +179,8 @@ export default function Footer() {
               Stay Updated
             </h4>
 
-            <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 shadow-xl relative overflow-hidden group max-w-md w-full">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-indigo-500 opacity-70 group-hover:opacity-100 transition-opacity" />
-
-              <p className="text-slate-400 text-sm mb-4">
+            <div className="flex flex-col gap-5 mt-2 max-w-md w-full">
+              <p className="text-slate-400 text-sm">
                 Subscribe to our newsletter for the latest tech news and updates.
               </p>
 
@@ -199,7 +197,7 @@ export default function Footer() {
     <Button
         type="submit"
         disabled={loading}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 rounded-xl font-medium shadow-lg shadow-blue-600/20 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
     >
         {loading ? "Subscribing..." : "Subscribe"}
 
@@ -228,41 +226,41 @@ export default function Footer() {
               href="https://www.facebook.com/885831577953764/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
-              <FacebookLogoIcon className="size-4" />
+              <FacebookLogoIcon className="size-5" />
             </a>
             <a
               href="https://x.com/induxtechnology"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
-              <FaXTwitter className="size-4" />
+              <FaXTwitter className="size-5" />
             </a>
             <a
               href="https://www.linkedin.com/company/indux-technology/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
-              <LinkedInLogoIcon className="size-4" />
+              <LinkedInLogoIcon className="size-5" />
             </a>
             <a
               href="https://www.instagram.com/indux.technology"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
-              <InstagramLogoIcon className="size-4" />
+              <InstagramLogoIcon className="size-5" />
             </a>
             <a
               href="https://wa.me/918421538753"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-full bg-slate-800/50 text-slate-400 hover:bg-[#25D366] hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-[#25D366] hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
-              <FaWhatsapp className="size-4" />
+              <FaWhatsapp className="size-5" />
             </a>
           </div>
         </div>

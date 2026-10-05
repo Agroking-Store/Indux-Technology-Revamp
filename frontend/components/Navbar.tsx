@@ -396,7 +396,10 @@ function DropdownMenu({
           </motion.div>
         </Link>
       ) : (
-        <div className="flex items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors">
+        <button
+          type="button"
+          className="flex items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+        >
           {data.title}
           <motion.div
             animate={{ rotate: isHovered ? 180 : 0 }}
@@ -404,7 +407,7 @@ function DropdownMenu({
           >
             <ChevronDown className="size-4" />
           </motion.div>
-        </div>
+        </button>
       )}
       {/* Aesthetic Bottom Hover Line */}
       <motion.span
@@ -630,7 +633,7 @@ function MobileNav({ pathname }: { pathname: string }) {
 
         <div className="p-6 border-t dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 flex flex-col gap-4">
           <GetQuoteModal>
-            <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-6 rounded-2xl text-lg shadow-lg shadow-blue-500/30 cursor-pointer border-t border-white/20">
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group mt-4">
               Get Quote
             </Button>
           </GetQuoteModal>
