@@ -133,8 +133,8 @@ const ReviewCard = ({
               <Star
                 key={i}
                 className={`w-3.5 h-3.5 ${i < rating
-                    ? "text-yellow-400 fill-yellow-400"
-                    : "text-slate-200 dark:text-slate-700"
+                  ? "text-yellow-400 fill-yellow-400"
+                  : "text-slate-200 dark:text-slate-700"
                   }`}
               />
             ))}
@@ -405,13 +405,13 @@ export default function Home() {
 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4 sm:mt-6">
                   <GetQuoteModal>
-                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
-                      Get Free Quote <ArrowRight className="w-4 h-4" />
+                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                      Get Free Quote <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </GetQuoteModal>
                   <Link
                     href="/services"
-                    className="inline-flex items-center justify-center text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-slate-600 dark:hover:text-slate-400 underline underline-offset-4 decoration-2 decoration-slate-300 dark:decoration-slate-700 hover:decoration-slate-800 dark:hover:decoration-slate-500 transition-all cursor-pointer py-2 sm:py-0"
+                    className="w-full sm:w-auto bg-transparent border-2 border-slate-300 dark:border-slate-700 hover:border-slate-800 dark:hover:border-slate-500 text-slate-800 dark:text-slate-200 px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 group"
                   >
                     Our Services
                   </Link>
@@ -491,7 +491,7 @@ export default function Home() {
                 <div className="absolute top-0 left-0 w-3/4 h-[80%] sm:h-[85%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-md">
                   <Image
                     src="/images/unsplash/img-4dddf9a5.webp"
-                    alt="IT team discussing software development and business solutions" width="800" height="600"
+                    alt="IT team discussing software development and business solutions"
                     fill
                     loading="eager"
                     sizes="(max-width: 768px) 75vw, 35vw"
@@ -503,7 +503,7 @@ export default function Home() {
                 <div className="absolute bottom-0 right-0 w-[65%] h-[58%] sm:h-[60%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-2xl border-4 sm:border-8 border-white dark:border-slate-950">
                   <Image
                     src="/images/unsplash/img-51707ed2.webp"
-                    alt="IT professional working on a computer for software development" width="800" height="600"
+                    alt="IT professional working on a computer for software development"
                     fill
                     sizes="(max-width: 768px) 65vw, 30vw"
                     className="object-cover"
@@ -511,11 +511,11 @@ export default function Home() {
                 </div>
 
                 {/* Floating Badge (Top Right) */}
-                <div className="absolute top-4 right-0 sm:top-12 sm:-right-4 md:-right-6 bg-blue-700 rounded-2xl sm:rounded-3xl rounded-tr-md text-white p-4 sm:p-6 md:p-8 shadow-xl flex flex-col items-center justify-center min-w-[120px] sm:min-w-[160px] transform hover:-translate-y-2 transition-transform duration-500">
-                  <h3 className="text-3xl sm:text-4xl md:text-5xl font-black mb-1">
-                    <NumberTicker value={7} className="text-white" />+
-                  </h3>
-                  <p className="text-[10px] sm:text-xs font-bold tracking-widest uppercase text-blue-100 text-center leading-relaxed">
+                <div className="absolute top-4 right-0 sm:top-12 sm:-right-4 md:-right-6 bg-blue-700 rounded-2xl sm:rounded-3xl rounded-tr-md text-white p-6 sm:p-8 md:p-10 shadow-xl flex flex-col items-center justify-center min-w-[140px] sm:min-w-[180px] transform hover:-translate-y-2 transition-transform duration-500">
+                  <div className="text-3xl sm:text-4xl md:text-5xl font-black mb-1">
+                    7+
+                  </div>
+                  <p className="text-[10px] sm:text-xs font-bold tracking-widest capitalize text-blue-100 text-center leading-relaxed">
                     Years
                     <br />
                     Of Experience
@@ -545,9 +545,9 @@ export default function Home() {
                 </p>
 
                 <div className="mt-2">
-                  <h4 className="font-bold text-slate-900 dark:text-white mb-4 sm:mb-5 text-sm md:text-base">
+                  <h3 className="font-bold text-slate-900 dark:text-white mb-4 sm:mb-5 text-sm md:text-base">
                     Development Special Services:
-                  </h4>
+                  </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-5 gap-x-6">
                     {[
@@ -575,9 +575,9 @@ export default function Home() {
 
                 <div className="mt-6 sm:mt-8">
                   <Link href="/contact-us" className="w-full sm:w-auto">
-                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
+                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                       Connect With Us{" "}
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
                 </div>
@@ -587,7 +587,7 @@ export default function Home() {
 
           {/* Solid Bottom Banner */}
           {/* Solid Bottom Banner */}
-          <div className="bg-[#0f2e4a] dark:bg-slate-900 w-full py-10 sm:py-12 md:py-16">
+          <div className="bg-[#0f2e4a] dark:bg-slate-900 w-full py-16 sm:py-20 md:py-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-4 md:divide-x divide-blue-800/40 dark:divide-slate-800"
               >
@@ -626,13 +626,9 @@ export default function Home() {
                       </div>
                       <div className="text-center sm:text-left">
                         <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-0.5 sm:mb-1">
-                          <NumberTicker
-                            value={stat.num}
-                            className="text-white"
-                          />
-                          {stat.suffix}
+                          {stat.num}{stat.suffix}
                         </h3>
-                        <p className="text-blue-100/70 font-medium text-[10px] sm:text-[11px] md:text-xs tracking-wider uppercase">
+                        <p className="text-blue-100/70 font-medium text-[10px] sm:text-[11px] md:text-xs tracking-wider capitalize">
                           {stat.label}
                         </p>
                       </div>
@@ -648,32 +644,20 @@ export default function Home() {
         <section className="relative overflow-hidden pb-16 sm:pb-24 lg:pb-32 pt-0 bg-slate-50 dark:bg-slate-950">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header Area */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 sm:mb-16">
-              <div className="max-w-2xl"
-              >
-                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
-                  <div className="flex gap-1">
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-300 dark:bg-slate-700"></span>
-                  </div>
-                  Our Services
+            <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+              <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
+                <div className="flex gap-1">
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-300 dark:bg-slate-700"></span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                  Accelerate Growth with Our{" "}
-                  <span className="text-blue-600">IT Expertise</span>
-                </h2>
+                Our Services
               </div>
-
-              <div className="w-full sm:w-auto"
-              >
-                <Link href="/services" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
-                    View All Services{" "}
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+                Accelerate Growth with Our{" "}
+                <span className="text-blue-600">IT Expertise</span>
+              </h2>
             </div>
+
 
             {/* Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
@@ -686,7 +670,7 @@ export default function Home() {
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
                       src="/images/unsplash/img-3516b3f9.webp"
-                      alt="Custom CRM software development team working on business solutions" width="800" height="600"
+                      alt="Custom CRM software development team working on business solutions"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
@@ -714,7 +698,13 @@ export default function Home() {
                 onClick={() => router.push('/services/erp')}
                 className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
-                <div className="p-6 sm:p-8 pb-2 sm:pb-4 flex flex-col flex-grow order-2 md:order-1">
+                <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                    <img src="/images/unsplash/img-8afc3801.webp" alt="Manufacturing ERP" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                </div>
+                <div className="p-6 sm:p-8 pt-2 sm:pt-4 flex flex-col flex-grow">
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-white mb-2 sm:mb-3 transition-colors">
                     Manufacturing ERP
                   </h3>
@@ -725,12 +715,6 @@ export default function Home() {
                   <div className="mt-auto flex items-center text-sm sm:text-base font-semibold text-blue-600 dark:text-blue-400 group-hover:text-white transition-colors">
                     Learn more{" "}
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-                <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64 order-1 md:order-2">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                    <img src="/images/unsplash/img-8afc3801.webp" alt="Manufacturing ERP" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
-                    />
                   </div>
                 </div>
               </div>
@@ -760,6 +744,14 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="mt-12 sm:mt-16 flex justify-center w-full">
+              <Link href="/services" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                  View All Services{" "}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
@@ -796,15 +788,15 @@ export default function Home() {
                 </p>
 
                 <Link href="/contact-us" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
+                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                     Consult With Our Expertise{" "}
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
               </div>
 
               {/* Right Side: Scrollable Cards */}
-              <div className="w-full lg:w-7/12 flex flex-col gap-6 sm:gap-8 lg:gap-12 lg:pb-32">
+              <div className="w-full lg:w-7/12 flex flex-col gap-6 lg:gap-8 lg:pb-32">
                 {[
                   {
                     icon: Users,
@@ -834,7 +826,7 @@ export default function Home() {
                       key={idx} className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-10 items-start w-full group"
                     >
                       {/* Huge Number */}
-                      <div className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-bold text-blue-800 dark:text-blue-500 leading-none tracking-tighter sm:mt-4 w-16 sm:w-24 md:w-32 flex-shrink-0">
+                      <div className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-bold text-blue-800/30 dark:text-blue-500/30 leading-none tracking-tighter sm:mt-4 w-16 sm:w-24 md:w-32 flex-shrink-0">
                         {numStr}
                       </div>
 
@@ -846,9 +838,9 @@ export default function Home() {
                             strokeWidth={2}
                           />
                         </div>
-                        <h4 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-slate-900 dark:text-white mb-2 sm:mb-3 md:mb-4 tracking-tight">
+                        <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-slate-900 dark:text-white mb-2 sm:mb-3 md:mb-4 tracking-tight">
                           {feature.title}
-                        </h4>
+                        </h3>
                         <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed">
                           {feature.desc}
                         </p>
@@ -860,41 +852,26 @@ export default function Home() {
             </div>
           </div>
         </section>
-        {/* WORK PROCESS SECTION - Responsive (Vertical on Mobile, Fake Horizontal on Desktop) */}
-        <section
-          ref={containerRef}
-          style={{
-            height: scrollRange > 0 ? `${scrollRange + viewportHeight}px` : "auto",
-          }}
-          className="relative bg-slate-50 dark:bg-slate-950"
-        >
-          {/* Container logic: sticky on desktop, static block on mobile */}
-          <div className="md:sticky md:top-0 flex md:h-screen items-center overflow-hidden z-10 py-16 md:py-0">
-            <div
-              ref={trackRef}
-              className="flex flex-col md:flex-row gap-8 px-4 sm:px-6 lg:px-8 items-center w-full md:w-auto md:flex-nowrap will-change-transform"
-            >
-              {/* Intro Title Block */}
-              <div className="w-full md:w-[50vw] lg:w-[35vw] md:flex-shrink-0 flex flex-col justify-center pr-0 md:pr-8 lg:pr-12 text-center md:text-left mb-10 md:mb-0">
-                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-sm text-blue-600 uppercase mb-4">
-                  <div className="flex gap-1">
-                    <span className="w-3.5 h-3.5 rounded-full bg-blue-500"></span>
-                    <span className="w-3.5 h-3.5 rounded-full bg-slate-300 dark:bg-slate-800"></span>
-                  </div>
-                  Our Work Process
-                </div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6">
-                  Step-by-Step to <br /> Your{" "}
-                  <span className="text-blue-600">Growth</span>
-                </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
-                  We collaborate closely with clients to understand their vision,
-                  goals, and target audience, conducting in-depth research to
-                  craft tailored digital solutions.
-                </p>
+        {/* WORK PROCESS SECTION */}
+        <section className="relative bg-slate-50 dark:bg-slate-950 py-16 sm:py-24 lg:py-32 overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+              <div className="inline-flex items-center gap-2 font-bold tracking-wider text-sm text-blue-600 uppercase mb-4 justify-center">
+                Our Work Process
               </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6">
+                Step-by-Step to <br className="hidden sm:block" /> Your{" "}
+                <span className="text-blue-600">Growth</span>
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
+                We collaborate closely with clients to understand their vision,
+                goals, and target audience, conducting in-depth research to
+                craft tailored digital solutions.
+              </p>
+            </div>
 
-              {/* Process Cards */}
+            {/* Horizontal Scroll Container */}
+            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 hide-scrollbar w-full">
               {[
                 {
                   step: "01",
@@ -919,9 +896,9 @@ export default function Home() {
               ].map((card, idx) => (
                 <div
                   key={idx}
-                  className="w-full md:w-[45vw] lg:w-[30vw] md:flex-shrink-0 flex flex-col rounded-[2rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-auto md:h-[450px]"
+                  className="snap-center sm:snap-start shrink-0 w-[85vw] sm:w-[350px] md:w-[400px] flex flex-col rounded-[2rem] overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
                 >
-                  <div className="flex-1 p-8 md:p-10 relative overflow-hidden flex flex-col justify-center">
+                  <div className="p-8 md:p-10 relative overflow-hidden flex flex-col justify-center h-[350px]">
                     <div className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 text-[8rem] md:text-[12rem] font-bold text-slate-100 dark:text-slate-800/50 pointer-events-none select-none z-0">
                       {card.step}
                     </div>
@@ -934,19 +911,8 @@ export default function Home() {
                       </p>
                     </div>
                   </div>
-                  <div className="h-20 bg-[#0f2e4a] dark:bg-slate-800 flex items-center justify-between px-8 md:px-10 relative overflow-hidden">
-                    {/* Diagonal Stripes Pattern */}
-                    <div className="absolute inset-0 opacity-10 bg-[linear-gradient(45deg,rgba(255,255,255,1)_25%,transparent_25%,transparent_50%,rgba(255,255,255,1)_50%,rgba(255,255,255,1)_75%,transparent_75%,transparent)] bg-[length:10px_10px]"></div>
-                    <span className="text-white text-xs font-bold tracking-widest uppercase relative z-10">
-                      Step
-                    </span>
-                    <span className="text-white text-xl font-bold relative z-10">
-                      {card.step}
-                    </span>
-                  </div>
                 </div>
               ))}
-              <div className="hidden md:block w-[10vw] flex-shrink-0" />
             </div>
           </div>
         </section>
@@ -1047,10 +1013,10 @@ export default function Home() {
 
             {/* View All Button */}
             <div className="mt-12 sm:mt-16 text-center">
-              <Link href="/products" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
+              <Link href="/products" className="inline-block">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Work{" "}
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
             </div>
@@ -1060,22 +1026,23 @@ export default function Home() {
         {/* TESTIMONIALS SECTION */}
         <section className="relative pb-16 sm:pb-24 lg:pb-32 pt-0 bg-slate-50 dark:bg-slate-950 overflow-hidden">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
+            <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+              <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-4 justify-center">
+                <div className="flex gap-1">
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-200 dark:bg-slate-800"></span>
+                </div>
+                Testimonials
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-2">
+                Trusted by Our <span className="text-blue-600">Clients</span>
+              </h2>
+            </div>
+            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
               {/* Left Side: Static Anchor */}
               <div className="w-full lg:w-5/12 flex flex-col gap-4 sm:gap-6">
-                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase">
-                  <div className="flex gap-1">
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-200 dark:bg-slate-800"></span>
-                  </div>
-                  Testimonials
-                </div>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-2">
-                  Trusted by Our <span className="text-blue-600">Clients</span>
-                </h2>
-
                 {/* Trust Rating Card */}
-                <div className="mt-2 bg-[#0f2e4a] rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                <div className="mt-2 bg-[#0f2e4a] rounded-2xl sm:rounded-3xl p-6 sm:p-8 pb-8 sm:pb-10 shadow-2xl relative overflow-hidden">
                   <div className="absolute top-0 right-0 p-4 opacity-10">
                     <svg
                       className="w-16 h-16 sm:w-24 sm:h-24 text-white transform translate-x-2 -translate-y-2"
@@ -1106,7 +1073,7 @@ export default function Home() {
                       Customer experiences that speak for themselves.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mt-2">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-6 mt-6">
                       <div className="flex -space-x-3 justify-center sm:justify-start">
                         <Image
                           className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
@@ -1138,7 +1105,7 @@ export default function Home() {
                         href="https://www.google.com/search?sca_esv=590eb0aa4b74244e&hl=en-IN&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_8rvk6vr8yfTYT7skK3V3XFwpaMdTntxaRkoVitZ5oNvuSsJBuUECr7oGrWVEL7WbYUpLvB-GYmK1MIbvIMdk3etA_Thu6PRaHoPCDFquLsgpBZ0Hg%3D%3D&q=INDUX+TECHNOLOGY+Reviews&sa=X&ved=2ahUKEwjY9OHo7s6VAxVhzjgGHS8-DSYQ0bkNegQIJxAI&biw=1536&bih=730&dpr=1.25"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center justify-center gap-2 bg-white/10 hover:bg-white text-white hover:text-[#0f2e4a] text-xs sm:text-sm font-bold py-2.5 px-5 rounded-full transition-all duration-300 backdrop-blur-sm border border-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 text-sm sm:text-base rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group"
                       >
                         Write Review{" "}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1149,7 +1116,7 @@ export default function Home() {
               </div>
 
               {/* Right Side: Marquee Reviews */}
-              <div className="w-full lg:w-7/12 relative mt-6 lg:mt-24 flex flex-col gap-4 sm:gap-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+              <div className="w-full lg:w-7/12 relative mt-6 lg:mt-0 flex flex-col gap-4 sm:gap-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
                 <Marquee pauseOnHover className="[--duration:40s]">
                   {firstRow.map((review, index) => (
                     <ReviewCard key={review.name + index} {...review} />
@@ -1175,7 +1142,7 @@ export default function Home() {
           <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-8 mb-12 sm:mb-16">
+            <div className="flex flex-col md:flex-row md:items-end justify-start gap-6 sm:gap-8 mb-12 sm:mb-16">
               <div className="flex flex-col gap-3 sm:gap-4">
                 <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-400 uppercase">
                   <div className="flex gap-1">
@@ -1188,12 +1155,6 @@ export default function Home() {
                   Our Latest <br className="hidden md:block" /> News & Blogs
                 </h2>
               </div>
-              <Link href="/blogs" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
-                  View All Blogs{" "}
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
             </div>
 
             {/* Blog Grid */}
@@ -1251,6 +1212,15 @@ export default function Home() {
                   </div>
                 </Link>
               ))}
+            </div>
+
+            <div className="mt-12 sm:mt-16 flex justify-center">
+              <Link href="/blogs" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                  View All Blogs{" "}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
