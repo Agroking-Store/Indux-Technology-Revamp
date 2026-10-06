@@ -411,16 +411,15 @@ export default function Home() {
                   </GetQuoteModal>
                   <Link
                     href="/services"
-                    className="w-full sm:w-auto bg-transparent border-2 border-slate-300 dark:border-slate-700 hover:border-slate-800 dark:hover:border-slate-500 text-slate-800 dark:text-slate-200 px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 group"
+                    className="w-full sm:w-auto bg-slate-100/50 dark:bg-slate-800/50 border-2 border-slate-300 dark:border-slate-700 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 hover:border-slate-400 dark:hover:border-slate-500 text-slate-800 dark:text-slate-200 px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 group focus-visible:ring-2 focus-visible:ring-slate-400"
                   >
                     Our Services
                   </Link>
                 </div>
               </div>
 
-              {/* Right Side: Bento Image Grid (Custom Layout) */}
-              <div className="relative w-full aspect-square md:aspect-[4/3] lg:aspect-square flex items-center justify-center max-w-lg mx-auto lg:max-w-none"
-              >
+              {/* Right Side: Cohesive Hero Image Composition */}
+              <div className="relative w-full aspect-square md:aspect-[4/3] lg:aspect-square flex items-center justify-center max-w-lg mx-auto lg:max-w-none">
                 {/* Floating Rotating Text Badge */}
                 <div className="absolute -left-2 sm:left-0 lg:-left-6 bottom-6 sm:bottom-1/4 z-20 w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-2xl dark:shadow-none dark:border dark:border-slate-800">
                   {/* Rotating Text SVG */}
@@ -450,29 +449,22 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-12 grid-rows-12 gap-2.5 sm:gap-4 w-full h-full relative z-10 p-2 sm:p-6 md:p-8">
-                  {/* Left Tall Image */}
-                  <div className="col-span-5 row-span-10 row-start-2 bg-slate-300 rounded-2xl sm:rounded-[2rem] rounded-tl-xl overflow-hidden relative shadow-lg">
-                    <img src="/images/unsplash/img-f787f12c.webp" alt="Team working" width="800" height="600" fetchPriority="high" loading="eager" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                    />
+                {/* Dominant Image Container */}
+                <div className="relative w-[90%] h-[90%] bg-slate-200 dark:bg-slate-800 rounded-3xl overflow-hidden shadow-2xl z-10">
+                  <img src="/images/unsplash/img-f787f12c.webp" alt="IT experts collaborating" width="800" height="600" fetchPriority="high" loading="eager" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                  
+                  {/* Overlay image - Top Right */}
+                  <div className="absolute top-4 right-4 w-32 h-32 sm:w-40 sm:h-40 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl hidden sm:block">
+                     <div className="w-full h-full rounded-xl overflow-hidden">
+                       <img src="/images/unsplash/img-4dddf9a5.webp" alt="Discussion" width="400" height="400" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                     </div>
                   </div>
 
-                  {/* Right Top Image */}
-                  <div className="col-span-7 row-span-4 bg-slate-300 rounded-2xl sm:rounded-[2rem] rounded-tr-xl overflow-hidden relative shadow-lg">
-                    <img src="/images/unsplash/img-4dddf9a5.webp" alt="Discussion" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                    />
-                  </div>
-
-                  {/* Right Middle Image */}
-                  <div className="col-span-7 row-span-4 bg-slate-300 rounded-xl sm:rounded-2xl overflow-hidden relative shadow-lg">
-                    <img src="/images/unsplash/img-9040528a.webp" alt="Meeting" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                    />
-                  </div>
-
-                  {/* Right Bottom Image */}
-                  <div className="col-span-7 row-span-4 bg-slate-300 rounded-2xl sm:rounded-[2rem] rounded-br-xl overflow-hidden relative shadow-lg">
-                    <img src="/images/unsplash/img-931d0d20.webp" alt="Collaboration" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                    />
+                  {/* Overlay image - Bottom Left */}
+                  <div className="absolute bottom-4 left-4 w-36 h-28 sm:w-48 sm:h-32 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl hidden sm:block pl-10">
+                     <div className="w-full h-full rounded-xl overflow-hidden relative right-2">
+                       <img src="/images/unsplash/img-931d0d20.webp" alt="Collaboration" width="400" height="300" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                     </div>
                   </div>
                 </div>
               </div>
@@ -549,7 +541,7 @@ export default function Home() {
                     Development Special Services:
                   </h3>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-5 gap-x-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-5 gap-x-4">
                     {[
                       "Emergency Solutions Anytime",
                       "How to improve business",
@@ -620,8 +612,9 @@ export default function Home() {
                     >
                       <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full border-[1.5px] border-blue-400/20 flex items-center justify-center bg-blue-800/10 shrink-0">
                         <Icon
-                          className="w-4 h-4 sm:w-6 sm:h-6 text-blue-300 opacity-80"
-                          strokeWidth={1.5}
+                          className="w-5 h-5 sm:w-7 sm:h-7 text-blue-300"
+                          strokeWidth={2}
+                          aria-hidden="true"
                         />
                       </div>
                       <div className="text-center sm:text-left">
@@ -823,25 +816,25 @@ export default function Home() {
                   const numStr = String(idx + 1).padStart(2, "0");
                   return (
                     <div
-                      key={idx} className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-10 items-start w-full group"
+                      key={idx} className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 items-center w-full group"
                     >
                       {/* Huge Number */}
-                      <div className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-bold text-blue-800/30 dark:text-blue-500/30 leading-none tracking-tighter sm:mt-4 w-16 sm:w-24 md:w-32 flex-shrink-0">
+                      <div className="text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] font-bold text-blue-800/10 dark:text-blue-500/10 leading-none tracking-tighter sm:mt-2 w-16 sm:w-20 md:w-28 flex-shrink-0">
                         {numStr}
                       </div>
 
-                      {/* Content Card (Strict Flat Border) */}
-                      <div className="bg-white dark:bg-slate-900 rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 border-[1.5px] border-slate-200 dark:border-slate-800 transition-all duration-500 flex-1 relative group-hover:border-blue-800/30 dark:group-hover:border-blue-500/30 w-full">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-900 dark:bg-blue-900/40 flex items-center justify-center mb-4 sm:mb-6">
+                      {/* Content Card */}
+                      <div className="bg-white dark:bg-slate-900 rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 border-[1.5px] border-slate-200 dark:border-slate-800 transition-all duration-500 flex-1 relative group-hover:border-blue-800/30 dark:group-hover:border-blue-500/30 w-full">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-900 dark:bg-blue-900/40 flex items-center justify-center mb-3 sm:mb-4">
                           <Icon
                             className="w-5 h-5 md:w-6 md:h-6 text-white dark:text-blue-400"
                             strokeWidth={2}
                           />
                         </div>
-                        <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-slate-900 dark:text-white mb-2 sm:mb-3 md:mb-4 tracking-tight">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-medium text-slate-900 dark:text-white mb-2 tracking-tight">
                           {feature.title}
                         </h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed">
+                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
                           {feature.desc}
                         </p>
                       </div>
@@ -870,8 +863,8 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Horizontal Scroll Container */}
-            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 hide-scrollbar w-full">
+            {/* CSS Grid Container */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
               {[
                 {
                   step: "01",
@@ -896,17 +889,17 @@ export default function Home() {
               ].map((card, idx) => (
                 <div
                   key={idx}
-                  className="snap-center sm:snap-start shrink-0 w-[85vw] sm:w-[350px] md:w-[400px] flex flex-col rounded-[2rem] overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+                  className="flex flex-col rounded-3xl overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
                 >
-                  <div className="p-8 md:p-10 relative overflow-hidden flex flex-col justify-center h-[350px]">
-                    <div className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 text-[8rem] md:text-[12rem] font-bold text-slate-100 dark:text-slate-800/50 pointer-events-none select-none z-0">
+                  <div className="p-6 md:p-8 relative overflow-hidden flex flex-col justify-center h-full min-h-[300px]">
+                    <div className="absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 text-[6rem] md:text-[8rem] font-bold text-slate-100 dark:text-slate-800/30 pointer-events-none select-none z-0">
                       {card.step}
                     </div>
-                    <div className="relative z-10">
-                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
+                    <div className="relative z-10 flex flex-col h-full">
+                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">
                         {card.title}
                       </h3>
-                      <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium text-sm md:text-base">
+                      <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium text-sm">
                         {card.desc}
                       </p>
                     </div>
@@ -985,20 +978,18 @@ export default function Home() {
                         loading="lazy"
                         className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                       />
+                      <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10">
+                        <span className="inline-block bg-[#0f2e4a]/90 backdrop-blur-sm text-white text-[10px] sm:text-xs font-semibold tracking-wide px-3 py-1.5 rounded-full">
+                          {project.category}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
                   {/* Content Container */}
-                  <div className="p-5 sm:p-6 md:p-8 flex flex-col flex-grow">
-                    {/* Badge */}
-                    <div className="mb-3 sm:mb-4">
-                      <span className="inline-block bg-[#0f2e4a] text-white text-[10px] sm:text-xs font-semibold tracking-wide px-3 py-1.5 rounded-full">
-                        {project.category}
-                      </span>
-                    </div>
-
+                  <div className="p-5 sm:p-6 md:p-8 pt-4 sm:pt-5 md:pt-6 flex flex-col flex-grow justify-center">
                     {/* Title & Button */}
-                    <div className="flex items-center justify-between mt-auto">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors duration-300 pr-2 sm:pr-4">
                         {project.title}
                       </h3>
