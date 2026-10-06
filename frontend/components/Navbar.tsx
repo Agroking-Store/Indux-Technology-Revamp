@@ -385,7 +385,7 @@ function DropdownMenu({
       {data.href ? (
         <Link
           href={data.href}
-          className="flex items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+          className="flex h-full items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
         >
           {data.title}
           <motion.div
@@ -398,7 +398,7 @@ function DropdownMenu({
       ) : (
         <button
           type="button"
-          className="flex items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+          className="flex h-full items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
         >
           {data.title}
           <motion.div

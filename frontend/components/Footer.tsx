@@ -103,7 +103,7 @@ export default function Footer() {
             </p>
 
             <div className="mt-2">
-              <ul className="grid grid-cols-2 gap-y-3 gap-x-4">
+              <ul className="grid grid-cols-2 gap-y-3 gap-x-8">
                 {allLinks.map((link) => (
                   <li key={link.name}>
                     <Link
