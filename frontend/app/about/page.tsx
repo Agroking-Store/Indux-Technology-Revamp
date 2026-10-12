@@ -170,7 +170,7 @@ export default function AboutPage() {
               <p className="font-bold text-lg text-slate-900 dark:text-white leading-tight">
                 "Making an impact, together"
               </p>
-              <p className="text-slate-500 dark:text-slate-400 mt-2 font-medium">— Indux Founder</p>
+              <p className="text-slate-500 dark:text-slate-400 mt-2 font-medium">— Laxman Jadhav</p>
             </div>
           </motion.div>
 

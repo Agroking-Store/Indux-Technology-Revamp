@@ -80,7 +80,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.2fr] gap-12 lg:gap-16 mb-16">
-          
+
           {/* Left Section: Brand & Links */}
           <div className="flex flex-col gap-6 text-left">
             <Link
@@ -181,30 +181,30 @@ export default function Footer() {
 
             <div className="flex flex-col gap-5 mt-2 max-w-md w-full">
               <p className="text-slate-400 text-sm">
-                Subscribe to our newsletter for the latest tech news and updates.
+                Subscribe to our newsletter for the latest tech news and updates.(You will receive blogs on monthly basis)
               </p>
 
               <form onSubmit={handleSubscribe} className="flex flex-col gap-3">
-    <input
-        type="email"
-        placeholder="Your Email Address"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        disabled={loading}
-        className="w-full bg-slate-950/50 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-        suppressHydrationWarning
-    />
-    <Button
-        type="submit"
-        disabled={loading}
-        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-    >
-        {loading ? "Subscribing..." : "Subscribe"}
+                <input
+                  type="email"
+                  placeholder="Your Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                  className="w-full bg-slate-950/50 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  suppressHydrationWarning
+                />
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                >
+                  {loading ? "Subscribing..." : "Subscribe"}
 
-        <Send className="size-4" />
-    </Button>
+                  <Send className="size-4" />
+                </Button>
 
-</form>
+              </form>
             </div>
           </div>
         </div>

@@ -452,19 +452,19 @@ export default function Home() {
                 {/* Dominant Image Container */}
                 <div className="relative w-[90%] h-[90%] bg-slate-200 dark:bg-slate-800 rounded-3xl overflow-hidden shadow-2xl z-10">
                   <img src="/images/unsplash/img-f787f12c.webp" alt="IT experts collaborating" width="800" height="600" fetchPriority="high" loading="eager" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
-                  
+
                   {/* Overlay image - Top Right */}
                   <div className="absolute top-4 right-4 w-32 h-32 sm:w-40 sm:h-40 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl hidden sm:block">
-                     <div className="w-full h-full rounded-xl overflow-hidden">
-                       <img src="/images/unsplash/img-4dddf9a5.webp" alt="Discussion" width="400" height="400" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
-                     </div>
+                    <div className="w-full h-full rounded-xl overflow-hidden">
+                      <img src="/images/unsplash/img-4dddf9a5.webp" alt="Discussion" width="400" height="400" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                    </div>
                   </div>
 
                   {/* Overlay image - Bottom Left */}
                   <div className="absolute bottom-4 left-4 w-36 h-28 sm:w-48 sm:h-32 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl hidden sm:block pl-10">
-                     <div className="w-full h-full rounded-xl overflow-hidden relative right-2">
-                       <img src="/images/unsplash/img-931d0d20.webp" alt="Collaboration" width="400" height="300" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
-                     </div>
+                    <div className="w-full h-full rounded-xl overflow-hidden relative right-2">
+                      <img src="/images/unsplash/img-931d0d20.webp" alt="Collaboration" width="400" height="300" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -593,7 +593,7 @@ export default function Home() {
                   {
                     num: 200,
                     suffix: "+",
-                    label: "Complete project",
+                    label: "Completed project",
                     icon: Briefcase,
                   },
                   { num: 70, suffix: "+", label: "Team Members", icon: Users },

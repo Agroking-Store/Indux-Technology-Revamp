@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AI Software Development & Intelligent Chatbots | Indux Technology",
-  description: "Integrate AI solutions into your business workflow. Indux Technology in Pune builds custom AI agents, LLM integrations, intelligent chatbots, and predictive analytics tools.",
+  title: "AI Development & Automation Solutions | Indux Technology",
+  description: "Explore AI development and automation solutions that help businesses improve workflows, automate repetitive tasks, and support smarter decision-making.",
   alternates: {
     canonical: "https://induxtechnology.com/services/ai-chatbots",
+  },
+  openGraph: {
+    title: "AI Development & Automation Solutions | Indux Technology",
+    description: "Explore AI development and automation solutions that help businesses improve workflows, automate repetitive tasks, and support smarter decision-making.",
+    url: "https://induxtechnology.com/services/ai-chatbots",
+  },
+  twitter: {
+    title: "AI Development & Automation Solutions | Indux Technology",
+    description: "Explore AI development and automation solutions that help businesses improve workflows, automate repetitive tasks, and support smarter decision-making.",
   },
 };
 
