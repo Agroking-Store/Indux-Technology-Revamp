@@ -21,10 +21,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://induxtechnology.com"),
   title: {
-    default: "Custom CRM & ERP Development Pune | Indux Technology",
+    default: "Software Development Company in Pune | Indux Technology",
     template: "%s | Indux Technology"
   },
-  description: "Indux Technology helps businesses simplify everyday work with custom CRM, ERP, AI, automation, and web & mobile app development built around their needs.",
+  description: "Indux Technology offers custom software, CRM, ERP, AI automation, and web and mobile app development in Pune to help businesses grow.",
   keywords: [
     "Indux Technology",
     "CRM Development Company Pune",
@@ -58,8 +58,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://induxtechnology.com",
-    title: "Custom CRM & ERP Development Pune | Indux Technology",
-    description: "Indux Technology helps businesses simplify everyday work with custom CRM, ERP, AI, automation, and web & mobile app development built around their needs.",
+    title: "Software Development Company in Pune | Indux Technology",
+    description: "Indux Technology offers custom software, CRM, ERP, AI automation, and web and mobile app development in Pune to help businesses grow.",
     siteName: "Indux Technology",
     images: [
       {
@@ -72,8 +72,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Custom CRM & ERP Development Pune | Indux Technology",
-    description: "Indux Technology helps businesses simplify everyday work with custom CRM, ERP, AI, automation, and web & mobile app development built around their needs.",
+    title: "Software Development Company in Pune | Indux Technology",
+    description: "Indux Technology offers custom software, CRM, ERP, AI automation, and web and mobile app development in Pune to help businesses grow.",
     images: ["/images/og-image.jpg"],
     creator: "@InduxTech",
   },

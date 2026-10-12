@@ -33,7 +33,7 @@ export const projects: Project[] = [
     title: "Indux CRM",
     category: "Business Intelligence",
     shortDescription:
-      "Empower your business with a centralized CRM system to manage leads and automate workflows.",
+      "Manage leads, customer relationships, sales activities, and follow-ups with custom CRM software designed around your business workflows.",
     fullDescription:
       "Indux CRM is an enterprise-grade solution designed to unify your sales, marketing, and support teams. By centralizing customer data, it eliminates silos and provides a 360-degree view of your customer journey, allowing for data-driven decisions at every level of your organization.",
     themeColor: "blue",

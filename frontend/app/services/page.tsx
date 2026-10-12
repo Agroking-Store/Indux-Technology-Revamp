@@ -41,13 +41,13 @@ const GlobalPresenceClocks = () => {
                     <div className="text-5xl sm:text-7xl md:text-8xl text-foreground font-extrabold tracking-tight mb-4 min-h-[72px] sm:min-h-[96px]">
                         {indiaTime || "00:00"}
                     </div>
-                    
-<h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
+
+                    <h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
                         <Image src="https://flagcdn.com/w40/in.png" alt="India Flag with Indux Technology Office to Showcase the Global Presence" width={32} height={32} className="w-8 h-auto mr-3" />
                         India
-</h3>
+                    </h3>
                     <div className="flex items-center gap-2 text-muted-foreground">
-                        <span className="font-medium uppercase tracking-widest text-xs sm:text-sm">Mumbai</span>
+                        <span className="font-medium uppercase tracking-widest text-xs sm:text-sm">Pune</span>
                     </div>
                     <div className="mt-4 text-xs sm:text-sm text-muted-foreground font-semibold uppercase tracking-widest">
                         IST (UTC+5:30)
@@ -62,7 +62,7 @@ const GlobalPresenceClocks = () => {
                     <h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
                         <Image src="https://flagcdn.com/w40/ae.png" alt="UAE Flag with Indux Technology Office to Showcase the Global Presence and Innovation" width={32} height={32} className="w-8 h-auto mr-3" />
                         UAE
-</h3>
+                    </h3>
                     <div className="flex items-center gap-2 text-muted-foreground">
                         <span className="font-medium uppercase tracking-widest text-xs sm:text-sm">Dubai</span>
                     </div>
