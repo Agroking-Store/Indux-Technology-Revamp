@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     default: "Software Development Company in Pune | Indux Technology",
     template: "%s | Indux Technology"
   },
-  description: "Indux Technology offers custom software, CRM, ERP, AI automation, and web and mobile app development in Pune to help businesses grow.",
+  description: "Indux Technology is a software development company in Pune offering custom software, CRM, ERP, AI automation, and web and mobile app development.",
   keywords: [
     "Indux Technology",
     "CRM Development Company Pune",
