@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Get a Free Quote",
-  description: "Get in touch with the IT experts at Indux Technology. Request a free quote for custom software, CRM, ERP, or digital transformation consultations.",
+  title: "Contact Indux Technology | Get a Free Quote",
+  description: "Contact Indux Technology for custom software development, CRM, ERP, AI, and automation solutions. Get in touch with our team to discuss your project",
   alternates: {
     canonical: "https://induxtechnology.com/contact-us",
   },
