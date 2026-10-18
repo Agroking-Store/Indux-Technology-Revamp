@@ -15,10 +15,7 @@ import {
   Cpu,
   Briefcase,
   Smile,
-  ChevronDown,
-  HelpCircle,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
@@ -181,30 +178,6 @@ const fallbackBlogs = [
   },
 ];
 
-const faqs = [
-  {
-    question: "What does Indux Technology do?",
-    answer:
-      "Indux Technology provides custom software development, CRM and ERP solutions, web and mobile app development, AI solutions, and business automation.",
-  },
-  {
-    question: "Where is Indux Technology located?",
-    answer:
-      "Indux Technology is based in Kharadi, Pune, Maharashtra, India, and offers digital solutions to businesses beyond its local area.",
-  },
-  {
-    question: "Does Indux Technology develop custom software?",
-    answer:
-      "Yes. Projects can be planned around specific business requirements, workflows, features, and integration needs.",
-  },
-  {
-    question: "How can I discuss my software project?",
-    answer:
-      "Visit the contact page at https://induxtechnology.com/contact-us to submit your requirements and connect with the team.",
-    hasLink: true,
-  },
-];
-
 export default function Home() {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -276,11 +249,6 @@ export default function Home() {
 
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [blogsLoading, setBlogsLoading] = useState(true);
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-
-  const toggleFaq = (index: number) => {
-    setOpenFaq((prev) => (prev === index ? null : index));
-  };
 
   useEffect(() => {
     getBlogs()
@@ -391,19 +359,6 @@ export default function Home() {
     ]
   };
 
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map((faq) => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer,
-      },
-    })),
-  };
-
   return (
     <div className="flex flex-col min-h-screen w-full overflow-x-clip bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <script
@@ -415,11 +370,6 @@ export default function Home() {
         type="application/ld+json"
         id="local-business-schema"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        id="faq-schema"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <main className="flex-1 w-full">
         {/* HERO SECTION */}
@@ -441,18 +391,16 @@ export default function Home() {
                 </div>
 
                 <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.15] sm:leading-[1.1]">
-                  Software Development Company in{" "}
+                  Build{" "}
                   <LineShadowText className="italic" shadowColor="#2563eb">
-                    Pune
+                    Smarter.
                   </LineShadowText>
+                  <br />
+                  Scale Faster.
                 </h1>
-                <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed mt-1 sm:mt-2 max-w-md">
-                  Technology should make your life better, not more difficult. We at Indux Technology specialize in turning our clients' ideas into reality in the form of digital tools which enable their operations and the activity of their daily lives.
-                  As a software development company located in Pune, we specialize in custom software development, CRM and ERP solutions, AI-powered automation, and web and mobile application development. Whether you're a startup looking to get your first product out the door, or an established entity looking to augment your existing operations, we offer solutions which allow you to reach your goals and grow your business.
 
-                </p>
-                <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 font-bold leading-relaxed mt-1 sm:mt-2 max-w-md">
-                  Let's build smarter solutions for your business.
+                <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed mt-1 sm:mt-2 max-w-md">
+                  Custom IT Solutions That Power Your Business.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4 sm:mt-6">
@@ -502,16 +450,22 @@ export default function Home() {
                 </div>
 
                 {/* Dominant Image Container */}
-                <div className="relative w-full max-w-lg lg:max-w-none rounded-3xl overflow-hidden shadow-2xl z-10 border border-slate-200/50 dark:border-slate-800/80 bg-slate-900 group">
-                  <img
-                    src="/images/hero-banner.jpg"
-                    alt="Indux Technology - Software Development Company in Pune"
-                    width="1000"
-                    height="1000"
-                    fetchPriority="high"
-                    loading="eager"
-                    className="w-full h-auto object-cover rounded-3xl transition-transform duration-500 group-hover:scale-[1.02]"
-                  />
+                <div className="relative w-[90%] h-[90%] bg-slate-200 dark:bg-slate-800 rounded-3xl overflow-hidden shadow-2xl z-10">
+                  <img src="/images/unsplash/img-f787f12c.webp" alt="IT experts collaborating" width="800" height="600" fetchPriority="high" loading="eager" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+
+                  {/* Overlay image - Top Right */}
+                  <div className="absolute top-4 right-4 w-32 h-32 sm:w-40 sm:h-40 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl hidden sm:block">
+                    <div className="w-full h-full rounded-xl overflow-hidden">
+                      <img src="/images/unsplash/img-4dddf9a5.webp" alt="Discussion" width="400" height="400" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                    </div>
+                  </div>
+
+                  {/* Overlay image - Bottom Left */}
+                  <div className="absolute bottom-4 left-4 w-36 h-28 sm:w-48 sm:h-32 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl hidden sm:block pl-10">
+                    <div className="w-full h-full rounded-xl overflow-hidden relative right-2">
+                      <img src="/images/unsplash/img-931d0d20.webp" alt="Collaboration" width="400" height="300" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -525,25 +479,25 @@ export default function Home() {
               {/* Left Side: Overlapping Images */}
               <div className="relative h-[360px] sm:h-[480px] md:h-[600px] w-full max-w-lg mx-auto lg:max-w-none"
               >
-                {/* Back Image (Overview Banner) */}
-                <div className="absolute top-0 left-0 w-[85%] sm:w-[82%] h-[72%] sm:h-[75%] bg-slate-100 dark:bg-slate-850 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-200/80 dark:border-slate-800">
+                {/* Back Image (Tall) */}
+                <div className="absolute top-0 left-0 w-3/4 h-[80%] sm:h-[85%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-md">
                   <Image
-                    src="/images/about-indux-overview.webp"
-                    alt="About Indux Technology - Software Development and IT Solutions"
+                    src="/images/unsplash/img-4dddf9a5.webp"
+                    alt="IT team discussing software development and business solutions"
                     fill
                     loading="eager"
-                    sizes="(max-width: 768px) 85vw, 40vw"
-                    className="object-contain sm:object-cover object-center bg-slate-900"
+                    sizes="(max-width: 768px) 75vw, 35vw"
+                    className="object-cover"
                   />
                 </div>
 
                 {/* Front Image (Square, bottom right) */}
-                <div className="absolute bottom-0 right-0 w-[55%] sm:w-[52%] h-[50%] sm:h-[52%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-2xl border-4 sm:border-8 border-white dark:border-slate-950">
+                <div className="absolute bottom-0 right-0 w-[65%] h-[58%] sm:h-[60%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-2xl border-4 sm:border-8 border-white dark:border-slate-950">
                   <Image
                     src="/images/unsplash/img-51707ed2.webp"
                     alt="IT professional working on a computer for software development"
                     fill
-                    sizes="(max-width: 768px) 55vw, 25vw"
+                    sizes="(max-width: 768px) 65vw, 30vw"
                     className="object-cover"
                   />
                 </div>
@@ -569,16 +523,17 @@ export default function Home() {
                 </div>
 
                 <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-slate-900 dark:text-white leading-[1.15] tracking-tight">
-                  Software Development That Works for{" "}
+                  One of the fastest way to gain{" "}
                   <span className="italic text-slate-600 dark:text-slate-400 font-serif">
-                    Your Business
+                    business success
                   </span>
                 </h2>
 
                 <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm md:text-base mt-1 sm:mt-2 max-w-lg">
-                  At Indux Technology is a software development company with a belief in the power of good software to make business easy. We have been helping startups, small businesses, and growing companies actualize their ideas into effective and efficient digital products through our solutions.
-                  Our custom software developers take pride in bringing to life all kinds of products ranging from CRM and ERP solutions to AI development, business automation, web, and app development. We exist to make your business run smoothly by developing innovative, user-friendly, and scalable digital products that help you achieve your goals.
-                  we do not only provide you with solutions to your business problems but also consider your operations and work processes in the development process. Our custom software developers work closely with you to understand your unique needs, preferences, and expectations in developing a product that suits your needs.
+                  We empower businesses across all industries with cutting-edge
+                  IT solutions. From startups to large enterprises, our goal is
+                  to leverage the power of technology to help clients reach
+                  their target efficiently.
                 </p>
 
                 <div className="mt-2">
@@ -1305,125 +1260,6 @@ export default function Home() {
                   />
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ SECTION */}
-        <section className="py-16 sm:py-24 lg:py-32 bg-slate-50 dark:bg-slate-950 relative overflow-hidden border-t border-slate-200/60 dark:border-slate-800/60">
-          {/* Subtle background glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-500/5 dark:bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
-
-          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Header Badge & Title */}
-            <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-              <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 dark:text-blue-500 uppercase mb-3 sm:mb-4">
-                <div className="flex gap-1">
-                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
-                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-300 dark:bg-slate-700"></span>
-                </div>
-                Frequently Asked Questions
-              </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
-                Got Questions? <span className="text-blue-600">We've Got Answers</span>
-              </h2>
-              <p className="text-slate-500 dark:text-slate-400 text-sm sm:text-base mt-3 sm:mt-4 leading-relaxed">
-                Find clear answers to commonly asked questions about our software development services, location, and project workflows.
-              </p>
-            </div>
-
-            {/* Accordion List */}
-            <div className="space-y-4">
-              {faqs.map((faq, idx) => {
-                const isOpen = openFaq === idx;
-                return (
-                  <div
-                    key={idx}
-                    className={`rounded-2xl transition-all duration-300 border ${
-                      isOpen
-                        ? "bg-white dark:bg-slate-900 border-blue-500/40 dark:border-blue-500/30 shadow-xl shadow-blue-500/5"
-                        : "bg-white/80 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 shadow-sm"
-                    }`}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => toggleFaq(idx)}
-                      className="w-full px-5 sm:px-7 py-5 sm:py-6 text-left flex justify-between items-center gap-4 cursor-pointer select-none group"
-                      aria-expanded={isOpen}
-                    >
-                      <div className="flex items-center gap-3 sm:gap-4">
-                        <div
-                          className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
-                            isOpen
-                              ? "bg-blue-600 text-white"
-                              : "bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/40"
-                          }`}
-                        >
-                          <HelpCircle className="w-4 h-4" />
-                        </div>
-                        <span className="font-semibold text-slate-900 dark:text-slate-100 text-base sm:text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                          {faq.question}
-                        </span>
-                      </div>
-                      <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
-                          isOpen
-                            ? "bg-blue-600 text-white rotate-180"
-                            : "bg-slate-100 dark:bg-slate-800 text-slate-500 group-hover:bg-slate-200 dark:group-hover:bg-slate-700"
-                        }`}
-                      >
-                        <ChevronDown className="w-4 h-4 transition-transform duration-300" />
-                      </div>
-                    </button>
-
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.28, ease: "easeInOut" }}
-                          className="overflow-hidden"
-                        >
-                          <div className="px-5 sm:px-7 pb-5 sm:pb-6 pt-1 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed border-t border-slate-100 dark:border-slate-800/80">
-                            {faq.hasLink ? (
-                              <p>
-                                Visit the contact page at{" "}
-                                <Link
-                                  href="/contact-us"
-                                  className="text-blue-600 dark:text-blue-400 font-semibold underline underline-offset-4 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
-                                >
-                                  https://induxtechnology.com/contact-us
-                                </Link>{" "}
-                                to submit your requirements and connect with the team.
-                              </p>
-                            ) : (
-                              <p>{faq.answer}</p>
-                            )}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Bottom Support Callout */}
-            <div className="mt-10 sm:mt-12 text-center p-6 sm:p-8 rounded-2xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/40 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-left">
-                <h4 className="font-bold text-slate-900 dark:text-white text-base sm:text-lg">
-                  Have more questions about your project?
-                </h4>
-                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-0.5">
-                  Our team is ready to discuss your specific requirements anytime.
-                </p>
-              </div>
-              <Link href="/contact-us">
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-6 py-2.5 font-semibold text-sm shadow-md hover:scale-105 transition-all shrink-0">
-                  Contact Us
-                </Button>
-              </Link>
             </div>
           </div>
         </section>
