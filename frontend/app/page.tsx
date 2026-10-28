@@ -18,6 +18,7 @@ import {
   ChevronDown,
   HelpCircle
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
@@ -180,6 +181,30 @@ const fallbackBlogs = [
   },
 ];
 
+const faqs = [
+  {
+    question: "What does Indux Technology do?",
+    answer:
+      "Indux Technology provides custom software development, CRM and ERP solutions, web and mobile app development, AI solutions, and business automation.",
+  },
+  {
+    question: "Where is Indux Technology located?",
+    answer:
+      "Indux Technology is based in Kharadi, Pune, Maharashtra, India, and offers digital solutions to businesses beyond its local area.",
+  },
+  {
+    question: "Does Indux Technology develop custom software?",
+    answer:
+      "Yes. Projects can be planned around specific business requirements, workflows, features, and integration needs.",
+  },
+  {
+    question: "How can I discuss my software project?",
+    answer:
+      "Visit the contact page at https://induxtechnology.com/contact-us to submit your requirements and connect with the team.",
+    hasLink: true,
+  },
+];
+
 export default function Home() {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -251,6 +276,11 @@ export default function Home() {
 
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [blogsLoading, setBlogsLoading] = useState(true);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaq((prev) => (prev === index ? null : index));
+  };
 
   useEffect(() => {
     getBlogs()
@@ -548,7 +578,7 @@ export default function Home() {
                 <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-medium text-slate-900 dark:text-white leading-[1.15] tracking-tight">
                   One of the fastest way to gain{" "}
                   <span className="italic text-slate-600 dark:text-slate-400 font-serif">
-                    business success
+                    Your Business
                   </span>
                 </h2>
 
