@@ -431,7 +431,7 @@ export default function ERPServicePage() {
             >
               <Image
                 src="/images/unsplash/img-354f8fd9.webp"
-                alt="ERP Data Analytics"
+                alt="ERP Data Analytics Dashboard with Graphs and Charts"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"
               />

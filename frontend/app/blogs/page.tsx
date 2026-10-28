@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getBlogs, Blog } from '@/lib/api';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Calendar, User, ArrowRight, Newspaper, Search, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -45,6 +46,15 @@ export default function BlogsPage() {
       .then(setBlogs)
       .catch(console.error)
       .finally(() => setLoading(false));
+
+    // Support incoming search queries from other pages
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const search = params.get('search');
+      if (search) {
+        setSearchQuery(search);
+      }
+    }
   }, []);
 
   const publishedBlogs = useMemo(() => blogs.filter((b) => b.status === 'Published'), [blogs]);
@@ -101,6 +111,30 @@ export default function BlogsPage() {
   
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        id="blogs-breadcrumb-schema"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://induxtechnology.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blogs",
+                "item": "https://induxtechnology.com/blogs"
+              }
+            ]
+          })
+        }}
+      />
       <main className="flex-1">
         {/* ===== HERO SECTION ===== */}
         <section className="relative overflow-hidden pt-16 pb-20 lg:pt-20 lg:pb-28">
@@ -123,9 +157,17 @@ export default function BlogsPage() {
                   Our Blog &<br />
                   <span className="italic text-slate-600 dark:text-slate-400 font-serif">Insights.</span>
                 </h1>
-                <p className="text-lg text-slate-505 dark:text-slate-400 leading-relaxed mt-2">
-                  Stay updated with corporate announcements, technical guides, cloud updates, and modern engineering practices from the Indux team.
-                </p>
+                <div className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mt-2 space-y-4">
+                  <p>
+                    Stay updated with corporate announcements, technical guides, cloud updates, and modern engineering practices from the Indux team.
+                  </p>
+                  <p className="hidden md:block">
+                    Our experts share deep dives into CRM implementation strategies, ERP modernization workflows, and how AI can transform standard business operations. Whether you are a technical founder or a business leader, you'll find actionable insights to accelerate your digital growth.
+                  </p>
+                  <p className="hidden md:block text-sm italic">
+                    Explore our latest articles below, or use the category filters to find topics most relevant to your industry.
+                  </p>
+                </div>
               </motion.div>
 
               {/* Interactive Search Bar */}
@@ -230,11 +272,13 @@ export default function BlogsPage() {
                     className="group grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-xl dark:shadow-none transition-all duration-350 mb-12"
                   >
                     <div className="lg:col-span-7 overflow-hidden min-h-[300px] relative bg-slate-100 dark:bg-slate-850">
-                      <img
+                      <Image
                         src={featured.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${featured.featuredImage}` : fallbackImages[0]}
                         alt={featured.title}
+                        fill
+                        priority={true}
                         sizes="(max-width: 1024px) 100vw, 58vw"
-                        className="w-full h-75 object-cover transition-transform duration-700 group-hover:scale-103"
+                        className="object-cover transition-transform duration-700 group-hover:scale-103"
                       />
                     </div>
                     <div className="lg:col-span-5 p-8 sm:p-10 flex flex-col justify-center">
@@ -284,11 +328,12 @@ export default function BlogsPage() {
                       className="group flex flex-col rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-lg transition-all duration-300 h-full"
                     >
                       <div className="overflow-hidden h-48 relative bg-slate-100 dark:bg-slate-850">
-                        <img
+                        <Image
                           src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
                           alt={blog.title}
+                          fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="w-full h-75 object-cover transition-transform duration-700 group-hover:scale-103"
+                          className="object-cover transition-transform duration-700 group-hover:scale-103"
                         />
                       </div>
                       <div className="p-6 flex flex-col flex-1">
@@ -322,57 +367,7 @@ export default function BlogsPage() {
         </section>
 
         {/* ===== NEWSLETTER BANNER (Solid Deep Blue Theme) ===== */}
-        <section className="bg-[#0f2e4a] dark:bg-slate-900 w-full py-16 md:py-20 text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:30px_30px]" />
-          
-          <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-blue-300 mb-3">
-                {"// Newsletter Subscription"}
-              </p>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
-                Get the latest updates in your inbox.
-              </h2>
-              <p className="text-blue-100/70 text-sm leading-relaxed mt-3 mb-8 max-w-md mx-auto">
-                Subscribe to stay up-to-date with our regular publications, developer tips, and technology deep-dives.
-              </p>
-
-              {subscribed ? (
-                <div className="bg-blue-900/30 border border-blue-500/20 rounded-full py-3.5 px-8 max-w-md mx-auto">
-                  <p className="text-blue-300 font-semibold text-sm">
-                    ✓ Successfully subscribed! Thank you for joining.
-                  </p>
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleSubscribe}
-                  className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-                >
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="name@company.com"
-                    className="flex-1 rounded-full border border-blue-800/60 bg-blue-950/40 px-6 py-4 text-sm text-white placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all"
-                  />
-                  <Button
-                    type="submit"
-                    disabled={subscribing}
-                    className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 font-bold tracking-wider text-xs uppercase transition-all shadow-lg shadow-blue-700/20 active:scale-95 cursor-pointer"
-                  >
-                    {subscribing ? "Subscribing..." : "Subscribe"}
-                  </Button>
-                </form>
-              )}
-            </motion.div>
-          </div>
-        </section>
+        
       </main>
     </div>
   );

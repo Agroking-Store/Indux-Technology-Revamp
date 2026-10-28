@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { projects } from "@/lib/products-data";
 import { Button } from "@/components/ui/button";
 
@@ -21,16 +22,49 @@ export default function ProductsZigzagShowcase() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-      <main className="flex-grow pt-20 pb-20">
+      <script
+        type="application/ld+json"
+        id="products-schema"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "InduxCRM",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "All"
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://induxtechnology.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Products",
+                  "item": "https://induxtechnology.com/products"
+                }
+              ]
+            }
+          ])
+        }}
+      />
+      <main className="flex-grow pb-20">
         {/* HERO SECTION - Matching Service Page Style */}
-        <section className="relative py-20 overflow-hidden">
+        <section className="relative pt-6 pb-12 sm:pt-8 sm:pb-14 lg:pt-10 lg:pb-16 overflow-hidden">
           <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none bg-[radial-gradient(#cbd5e1_2px,transparent_2px)] dark:bg-[radial-gradient(#334155_2px,transparent_2px)] bg-[size:32px_32px]"></div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide mb-6"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide mb-4"
             >
               <Package className="size-4" /> Our Innovative Products
             </motion.div>
@@ -38,7 +72,7 @@ export default function ProductsZigzagShowcase() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 dark:text-white mb-6"
+              className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 sm:mb-6"
             >
               Built for <span className="text-blue-600">Performance.</span>
             </motion.h1>
@@ -72,11 +106,13 @@ export default function ProductsZigzagShowcase() {
                     {/* Image Column */}
                     <div className="w-full lg:w-1/2 relative">
                       <div className="absolute -inset-4 rounded-[2.5rem] bg-blue-600/5 dark:bg-blue-600/10 blur-2xl"></div>
-                      <div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xl group">
-                        <img
+                      <div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xl group aspect-[16/10]">
+                        <Image
                           src={project.image}
                           alt={project.title}
-                          className="w-full aspect-[16/10] object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                         />
                       </div>
                     </div>

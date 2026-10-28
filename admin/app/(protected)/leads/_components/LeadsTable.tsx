@@ -161,9 +161,13 @@ export default function LeadsTable() {
       cell: ({ row }) => {
         const lead = row.original;
         return (
-          <div className="flex flex-col gap-1 text-left max-w-[220px]">
-            <div className="text-xs text-muted-foreground truncate" title={lead.email}>{lead.email}</div>
-            <div className="text-xs text-muted-foreground font-mono truncate" title={lead.phone}>{lead.phone}</div>
+          <div className="flex flex-col gap-1 text-left max-w-[240px]">
+            <div className="text-sm font-medium text-slate-800 dark:text-slate-200 truncate" title={lead.email}>
+              {lead.email}
+            </div>
+            <div className="text-xs font-medium text-slate-500 dark:text-slate-400 font-mono truncate" title={lead.phone}>
+              {lead.phone}
+            </div>
           </div>
         );
       },

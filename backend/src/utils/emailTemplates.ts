@@ -54,7 +54,7 @@ export const getEmailBaseTemplate = (title: string, bodyContent: string) => {
       <tr>
         <td class="header">
           <a href="https://induxtechnology.com" target="_blank" style="text-decoration: none;">
-            <img src="https://www.induxtechnology.com/induxtechnologylogo_blue.webp" alt="Indux Technology" />
+            <img src="https://www.induxtechnology.com/indux%20technology%20brand%20logo.png" alt="Indux Technology" />
           </a>
         </td>
       </tr>
@@ -251,6 +251,43 @@ export const getJobApplicationTemplate = (candidateName: string, jobTitle: strin
   `;
 
   return getEmailBaseTemplate(`Application Received: ${jobTitle} - Indux Technology`, bodyContent);
+};
+
+// Candidate Hired Template
+export const getCandidateHiredTemplate = (candidateName: string, jobTitle: string) => {
+  const bodyContent = `
+    <h2 class="greeting">Congratulations ${candidateName}!</h2>
+    <p class="text-body">
+      We are thrilled to inform you that you have been selected for the <strong>${jobTitle}</strong> position at Indux Technology.
+    </p>
+    <p class="text-body">
+      Our team was very impressed with your background and skills, and we believe you will be a valuable addition to our company.
+    </p>
+    <p class="text-body">
+      Our HR team will be in touch with you shortly with your official offer letter and details regarding your onboarding process.
+    </p>
+    <p class="text-body">
+      Welcome to the team!
+    </p>
+  `;
+  return getEmailBaseTemplate(`Congratulations! You're hired for ${jobTitle} - Indux Technology`, bodyContent);
+};
+
+// Candidate Rejected Template
+export const getCandidateRejectedTemplate = (candidateName: string, jobTitle: string) => {
+  const bodyContent = `
+    <h2 class="greeting">Hi ${candidateName},</h2>
+    <p class="text-body">
+      Thank you for taking the time to apply for the <strong>${jobTitle}</strong> position at Indux Technology and for speaking with our team.
+    </p>
+    <p class="text-body">
+      While we were impressed with your background, we have decided to move forward with another candidate whose qualifications more closely align with our current needs for this specific role.
+    </p>
+    <p class="text-body">
+      We will keep your resume on file and reach out if a position opens up that matches your skillset. We wish you the best of luck in your job search and future professional endeavors.
+    </p>
+  `;
+  return getEmailBaseTemplate(`Update regarding your application for ${jobTitle} - Indux Technology`, bodyContent);
 };
 
 // Event Registration Template (Confirmation to End User)

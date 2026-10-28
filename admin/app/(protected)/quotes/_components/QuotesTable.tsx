@@ -203,9 +203,13 @@ export default function QuotesTable() {
       cell: ({ row }) => {
         const quote = row.original;
         return (
-          <div className="flex flex-col gap-1 text-left max-w-[160px]">
-            <div className="text-xs text-muted-foreground truncate" title={quote.workEmail}>{quote.workEmail}</div>
-            <div className="text-xs text-muted-foreground font-mono truncate" title={quote.phone}>{quote.phone}</div>
+          <div className="flex flex-col gap-1 text-left max-w-[200px]">
+            <div className="text-sm font-medium text-slate-800 dark:text-slate-200 truncate" title={quote.workEmail}>
+              {quote.workEmail}
+            </div>
+            <div className="text-xs font-medium text-slate-500 dark:text-slate-400 font-mono truncate" title={quote.phone}>
+              {quote.phone}
+            </div>
           </div>
         );
       },
@@ -217,17 +221,19 @@ export default function QuotesTable() {
         const rawValue = row.getValue("serviceInterest") as string;
         const mappedLabel = servicesList.find((s) => s.value === rawValue)?.label || rawValue;
         return (
-          <Badge variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-400 dark:border-indigo-900/40 font-bold whitespace-nowrap truncate max-w-[150px]">
-            {mappedLabel}
-          </Badge>
+          <div className="max-w-[210px] truncate" title={mappedLabel}>
+            <Badge variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-400 dark:border-indigo-900/40 font-bold whitespace-nowrap truncate max-w-full">
+              {mappedLabel}
+            </Badge>
+          </div>
         );
       }
     },
     {
       accessorKey: "createdAt",
-      header: () => <div className="text-center font-semibold px-4">Date</div>,
+      header: () => <div className="text-center font-semibold px-2">Date</div>,
       cell: ({ row }) => (
-        <div className="whitespace-nowrap text-sm text-muted-foreground text-center px-4">
+        <div className="whitespace-nowrap text-sm text-muted-foreground text-center px-2 min-w-[110px]">
           {new Date(row.getValue("createdAt")).toLocaleDateString(undefined, {
             month: 'short', day: 'numeric', year: 'numeric',
           })}
@@ -424,19 +430,19 @@ export default function QuotesTable() {
 
       {/* Table Container */}
       <Card className="overflow-hidden border-border bg-card shadow-sm">
-        <Table className="table-fixed w-full">
+        <Table className="w-full min-w-[1050px]">
           <TableHeader className="bg-muted/50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="hover:bg-transparent">
                 {headerGroup.headers.map((header) => {
                   let width = 'auto';
-                  if (header.id === 'serial') width = '70px';
-                  else if (header.id === 'name') width = '200px';
-                  else if (header.id === 'contact') width = '200px';
-                  else if (header.id === 'serviceInterest') width = '20%';
-                  else if (header.id === 'createdAt') width = '140px';
+                  if (header.id === 'serial') width = '60px';
+                  else if (header.id === 'name') width = '190px';
+                  else if (header.id === 'contact') width = '190px';
+                  else if (header.id === 'serviceInterest') width = '220px';
+                  else if (header.id === 'createdAt') width = '130px';
                   else if (header.id === 'status') width = '120px';
-                  else if (header.id === 'actions') width = '120px';
+                  else if (header.id === 'actions') width = '110px';
                   
                   return (
                     <TableHead key={header.id} className="font-bold text-muted-foreground uppercase text-xs tracking-wider h-11 align-middle" style={{ width }}>

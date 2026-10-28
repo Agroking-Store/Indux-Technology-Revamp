@@ -62,7 +62,7 @@ export default function CareersPage() {
     try {
       const params: any = {
         page,
-        limit: 10,
+        limit: 20,
       };
       if (searchTerm) params.search = searchTerm;
       if (selectedRole && selectedRole !== 'ALL') params.role = selectedRole;
@@ -310,22 +310,25 @@ export default function CareersPage() {
           <Table>
             <TableHeader className="bg-slate-50 dark:bg-slate-900/80">
               <TableRow className="hover:bg-transparent">
-                <TableHead className="w-[8%] px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <TableHead className="w-[6%] px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                   S.No.
                 </TableHead>
-                <TableHead className="w-[27%] px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <TableHead className="w-[24%] px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                   Position Title
                 </TableHead>
-                <TableHead className="w-[20%] px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <TableHead className="w-[18%] px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                   Department
                 </TableHead>
-                <TableHead className="w-[20%] px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <TableHead className="w-[18%] px-6 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                   Office Location
                 </TableHead>
-                <TableHead className="w-[12%] px-6 py-3 text-center text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <TableHead className="w-[8%] px-6 py-3 text-center text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Views
+                </TableHead>
+                <TableHead className="w-[10%] px-6 py-3 text-center text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                   Status
                 </TableHead>
-                <TableHead className="w-[13%] px-6 py-3 text-center text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <TableHead className="w-[16%] px-6 py-3 text-center text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                   Actions
                 </TableHead>
               </TableRow>
@@ -339,6 +342,7 @@ export default function CareersPage() {
                     <TableCell><Skeleton className="h-4 w-[120px]" /></TableCell>
                     <TableCell><Skeleton className="h-4 w-[140px]" /></TableCell>
                     <TableCell><div className="flex justify-center"><Skeleton className="h-6 w-16 rounded-full" /></div></TableCell>
+                    <TableCell><div className="flex justify-center"><Skeleton className="h-6 w-16 rounded-full" /></div></TableCell>
                     <TableCell><div className="flex justify-center gap-1.5"><Skeleton className="h-9 w-9 rounded-md" /><Skeleton className="h-9 w-9 rounded-md" /><Skeleton className="h-9 w-9 rounded-md" /></div></TableCell>
                   </TableRow>
                 ))
@@ -349,11 +353,11 @@ export default function CareersPage() {
                   onClick={() => router.push(`/careers/${career._id}`)}
                 >
                   <TableCell className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 font-semibold">
-                    {(page - 1) * 10 + index + 1}
+                    {(page - 1) * 20 + index + 1}
                   </TableCell>
                   <TableCell className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">
-                      {career.title}
+                    <div className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate" title={career.title}>
+                      {career.title.length > 25 ? career.title.substring(0, 25) + '...' : career.title}
                     </div>
                   </TableCell>
                   <TableCell className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 font-medium">
@@ -361,6 +365,9 @@ export default function CareersPage() {
                   </TableCell>
                   <TableCell className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 font-medium">
                     {career.location}
+                  </TableCell>
+                  <TableCell className="px-6 py-4 whitespace-nowrap text-center font-medium text-slate-700 dark:text-slate-300">
+                    {career.views ?? 0}
                   </TableCell>
                   <TableCell className="px-6 py-4 whitespace-nowrap text-center">
                     <span
@@ -449,7 +456,7 @@ export default function CareersPage() {
         {totalCount > 0 && (
           <div className="flex items-center justify-between px-4 py-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20">
             <div className="text-sm text-slate-500 dark:text-slate-400">
-              Showing <span className="font-medium text-slate-900 dark:text-slate-100">{(page - 1) * 10 + 1}</span> to <span className="font-medium text-slate-900 dark:text-slate-100">{Math.min(page * 10, totalCount)}</span> of <span className="font-medium text-slate-900 dark:text-slate-100">{totalCount}</span> results
+              Showing <span className="font-medium text-slate-900 dark:text-slate-100">{(page - 1) * 20 + 1}</span> to <span className="font-medium text-slate-900 dark:text-slate-100">{Math.min(page * 20, totalCount)}</span> of <span className="font-medium text-slate-900 dark:text-slate-100">{totalCount}</span> results
             </div>
             <div className="flex items-center space-x-2">
               <Button

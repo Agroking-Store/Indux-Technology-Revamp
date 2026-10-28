@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Custom CRM Software Development Company | Indux Technology",
-  description: "Transform your client relationships with custom CRM development services from Indux Technology in Pune, India. We configure, implement, and automate HubSpot, Salesforce, and bespoke CRM platforms.",
+  title: "Custom CRM Software Development | Indux Technology",
+  description: "Manage leads, customer relationships, sales activities, and follow-ups with custom CRM software designed around your business workflows.",
   alternates: {
     canonical: "https://induxtechnology.com/services/crm",
+  },
+  openGraph: {
+    title: "Custom CRM Software Development | Indux Technology",
+    description: "Manage leads, customer relationships, sales activities, and follow-ups with custom CRM software designed around your business workflows.",
+    url: "https://induxtechnology.com/services/crm",
+  },
+  twitter: {
+    title: "Custom CRM Software Development | Indux Technology",
+    description: "Manage leads, customer relationships, sales activities, and follow-ups with custom CRM software designed around your business workflows.",
   },
 };
 

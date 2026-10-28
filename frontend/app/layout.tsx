@@ -21,23 +21,23 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://induxtechnology.com"),
   title: {
-    default: "CRM Development Company in Pune & ERP Software | Indux Technology",
+    default: "Software Development Company in Pune | Indux Technology",
     template: "%s | Indux Technology"
   },
-  description: "Indux Technology is a leading IT solutions & software development company in Pune, India. We build custom CRM software, manufacturing ERP systems, web development, mobile apps, and AI solutions.",
+  description: "Indux Technology offers custom software, CRM, ERP, AI automation, and web and mobile app development in Pune to help businesses grow.",
   keywords: [
-    "Indux Technology", 
+    "Indux Technology",
     "CRM Development Company Pune",
     "ERP Software Pune",
     "AI Software Development India",
     "software company Pune",
-    "custom CRM systems", 
-    "manufacturing ERP software", 
-    "sales automation", 
-    "IT consultancy", 
-    "software development company", 
-    "cloud migration", 
-    "cybersecurity solutions", 
+    "custom CRM systems",
+    "manufacturing ERP software",
+    "sales automation",
+    "IT consultancy",
+    "software development company",
+    "cloud migration",
+    "cybersecurity solutions",
     "enterprise software solutions"
   ],
   authors: [{ name: "Indux Technology" }],
@@ -58,8 +58,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://induxtechnology.com",
-    title: "CRM Development Company in Pune & ERP Software | Indux Technology",
-    description: "Indux Technology is a leading IT solutions & software development company in Pune, India. We build custom CRM software, manufacturing ERP systems, web development, mobile apps, and AI solutions.",
+    title: "Software Development Company in Pune | Indux Technology",
+    description: "Indux Technology offers custom software, CRM, ERP, AI automation, and web and mobile app development in Pune to help businesses grow.",
     siteName: "Indux Technology",
     images: [
       {
@@ -72,8 +72,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CRM Development Company in Pune & ERP Software | Indux Technology",
-    description: "Indux Technology is a leading IT solutions & software development company in Pune, India. We build custom CRM software, manufacturing ERP systems, web development, mobile apps, and AI solutions.",
+    title: "Software Development Company in Pune | Indux Technology",
+    description: "Indux Technology offers custom software, CRM, ERP, AI automation, and web and mobile app development in Pune to help businesses grow.",
     images: ["/images/og-image.jpg"],
     creator: "@InduxTech",
   },
@@ -111,6 +111,22 @@ export default function RootLayout({
             `,
           }}
         />
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-Z6FCN27VB3`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-Z6FCN27VB3');
+            `,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col font-sans">
         <Navbar />
@@ -122,9 +138,9 @@ export default function RootLayout({
 
         <Script
           src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-translate-init" strategy="afterInteractive">
+        <Script id="google-translate-init" strategy="lazyOnload">
           {`
             function googleTranslateElementInit() {
               new google.translate.TranslateElement({

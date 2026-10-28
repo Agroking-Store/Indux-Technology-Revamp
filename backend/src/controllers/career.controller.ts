@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 import Career from "../models/Career";
 import JobApplication from "../models/JobApplication";
 import { createCareerSchema, updateCareerSchema, updateCareerStatusSchema } from "../validators/career.validator";
@@ -245,4 +246,29 @@ export const updateCareerStatus = asyncHandler(async (req: AuthRequest, res: Res
   await career.save();
 
   res.status(200).json(new ApiResponse(200, career, `Job status updated to ${status}`));
+});
+
+// ============================
+// INCREMENT CAREER VIEWS
+// ============================
+export const incrementCareerViews = asyncHandler(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const query = typeof id === "string" && /^[0-9a-fA-F]{24}$/.test(id)
+    ? { _id: new mongoose.Types.ObjectId(id) }
+    : { slug: id };
+
+  const career = await Career.findOneAndUpdate(
+    query,
+    { $inc: { views: 1 } },
+    { new: true }
+  );
+
+  if (!career) {
+    throw ApiError.notFound("Career not found");
+  }
+
+  res.status(200).json(
+    new ApiResponse(200, { views: career.views }, "Career views incremented successfully")
+  );
 });

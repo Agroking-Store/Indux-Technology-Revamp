@@ -132,11 +132,10 @@ const ReviewCard = ({
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
-                className={`w-3.5 h-3.5 ${
-                  i < rating
-                    ? "text-yellow-400 fill-yellow-400"
-                    : "text-slate-200 dark:text-slate-700"
-                }`}
+                className={`w-3.5 h-3.5 ${i < rating
+                  ? "text-yellow-400 fill-yellow-400"
+                  : "text-slate-200 dark:text-slate-700"
+                  }`}
               />
             ))}
           </div>
@@ -198,25 +197,25 @@ export default function Home() {
       }
 
       if (!containerRef.current || !trackRef.current) return;
-      
+
       const containerTop = containerRef.current.offsetTop;
       const scrollPosition = window.scrollY;
-      
+
       // If we haven't reached the container, don't move horizontal track
       if (scrollPosition < containerTop) {
         trackRef.current.style.transform = `translateX(0px)`;
         return;
       }
-      
+
       // Calculate how far we've scrolled inside the container
       const scrolledPastContainer = scrollPosition - containerTop;
-      
+
       // Calculate the max distance we can scroll vertically for this effect
       const maxScroll = scrollRange;
-      
+
       // Calculate the translation (clamp between 0 and maxScroll)
       const xTranslate = Math.min(Math.max(scrolledPastContainer, 0), maxScroll);
-      
+
       // Apply the negative translation to the track
       trackRef.current.style.transform = `translateX(-${xTranslate}px)`;
     };
@@ -240,7 +239,7 @@ export default function Home() {
     const timer = setTimeout(calculateRange, 100);
     window.addEventListener("resize", calculateRange);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     return () => {
       clearTimeout(timer);
       window.removeEventListener("resize", calculateRange);
@@ -269,6 +268,7 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Indux Technology",
+    "description": "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
     "url": "https://induxtechnology.com",
     "logo": "https://induxtechnology.com/induxtechnologylogo_white.webp",
     "sameAs": [
@@ -289,7 +289,9 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Indux Technology",
+    "description": "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
     "image": "https://induxtechnology.com/images/og-image.jpg",
+    "openingHours": "Mo-Fr 09:00-18:00",
     "@id": "https://induxtechnology.com/#localbusiness",
     "url": "https://induxtechnology.com",
     "telephone": "+918421538753",
@@ -403,22 +405,21 @@ export default function Home() {
 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4 sm:mt-6">
                   <GetQuoteModal>
-                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
-                      Get Free Quote <ArrowRight className="w-4 h-4" />
+                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                      Get Free Quote <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </GetQuoteModal>
                   <Link
                     href="/services"
-                    className="inline-flex items-center justify-center text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-slate-600 dark:hover:text-slate-400 underline underline-offset-4 decoration-2 decoration-slate-300 dark:decoration-slate-700 hover:decoration-slate-800 dark:hover:decoration-slate-500 transition-all cursor-pointer py-2 sm:py-0"
+                    className="w-full sm:w-auto bg-slate-100/50 dark:bg-slate-800/50 border-2 border-slate-300 dark:border-slate-700 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 hover:border-slate-400 dark:hover:border-slate-500 text-slate-800 dark:text-slate-200 px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 group focus-visible:ring-2 focus-visible:ring-slate-400"
                   >
                     Our Services
                   </Link>
                 </div>
               </div>
 
-              {/* Right Side: Bento Image Grid (Custom Layout) */}
-              <div className="relative w-full aspect-square md:aspect-[4/3] lg:aspect-square flex items-center justify-center max-w-lg mx-auto lg:max-w-none"
-              >
+              {/* Right Side: Cohesive Hero Image Composition */}
+              <div className="relative w-full aspect-square md:aspect-[4/3] lg:aspect-square flex items-center justify-center max-w-lg mx-auto lg:max-w-none">
                 {/* Floating Rotating Text Badge */}
                 <div className="absolute -left-2 sm:left-0 lg:-left-6 bottom-6 sm:bottom-1/4 z-20 w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-2xl dark:shadow-none dark:border dark:border-slate-800">
                   {/* Rotating Text SVG */}
@@ -448,51 +449,22 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-12 grid-rows-12 gap-2.5 sm:gap-4 w-full h-full relative z-10 p-2 sm:p-6 md:p-8">
-                  {/* Left Tall Image */}
-                  <div className="col-span-5 row-span-10 row-start-2 bg-slate-300 rounded-2xl sm:rounded-[2rem] rounded-tl-xl overflow-hidden relative shadow-lg">
-                    <Image
-                      src="/images/unsplash/img-f787f12c.webp"
-                      alt="Team working"
-                      fill
-                      loading="eager"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                    />
+                {/* Dominant Image Container */}
+                <div className="relative w-[90%] h-[90%] bg-slate-200 dark:bg-slate-800 rounded-3xl overflow-hidden shadow-2xl z-10">
+                  <img src="/images/unsplash/img-f787f12c.webp" alt="IT experts collaborating" width="800" height="600" fetchPriority="high" loading="eager" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+
+                  {/* Overlay image - Top Right */}
+                  <div className="absolute top-4 right-4 w-32 h-32 sm:w-40 sm:h-40 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl hidden sm:block">
+                    <div className="w-full h-full rounded-xl overflow-hidden">
+                      <img src="/images/unsplash/img-4dddf9a5.webp" alt="Discussion" width="400" height="400" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                    </div>
                   </div>
 
-                  {/* Right Top Image */}
-                  <div className="col-span-7 row-span-4 bg-slate-300 rounded-2xl sm:rounded-[2rem] rounded-tr-xl overflow-hidden relative shadow-lg">
-                    <Image
-                      src="/images/unsplash/img-4dddf9a5.webp"
-                      alt="Discussion"
-                      loading="eager"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 40vw"
-                      className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                    />
-                  </div>
-
-                  {/* Right Middle Image */}
-                  <div className="col-span-7 row-span-4 bg-slate-300 rounded-xl sm:rounded-2xl overflow-hidden relative shadow-lg">
-                    <Image
-                      src="/images/unsplash/img-9040528a.webp"
-                      alt="Meeting"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 40vw"
-                      className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                    />
-                  </div>
-
-                  {/* Right Bottom Image */}
-                  <div className="col-span-7 row-span-4 bg-slate-300 rounded-2xl sm:rounded-[2rem] rounded-br-xl overflow-hidden relative shadow-lg">
-                    <Image
-                      src="/images/unsplash/img-931d0d20.webp"
-                      alt="Collaboration"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 40vw"
-                      className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                    />
+                  {/* Overlay image - Bottom Left */}
+                  <div className="absolute bottom-4 left-4 w-36 h-28 sm:w-48 sm:h-32 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl hidden sm:block pl-10">
+                    <div className="w-full h-full rounded-xl overflow-hidden relative right-2">
+                      <img src="/images/unsplash/img-931d0d20.webp" alt="Collaboration" width="400" height="300" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -511,7 +483,7 @@ export default function Home() {
                 <div className="absolute top-0 left-0 w-3/4 h-[80%] sm:h-[85%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-md">
                   <Image
                     src="/images/unsplash/img-4dddf9a5.webp"
-                    alt="Team Discussion"
+                    alt="IT team discussing software development and business solutions"
                     fill
                     loading="eager"
                     sizes="(max-width: 768px) 75vw, 35vw"
@@ -523,7 +495,7 @@ export default function Home() {
                 <div className="absolute bottom-0 right-0 w-[65%] h-[58%] sm:h-[60%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-2xl border-4 sm:border-8 border-white dark:border-slate-950">
                   <Image
                     src="/images/unsplash/img-51707ed2.webp"
-                    alt="IT Professional"
+                    alt="IT professional working on a computer for software development"
                     fill
                     sizes="(max-width: 768px) 65vw, 30vw"
                     className="object-cover"
@@ -531,11 +503,11 @@ export default function Home() {
                 </div>
 
                 {/* Floating Badge (Top Right) */}
-                <div className="absolute top-4 right-0 sm:top-12 sm:-right-4 md:-right-6 bg-blue-700 rounded-2xl sm:rounded-3xl rounded-tr-md text-white p-4 sm:p-6 md:p-8 shadow-xl flex flex-col items-center justify-center min-w-[120px] sm:min-w-[160px] transform hover:-translate-y-2 transition-transform duration-500">
-                  <h3 className="text-3xl sm:text-4xl md:text-5xl font-black mb-1">
-                    <NumberTicker value={7} className="text-white" />+
-                  </h3>
-                  <p className="text-[10px] sm:text-xs font-bold tracking-widest uppercase text-blue-100 text-center leading-relaxed">
+                <div className="absolute top-4 right-0 sm:top-12 sm:-right-4 md:-right-6 bg-blue-700 rounded-2xl sm:rounded-3xl rounded-tr-md text-white p-6 sm:p-8 md:p-10 shadow-xl flex flex-col items-center justify-center min-w-[140px] sm:min-w-[180px] transform hover:-translate-y-2 transition-transform duration-500">
+                  <div className="text-3xl sm:text-4xl md:text-5xl font-black mb-1">
+                    7+
+                  </div>
+                  <p className="text-[10px] sm:text-xs font-bold tracking-widest capitalize text-blue-100 text-center leading-relaxed">
                     Years
                     <br />
                     Of Experience
@@ -565,11 +537,11 @@ export default function Home() {
                 </p>
 
                 <div className="mt-2">
-                  <h4 className="font-bold text-slate-900 dark:text-white mb-4 sm:mb-5 text-sm md:text-base">
+                  <h3 className="font-bold text-slate-900 dark:text-white mb-4 sm:mb-5 text-sm md:text-base">
                     Development Special Services:
-                  </h4>
+                  </h3>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-5 gap-x-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-5 gap-x-4">
                     {[
                       "Emergency Solutions Anytime",
                       "How to improve business",
@@ -595,9 +567,9 @@ export default function Home() {
 
                 <div className="mt-6 sm:mt-8">
                   <Link href="/contact-us" className="w-full sm:w-auto">
-                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
+                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                       Connect With Us{" "}
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
                 </div>
@@ -607,7 +579,7 @@ export default function Home() {
 
           {/* Solid Bottom Banner */}
           {/* Solid Bottom Banner */}
-          <div className="bg-[#0f2e4a] dark:bg-slate-900 w-full py-10 sm:py-12 md:py-16">
+          <div className="bg-[#0f2e4a] dark:bg-slate-900 w-full py-16 sm:py-20 md:py-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-4 md:divide-x divide-blue-800/40 dark:divide-slate-800"
               >
@@ -621,7 +593,7 @@ export default function Home() {
                   {
                     num: 200,
                     suffix: "+",
-                    label: "Complete project",
+                    label: "Completed project",
                     icon: Briefcase,
                   },
                   { num: 70, suffix: "+", label: "Team Members", icon: Users },
@@ -640,19 +612,16 @@ export default function Home() {
                     >
                       <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full border-[1.5px] border-blue-400/20 flex items-center justify-center bg-blue-800/10 shrink-0">
                         <Icon
-                          className="w-4 h-4 sm:w-6 sm:h-6 text-blue-300 opacity-80"
-                          strokeWidth={1.5}
+                          className="w-5 h-5 sm:w-7 sm:h-7 text-blue-300"
+                          strokeWidth={2}
+                          aria-hidden="true"
                         />
                       </div>
                       <div className="text-center sm:text-left">
                         <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-0.5 sm:mb-1">
-                          <NumberTicker
-                            value={stat.num}
-                            className="text-white"
-                          />
-                          {stat.suffix}
+                          {stat.num}{stat.suffix}
                         </h3>
-                        <p className="text-blue-100/70 font-medium text-[10px] sm:text-[11px] md:text-xs tracking-wider uppercase">
+                        <p className="text-blue-100/70 font-medium text-[10px] sm:text-[11px] md:text-xs tracking-wider capitalize">
                           {stat.label}
                         </p>
                       </div>
@@ -668,37 +637,25 @@ export default function Home() {
         <section className="relative overflow-hidden pb-16 sm:pb-24 lg:pb-32 pt-0 bg-slate-50 dark:bg-slate-950">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header Area */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 sm:mb-16">
-              <div className="max-w-2xl"
-              >
-                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
-                  <div className="flex gap-1">
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-300 dark:bg-slate-700"></span>
-                  </div>
-                  Our Services
+            <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+              <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
+                <div className="flex gap-1">
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-300 dark:bg-slate-700"></span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                  Accelerate Growth with Our{" "}
-                  <span className="text-blue-600">IT Expertise</span>
-                </h2>
+                Our Services
               </div>
-
-              <div className="w-full sm:w-auto"
-              >
-                <Link href="/services" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
-                    View All Services{" "}
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+                Accelerate Growth with Our{" "}
+                <span className="text-blue-600">IT Expertise</span>
+              </h2>
             </div>
+
 
             {/* Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {/* Card 1: CRM */}
-              <div 
+              <div
                 onClick={() => router.push('/services/crm')}
                 className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
@@ -706,7 +663,7 @@ export default function Home() {
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
                       src="/images/unsplash/img-3516b3f9.webp"
-                      alt="CRM Solutions"
+                      alt="Custom CRM software development team working on business solutions"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
@@ -730,11 +687,17 @@ export default function Home() {
               </div>
 
               {/* Card 2: Manufacturing ERP */}
-              <div 
+              <div
                 onClick={() => router.push('/services/erp')}
                 className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
-                <div className="p-6 sm:p-8 pb-2 sm:pb-4 flex flex-col flex-grow order-2 md:order-1">
+                <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                    <img src="/images/unsplash/img-8afc3801.webp" alt="Manufacturing ERP" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                </div>
+                <div className="p-6 sm:p-8 pt-2 sm:pt-4 flex flex-col flex-grow">
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-white mb-2 sm:mb-3 transition-colors">
                     Manufacturing ERP
                   </h3>
@@ -747,32 +710,16 @@ export default function Home() {
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-                <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64 order-1 md:order-2">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                    <Image
-                      src="/images/unsplash/img-8afc3801.webp"
-                      alt="Manufacturing ERP"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                </div>
               </div>
 
               {/* Card 3: Sales Automation */}
-              <div 
+              <div
                 onClick={() => router.push('/services/automation')}
                 className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                    <Image
-                      src="/images/unsplash/img-1bd55875.webp"
-                      alt="Sales Automation"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                    <img src="/images/unsplash/img-1bd55875.webp" alt="Sales Automation" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                     />
                   </div>
                 </div>
@@ -790,6 +737,14 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="mt-12 sm:mt-16 flex justify-center w-full">
+              <Link href="/services" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                  View All Services{" "}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
@@ -826,15 +781,15 @@ export default function Home() {
                 </p>
 
                 <Link href="/contact-us" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
+                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                     Consult With Our Expertise{" "}
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
               </div>
 
               {/* Right Side: Scrollable Cards */}
-              <div className="w-full lg:w-7/12 flex flex-col gap-6 sm:gap-8 lg:gap-12 lg:pb-32">
+              <div className="w-full lg:w-7/12 flex flex-col gap-6 lg:gap-8 lg:pb-32">
                 {[
                   {
                     icon: Users,
@@ -861,25 +816,25 @@ export default function Home() {
                   const numStr = String(idx + 1).padStart(2, "0");
                   return (
                     <div
-                      key={idx} className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-10 items-start w-full group"
+                      key={idx} className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 items-center w-full group"
                     >
                       {/* Huge Number */}
-                      <div className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-bold text-blue-800 dark:text-blue-500 leading-none tracking-tighter sm:mt-4 w-16 sm:w-24 md:w-32 flex-shrink-0">
+                      <div className="text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] font-bold text-blue-800/10 dark:text-blue-500/10 leading-none tracking-tighter sm:mt-2 w-16 sm:w-20 md:w-28 flex-shrink-0">
                         {numStr}
                       </div>
 
-                      {/* Content Card (Strict Flat Border) */}
-                      <div className="bg-white dark:bg-slate-900 rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 border-[1.5px] border-slate-200 dark:border-slate-800 transition-all duration-500 flex-1 relative group-hover:border-blue-800/30 dark:group-hover:border-blue-500/30 w-full">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-900 dark:bg-blue-900/40 flex items-center justify-center mb-4 sm:mb-6">
+                      {/* Content Card */}
+                      <div className="bg-white dark:bg-slate-900 rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 border-[1.5px] border-slate-200 dark:border-slate-800 transition-all duration-500 flex-1 relative group-hover:border-blue-800/30 dark:group-hover:border-blue-500/30 w-full">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-900 dark:bg-blue-900/40 flex items-center justify-center mb-3 sm:mb-4">
                           <Icon
                             className="w-5 h-5 md:w-6 md:h-6 text-white dark:text-blue-400"
                             strokeWidth={2}
                           />
                         </div>
-                        <h4 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-slate-900 dark:text-white mb-2 sm:mb-3 md:mb-4 tracking-tight">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-medium text-slate-900 dark:text-white mb-2 tracking-tight">
                           {feature.title}
-                        </h4>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed">
+                        </h3>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
                           {feature.desc}
                         </p>
                       </div>
@@ -890,41 +845,26 @@ export default function Home() {
             </div>
           </div>
         </section>
-        {/* WORK PROCESS SECTION - Responsive (Vertical on Mobile, Fake Horizontal on Desktop) */}
-        <section
-          ref={containerRef}
-          style={{
-            height: scrollRange > 0 ? `${scrollRange + viewportHeight}px` : "auto",
-          }}
-          className="relative bg-slate-50 dark:bg-slate-950"
-        >
-          {/* Container logic: sticky on desktop, static block on mobile */}
-          <div className="md:sticky md:top-0 flex md:h-screen items-center overflow-hidden z-10 py-16 md:py-0">
-            <div
-              ref={trackRef}
-              className="flex flex-col md:flex-row gap-8 px-4 sm:px-6 lg:px-8 items-center w-full md:w-auto md:flex-nowrap will-change-transform"
-            >
-              {/* Intro Title Block */}
-              <div className="w-full md:w-[50vw] lg:w-[35vw] md:flex-shrink-0 flex flex-col justify-center pr-0 md:pr-8 lg:pr-12 text-center md:text-left mb-10 md:mb-0">
-                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-sm text-blue-600 uppercase mb-4">
-                  <div className="flex gap-1">
-                    <span className="w-3.5 h-3.5 rounded-full bg-blue-500"></span>
-                    <span className="w-3.5 h-3.5 rounded-full bg-slate-300 dark:bg-slate-800"></span>
-                  </div>
-                  Our Work Process
-                </div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6">
-                  Step-by-Step to <br /> Your{" "}
-                  <span className="text-blue-600">Growth</span>
-                </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
-                  We collaborate closely with clients to understand their vision,
-                  goals, and target audience, conducting in-depth research to
-                  craft tailored digital solutions.
-                </p>
+        {/* WORK PROCESS SECTION */}
+        <section className="relative bg-slate-50 dark:bg-slate-950 py-16 sm:py-24 lg:py-32 overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+              <div className="inline-flex items-center gap-2 font-bold tracking-wider text-sm text-blue-600 uppercase mb-4 justify-center">
+                Our Work Process
               </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6">
+                Step-by-Step to <br className="hidden sm:block" /> Your{" "}
+                <span className="text-blue-600">Growth</span>
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
+                We collaborate closely with clients to understand their vision,
+                goals, and target audience, conducting in-depth research to
+                craft tailored digital solutions.
+              </p>
+            </div>
 
-              {/* Process Cards */}
+            {/* CSS Grid Container */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
               {[
                 {
                   step: "01",
@@ -949,34 +889,23 @@ export default function Home() {
               ].map((card, idx) => (
                 <div
                   key={idx}
-                  className="w-full md:w-[45vw] lg:w-[30vw] md:flex-shrink-0 flex flex-col rounded-[2rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-auto md:h-[450px]"
+                  className="flex flex-col rounded-3xl overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
                 >
-                  <div className="flex-1 p-8 md:p-10 relative overflow-hidden flex flex-col justify-center">
-                    <div className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 text-[8rem] md:text-[12rem] font-bold text-slate-100 dark:text-slate-800/50 pointer-events-none select-none z-0">
+                  <div className="p-6 md:p-8 relative overflow-hidden flex flex-col justify-center h-full min-h-[300px]">
+                    <div className="absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 text-[6rem] md:text-[8rem] font-bold text-slate-100 dark:text-slate-800/30 pointer-events-none select-none z-0">
                       {card.step}
                     </div>
-                    <div className="relative z-10">
-                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
+                    <div className="relative z-10 flex flex-col h-full">
+                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">
                         {card.title}
                       </h3>
-                      <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium text-sm md:text-base">
+                      <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium text-sm">
                         {card.desc}
                       </p>
                     </div>
                   </div>
-                  <div className="h-20 bg-[#0f2e4a] dark:bg-slate-800 flex items-center justify-between px-8 md:px-10 relative overflow-hidden">
-                    {/* Diagonal Stripes Pattern */}
-                    <div className="absolute inset-0 opacity-10 bg-[linear-gradient(45deg,rgba(255,255,255,1)_25%,transparent_25%,transparent_50%,rgba(255,255,255,1)_50%,rgba(255,255,255,1)_75%,transparent_75%,transparent)] bg-[length:10px_10px]"></div>
-                    <span className="text-white text-xs font-bold tracking-widest uppercase relative z-10">
-                      Step
-                    </span>
-                    <span className="text-white text-xl font-bold relative z-10">
-                      {card.step}
-                    </span>
-                  </div>
                 </div>
               ))}
-              <div className="hidden md:block w-[10vw] flex-shrink-0" />
             </div>
           </div>
         </section>
@@ -1006,58 +935,61 @@ export default function Home() {
               {[
                 {
                   title: "Indux CRM",
+                  alt: "Indux CRM dashboard for managing customers and business operations",
                   category: "Business Intelligence",
                   img: "/induxcrm.webp",
                   link: "/products/indux-crm",
                 },
                 {
                   title: "HRMS",
+                  alt: "HRMS software dashboard for managing employee information and HR operations",
                   category: "Human Resources",
                   img: "/hrms.webp",
                   link: "/products/hrms-suite",
                 },
                 {
                   title: "Jemsoft",
+                  alt: "Jemsoft business software solution by Indux Technology",
                   category: "Insurance ERP",
                   img: "/jemsoft.webp",
                   link: "/products/jem-soft",
                 },
                 {
                   title: "InduxERP",
+                  alt: "InduxERP dashboard for managing business processes and operations",
                   category: "Enterprise Software",
                   img: "/indux_erp.webp",
                   link: "/products/indux-erp",
                 },
               ].map((project, idx) => (
                 <div
-                  key={idx} 
+                  key={idx}
                   onClick={() => router.push(project.link)}
                   className="group bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-500 cursor-pointer flex flex-col"
                 >
                   {/* Image Container */}
                   <div className="p-3 sm:p-4 md:p-6 pb-0">
                     <div className="relative w-full h-[200px] xs:h-[250px] sm:h-[300px] rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800">
-                      <Image
+                      <img
                         src={project.img}
-                        alt={project.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                        alt={project.alt || project.title}
+                        width="800"
+                        height="600"
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                       />
+                      <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10">
+                        <span className="inline-block bg-[#0f2e4a]/90 backdrop-blur-sm text-white text-[10px] sm:text-xs font-semibold tracking-wide px-3 py-1.5 rounded-full">
+                          {project.category}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
                   {/* Content Container */}
-                  <div className="p-5 sm:p-6 md:p-8 flex flex-col flex-grow">
-                    {/* Badge */}
-                    <div className="mb-3 sm:mb-4">
-                      <span className="inline-block bg-[#0f2e4a] text-white text-[10px] sm:text-xs font-semibold tracking-wide px-3 py-1.5 rounded-full">
-                        {project.category}
-                      </span>
-                    </div>
-
+                  <div className="p-5 sm:p-6 md:p-8 pt-4 sm:pt-5 md:pt-6 flex flex-col flex-grow justify-center">
                     {/* Title & Button */}
-                    <div className="flex items-center justify-between mt-auto">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors duration-300 pr-2 sm:pr-4">
                         {project.title}
                       </h3>
@@ -1072,10 +1004,10 @@ export default function Home() {
 
             {/* View All Button */}
             <div className="mt-12 sm:mt-16 text-center">
-              <Link href="/products" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
+              <Link href="/products" className="inline-block">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Work{" "}
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
             </div>
@@ -1085,22 +1017,23 @@ export default function Home() {
         {/* TESTIMONIALS SECTION */}
         <section className="relative pb-16 sm:pb-24 lg:pb-32 pt-0 bg-slate-50 dark:bg-slate-950 overflow-hidden">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
+            <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+              <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-4 justify-center">
+                <div className="flex gap-1">
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-200 dark:bg-slate-800"></span>
+                </div>
+                Testimonials
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-2">
+                Trusted by Our <span className="text-blue-600">Clients</span>
+              </h2>
+            </div>
+            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
               {/* Left Side: Static Anchor */}
               <div className="w-full lg:w-5/12 flex flex-col gap-4 sm:gap-6">
-                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase">
-                  <div className="flex gap-1">
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-200 dark:bg-slate-800"></span>
-                  </div>
-                  Testimonials
-                </div>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-2">
-                  Trusted by Our <span className="text-blue-600">Clients</span>
-                </h2>
-
                 {/* Trust Rating Card */}
-                <div className="mt-2 bg-[#0f2e4a] rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                <div className="mt-2 bg-[#0f2e4a] rounded-2xl sm:rounded-3xl p-6 sm:p-8 pb-8 sm:pb-10 shadow-2xl relative overflow-hidden">
                   <div className="absolute top-0 right-0 p-4 opacity-10">
                     <svg
                       className="w-16 h-16 sm:w-24 sm:h-24 text-white transform translate-x-2 -translate-y-2"
@@ -1131,22 +1064,28 @@ export default function Home() {
                       Customer experiences that speak for themselves.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mt-2">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-6 mt-6">
                       <div className="flex -space-x-3 justify-center sm:justify-start">
-                        <img
+                        <Image
                           className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
                           src="https://i.pravatar.cc/150?u=1"
                           alt="avatar"
+                          width={40}
+                          height={40}
                         />
-                        <img
+                        <Image
                           className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
                           src="https://i.pravatar.cc/150?u=2"
                           alt="avatar"
+                          width={40}
+                          height={40}
                         />
-                        <img
+                        <Image
                           className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
                           src="https://i.pravatar.cc/150?u=3"
                           alt="avatar"
+                          width={40}
+                          height={40}
                         />
                         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] bg-blue-600 flex items-center justify-center text-white font-bold text-xs z-10">
                           +37
@@ -1157,7 +1096,7 @@ export default function Home() {
                         href="https://www.google.com/search?sca_esv=590eb0aa4b74244e&hl=en-IN&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_8rvk6vr8yfTYT7skK3V3XFwpaMdTntxaRkoVitZ5oNvuSsJBuUECr7oGrWVEL7WbYUpLvB-GYmK1MIbvIMdk3etA_Thu6PRaHoPCDFquLsgpBZ0Hg%3D%3D&q=INDUX+TECHNOLOGY+Reviews&sa=X&ved=2ahUKEwjY9OHo7s6VAxVhzjgGHS8-DSYQ0bkNegQIJxAI&biw=1536&bih=730&dpr=1.25"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center justify-center gap-2 bg-white/10 hover:bg-white text-white hover:text-[#0f2e4a] text-xs sm:text-sm font-bold py-2.5 px-5 rounded-full transition-all duration-300 backdrop-blur-sm border border-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 text-sm sm:text-base rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group"
                       >
                         Write Review{" "}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1168,7 +1107,7 @@ export default function Home() {
               </div>
 
               {/* Right Side: Marquee Reviews */}
-              <div className="w-full lg:w-7/12 relative mt-6 lg:mt-24 flex flex-col gap-4 sm:gap-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+              <div className="w-full lg:w-7/12 relative mt-6 lg:mt-0 flex flex-col gap-4 sm:gap-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
                 <Marquee pauseOnHover className="[--duration:40s]">
                   {firstRow.map((review, index) => (
                     <ReviewCard key={review.name + index} {...review} />
@@ -1194,7 +1133,7 @@ export default function Home() {
           <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-8 mb-12 sm:mb-16">
+            <div className="flex flex-col md:flex-row md:items-end justify-start gap-6 sm:gap-8 mb-12 sm:mb-16">
               <div className="flex flex-col gap-3 sm:gap-4">
                 <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-400 uppercase">
                   <div className="flex gap-1">
@@ -1207,59 +1146,73 @@ export default function Home() {
                   Our Latest <br className="hidden md:block" /> News & Blogs
                 </h2>
               </div>
-              <Link href="/blogs" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer">
-                  View All Blogs{" "}
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
             </div>
 
             {/* Blog Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-  {displayedBlogs.map((blog, idx) => (
-    <Link
-      key={blog._id || idx}
-      href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`}
-      className="bg-[#153a5c] rounded-3xl overflow-hidden border border-white/5 hover:border-blue-400/30 transition-all shadow-xl group flex flex-col h-full"
-    >
-      {/* Image */}
-      <div className="p-3">
-        <div className="h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden bg-slate-800">
-          <img
-            src={
-              blog.featuredImage
-                ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${blog.featuredImage}`
-                : "/images/unsplash/img-62ae3366.webp"
-            }
-            alt={blog.title}
-            className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-          />
-        </div>
-      </div>
+              {displayedBlogs.map((blog, idx) => (
+                <Link
+                  key={blog._id || idx}
+                  href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`}
+                  className="bg-[#153a5c] rounded-3xl overflow-hidden border border-white/5 hover:border-blue-400/30 transition-all shadow-xl group flex flex-col h-full"
+                >
+                  {/* Image */}
+                  <div className="p-3">
+                    <div className="relative h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden bg-slate-800">
+                      <img
+                        src={
+                          blog.featuredImage
+                            ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${blog.featuredImage}`
+                            : "/images/unsplash/img-62ae3366.webp"
+                        }
+                        alt={
+                          blog.title.includes("Cloud Migration")
+                            ? "Cloud migration guide for businesses and enterprise applications"
+                            : blog.title.includes("Cybersecurity")
+                              ? "Cybersecurity threats and protection strategies for businesses"
+                              : blog.title.includes("AI is Revolutionizing")
+                                ? "AI technology transforming custom enterprise software solutions"
+                                : blog.title
+                        }
+                        width="800"
+                        height="600"
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                      />
+                    </div>
+                  </div>
 
-      {/* Content */}
-      <div className="p-6 flex flex-col flex-1">
-        <span className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-md w-fit uppercase">
-          {blog.category}
-        </span>
+                  {/* Content */}
+                  <div className="p-6 flex flex-col flex-1">
+                    <span className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-md w-fit uppercase">
+                      {blog.category}
+                    </span>
 
-        <h3 className="mt-4 text-xl font-bold text-white group-hover:text-blue-300 transition-colors line-clamp-2">
-          {blog.title}
-        </h3>
+                    <h3 className="mt-4 text-xl font-bold text-white group-hover:text-blue-300 transition-colors line-clamp-2">
+                      {blog.title}
+                    </h3>
 
-        <p className="mt-3 text-blue-100/70 text-sm flex-1 line-clamp-3">
-          {blog.shortDescription}
-        </p>
+                    <p className="mt-3 text-blue-100/70 text-sm flex-1 line-clamp-3">
+                      {blog.shortDescription}
+                    </p>
 
-        <div className="mt-6 inline-flex items-center text-blue-400 font-bold hover:text-blue-300">
-          Read More
-          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-        </div>
-      </div>
-    </Link>
-  ))}
-</div>
+                    <div className="mt-6 inline-flex items-center text-blue-400 font-bold hover:text-blue-300">
+                      Read More
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            <div className="mt-12 sm:mt-16 flex justify-center">
+              <Link href="/blogs" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                  View All Blogs{" "}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
 

@@ -197,7 +197,7 @@ export default function DashboardPage() {
           </p>
         </div>
         <div className="flex gap-3 relative z-10">
-          <Link href="/events/create" className={cn(buttonVariants({ variant: "default" }), "bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-lg shadow-indigo-600/20 h-auto py-2.5 px-4.5 cursor-pointer border-0")}>
+          <Link href="/events/new" className={cn(buttonVariants({ variant: "default" }), "bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-lg shadow-indigo-600/20 h-auto py-2.5 px-4.5 cursor-pointer border-0")}>
             <PlusCircle size={14} className="mr-1.5" /> New Event
           </Link>
           <Link href="/careers/create" className={cn(buttonVariants({ variant: "outline" }), "rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 text-slate-700 h-auto py-2.5 px-4.5 cursor-pointer bg-white hover:bg-slate-100")}>

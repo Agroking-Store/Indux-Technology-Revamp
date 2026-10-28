@@ -90,7 +90,7 @@ export default function ProductDetailPage() {
               className="relative group"
             >
               <div className="absolute -inset-4 bg-blue-600/10 rounded-[3rem] blur-3xl group-hover:bg-blue-600/20 transition-all"></div>
-              <img
+              <img width={800} height={600}
                 src={product.image}
                 alt={product.title}
                 className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-2xl w-full object-cover aspect-[16/10]"

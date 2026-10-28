@@ -152,8 +152,10 @@ export default function CRMServicePage() {
                   <span className="text-blue-600">Redefined.</span>
                 </h1>
                 <p className="text-lg text-slate-555 dark:text-slate-400 leading-relaxed mt-2 font-sans">
-                  We design, implement, and customize Customer Relationship Management platforms that empower your sales, marketing, and support teams to build lasting connections.
-                </p>
+                  Indux Technology builds custom CRM software for businesses in Pune and
+                  across India. We develop CRM systems for lead management, sales pipelines,
+                  customer management, workflow automation, analytics, WhatsApp integration,
+                  and business operations.                </p>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4">
                   <Button
                     nativeButton={false}
@@ -165,7 +167,7 @@ export default function CRMServicePage() {
                   <Button
                     nativeButton={false}
                     variant="ghost"
-                    className="w-full sm:w-auto px-8 py-6 rounded-full font-medium text-base text-slate-700 dark:text-slate-350 hover:bg-slate-200/50 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-800/80 transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2"
+                    className="px-8 py-6 rounded-full text-base font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200/50 dark:hover:bg-slate-900 cursor-pointer"
                     render={<a href="#capabilities" />}
                   >
                     Explore Capabilities
@@ -430,7 +432,7 @@ export default function CRMServicePage() {
             >
               <Image
                 src="/images/unsplash/img-bbad54bc.webp"
-                alt="CRM Data Dashboard"
+                alt="CRM Data Dashboard Visualization with Graphs and Charts showing real-time data insights and performance metrics for business decision-making and customer relationship management."
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"
               />

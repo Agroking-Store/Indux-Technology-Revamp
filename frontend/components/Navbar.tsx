@@ -287,7 +287,7 @@ export default function Navbar() {
           >
             <Image
               src="/induxtechnologylogo_blue.webp"
-              alt="Indux Technology"
+              alt="Indux Technology Logo"
               width={390}
               height={113}
               className="w-[125px] md:w-[160px] h-auto object-contain dark:hidden"
@@ -295,7 +295,7 @@ export default function Navbar() {
             />
             <Image
               src="/induxtechnologylogo_white.webp"
-              alt="Indux Technology"
+              alt="Indux Technology Logo"
               width={390}
               height={113}
               className="w-[125px] md:w-[160px] h-auto object-contain hidden dark:block"
@@ -385,7 +385,7 @@ function DropdownMenu({
       {data.href ? (
         <Link
           href={data.href}
-          className="flex items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+          className="flex h-full items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
         >
           {data.title}
           <motion.div
@@ -396,7 +396,10 @@ function DropdownMenu({
           </motion.div>
         </Link>
       ) : (
-        <div className="flex items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors">
+        <button
+          type="button"
+          className="flex h-full items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+        >
           {data.title}
           <motion.div
             animate={{ rotate: isHovered ? 180 : 0 }}
@@ -404,7 +407,7 @@ function DropdownMenu({
           >
             <ChevronDown className="size-4" />
           </motion.div>
-        </div>
+        </button>
       )}
       {/* Aesthetic Bottom Hover Line */}
       <motion.span
@@ -535,31 +538,32 @@ function MobileNav({ pathname }: { pathname: string }) {
         </div>
 
         <div className="flex-1 overflow-y-auto py-6 px-6 sm:px-8 flex flex-col gap-5">
+          {/* Products Link */}
+          <SheetClose
+            render={
+              <Link
+                href="/products"
+                className="block text-xl sm:text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+              />
+            }
+          >
+            Products
+          </SheetClose>
+
           {/* Services Accordion */}
           <div>
-            <div className="flex items-center justify-between w-full mb-2">
-              <SheetClose
-                render={
-                  <Link
-                    href="/services"
-                    className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
-                  />
-                }
-              >
-                Services
-              </SheetClose>
-              <button
-                onClick={() => toggleSection("services")}
-                className="p-2 -mr-2"
-              >
-                <ChevronDown
-                  className={cn(
-                    "size-6 text-slate-900 dark:text-white transition-transform",
-                    openSection === "services" && "rotate-180",
-                  )}
-                />
-              </button>
-            </div>
+            <button
+              onClick={() => toggleSection("services")}
+              className="flex items-center justify-between w-full text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 cursor-pointer"
+            >
+              Services
+              <ChevronDown
+                className={cn(
+                  "size-6 transition-transform",
+                  openSection === "services" && "rotate-180",
+                )}
+              />
+            </button>
             {openSection === "services" && (
               <div className="flex flex-col gap-3 mt-3 ml-4 border-l-2 dark:border-slate-800 pl-4">
                 {servicesData.main.map((item) => (
@@ -568,11 +572,12 @@ function MobileNav({ pathname }: { pathname: string }) {
                     render={
                       <Link
                         href={item.href || "#"}
-                        className="text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                       />
                     }
                   >
-                    {item.title}
+                    <item.icon className="size-5 shrink-0 text-blue-600 dark:text-blue-400" />
+                    <span>{item.title}</span>
                   </SheetClose>
                 ))}
               </div>
@@ -583,7 +588,7 @@ function MobileNav({ pathname }: { pathname: string }) {
           <div>
             <button
               onClick={() => toggleSection("company")}
-              className="flex items-center justify-between w-full text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2"
+              className="flex items-center justify-between w-full text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 cursor-pointer"
             >
               Company
               <ChevronDown
@@ -601,27 +606,19 @@ function MobileNav({ pathname }: { pathname: string }) {
                     render={
                       <Link
                         href={item.href || "#"}
-                        className="text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                       />
                     }
                   >
-                    {item.title}
+                    <item.icon className="size-5 shrink-0 text-blue-600 dark:text-blue-400" />
+                    <span>{item.title}</span>
                   </SheetClose>
                 ))}
               </div>
             )}
           </div>
 
-          <SheetClose
-            render={
-              <Link
-                href="/products"
-                className="block text-xl sm:text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
-              />
-            }
-          >
-            Products
-          </SheetClose>
+          {/* Contact Us Link */}
           <SheetClose
             render={
               <Link
@@ -636,7 +633,7 @@ function MobileNav({ pathname }: { pathname: string }) {
 
         <div className="p-6 border-t dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 flex flex-col gap-4">
           <GetQuoteModal>
-            <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-6 rounded-2xl text-lg shadow-lg shadow-blue-500/30 cursor-pointer border-t border-white/20">
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group mt-4">
               Get Quote
             </Button>
           </GetQuoteModal>

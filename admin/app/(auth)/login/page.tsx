@@ -107,13 +107,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Footer info badge */}
-        <div className="bg-slate-950/40 p-3.5 rounded-2xl border border-slate-850 flex items-start gap-2.5 text-slate-500 text-xs leading-relaxed">
-          <Sparkles className="size-4.5 text-indigo-400 shrink-0 mt-0.5" />
-          <p>
-            Default credentials for testing: <strong className="text-slate-300">admin@example.com</strong> / <strong className="text-slate-300">password123</strong>
-          </p>
-        </div>
 
       </div>
     </div>

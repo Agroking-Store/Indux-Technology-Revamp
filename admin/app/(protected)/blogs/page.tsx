@@ -60,6 +60,7 @@ interface Blog {
   author?: string;
   tags?: string[];
   status: "Draft" | "Published";
+  views?: number;
   createdAt: string;
 }
 
@@ -269,6 +270,15 @@ export default function BlogsPage() {
               day: "numeric",
               year: "numeric",
             })}
+          </div>
+        ),
+      },
+      {
+        accessorKey: "views",
+        header: () => <div className="text-center font-semibold">Views</div>,
+        cell: ({ row }) => (
+          <div className="text-center font-medium text-slate-700 dark:text-slate-300">
+            {row.getValue("views") ?? 0}
           </div>
         ),
       },
@@ -514,6 +524,7 @@ export default function BlogsPage() {
                   else if (header.id === "title") width = "200px";
                   else if (header.id === "category") width = "150px";
                   else if (header.id === "createdAt") width = "140px";
+                  else if (header.id === "views") width = "100px";
                   else if (header.id === "status") width = "120px";
                   else if (header.id === "actions") width = "120px";
 

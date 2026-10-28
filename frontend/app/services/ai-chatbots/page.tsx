@@ -443,7 +443,7 @@ export default function AiSolutionsServicePage() {
             >
               <Image
                 src="/images/unsplash/img-45690b6c.webp"
-                alt="AI Development Coding screen"
+                alt="AI Solutions Quality Guarantee Image and Visual Representation of Pipeline Uptime and Accuracy"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"
               />

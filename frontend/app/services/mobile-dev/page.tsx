@@ -443,7 +443,7 @@ export default function MobileDevServicePage() {
             >
               <Image
                 src="/images/unsplash/img-5ef227c4.webp"
-                alt="Mobile Code App"
+                alt="Mobile Code App Development Interface"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"
               />

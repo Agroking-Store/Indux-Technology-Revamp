@@ -96,7 +96,7 @@ export default function EventFormPage() {
   const searchParams = useSearchParams();
 
   const rawId = params?.id as string | undefined;
-  const isCreation = !rawId || rawId === 'new';
+  const isCreation = !rawId || rawId === 'new' || rawId === 'create';
   const eventId = isCreation ? null : rawId;
 
   // Determine mode: 'create', 'edit', or 'view'

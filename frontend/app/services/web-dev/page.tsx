@@ -443,7 +443,7 @@ export default function WebDevServicePage() {
             >
               <Image
                 src="/images/unsplash/img-325f90ce.webp"
-                alt="Web Development Code"
+                alt="Web Development Computer Screen"
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity"
               />
