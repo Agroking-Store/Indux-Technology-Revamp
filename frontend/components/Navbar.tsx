@@ -184,7 +184,7 @@ const LanguageSwitcher = () => {
     <div className="flex items-center gap-1 px-3 border rounded-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 h-10 notranslate">
       <Globe className="size-4 text-slate-500 shrink-0" />
       <Select value={currentLang} onValueChange={changeLanguage}>
-        <SelectTrigger className="w-auto min-w-[60px] border-none bg-transparent h-full focus:ring-0 text-[13px] font-bold cursor-pointer gap-2 px-1">
+        <SelectTrigger className="w-auto min-w-[60px] border-none bg-transparent dark:bg-transparent hover:bg-transparent dark:hover:bg-transparent h-full focus:ring-0 text-[13px] font-bold cursor-pointer gap-2 px-1 shadow-none">
           <SelectValue>{languageNames[currentLang]}</SelectValue>
         </SelectTrigger>
         <SelectContent alignItemWithTrigger={false} sideOffset={8} className="min-w-[120px] rounded-lg border-slate-200 dark:border-slate-800 shadow-lg">

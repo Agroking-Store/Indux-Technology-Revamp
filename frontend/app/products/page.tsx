@@ -106,13 +106,13 @@ export default function ProductsZigzagShowcase() {
                     {/* Image Column */}
                     <div className="w-full lg:w-1/2 relative">
                       <div className="absolute -inset-4 rounded-[2.5rem] bg-blue-600/5 dark:bg-blue-600/10 blur-2xl"></div>
-                      <div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xl group aspect-[16/10]">
+                      <div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xl group aspect-[16/10] flex items-center justify-center p-3 sm:p-4">
                         <Image
                           src={project.image}
                           alt={project.title}
                           fill
                           sizes="(max-width: 768px) 100vw, 50vw"
-                          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                          className="object-contain grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                         />
                       </div>
                     </div>

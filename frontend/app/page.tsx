@@ -15,6 +15,8 @@ import {
   Cpu,
   Briefcase,
   Smile,
+  ChevronDown,
+  HelpCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef, useEffect, useState } from "react";
@@ -359,6 +361,45 @@ export default function Home() {
     ]
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does Indux Technology do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Indux Technology provides custom software development, CRM and ERP solutions, web and mobile app development, AI solutions, and business automation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is Indux Technology located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Indux Technology is based in Kharadi, Pune, Maharashtra, India, and offers digital solutions to businesses beyond its local area."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Indux Technology develop custom software?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Projects can be planned around specific business requirements, workflows, features, and integration needs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I discuss my software project?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Visit the contact page at https://induxtechnology.com/contact-us to submit your requirements and connect with the team."
+        }
+      }
+    ]
+  };
+
   return (
     <div className="flex flex-col min-h-screen w-full overflow-x-clip bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <script
@@ -371,7 +412,34 @@ export default function Home() {
         id="local-business-schema"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        id="faq-schema"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        id="faq-schema"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <main className="flex-1 w-full">
+        {/* TOP HERO BANNER (BELOW NAVBAR) */}
+        <section className="relative w-full bg-[#d8ecfc] dark:bg-slate-900 overflow-hidden border-b border-slate-200/60 dark:border-slate-800">
+          <div className="w-full relative">
+            <div className="relative w-full aspect-[21/9] sm:aspect-[24/9] md:aspect-[3/1] max-h-[520px]">
+              <Image
+                src="/hero-banner-blue.jpg"
+                alt="One Of The Fastest Ways To Gain Business Success - Indux Technology"
+                fill
+                priority
+                quality={95}
+                sizes="100vw"
+                className="object-contain sm:object-cover object-center"
+              />
+            </div>
+          </div>
+        </section>
+
         {/* HERO SECTION */}
         <section className="relative overflow-hidden pt-6 pb-16 sm:pt-10 sm:pb-24 lg:pt-8 lg:pb-32">
           {/* Subtle dot pattern background */}
@@ -390,7 +458,7 @@ export default function Home() {
                   Elevate your work with us
                 </div>
 
-                <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.15] sm:leading-[1.1]">
+                <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.15] sm:leading-[1.1]">
                   Build{" "}
                   <LineShadowText className="italic" shadowColor="#2563eb">
                     Smarter.
@@ -398,14 +466,13 @@ export default function Home() {
                   <br />
                   Scale Faster.
                 </h1>
-
                 <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed mt-1 sm:mt-2 max-w-md">
-                  Custom IT Solutions That Power Your Business.
+                  We build smart digital solutions that help businesses work better and grow faster. From custom software, CRM, and ERP to AI automation, web and mobile app development, we turn your ideas into practical solutions that deliver real results
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4 sm:mt-6">
                   <GetQuoteModal>
-                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                    <Button className="w-full sm:w-auto h-auto bg-blue-600 hover:bg-blue-700 text-white border-2 border-transparent px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                       Get Free Quote <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </GetQuoteModal>
@@ -418,10 +485,10 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right Side: Cohesive Hero Image Composition */}
-              <div className="relative w-full aspect-square md:aspect-[4/3] lg:aspect-square flex items-center justify-center max-w-lg mx-auto lg:max-w-none">
+              {/* Right Side: Hero Image Showcase */}
+              <div className="relative w-full aspect-[843/591] flex items-center justify-center max-w-xl mx-auto lg:max-w-none">
                 {/* Floating Rotating Text Badge */}
-                <div className="absolute -left-2 sm:left-0 lg:-left-6 bottom-6 sm:bottom-1/4 z-20 w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-2xl dark:shadow-none dark:border dark:border-slate-800">
+                <div className="absolute -left-2 sm:left-0 lg:-left-6 bottom-4 sm:bottom-8 z-20 w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-2xl dark:shadow-none dark:border dark:border-slate-800">
                   {/* Rotating Text SVG */}
                   <div className="absolute inset-1.5 sm:inset-2 animate-[spin_8s_linear_infinite]">
                     <svg
@@ -449,23 +516,16 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Dominant Image Container */}
-                <div className="relative w-[90%] h-[90%] bg-slate-200 dark:bg-slate-800 rounded-3xl overflow-hidden shadow-2xl z-10">
-                  <img src="/images/unsplash/img-f787f12c.webp" alt="IT experts collaborating" width="800" height="600" fetchPriority="high" loading="eager" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
-
-                  {/* Overlay image - Top Right */}
-                  <div className="absolute top-4 right-4 w-32 h-32 sm:w-40 sm:h-40 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl hidden sm:block">
-                    <div className="w-full h-full rounded-xl overflow-hidden">
-                      <img src="/images/unsplash/img-4dddf9a5.webp" alt="Discussion" width="400" height="400" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
-                    </div>
-                  </div>
-
-                  {/* Overlay image - Bottom Left */}
-                  <div className="absolute bottom-4 left-4 w-36 h-28 sm:w-48 sm:h-32 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl hidden sm:block pl-10">
-                    <div className="w-full h-full rounded-xl overflow-hidden relative right-2">
-                      <img src="/images/unsplash/img-931d0d20.webp" alt="Collaboration" width="400" height="300" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
-                    </div>
-                  </div>
+                {/* Dominant Image Container - Full Fit */}
+                <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl z-10 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 group">
+                  <Image
+                    src="/hero-concept-showcase.webp"
+                    alt="Indux Technology - From Concept to Digital Success"
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
               </div>
             </div>
@@ -476,38 +536,26 @@ export default function Home() {
         <section className="relative overflow-hidden bg-white dark:bg-slate-950 pb-16 sm:pb-20 lg:pb-32 pt-0">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-24 items-center">
-              {/* Left Side: Overlapping Images */}
-              <div className="relative h-[360px] sm:h-[480px] md:h-[600px] w-full max-w-lg mx-auto lg:max-w-none"
-              >
-                {/* Back Image (Tall) */}
-                <div className="absolute top-0 left-0 w-3/4 h-[80%] sm:h-[85%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-md">
+              {/* Left Side: Single Image Showcase with Experience Badge */}
+              <div className="relative w-full aspect-[830/549] max-w-lg mx-auto lg:max-w-none">
+                {/* Main Showcase Image Container */}
+                <div className="relative w-full h-full rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 group">
                   <Image
-                    src="/images/unsplash/img-4dddf9a5.webp"
-                    alt="IT team discussing software development and business solutions"
+                    src="/about-company-showcase.webp"
+                    alt="Indux Technology - One of the Fastest Ways to Gain Business Success"
                     fill
                     loading="eager"
-                    sizes="(max-width: 768px) 75vw, 35vw"
-                    className="object-cover"
-                  />
-                </div>
-
-                {/* Front Image (Square, bottom right) */}
-                <div className="absolute bottom-0 right-0 w-[65%] h-[58%] sm:h-[60%] bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-2xl border-4 sm:border-8 border-white dark:border-slate-950">
-                  <Image
-                    src="/images/unsplash/img-51707ed2.webp"
-                    alt="IT professional working on a computer for software development"
-                    fill
-                    sizes="(max-width: 768px) 65vw, 30vw"
-                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
 
                 {/* Floating Badge (Top Right) */}
-                <div className="absolute top-4 right-0 sm:top-12 sm:-right-4 md:-right-6 bg-blue-700 rounded-2xl sm:rounded-3xl rounded-tr-md text-white p-6 sm:p-8 md:p-10 shadow-xl flex flex-col items-center justify-center min-w-[140px] sm:min-w-[180px] transform hover:-translate-y-2 transition-transform duration-500">
+                <div className="absolute -top-4 -right-2 sm:-top-6 sm:-right-4 md:-right-6 bg-blue-600 rounded-2xl sm:rounded-3xl text-white p-5 sm:p-7 md:p-8 shadow-2xl flex flex-col items-center justify-center min-w-[120px] sm:min-w-[150px] z-20 transform hover:-translate-y-2 transition-transform duration-500 border-2 border-white dark:border-slate-800">
                   <div className="text-3xl sm:text-4xl md:text-5xl font-black mb-1">
-                    7+
+                    5+
                   </div>
-                  <p className="text-[10px] sm:text-xs font-bold tracking-widest capitalize text-blue-100 text-center leading-relaxed">
+                  <p className="text-[10px] sm:text-xs font-bold tracking-widest uppercase text-blue-100 text-center leading-tight">
                     Years
                     <br />
                     Of Experience
@@ -522,7 +570,7 @@ export default function Home() {
                   COMPANY ABOUT
                 </div>
 
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-slate-900 dark:text-white leading-[1.15] tracking-tight">
+                <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-medium text-slate-900 dark:text-white leading-[1.15] tracking-tight">
                   One of the fastest way to gain{" "}
                   <span className="italic text-slate-600 dark:text-slate-400 font-serif">
                     business success
@@ -530,10 +578,7 @@ export default function Home() {
                 </h2>
 
                 <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm md:text-base mt-1 sm:mt-2 max-w-lg">
-                  We empower businesses across all industries with cutting-edge
-                  IT solutions. From startups to large enterprises, our goal is
-                  to leverage the power of technology to help clients reach
-                  their target efficiently.
+                  We empower businesses across all industries with cutting-edge IT solutions. From startups to large enterprises, our goal is to leverage the power of technology to help clients reach their target efficiently.
                 </p>
 
                 <div className="mt-2">
@@ -660,13 +705,13 @@ export default function Home() {
                 className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-2">
                     <Image
-                      src="/images/unsplash/img-3516b3f9.webp"
-                      alt="Custom CRM software development team working on business solutions"
+                      src="/services/crm.jpg"
+                      alt="Custom CRM - Built Around Your Business"
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                      className="object-contain transition-all duration-700 group-hover:scale-105"
                     />
                   </div>
                 </div>
@@ -692,8 +737,13 @@ export default function Home() {
                 className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                    <img src="/images/unsplash/img-8afc3801.webp" alt="Manufacturing ERP" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-2">
+                    <Image
+                      src="/services/erp.jpg"
+                      alt="Manufacturing ERP - Smarter Operations Higher Productivity"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-contain transition-all duration-700 group-hover:scale-105"
                     />
                   </div>
                 </div>
@@ -718,8 +768,13 @@ export default function Home() {
                 className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
               >
                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                    <img src="/images/unsplash/img-1bd55875.webp" alt="Sales Automation" width="800" height="600" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-2">
+                    <Image
+                      src="/services/sales-automation.jpg"
+                      alt="Sales Automation - Work Smarter Close Faster"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-contain transition-all duration-700 group-hover:scale-105"
                     />
                   </div>
                 </div>
@@ -755,15 +810,7 @@ export default function Home() {
             <div className="flex flex-col lg:flex-row gap-12 sm:gap-16 lg:gap-24 items-start relative">
               {/* Left Side: Sticky Content */}
               <div className="w-full lg:w-5/12 lg:sticky lg:top-32 z-10">
-                <div className="inline-flex items-center justify-start gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-4 sm:mb-6">
-                  <div className="flex gap-1">
-                    <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-blue-500"></span>
-                    <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-slate-200 dark:bg-slate-800"></span>
-                  </div>
-                  Why Choose Us
-                </div>
-
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15] sm:leading-[1.1] mb-4 sm:mb-6">
+                <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15] sm:leading-[1.1] mb-3 sm:mb-4">
                   We don't just write code, <br className="hidden md:block" />
                   We build your{" "}
                   <LineShadowText
@@ -774,7 +821,15 @@ export default function Home() {
                   </LineShadowText>
                 </h2>
 
-                <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm sm:text-base md:text-lg max-w-md mb-8 sm:mb-10">
+                <div className="inline-flex items-center justify-start gap-2.5 font-bold tracking-wider text-sm sm:text-base text-blue-600 uppercase mb-4 sm:mb-6">
+                  <div className="flex gap-1.5">
+                    <span className="w-3.5 h-3.5 rounded-full bg-blue-500"></span>
+                    <span className="w-3.5 h-3.5 rounded-full bg-slate-200 dark:bg-slate-800"></span>
+                  </div>
+                  Why Choose Us
+                </div>
+
+                <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm sm:text-base max-w-md mb-8 sm:mb-10">
                   Partner with a technology team that focuses on scalable
                   architectures, agile delivery, and driving real results for
                   your company.
@@ -969,14 +1024,14 @@ export default function Home() {
                 >
                   {/* Image Container */}
                   <div className="p-3 sm:p-4 md:p-6 pb-0">
-                    <div className="relative w-full h-[200px] xs:h-[250px] sm:h-[300px] rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800">
+                    <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800">
                       <img
                         src={project.img}
                         alt={project.alt || project.title}
                         width="800"
                         height="600"
                         loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                        className="w-full h-full object-fill grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                       />
                       <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10">
                         <span className="inline-block bg-[#0f2e4a]/90 backdrop-blur-sm text-white text-[10px] sm:text-xs font-semibold tracking-wide px-3 py-1.5 rounded-full">
@@ -1260,6 +1315,87 @@ export default function Home() {
                   />
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQS SECTION */}
+        <section className="py-16 sm:py-24 lg:py-32 bg-slate-50 dark:bg-slate-950 border-t border-slate-200/60 dark:border-slate-800 relative overflow-hidden">
+          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+              <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
+                <div className="flex gap-1">
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-200 dark:bg-slate-800"></span>
+                </div>
+                Common Queries
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+                Frequently Asked <span className="text-blue-600">Questions</span>
+              </h2>
+            </div>
+
+            <div className="space-y-4 sm:space-y-5">
+              {[
+                {
+                  question: "What does Indux Technology do?",
+                  answer:
+                    "Indux Technology provides custom software development, CRM and ERP solutions, web and mobile app development, AI solutions, and business automation.",
+                },
+                {
+                  question: "Where is Indux Technology located?",
+                  answer:
+                    "Indux Technology is based in Kharadi, Pune, Maharashtra, India, and offers digital solutions to businesses beyond its local area.",
+                },
+                {
+                  question: "Does Indux Technology develop custom software?",
+                  answer:
+                    "Yes. Projects can be planned around specific business requirements, workflows, features, and integration needs.",
+                },
+                {
+                  question: "How can I discuss my software project?",
+                  answer: (
+                    <span>
+                      Visit the contact page at{" "}
+                      <Link
+                        href="/contact-us"
+                        className="text-blue-600 dark:text-blue-400 font-semibold underline underline-offset-4 hover:text-blue-700"
+                      >
+                        https://induxtechnology.com/contact-us
+                      </Link>{" "}
+                      to submit your requirements and connect with the team.
+                    </span>
+                  ),
+                },
+              ].map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div
+                    key={index}
+                    className="border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden shadow-sm transition-all duration-300"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                      className="w-full px-6 py-5 sm:px-8 sm:py-6 text-left flex items-center justify-between gap-4 font-bold text-slate-900 dark:text-white text-base sm:text-lg cursor-pointer hover:text-blue-600 transition-colors"
+                    >
+                      <span className="flex items-center gap-3">
+                        <HelpCircle className="w-5 h-5 text-blue-600 shrink-0" />
+                        {faq.question}
+                      </span>
+                      <ChevronDown
+                        className={`w-5 h-5 text-slate-400 shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180 text-blue-600" : ""
+                          }`}
+                      />
+                    </button>
+                    {isOpen && (
+                      <div className="px-6 pb-6 sm:px-8 sm:pb-6 pt-0 text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed pl-14 sm:pl-16">
+                        {faq.answer}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

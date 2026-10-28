@@ -159,11 +159,6 @@ export default function AboutPage() {
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                <button className="w-20 h-20 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-600 transition-colors">
-                  <Play fill="currentColor" size={32} className="ml-2" />
-                </button>
-              </div>
             </div>
             {/* Floating Card */}
             <div className="absolute -bottom-8 -right-4 md:-right-12 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl shadow-xl max-w-[280px]">
@@ -237,7 +232,11 @@ export default function AboutPage() {
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Our Mission</h2>
               </div>
               <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed text-lg">
-                To empower businesses globally by delivering scalable, innovative, and reliable technology solutions that drive digital transformation and sustainable growth.
+                To build technology with a human touch.
+                We help businesses solve their day-to-day
+                challenges and reach their biggest goals
+                through reliable, honest, and creative software.
+
               </p>
               <ul className="space-y-4">
                 {['Client-Centric Agile Development', 'Future-Ready Tech Integrations', 'Uncompromising Quality & Security'].map((item, i) => (
@@ -247,6 +246,9 @@ export default function AboutPage() {
                   </li>
                 ))}
               </ul>
+              <p className="mt-6 text-slate-600 dark:text-slate-400 font-semibold text-lg leading-relaxed">
+                Simple. Reliable. Built around you. That’s how we work.
+              </p>
             </motion.div>
           </motion.div>
         </div>
@@ -272,7 +274,12 @@ export default function AboutPage() {
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Our Vision</h2>
               </div>
               <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed text-lg">
-                To become the globally recognized standard of excellence in the IT sector, pioneering digital solutions that shape the future of modern enterprises.
+                To prove that great technology starts with a
+                human heartbeat. We aim to shape the
+                future of business by crafting elegant,
+                intuitive software that doesn't just solve
+                technical problems, but makes daily work
+                a more inspiring experience for people everywhere.
               </p>
               <ul className="space-y-4">
                 {['Global Reach & Impact', 'Continuous Innovation Hub', 'Sustainable & Ethical Tech'].map((item, i) => (
@@ -282,6 +289,9 @@ export default function AboutPage() {
                   </li>
                 ))}
               </ul>
+              <p className="mt-6 text-slate-600 dark:text-slate-400 font-semibold text-lg leading-relaxed">
+                Build Once. Scale Infinitely.
+              </p>
             </motion.div>
           </motion.div>
 
