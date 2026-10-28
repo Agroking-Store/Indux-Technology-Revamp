@@ -56,7 +56,7 @@ export default function PremiumContact() {
             </motion.div>
 
             {/* Main Heading */}
-            <motion.h1 variants={fadeUp} className="mb-6 text-5xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-6xl lg:text-7xl">
+            <motion.h1 variants={fadeUp} className="mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.15]">
               Let's build something <br className="hidden lg:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">
                 extraordinary.

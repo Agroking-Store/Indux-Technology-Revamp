@@ -89,12 +89,15 @@ export default function ProductDetailPage() {
               animate={{ opacity: 1, scale: 1 }}
               className="relative group"
             >
-              <div className="absolute -inset-4 bg-blue-600/10 rounded-[3rem] blur-3xl group-hover:bg-blue-600/20 transition-all"></div>
-              <img width={800} height={600}
-                src={product.image}
-                alt={product.title}
-                className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-2xl w-full object-cover aspect-[16/10]"
-              />
+              <div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden aspect-[16/10] flex items-center justify-center p-3 sm:p-4">
+                <img
+                  width={800}
+                  height={600}
+                  src={product.image}
+                  alt={product.title}
+                  className="w-full h-full object-contain"
+                />
+              </div>
             </motion.div>
           </div>
         </div>
