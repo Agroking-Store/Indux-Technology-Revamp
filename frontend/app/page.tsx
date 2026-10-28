@@ -452,9 +452,9 @@ export default function Home() {
 
         {/* HERO SECTION */}
 
-        <section className="relative overflow-hidden pt-4 pb-12 sm:pt-6 sm:pb-16 lg:pt-8 lg:pb-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative w-full aspect-[1024/450] overflow-hidden rounded-2xl sm:rounded-3xl lg:rounded-[2.5rem] shadow-2xl border border-slate-200">
+        <section className="relative overflow-hidden w-full pt-0 pb-12 sm:pb-16 lg:pb-20">
+          <div className="w-full">
+            <div className="relative w-full aspect-[16/7] md:aspect-[16/6] lg:aspect-[21/9] min-h-[300px] sm:min-h-[400px] md:min-h-[460px] overflow-hidden shadow-sm border-b border-slate-200 dark:border-slate-800">
 
               {/* Background image */}
               <Image
@@ -462,13 +462,13 @@ export default function Home() {
                 alt="Indux Technology"
                 fill
                 priority
-                sizes="(max-width: 1280px) 100vw, 1280px"
-                className="object-cover object-center"
+                sizes="100vw"
+                className="object-cover object-center w-full h-full"
               />
 
               {/* Heading */}
-              <div className="absolute left-[3.6%] top-[21%] z-10 w-[57%]">
-                <h1 className="text-[clamp(12px,3.5vw,42px)] font-bold leading-[1.08] tracking-tight text-[#080b2d]">
+              <div className="absolute left-[5%] lg:left-[8%] top-[20%] z-10 w-[55%] max-w-2xl">
+                <h1 className="text-[clamp(18px,3.8vw,56px)] font-bold leading-[1.08] tracking-tight text-[#080b2d]">
                   Custom Software,
                   <br />
                   CRM &amp; ERP Solutions
@@ -478,8 +478,8 @@ export default function Home() {
               </div>
 
               {/* Description */}
-              <div className="absolute left-[3.6%] top-[53%] z-10 w-[45%]">
-                <p className="text-[clamp(5px,1.05vw,13px)] leading-[1.4] text-[#252a35]">
+              <div className="absolute left-[5%] lg:left-[8%] top-[53%] z-10 w-[45%] max-w-xl">
+                <p className="text-[clamp(11px,1.2vw,17px)] leading-[1.45] text-[#252a35]">
                   Indux Technology helps businesses streamline operations with
                   CRM and ERP software, custom applications, websites and
                   AI-powered automation. From business process improvement to
@@ -488,18 +488,18 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Original button text: Book a Free Consultation */}
+              {/* Button: Book a Free Consultation */}
               <Link
-                href="/contact"
-                className="absolute left-[3.6%] top-[73.5%] z-20 flex h-[8%] w-[20.5%] items-center justify-center rounded-full bg-[#3049b5] text-[clamp(5px,0.95vw,12px)] font-semibold text-white hover:bg-[#233894]"
+                href="/contact-us"
+                className="absolute left-[5%] lg:left-[8%] top-[74%] z-20 flex h-[10%] min-h-[36px] max-h-[52px] w-[22%] min-w-[140px] max-w-[220px] items-center justify-center rounded-full bg-[#3049b5] text-[clamp(10px,1vw,14px)] font-semibold text-white hover:bg-[#233894] shadow-md transition-all"
               >
                 Book a Free Consultation
               </Link>
 
-              {/* Original button text: Explore Our Solutions */}
+              {/* Button: Explore Our Solutions */}
               <Link
-                href="/solutions"
-                className="absolute left-[25%] top-[73.5%] z-20 flex h-[8%] w-[19%] items-center justify-center gap-1 text-[clamp(5px,0.95vw,12px)] font-semibold text-[#080b2d] hover:text-blue-700"
+                href="/services"
+                className="absolute left-[29%] lg:left-[24%] top-[74%] z-20 flex h-[10%] min-h-[36px] max-h-[52px] w-[20%] min-w-[140px] items-center justify-center gap-1 text-[clamp(10px,1vw,14px)] font-semibold text-[#080b2d] hover:text-blue-700 transition-colors"
               >
                 Explore Our Solutions →
               </Link>
