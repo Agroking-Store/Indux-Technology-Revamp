@@ -367,14 +367,6 @@ export default function Home() {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "What does Indux Technology do?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Indux Technology provides custom software development, CRM and ERP solutions, web and mobile app development, AI solutions, and business automation."
-        }
-      },
-      {
-        "@type": "Question",
         "name": "Where is Indux Technology located?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -383,10 +375,42 @@ export default function Home() {
       },
       {
         "@type": "Question",
-        "name": "Does Indux Technology develop custom software?",
+        "name": "What services does Indux Technology offer?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Projects can be planned around specific business requirements, workflows, features, and integration needs."
+          "text": "Indux Technology provides CRM and ERP solutions, custom software development, website development, mobile applications and business automation services, subject to the current service offering."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you customize software for our business?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We can discuss your workflows, requirements, integrations and budget to determine whether a customized solution is appropriate."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does a software project cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pricing depends on scope, functionality, integrations, complexity and support requirements. Contact the team to discuss your requirements and receive a suitable proposal."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do we get started?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Contact the team to discuss your requirements and arrange an initial consultation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between CRM and ERP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CRM focuses on customer relationships and sales activities; ERP connects broader business processes such as operations, inventory, finance or production, depending on the implementation."
         }
       },
       {
@@ -424,114 +448,65 @@ export default function Home() {
       />
       <main className="flex-1 w-full">
         {/* TOP HERO BANNER (BELOW NAVBAR) */}
-        <section className="relative w-full bg-[#d8ecfc] dark:bg-slate-900 overflow-hidden border-b border-slate-200/60 dark:border-slate-800">
-          <div className="w-full relative">
-            <div className="relative w-full aspect-[21/9] sm:aspect-[24/9] md:aspect-[3/1] max-h-[520px]">
-              <Image
-                src="/hero-banner-blue.jpg"
-                alt="One Of The Fastest Ways To Gain Business Success - Indux Technology"
-                fill
-                priority
-                quality={95}
-                sizes="100vw"
-                className="object-contain sm:object-cover object-center"
-              />
-            </div>
-          </div>
-        </section>
+
 
         {/* HERO SECTION */}
-        <section className="relative overflow-hidden pt-6 pb-16 sm:pt-10 sm:pb-24 lg:pt-8 lg:pb-32">
-          {/* Subtle dot pattern background */}
-          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full h-full opacity-40 dark:opacity-20 pointer-events-none bg-[radial-gradient(#cbd5e1_2px,transparent_2px)] dark:bg-[radial-gradient(#334155_2px,transparent_2px)] bg-[size:32px_32px]"></div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-8 items-center">
-              {/* Left Side: Text Content */}
-              <div className="flex flex-col gap-4 sm:gap-6 text-left max-w-xl mx-auto lg:mx-0"
-              >
-                <div className="inline-flex items-center gap-2 font-medium text-slate-600 dark:text-slate-400 text-base sm:text-lg w-max">
-                  <div className="flex items-center">
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-800 -ml-1"></span>
-                  </div>
-                  Elevate your work with us
-                </div>
+        <section className="relative overflow-hidden pt-4 pb-12 sm:pt-6 sm:pb-16 lg:pt-8 lg:pb-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="relative w-full aspect-[1024/450] overflow-hidden rounded-2xl sm:rounded-3xl lg:rounded-[2.5rem] shadow-2xl border border-slate-200">
 
-                <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.15] sm:leading-[1.1]">
-                  Build{" "}
-                  <LineShadowText className="italic" shadowColor="#2563eb">
-                    Smarter.
-                  </LineShadowText>
+              {/* Background image */}
+              <Image
+                src="/image.png"
+                alt="Indux Technology"
+                fill
+                priority
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                className="object-cover object-center"
+              />
+
+              {/* Heading */}
+              <div className="absolute left-[3.6%] top-[21%] z-10 w-[57%]">
+                <h1 className="text-[clamp(12px,3.5vw,42px)] font-bold leading-[1.08] tracking-tight text-[#080b2d]">
+                  Custom Software,
                   <br />
-                  Scale Faster.
+                  CRM &amp; ERP Solutions
+                  <br />
+                  for Growing Businesses
                 </h1>
-                <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed mt-1 sm:mt-2 max-w-md">
-                  We build smart digital solutions that help businesses work better and grow faster. From custom software, CRM, and ERP to AI automation, web and mobile app development, we turn your ideas into practical solutions that deliver real results
+              </div>
+
+              {/* Description */}
+              <div className="absolute left-[3.6%] top-[53%] z-10 w-[45%]">
+                <p className="text-[clamp(5px,1.05vw,13px)] leading-[1.4] text-[#252a35]">
+                  Indux Technology helps businesses streamline operations with
+                  CRM and ERP software, custom applications, websites and
+                  AI-powered automation. From business process improvement to
+                  tailored software development, we build solutions around your
+                  requirements.
                 </p>
-
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4 sm:mt-6">
-                  <GetQuoteModal>
-                    <Button className="w-full sm:w-auto h-auto bg-blue-600 hover:bg-blue-700 text-white border-2 border-transparent px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
-                      Get Free Quote <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </GetQuoteModal>
-                  <Link
-                    href="/services"
-                    className="w-full sm:w-auto bg-slate-100/50 dark:bg-slate-800/50 border-2 border-slate-300 dark:border-slate-700 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 hover:border-slate-400 dark:hover:border-slate-500 text-slate-800 dark:text-slate-200 px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 group focus-visible:ring-2 focus-visible:ring-slate-400"
-                  >
-                    Our Services
-                  </Link>
-                </div>
               </div>
 
-              {/* Right Side: Hero Image Showcase */}
-              <div className="relative w-full aspect-[843/591] flex items-center justify-center max-w-xl mx-auto lg:max-w-none">
-                {/* Floating Rotating Text Badge */}
-                <div className="absolute -left-2 sm:left-0 lg:-left-6 bottom-4 sm:bottom-8 z-20 w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-2xl dark:shadow-none dark:border dark:border-slate-800">
-                  {/* Rotating Text SVG */}
-                  <div className="absolute inset-1.5 sm:inset-2 animate-[spin_8s_linear_infinite]">
-                    <svg
-                      viewBox="0 0 100 100"
-                      className="w-full h-full text-blue-600 overflow-visible"
-                    >
-                      <path
-                        id="circlePath"
-                        d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
-                        fill="none"
-                      />
-                      <text
-                        className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em]"
-                        fill="currentColor"
-                      >
-                        <textPath href="#circlePath" startOffset="0%">
-                          • INDUX TECHNOLOGY • TOP RATED
-                        </textPath>
-                      </text>
-                    </svg>
-                  </div>
-                  {/* Center Icon */}
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-inner">
-                    <Trophy className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </div>
-                </div>
+              {/* Original button text: Book a Free Consultation */}
+              <Link
+                href="/contact"
+                className="absolute left-[3.6%] top-[73.5%] z-20 flex h-[8%] w-[20.5%] items-center justify-center rounded-full bg-[#3049b5] text-[clamp(5px,0.95vw,12px)] font-semibold text-white hover:bg-[#233894]"
+              >
+                Book a Free Consultation
+              </Link>
 
-                {/* Dominant Image Container - Full Fit */}
-                <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl z-10 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 group">
-                  <Image
-                    src="/hero-concept-showcase.webp"
-                    alt="Indux Technology - From Concept to Digital Success"
-                    fill
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-              </div>
+              {/* Original button text: Explore Our Solutions */}
+              <Link
+                href="/solutions"
+                className="absolute left-[25%] top-[73.5%] z-20 flex h-[8%] w-[19%] items-center justify-center gap-1 text-[clamp(5px,0.95vw,12px)] font-semibold text-[#080b2d] hover:text-blue-700"
+              >
+                Explore Our Solutions →
+              </Link>
+
             </div>
           </div>
         </section>
-
         {/* ABOUT US SECTION */}
         <section className="relative overflow-hidden bg-white dark:bg-slate-950 pb-16 sm:pb-20 lg:pb-32 pt-0">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-32">
@@ -1319,6 +1294,7 @@ export default function Home() {
           </div>
         </section>
 
+
         {/* FAQS SECTION */}
         <section className="py-16 sm:py-24 lg:py-32 bg-slate-50 dark:bg-slate-950 border-t border-slate-200/60 dark:border-slate-800 relative overflow-hidden">
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1338,19 +1314,34 @@ export default function Home() {
             <div className="space-y-4 sm:space-y-5">
               {[
                 {
-                  question: "What does Indux Technology do?",
-                  answer:
-                    "Indux Technology provides custom software development, CRM and ERP solutions, web and mobile app development, AI solutions, and business automation.",
-                },
-                {
                   question: "Where is Indux Technology located?",
                   answer:
                     "Indux Technology is based in Kharadi, Pune, Maharashtra, India, and offers digital solutions to businesses beyond its local area.",
                 },
                 {
-                  question: "Does Indux Technology develop custom software?",
+                  question: "What services does Indux Technology offer?",
                   answer:
-                    "Yes. Projects can be planned around specific business requirements, workflows, features, and integration needs.",
+                    "Indux Technology provides CRM and ERP solutions, custom software development, website development, mobile applications and business automation services, subject to the current service offering.",
+                },
+                {
+                  question: "Can you customize software for our business?",
+                  answer:
+                    "We can discuss your workflows, requirements, integrations and budget to determine whether a customized solution is appropriate.",
+                },
+                {
+                  question: "How much does a software project cost?",
+                  answer:
+                    "Pricing depends on scope, functionality, integrations, complexity and support requirements. Contact the team to discuss your requirements and receive a suitable proposal.",
+                },
+                {
+                  question: "How do we get started?",
+                  answer:
+                    "Contact the team to discuss your requirements and arrange an initial consultation.",
+                },
+                {
+                  question: "What is the difference between CRM and ERP?",
+                  answer:
+                    "CRM focuses on customer relationships and sales activities; ERP connects broader business processes such as operations, inventory, finance or production, depending on the implementation.",
                 },
                 {
                   question: "How can I discuss my software project?",

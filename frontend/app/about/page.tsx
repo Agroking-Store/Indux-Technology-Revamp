@@ -232,10 +232,8 @@ export default function AboutPage() {
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Our Mission</h2>
               </div>
               <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed text-lg">
-                To build technology with a human touch.
-                We help businesses solve their day-to-day
-                challenges and reach their biggest goals
-                through reliable, honest, and creative software.
+                Our mission is to empower businesses globally with scalable, innovative, and reliable technology solutions that simplify operations, improve productivity, and accelerate digital transformation. We help organizations turn ideas into practical digital solutions through custom software development, CRM and ERP systems, AI-powered automation, and web and mobile applications tailored to their unique business needs.
+
 
               </p>
               <ul className="space-y-4">
@@ -274,12 +272,7 @@ export default function AboutPage() {
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Our Vision</h2>
               </div>
               <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed text-lg">
-                To prove that great technology starts with a
-                human heartbeat. We aim to shape the
-                future of business by crafting elegant,
-                intuitive software that doesn't just solve
-                technical problems, but makes daily work
-                a more inspiring experience for people everywhere.
+                To become a globally recognized IT leader by delivering innovative, scalable, and future-ready digital solutions. At Indux Technology, we aim to empower businesses through modern technology, AI-driven innovation, and reliable software solutions that enhance efficiency, encourage growth, and create lasting value.
               </p>
               <ul className="space-y-4">
                 {['Global Reach & Impact', 'Continuous Innovation Hub', 'Sustainable & Ethical Tech'].map((item, i) => (
