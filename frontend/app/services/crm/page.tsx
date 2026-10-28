@@ -183,7 +183,7 @@ export default function CRMServicePage() {
                 className="relative max-w-lg w-full lg:ml-auto"
               >
                 <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-20 blur-xl animate-pulse"></div>
-                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl">
+                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl group">
                   {/* Mock Browser Header */}
                   <div className="bg-slate-950/80 px-4 py-3 flex items-center gap-2 border-b border-slate-800">
                     <div className="w-3 h-3 rounded-full bg-rose-500"></div>
@@ -194,11 +194,16 @@ export default function CRMServicePage() {
                     </div>
                   </div>
                   {/* Illustration Image */}
-                  <img width={800} height={600}
-                    src="/images/unsplash/img-4a096fc5.webp"
-                    alt="CRM Dashboard Visualization with Graphs and Charts showing real-time data insights and performance metrics for business decision-making and customer relationship management."
-                    className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
-                  />
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
+                    <Image
+                      src="/images/unsplash/crm.webp"
+                      alt="CRM Dashboard Mockup"
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover object-top opacity-90 group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
                 </div>
               </motion.div>
 

@@ -43,7 +43,7 @@ const GlobalPresenceClocks = () => {
                     </div>
 
                     <h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
-                        <Image src="https://flagcdn.com/w40/in.png" alt="India Flag with Indux Technology Office to Showcase the Global Presence" width={32} height={32} className="w-8 h-auto mr-3" />
+                        <img src="https://flagcdn.com/w40/in.png" alt="India Flag" className="w-8 h-auto mr-3" />
                         India
                     </h3>
                     <div className="flex items-center gap-2 text-muted-foreground">
@@ -158,7 +158,7 @@ export default function ServicesPage() {
                     </div>
 
                     <div className="flex flex-col items-center gap-8 py-12">
-                        {/* Row 1: CRM Solutions */}
+                        {/* Row 1: CRM Software */}
                         <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 w-full mb-20 md:-left-24 relative">
                             <div className="relative shrink-0">
                                 <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">01</span>
@@ -167,12 +167,11 @@ export default function ServicesPage() {
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">CRM Solutions</h3>
+                                <h3 className="text-3xl font-bold text-foreground mb-4">CRM Software</h3>
                                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Streamline your customer relationships and sales pipelines. Our CRM solutions empower your team with real-time data, automated workflows, and comprehensive insights for better decision making.
-                                </p>
+                                    Manage leads, organize customer information, track sales activities and schedule follow-ups with Indux CRM or a customized CRM solution.                                </p>
                                 <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start">
-                                    <Link href="/services/crm" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
+                                    <Link href="/services/crm" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Explore CRM Solutions</Link>
                                 </div>
                             </div>
                         </div>
@@ -186,15 +185,14 @@ export default function ServicesPage() {
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-right relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">Web Development</h3>
+                                <h3 className="text-3xl font-bold text-foreground mb-4">Custom Software Development</h3>
                                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Building responsive, high-performance web applications that deliver exceptional user experiences across all devices. We focus on scalability and modern architecture to ensure your business stays ahead in a competitive digital landscape.
-                                </p>
-                                <Link href="/services/web-dev" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
+                                    Turn business requirements into web applications and software tailored to agreed workflows.                                </p>
+                                <Link href="/services/web-dev" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Discuss Your Project</Link>
                             </div>
                         </div>
 
-                        {/* Row 3: Mobile Apps */}
+                        {/* Row 3: Mobile App Development */}
                         <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 w-full mb-20 relative">
                             <div className="relative shrink-0">
                                 <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">03</span>
@@ -203,15 +201,14 @@ export default function ServicesPage() {
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">Mobile Apps</h3>
+                                <h3 className="text-3xl font-bold text-foreground mb-4">Mobile App Development</h3>
                                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Native and cross-platform mobile solutions that keep your business connected with customers on the go. We build intuitive interfaces and robust backends that provide seamless performance on every handheld device.
-                                </p>
-                                <Link href="/services/mobile-dev" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
+                                    Create mobile experiences for customer services and business workflows, where aligned with project needs.</p>
+                                <Link href="/services/mobile-dev" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Discuss Your App</Link>
                             </div>
                         </div>
 
-                        {/* Row 4: AI Chatbots */}
+                        {/* Row 4: AI & Business Automation */}
                         <div className="flex flex-col md:flex-row-reverse items-center justify-center gap-12 md:gap-20 w-full mb-20 relative">
                             <div className="relative shrink-0">
                                 <span className="absolute -right-24 md:-right-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">04</span>
@@ -220,6 +217,22 @@ export default function ServicesPage() {
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-right relative z-10">
+                                <h3 className="text-3xl font-bold text-foreground mb-4">AI & Business Automation</h3>
+                                <p className="text-muted-foreground mb-6 leading-relaxed">
+                                    Explore practical AI assistants, chatbots and workflow automation for repetitive business processes.</p>
+                                <Link href="/services/ai-chatbots" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Explore Automation</Link>
+                            </div>
+                        </div>
+
+                        {/* Row 5: AI Chatbots */}
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 w-full mb-20 relative">
+                            <div className="relative shrink-0">
+                                <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">05</span>
+                                <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+                                    <img alt="AI Chatbots" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/business-automation.webp" />
+                                </div>
+                            </div>
+                            <div className="max-w-md text-center md:text-left relative z-10">
                                 <h3 className="text-3xl font-bold text-foreground mb-4">AI Chatbots</h3>
                                 <p className="text-muted-foreground mb-6 leading-relaxed">
                                     Intelligent conversational agents that automate customer support and enhance user engagement 24/7. Our AI solutions learn from interactions to provide personalized experiences and reduce operational overhead.
@@ -228,37 +241,19 @@ export default function ServicesPage() {
                             </div>
                         </div>
 
-                        {/* Row 5: Business Automation */}
-                        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 w-full mb-20 relative">
-                            <div className="relative shrink-0">
-                                <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">05</span>
-                                <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <Image alt="Business Automation Workflow Illustration and Data Accuracy Guarantee" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/business-automation.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
-                                </div>
-                            </div>
-                            <div className="max-w-md text-center md:text-left relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">Business Automation</h3>
-                                <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Optimizing workflows and reducing manual tasks through smart automation technology tailored to your needs. We identify bottlenecks and implement efficient systems that free up your team for higher-value work.
-                                </p>
-                                <Link href="/services/automation" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
-                            </div>
-                        </div>
-
-                        {/* Row 6: ERP Systems */}
+                        {/* Row 6: ERP Software */}
                         <div className="flex flex-col md:flex-row-reverse items-center justify-center gap-12 md:gap-20 w-full relative">
                             <div className="relative shrink-0">
                                 <span className="absolute -right-24 md:-right-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">06</span>
                                 <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <Image alt="ERP Systems Dashboard with Graphs and Charts showing real-time data insights and performance metrics for business decision-making and operational efficiency" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/erp.avif" fill sizes="(max-width: 768px) 100vw, 300px" />
+                                    <img alt="ERP Software" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/erp.avif" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-right relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">ERP Systems</h3>
+                                <h3 className="text-3xl font-bold text-foreground mb-4">ERP Software</h3>
                                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Integrate core business processes with centralized management systems designed for efficiency and scalability. Our ERP solutions optimize resources and synchronize your entire operation.
-                                </p>
-                                <Link href="/services/erp" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
+                                    Connect business processes with ERP solutions designed around your operational requirements.                                </p>
+                                <Link href="/services/erp" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Explore ERP Solutions</Link>
                             </div>
                         </div>
                     </div>
