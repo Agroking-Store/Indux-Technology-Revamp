@@ -3,17 +3,17 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { 
-  Globe, 
-  Code, 
-  Cpu, 
-  Database, 
-  Layers, 
-  Zap, 
-  ShieldCheck, 
-  Search, 
-  Smartphone, 
-  ArrowRight, 
+import {
+  Globe,
+  Code,
+  Cpu,
+  Database,
+  Layers,
+  Zap,
+  ShieldCheck,
+  Search,
+  Smartphone,
+  ArrowRight,
   Terminal,
   Activity,
   Server,
@@ -27,14 +27,14 @@ import {
   WifiOff,
   ChevronDown
 } from 'lucide-react';
-import { 
-  SiSwift, 
-  SiKotlin, 
-  SiReact, 
-  SiFlutter, 
-  SiDart, 
-  SiFirebase, 
-  SiSqlite 
+import {
+  SiSwift,
+  SiKotlin,
+  SiReact,
+  SiFlutter,
+  SiDart,
+  SiFirebase,
+  SiSqlite
 } from 'react-icons/si';
 import { FaServer } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
@@ -136,7 +136,7 @@ function AppleIconWrapper(props: React.SVGProps<SVGSVGElement>) {
 export default function MobileDevServicePage() {
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 relative font-sans">
-      
+
       {/* Decorative Blur Background Blobs */}
       <div className="absolute top-[10%] left-[-15%] w-[450px] h-[450px] rounded-full bg-blue-500/10 dark:bg-blue-600/5 blur-3xl pointer-events-none"></div>
       <div className="absolute top-[50%] right-[-15%] w-[450px] h-[450px] rounded-full bg-indigo-500/10 dark:bg-indigo-600/5 blur-3xl pointer-events-none"></div>
@@ -149,7 +149,7 @@ export default function MobileDevServicePage() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 font-sans">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              
+
               {/* Left Column: Text & CTAs (Slides in from Left) */}
               <motion.div
                 initial={{ opacity: 0, x: -60 }}
@@ -187,7 +187,7 @@ export default function MobileDevServicePage() {
                 </div>
               </motion.div>
 
-              {/* Right Column: Premium Smartphone Graphic */}
+              {/* Right Column: Premium Floating Mock Window Graphic */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.85, rotate: -2, y: 30 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
@@ -195,16 +195,21 @@ export default function MobileDevServicePage() {
                 className="relative max-w-lg w-full lg:ml-auto"
               >
                 <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-20 blur-xl animate-pulse"></div>
-                <div className="relative rounded-[2.5rem] border-8 border-slate-900 bg-slate-950 overflow-hidden shadow-2xl aspect-[9/19] max-w-[280px] mx-auto">
-                  {/* Speaker Notch */}
-                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-4 rounded-full bg-slate-900 z-30 flex items-center justify-center">
-                    <span className="w-8 h-1 rounded bg-slate-800"></span>
+                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl">
+                  {/* Mock Window Header */}
+                  <div className="bg-slate-950/80 px-4 py-3 flex items-center gap-2 border-b border-slate-800">
+                    <div className="w-3 h-3 rounded-full bg-rose-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                    <div className="w-40 h-4 rounded bg-slate-800/60 mx-auto text-[10px] text-slate-500 flex items-center justify-center font-mono select-none">
+                      induxtech.com/mobile-dev
+                    </div>
                   </div>
-                  {/* Mockup screen content */}
+                  {/* Illustration Image */}
                   <img
-                    src="/images/unsplash/img-204a4aa2.webp"
-                    alt="Mobile App Interface mockup"
-                    className="w-full h-full object-cover opacity-90"
+                    src="/images/unsplash/mobile.webp"
+                    alt="Mobile App Development Showcase"
+                    className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
                   />
                 </div>
               </motion.div>
@@ -216,9 +221,9 @@ export default function MobileDevServicePage() {
         {/* ===== CAPABILITIES SECTION (WHY CHOOSE US STICKY SCROLL LAYOUT) ===== */}
         <section id="capabilities" className="relative overflow-visible border-t border-slate-200/60 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-950/50">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-            
+
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start relative">
-              
+
               {/* Left Column: Sticky Title & Info */}
               <div className="w-full lg:w-5/12 lg:sticky lg:top-32 z-10 text-left">
                 <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-6">
@@ -228,17 +233,17 @@ export default function MobileDevServicePage() {
                   </div>
                   Capabilities
                 </div>
-                
+
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6 font-sans">
                   What we build <br className="hidden md:block" />
                   and deliver
                 </h2>
-                
+
                 <p className="text-slate-555 dark:text-slate-400 leading-relaxed text-lg max-w-md mb-10 font-sans">
                   We write clean, high-performance mobile code bases that leverage physical hardware parameters and deliver responsive user layouts.
                 </p>
 
-                <Button 
+                <Button
                   nativeButton={false}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wide text-sm uppercase transition-all shadow-lg shadow-blue-600/20 group cursor-pointer"
                   render={<Link href="/contact-us" />}
@@ -253,7 +258,7 @@ export default function MobileDevServicePage() {
                   const Icon = cap.icon;
                   const numStr = String(idx + 1).padStart(2, '0');
                   return (
-                    <motion.div 
+                    <motion.div
                       key={idx}
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -357,12 +362,12 @@ export default function MobileDevServicePage() {
                   >
                     {/* Process Card */}
                     <div className="w-full md:w-[45%] bg-white dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 hover:border-blue-500/30 hover:shadow-2xl dark:hover:shadow-none transition-all duration-300 relative overflow-hidden group">
-                      
+
                       {/* Stylized background number */}
                       <span className="absolute right-6 top-6 text-7xl font-extrabold text-slate-100 dark:text-slate-800/80 select-none group-hover:scale-110 transition-transform duration-500">
                         {step.step}
                       </span>
-                      
+
                       <div className="relative z-10 text-left space-y-3">
                         <div className="inline-flex items-center justify-center px-3 py-1 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide">
                           Phase {step.step}
@@ -393,7 +398,7 @@ export default function MobileDevServicePage() {
         {/* ===== WHY INDUX SECTION ===== */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-slate-200/60 dark:border-slate-900">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
+
             {/* Value columns (Slide in from Left) */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -463,12 +468,12 @@ export default function MobileDevServicePage() {
           >
             {/* High-tech Glowing Background Accents */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-gradient-to-r from-blue-600/20 to-indigo-600/20 blur-[100px] pointer-events-none"></div>
-            
+
             {/* Subtle Grid overlay */}
             <div className="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
-            
+
             <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-              
+
               {/* Left Column: Heading and description */}
               <div className="text-left lg:max-w-2xl space-y-4">
                 <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.15] text-white">
