@@ -188,13 +188,13 @@ export default function WebDevServicePage() {
 
               {/* Right Column: Premium Floating Mock Browser Graphic */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.85, rotate: -2, y: 30 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative max-w-lg w-full lg:ml-auto"
               >
                 <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-20 blur-xl animate-pulse"></div>
-                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl">
+                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl group">
                   {/* Mock Browser Header */}
                   <div className="bg-slate-950/80 px-4 py-3 flex items-center gap-2 border-b border-slate-800">
                     <div className="w-3 h-3 rounded-full bg-rose-500"></div>
@@ -205,12 +205,16 @@ export default function WebDevServicePage() {
                     </div>
                   </div>
                   {/* Illustration Image */}
-                  <img
-                    // src="/images/unsplash/img-09ddb758.webp"
-                    src="/images/unsplash/softwaredevelopment.webp"
-                    alt="Web Application Mockup"
-                    className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
-                  />
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
+                    <Image
+                      src="/images/unsplash/softwaredevelopment.webp"
+                      alt="Web Application Mockup"
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-contain opacity-95 group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
                 </div>
               </motion.div>
 

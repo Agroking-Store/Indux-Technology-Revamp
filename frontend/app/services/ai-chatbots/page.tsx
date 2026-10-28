@@ -194,23 +194,27 @@ export default function AiSolutionsServicePage() {
                 className="relative max-w-lg w-full lg:ml-auto"
               >
                 <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-20 blur-xl animate-pulse"></div>
-                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl">
+                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl group">
                   {/* Mock Browser Header */}
                   <div className="bg-slate-950/80 px-4 py-3 flex items-center gap-2 border-b border-slate-800">
                     <div className="w-3 h-3 rounded-full bg-rose-500"></div>
                     <div className="w-3 h-3 rounded-full bg-amber-500"></div>
                     <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
-                    <div className="w-40 h-4 rounded bg-slate-800/60 mx-auto text-[10px] text-slate-555 flex items-center justify-center font-mono select-none">
-                      induxtech.com/ai-solutions
+                    <div className="w-40 h-4 rounded bg-slate-800/60 mx-auto text-[10px] text-slate-500 flex items-center justify-center font-mono select-none">
+                      induxtech.com/ai-chatbots
                     </div>
                   </div>
                   {/* Illustration Image */}
-                  <img
-                    // src="/images/unsplash/img-1dfc46ab.webp"
-                    src="/images/unsplash/AI.webp"
-                    alt="AI Solutions Mockup"
-                    className="w-full h-auto object-cover opacity-90 hover:scale-102 transition-transform duration-500"
-                  />
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
+                    <Image
+                      src="/images/unsplash/AI.webp"
+                      alt="AI Solutions Mockup"
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover object-top opacity-90 group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
                 </div>
               </motion.div>
 
