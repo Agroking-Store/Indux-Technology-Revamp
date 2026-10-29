@@ -46,6 +46,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: 'Marketing Feed',
       items: [
         { href: '/blogs', label: 'Blogs Feed', icon: FileText },
+        { href: '/case-studies', label: 'Case Studies', icon: Award },
         { href: '/leads', label: 'Contact Leads', icon: MessageSquare },
         { href: '/quotes', label: 'Quote Requests', icon: Briefcase },
       ]

@@ -91,6 +91,37 @@ export const incrementBlogView = async (id: string) => {
   return res.data;
 };
 
+// ===== Case Study Types & API =====
+export interface CaseStudy {
+  _id: string;
+  name: string;
+  slug: string;
+  headline: string;
+  challenge: string;
+  solution: string; // What we built
+  result: string; // The result
+  image?: string;
+  status: "Draft" | "Published";
+  views?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const getCaseStudies = async (): Promise<CaseStudy[]> => {
+  const res = await api.get("/case-studies?limit=100&status=Published");
+  return res.data.data.caseStudies;
+};
+
+export const getCaseStudyBySlug = async (slug: string): Promise<CaseStudy> => {
+  const res = await api.get(`/case-studies/${slug}`);
+  return res.data.data;
+};
+
+export const incrementCaseStudyView = async (id: string) => {
+  const res = await api.patch(`/case-studies/${id}/view`);
+  return res.data;
+};
+
 // ===== Job Application Types & API =====
 export interface JobApplicationInput {
   careerId?: string;
