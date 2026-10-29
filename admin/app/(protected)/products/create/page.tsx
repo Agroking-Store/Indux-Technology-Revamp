@@ -21,6 +21,7 @@ export default function CreateProductPage() {
   const [fullDescription, setFullDescription] = useState('');
   const [status, setStatus] = useState<'Draft' | 'Published'>('Published');
   const [order, setOrder] = useState('0');
+  const [liveUrl, setLiveUrl] = useState('');
 
   // Image
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -101,6 +102,7 @@ export default function CreateProductPage() {
       formData.append('fullDescription', fullDescription);
       formData.append('status', status);
       formData.append('order', order);
+      formData.append('liveUrl', liveUrl);
       formData.append('image', imageFile);
 
       // JSON stringify structured fields
@@ -213,6 +215,19 @@ export default function CreateProductPage() {
                 <option value="cyan">Cyan</option>
                 <option value="indigo">Indigo / Purple</option>
               </select>
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                Live URL / Demo Link (Optional)
+              </label>
+              <input
+                type="url"
+                placeholder="https://..."
+                value={liveUrl}
+                onChange={(e) => setLiveUrl(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm text-slate-900 dark:text-white focus:outline-blue-600"
+              />
             </div>
           </div>
 

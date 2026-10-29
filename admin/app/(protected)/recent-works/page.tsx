@@ -218,6 +218,17 @@ export default function RecentWorksAdminPage() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
+                        {work.liveUrl && work.liveUrl.trim() && (
+                          <a
+                            href={work.liveUrl.startsWith('http') ? work.liveUrl.trim() : `https://${work.liveUrl.trim()}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"
+                            title="Visit Live URL"
+                          >
+                            <ExternalLink className="size-4" />
+                          </a>
+                        )}
                         <Link
                           href={`/recent-works/${work._id}/edit`}
                           className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"

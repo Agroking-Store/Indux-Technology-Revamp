@@ -25,6 +25,7 @@ export interface Project {
   stats: { label: string; value: string }[];
   faq: { q: string; a: string }[];
   tech: string[];
+  liveUrl?: string;
 }
 
 export const projects: Project[] = [

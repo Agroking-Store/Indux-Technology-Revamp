@@ -205,6 +205,17 @@ export default function ProductsAdminPage() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
+                        {product.liveUrl && product.liveUrl.trim() && (
+                          <a
+                            href={product.liveUrl.startsWith('http') ? product.liveUrl.trim() : `https://${product.liveUrl.trim()}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"
+                            title="Visit Live URL"
+                          >
+                            <ExternalLink className="size-4" />
+                          </a>
+                        )}
                         <Link
                           href={`/products/${product._id}/edit`}
                           className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"

@@ -206,6 +206,7 @@ export interface Product {
   stats: ProductStat[];
   faq: ProductFaq[];
   tech: string[];
+  liveUrl?: string;
   status: "Draft" | "Published";
   order: number;
   createdAt: string;

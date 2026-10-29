@@ -11,9 +11,10 @@ import {
   X,
   TrendingUp,
   ChevronRight,
+  ExternalLink,
 } from "lucide-react";
 import { recentWorks as staticRecentWorks, RecentWork } from "@/lib/recent-works-data";
-import { getDynamicRecentWorks, getFullImageUrl } from "@/lib/api";
+import { getDynamicRecentWorks, getFullImageUrl, formatLiveUrl } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { GetQuoteModal } from "@/components/GetQuoteModal";
 
@@ -306,7 +307,7 @@ export default function OurRecentWorksPage() {
                       )}
 
                       {/* Actions */}
-                      <div className="flex items-center gap-4">
+                      <div className="flex flex-wrap items-center gap-3">
                         <Button
                           onClick={() => setActiveModalProject(work)}
                           className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6 py-5 font-semibold text-sm transition-all shadow-md shadow-blue-500/20 cursor-pointer"
@@ -314,6 +315,21 @@ export default function OurRecentWorksPage() {
                           View Details
                           <ChevronRight className="size-4 ml-1.5" />
                         </Button>
+                        {formatLiveUrl(work.liveUrl) && (
+                          <a
+                            href={formatLiveUrl(work.liveUrl)!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Button
+                              variant="outline"
+                              className="rounded-xl px-5 py-5 font-semibold text-sm border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all cursor-pointer"
+                            >
+                              Live Project
+                              <ExternalLink className="size-4 ml-1.5" />
+                            </Button>
+                          </a>
+                        )}
                         <GetQuoteModal>
                           <Button
                             variant="outline"
@@ -505,7 +521,7 @@ export default function OurRecentWorksPage() {
               </div>
 
               {/* Footer */}
-              <div className="p-4 sm:px-8 sm:py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-end gap-3">
+              <div className="p-4 sm:px-8 sm:py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex flex-wrap items-center justify-end gap-3">
                 <Button
                   variant="outline"
                   onClick={() => setActiveModalProject(null)}
@@ -513,6 +529,21 @@ export default function OurRecentWorksPage() {
                 >
                   Close
                 </Button>
+                {formatLiveUrl(activeModalProject.liveUrl) && (
+                  <a
+                    href={formatLiveUrl(activeModalProject.liveUrl)!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      variant="outline"
+                      className="rounded-xl px-5 text-sm font-semibold border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all cursor-pointer"
+                    >
+                      Visit Live Project
+                      <ExternalLink className="size-4 ml-1.5" />
+                    </Button>
+                  </a>
+                )}
                 <GetQuoteModal>
                   <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-5 text-sm font-semibold cursor-pointer">
                     Start Similar Project
