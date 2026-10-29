@@ -203,17 +203,19 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-800/80 p-6 sm:p-10 shadow-sm overflow-hidden flex flex-col gap-8"
+              className="bg-white dark:bg-slate-900 rounded-3xl sm:rounded-[2.5rem] border border-slate-200/80 dark:border-slate-800/80 p-4 xs:p-6 sm:p-8 md:p-10 shadow-sm overflow-hidden flex flex-col gap-6 sm:gap-8"
             >
               
  {/* Featured Image with shine overlay on hover */}
-              <div className="relative h-80 w-full rounded-2xl overflow-hidden">
- <img width={800} height={600}
- src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
-    alt={blog.title}
- className="w-full h-full object-cover"
-  />
-</div>
+              {/* Responsive Featured Image */}
+              <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[21/10] max-h-[460px] rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800 shadow-sm">
+                <img
+                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
+                  alt={blog.title}
+                  className="w-full h-full object-cover object-center"
+                  loading="eager"
+                />
+              </div>
 
               {/* Short description Intro */}
               <div className="border-l-4 border-blue-600 pl-5 text-left">

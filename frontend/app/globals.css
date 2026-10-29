@@ -264,3 +264,24 @@
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* Responsive Blog Post Content Images & Embedded Media */
+.blog-body img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 1rem;
+  margin: 1.5rem auto;
+  display: block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.blog-body figure {
+  max-width: 100% !important;
+  margin: 1.5rem auto;
+}
+
+.blog-body iframe,
+.blog-body video {
+  max-width: 100% !important;
+  border-radius: 1rem;
+}

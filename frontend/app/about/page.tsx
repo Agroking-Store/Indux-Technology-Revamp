@@ -75,7 +75,7 @@ export default function AboutPage() {
       </section>
 
  {/* Overlapping Image Grid */}
-      <section className="relative px-6 -mt-32 md:-mt-36 z-20">
+      <section className="relative px-6 -mt-32 md:-mt-36 z-20 pb-4 sm:pb-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -111,7 +111,7 @@ export default function AboutPage() {
       </section>
 
       {/* Indux Group Stories (Centered Title, Two-Column Text) */}
-      <section className="px-6 py-12 md:py-14">
+      <section className="px-6 py-14 md:py-20">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -142,7 +142,7 @@ export default function AboutPage() {
       </section>
 
       {/* Founder Section (Overlapping Cards) */}
-      <section className="px-6 py-12 md:py-16 bg-slate-100 dark:bg-slate-900/50">
+      <section className="px-6 py-16 md:py-20 bg-slate-100 dark:bg-slate-900/50">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center">
  {/* Left: Image with floating card */}
           <motion.div
@@ -195,7 +195,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission Section */}
-      <section className="px-6 py-12 md:py-16 bg-white dark:bg-slate-950 relative overflow-hidden">
+      <section className="px-6 py-16 md:py-20 bg-white dark:bg-slate-950 relative overflow-hidden">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 md:gap-14 items-center">
 
  {/* Left: Image Collage for Mission */}
@@ -253,7 +253,7 @@ export default function AboutPage() {
       </section>
 
       {/* Vision Section */}
-      <section className="px-6 py-12 md:py-16 bg-slate-50 dark:bg-slate-900/50 relative overflow-hidden">
+      <section className="px-6 py-16 md:py-20 bg-slate-50 dark:bg-slate-900/50 relative overflow-hidden">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 md:gap-14 items-center">
 
           {/* Left: Vision Content */}
@@ -312,7 +312,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Approach & Values Section */}
-      <section className="relative px-6  md:py-16">
+      <section className="relative px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
           {/* Our Approach */}
           <div className="text-center mb-10 md:mb-12">
@@ -411,7 +411,7 @@ export default function AboutPage() {
         </div>
       </section>
       {/* Global Reach Section */}
-      <section className="px-6 py-16 md:py-20 bg-slate-50 dark:bg-slate-900/30 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden">
+      <section className="px-6 py-18 md:py-24 bg-slate-50 dark:bg-slate-900/30 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
 
           {/* Left: Content */}
@@ -474,7 +474,7 @@ export default function AboutPage() {
       </section>
 
       {/* Closing CTA */}
-      <section className="px-6 py-16 md:py-20 bg-blue-600 text-white text-center">
+      <section className="px-6 py-18 md:py-24 bg-blue-600 text-white text-center">
         <div className="max-w-4xl mx-auto flex flex-col items-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 tracking-tight">
             Want to talk about your project?
