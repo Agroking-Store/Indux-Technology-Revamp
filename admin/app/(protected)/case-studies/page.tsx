@@ -167,7 +167,7 @@ export default function CaseStudiesPage() {
 
         <Button
           onClick={() => router.push("/case-studies/create")}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white gap-2 font-medium"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white gap-2 font-medium cursor-pointer"
         >
           <Plus size={16} />
           Create Case Study
@@ -188,7 +188,7 @@ export default function CaseStudiesPage() {
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer"
               >
                 <X className="size-4" />
               </button>
@@ -203,13 +203,13 @@ export default function CaseStudiesPage() {
                 setPage(1);
               }}
             >
-              <SelectTrigger className="w-[140px]">
+              <SelectTrigger className="w-[140px] cursor-pointer">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="Published">Published</SelectItem>
-                <SelectItem value="Draft">Draft</SelectItem>
+                <SelectItem value="all" className="cursor-pointer">All Status</SelectItem>
+                <SelectItem value="Published" className="cursor-pointer">Published</SelectItem>
+                <SelectItem value="Draft" className="cursor-pointer">Draft</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -323,7 +323,7 @@ export default function CaseStudiesPage() {
                                 <Button
                                   variant="ghost"
                                   size="icon"
-                                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                                  className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer"
                                   onClick={() => router.push(`/case-studies/${item._id}`)}
                                 >
                                   <Eye className="size-4" />
@@ -339,7 +339,7 @@ export default function CaseStudiesPage() {
                                 <Button
                                   variant="ghost"
                                   size="icon"
-                                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                                  className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer"
                                   onClick={() => router.push(`/case-studies/edit/${item._id}`)}
                                 >
                                   <Edit2 className="size-4" />
@@ -355,7 +355,7 @@ export default function CaseStudiesPage() {
                                 <Button
                                   variant="ghost"
                                   size="icon"
-                                  className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20"
+                                  className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20 cursor-pointer"
                                   onClick={() => {
                                     setItemToDelete(item);
                                     setDeleteModalOpen(true);
@@ -389,6 +389,7 @@ export default function CaseStudiesPage() {
                 size="sm"
                 disabled={page <= 1 || loading}
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
+                className="cursor-pointer disabled:cursor-not-allowed"
               >
                 Previous
               </Button>
@@ -397,6 +398,7 @@ export default function CaseStudiesPage() {
                 size="sm"
                 disabled={page >= totalPages || loading}
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                className="cursor-pointer disabled:cursor-not-allowed"
               >
                 Next
               </Button>

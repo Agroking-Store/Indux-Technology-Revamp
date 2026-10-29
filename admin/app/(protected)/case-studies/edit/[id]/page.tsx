@@ -88,7 +88,7 @@ export default function EditCaseStudyPage() {
           variant="ghost"
           size="icon"
           onClick={() => router.push("/case-studies")}
-          className="text-muted-foreground"
+          className="text-muted-foreground cursor-pointer"
         >
           <ArrowLeft size={20} />
         </Button>
