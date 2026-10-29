@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams, notFound } from "next/navigation";
 import { motion } from "framer-motion";
 import { projects as staticProjects } from "@/lib/products-data";
-import { getDynamicProductBySlug, getFullImageUrl } from "@/lib/api";
+import { getDynamicProductBySlug, getFullImageUrl, formatLiveUrl } from "@/lib/api";
 
 import {
   ArrowRight,
@@ -15,6 +15,7 @@ import {
   HelpCircle,
   BarChart,
   ShieldAlert,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -105,14 +106,26 @@ export default function ProductDetailPage() {
               <p className="text-xl text-slate-500 dark:text-slate-400 leading-relaxed mb-10 max-w-xl">
                 {product.shortDescription}
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 items-center">
                 <GetQuoteModal>
-
                   <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold shadow-xl shadow-blue-600/20 cursor-pointer">
                     Get Free Quote <ArrowRight className="ml-2 size-5" />
-
                   </Button>
                 </GetQuoteModal>
+                {formatLiveUrl(product.liveUrl) && (
+                  <a
+                    href={formatLiveUrl(product.liveUrl)!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      variant="outline"
+                      className="px-8 py-6 rounded-full font-bold border-2 border-slate-200 dark:border-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all cursor-pointer"
+                    >
+                      Visit Live Project <ExternalLink className="ml-2 size-5" />
+                    </Button>
+                  </a>
+                )}
               </div>
             </motion.div>
 

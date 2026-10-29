@@ -341,6 +341,13 @@ export const getVisitorCount = async (log = true): Promise<number> => {
 export default api;
 
 // ===== Dynamic Products & Recent Works Types & API =====
+export const formatLiveUrl = (url?: string): string | null => {
+  if (!url) return null;
+  const trimmed = url.trim();
+  if (!trimmed) return null;
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+};
+
 export interface DynamicProduct {
   _id?: string;
   id?: number | string;
@@ -356,6 +363,7 @@ export interface DynamicProduct {
   stats: { label: string; value: string }[];
   faq: { q: string; a: string }[];
   tech: string[];
+  liveUrl?: string;
   status?: "Draft" | "Published";
   order?: number;
 }

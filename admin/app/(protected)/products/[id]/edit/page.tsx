@@ -25,6 +25,7 @@ export default function EditProductPage() {
   const [fullDescription, setFullDescription] = useState('');
   const [status, setStatus] = useState<'Draft' | 'Published'>('Published');
   const [order, setOrder] = useState('0');
+  const [liveUrl, setLiveUrl] = useState('');
 
   // Existing image vs new file
   const [existingImage, setExistingImage] = useState<string>('');
@@ -51,6 +52,7 @@ export default function EditProductPage() {
           setFullDescription(data.fullDescription || '');
           setStatus(data.status || 'Published');
           setOrder(data.order?.toString() || '0');
+          setLiveUrl(data.liveUrl || '');
           setExistingImage(data.image || '');
 
           setFeatures(data.features && data.features.length > 0 ? data.features : [{ title: '', desc: '' }]);
@@ -99,6 +101,7 @@ export default function EditProductPage() {
       formData.append('fullDescription', fullDescription);
       formData.append('status', status);
       formData.append('order', order);
+      formData.append('liveUrl', liveUrl);
 
       if (imageFile) {
         formData.append('image', imageFile);
@@ -223,6 +226,19 @@ export default function EditProductPage() {
                 <option value="cyan">Cyan</option>
                 <option value="indigo">Indigo / Purple</option>
               </select>
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                Live URL / Demo Link (Optional)
+              </label>
+              <input
+                type="url"
+                placeholder="https://..."
+                value={liveUrl}
+                onChange={(e) => setLiveUrl(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm text-slate-900 dark:text-white focus:outline-blue-600"
+              />
             </div>
           </div>
 

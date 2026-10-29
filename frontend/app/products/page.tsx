@@ -7,11 +7,12 @@ import {
   Plus,
   Package,
   CheckCircle2,
+  ExternalLink,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { projects as staticProjects } from "@/lib/products-data";
-import { getDynamicProducts, getFullImageUrl } from "@/lib/api";
+import { getDynamicProducts, getFullImageUrl, formatLiveUrl } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 
 export default function ProductsZigzagShowcase() {
@@ -169,12 +170,29 @@ export default function ProductsZigzagShowcase() {
                             })}
                       </div>
 
-                      <Link href={`/products/${project.slug}`}>
-                        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer">
-                          Explore Details{" "}
-                          <ArrowRight className="ml-2 size-5 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                      </Link>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <Link href={`/products/${project.slug}`}>
+                          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer">
+                            Explore Details{" "}
+                            <ArrowRight className="ml-2 size-5 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                        </Link>
+                        {formatLiveUrl(project.liveUrl) && (
+                          <a
+                            href={formatLiveUrl(project.liveUrl)!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Button
+                              variant="outline"
+                              className="px-6 py-6 rounded-full font-semibold border-2 border-slate-200 dark:border-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all cursor-pointer"
+                            >
+                              Live Demo
+                              <ExternalLink className="ml-2 size-4" />
+                            </Button>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </motion.div>
                 );

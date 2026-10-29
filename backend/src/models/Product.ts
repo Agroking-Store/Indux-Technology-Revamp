@@ -28,6 +28,7 @@ export interface IProduct extends Document {
   stats: IProductStat[];
   faq: IProductFaq[];
   tech: string[];
+  liveUrl?: string;
   status: "Draft" | "Published";
   order: number;
   createdAt: Date;
@@ -101,6 +102,10 @@ const ProductSchema = new Schema<IProduct>(
         trim: true,
       },
     ],
+    liveUrl: {
+      type: String,
+      trim: true,
+    },
     status: {
       type: String,
       enum: ["Draft", "Published"],
