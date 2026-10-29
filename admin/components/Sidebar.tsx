@@ -13,7 +13,8 @@ import {
   Calendar,
   Users,
   LogOut,
-  Sparkles
+  Sparkles,
+  Award
 } from 'lucide-react';
 import {
   Sidebar,

@@ -304,19 +304,18 @@ export default function CaseStudiesPage() {
               Let us analyze your manual workflows and design a custom software solution with predictable milestones and guaranteed delivery.
             </p>
             <div className="pt-2 flex flex-wrap justify-center gap-4">
-              <Button
-                asChild
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold shadow-lg shadow-blue-500/20"
+              <Link
+                href="/contact-us"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-500/20 inline-flex items-center justify-center transition"
               >
-                <Link href="/contact-us">Book a Discovery Call</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="border-slate-700 text-slate-200 hover:bg-slate-800 px-8 py-6 rounded-full font-bold"
+                Book a Discovery Call
+              </Link>
+              <Link
+                href="/services"
+                className="border border-slate-700 text-slate-200 hover:bg-slate-800 px-8 py-4 rounded-full font-bold inline-flex items-center justify-center transition"
               >
-                <Link href="/services">Explore Our Services</Link>
-              </Button>
+                Explore Our Services
+              </Link>
             </div>
           </div>
         </section>

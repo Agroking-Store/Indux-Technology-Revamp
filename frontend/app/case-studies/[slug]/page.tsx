@@ -216,12 +216,12 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
               We specialize in turning complex, manual operations into automated software systems with measurable return on investment.
             </p>
             <div className="pt-2 flex flex-wrap justify-center gap-4">
-              <Button
-                asChild
-                className="bg-white text-slate-900 hover:bg-slate-100 font-bold px-8 py-6 rounded-full"
+              <Link
+                href="/contact-us"
+                className="bg-white text-slate-900 hover:bg-slate-100 font-bold px-8 py-4 rounded-full inline-flex items-center justify-center transition shadow-lg"
               >
-                <Link href="/contact-us">Schedule a Free Discovery Session</Link>
-              </Button>
+                Schedule a Free Discovery Session
+              </Link>
             </div>
           </div>
 
