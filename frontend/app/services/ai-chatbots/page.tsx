@@ -248,7 +248,7 @@ export default function AiSolutionsServicePage() {
         <section id="capabilities" className="relative overflow-visible border-t border-slate-200/60 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-950/50">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
 
-            
+
 
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start relative">
 
@@ -537,7 +537,7 @@ export default function AiSolutionsServicePage() {
                   Start Conversation <ArrowRight className="w-4 h-4" />
                 </Button>
                 <span className="text-xs text-slate-500 font-medium tracking-wide">
-                  Response within 24 hours • No commitment required
+                  Response within 24 hours
                 </span>
               </div>
 
