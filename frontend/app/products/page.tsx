@@ -119,10 +119,10 @@ export default function ProductsZigzagShowcase() {
                     viewport={{ once: true, margin: "-100px" }}
                     className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${isEven ? "" : "lg:flex-row-reverse"}`}
                   >
-                    {/* Image Column */}
+ {/* Image Column */}
                     <div className="w-full lg:w-1/2 relative">
                       <div className="absolute -inset-4 rounded-[2.5rem] bg-blue-600/5 dark:bg-blue-600/10 blur-2xl"></div>
-                      <div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xl group aspect-[16/10] flex items-center justify-center p-3 sm:p-4">
+<div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xl group aspect-[16/10] flex items-center justify-center p-3 sm:p-4">
                         <Image
                           src={imageSrc}
                           alt={project.title}

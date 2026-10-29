@@ -146,7 +146,7 @@ export default function CRMServicePage() {
                 className="flex flex-col gap-4 text-left max-w-xl font-sans"
               >
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide w-fit">
-                  <Sparkles className="size-4 text-blue-500 animate-spin" />
+
                   Service Overview
                 </div>
                 <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] font-sans">
@@ -180,7 +180,7 @@ export default function CRMServicePage() {
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4">
                   <Button
                     nativeButton={false}
-                    className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
                     render={<Link href="/contact-us" />}
                   >
                     Start Your Project
@@ -222,7 +222,7 @@ export default function CRMServicePage() {
                       fill
                       priority
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover object-top opacity-90 group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover object-top opacity-90 transition-transform duration-500"
                     />
                   </div>
                 </div>
@@ -244,7 +244,7 @@ export default function CRMServicePage() {
               <div className="w-full lg:w-5/12 lg:sticky lg:top-28 z-10 text-left">
                 <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-6">
                   <div className="flex gap-1">
-                    <span className="w-4 h-4 rounded-full bg-blue-500 animate-ping"></span>
+
                     <span className="w-4 h-4 rounded-full bg-slate-200 dark:bg-slate-800"></span>
                   </div>
                   Capabilities
@@ -520,7 +520,7 @@ export default function CRMServicePage() {
               <div className="flex flex-col items-center lg:items-end gap-3 w-full lg:w-auto flex-shrink-0">
                 <Button
                   nativeButton={false}
-                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-blue-600/35"
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
                   render={<Link href="/contact-us" />}
                 >
                   Start Conversation <ArrowRight className="w-4 h-4" />

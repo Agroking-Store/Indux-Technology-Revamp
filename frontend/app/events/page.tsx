@@ -192,7 +192,7 @@ console.log(process.env.NEXT_PUBLIC_IMAGE_RENDERING_URL);
             >
               <AnimatePresence mode="popLayout">
                 {filteredEvents.map((event, idx) => {
-                  const fallbackImg = fallbackEventImages[idx % fallbackEventImages.length];
+ const fallbackImg = fallbackEventImages[idx % fallbackEventImages.length];
                   return (
                     <Link href={`/events/${event.slug}`} key={event._id}>
                       <motion.div
@@ -203,15 +203,15 @@ console.log(process.env.NEXT_PUBLIC_IMAGE_RENDERING_URL);
                         transition={{ duration: 0.5 }}
                         className="group flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-900/60 rounded-3xl border border-slate-200/60 dark:border-slate-800 hover:shadow-xl dark:hover:shadow-none hover:border-blue-500/30 dark:hover:border-blue-500/20 transition-all duration-300 min-h-[460px] cursor-pointer"
                       >
-                        {/* Image & Type Badge */}
+ {/* Image & Type Badge */}
                         <div className="relative h-56 overflow-hidden">
-                          <img width={800} height={600}
-                            src={
-                              event.coverImage
-                                ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.coverImage}`
+ <img width={800} height={600}
+ src={
+ event.coverImage
+ ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.coverImage}`
                                 : event.image || fallbackImg
                             } alt={event.title}
-                            className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500"
+ className="w-full h-full object-cover transition-transform duration-500"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
 

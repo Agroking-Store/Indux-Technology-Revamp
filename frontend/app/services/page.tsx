@@ -44,7 +44,7 @@ const GlobalPresenceClocks = () => {
                     </div>
 
                     <h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
-                        <img src="https://flagcdn.com/w40/in.png" alt="India Flag" className="w-8 h-auto mr-3" />
+ <img src="https://flagcdn.com/w40/in.png" alt="India Flag" className="w-8 h-auto mr-3" />
                         India
                     </h3>
                     <div className="flex items-center gap-2 text-muted-foreground">
@@ -61,7 +61,7 @@ const GlobalPresenceClocks = () => {
                         {uaeTime || "00:00"}
                     </div>
                     <h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
-                        <Image src="https://flagcdn.com/w40/ae.png" alt="UAE Flag with Indux Technology Office to Showcase the Global Presence and Innovation" width={32} height={32} className="w-8 h-auto mr-3" />
+ <Image src="https://flagcdn.com/w40/ae.png" alt="UAE Flag with Indux Technology Office to Showcase the Global Presence and Innovation" width={32} height={32} className="w-8 h-auto mr-3" />
                         UAE
                     </h3>
                     <div className="flex items-center gap-2 text-muted-foreground">
@@ -110,10 +110,10 @@ export default function ServicesPage() {
             {/* Hero Section */}
             <section className="relative pt-20 sm:pt-24 pb-20 sm:pb-32 overflow-hidden">
                 <div className="absolute inset-0 w-full h-full z-0">
-                    <Image
+ <Image
                         alt="High-tech professional IT background"
-                        className="w-full h-full object-cover opacity-10"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdepPcUqWQb-AvSbx-mPzI5Crwpvmi02OxS4GFzCKt-h2KiecG9Rys_cgYTOJTyjLYS7llW3Q8vb9irsUttkpKJoKBQvydmhMh7a9-RsZ8FIlFNlrcXMAvF4Q5W9DVPCu3zVA7g_yvrp67UA3nBclcMDbQDW_QAPOhd-Y5TEF8DOEx4q5csZaAVW5TjhXtHmRiMu-GbkmD34QiOflsK4kIODgdYtodC87c_6g1eBst_xOQPkYq_Rx2fQ"
+ className="w-full h-full object-cover opacity-10"
+ src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdepPcUqWQb-AvSbx-mPzI5Crwpvmi02OxS4GFzCKt-h2KiecG9Rys_cgYTOJTyjLYS7llW3Q8vb9irsUttkpKJoKBQvydmhMh7a9-RsZ8FIlFNlrcXMAvF4Q5W9DVPCu3zVA7g_yvrp67UA3nBclcMDbQDW_QAPOhd-Y5TEF8DOEx4q5csZaAVW5TjhXtHmRiMu-GbkmD34QiOflsK4kIODgdYtodC87c_6g1eBst_xOQPkYq_Rx2fQ"
                         fill
                         priority={true}
                     />
@@ -158,103 +158,118 @@ export default function ServicesPage() {
                         </p>
                     </div>
 
-                    <div className="flex flex-col items-center gap-8 py-12">
+                    <div className="flex flex-col items-center gap-12 sm:gap-16 md:gap-24 py-8 sm:py-12">
                         {/* Row 1: CRM Software */}
-                        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 w-full mb-20 md:-left-24 relative">
-                            <div className="relative shrink-0">
-                                <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">01</span>
-                                <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <Image alt="CRM Solutions for Growing Business" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/crm.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 lg:gap-20 w-full relative">
+                            <div className="relative shrink-0 flex items-center justify-center">
+                                <span className="absolute -left-6 sm:-left-12 md:-left-20 lg:-left-28 text-7xl sm:text-8xl md:text-[12rem] lg:text-[15rem] font-extrabold text-[#b4c5ff] dark:text-blue-950/60 opacity-30 pointer-events-none z-0 select-none tracking-tighter leading-none -top-10 sm:-top-16 md:-top-20">01</span>
+                                <div className="relative w-56 h-64 sm:w-64 sm:h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+                                    <Image alt="CRM Solutions for Growing Business" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500" src="/services/crm.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">CRM Software</h3>
-                                <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Manage leads, organize customer information, track sales activities and schedule follow-ups with Indux CRM or a customized CRM solution.                                </p>
+                                <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">CRM Software</h3>
+                                <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">
+                                    Manage leads, organize customer information, track sales activities and schedule follow-ups with Indux CRM or a customized CRM solution.
+                                </p>
                                 <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start">
-                                    <Link href="/services/crm" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Explore CRM Solutions</Link>
+                                    <Link href="/services/crm" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full text-xs sm:text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Explore CRM Solutions</Link>
                                 </div>
                             </div>
                         </div>
 
                         {/* Row 2: Web Development */}
-                        <div className="flex flex-col md:flex-row-reverse items-center justify-center gap-12 md:gap-20 w-full mb-20 relative">
-                            <div className="relative shrink-0">
-                                <span className="absolute -right-24 md:-right-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">02</span>
-                                <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <Image alt="Web Development Responsive Design and User Experience for Modern Businesses and Startups" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/web-dev.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
+                        <div className="flex flex-col md:flex-row-reverse items-center justify-center gap-8 md:gap-16 lg:gap-20 w-full relative">
+                            <div className="relative shrink-0 flex items-center justify-center">
+                                <span className="absolute -right-6 sm:-right-12 md:-right-20 lg:-right-28 text-7xl sm:text-8xl md:text-[12rem] lg:text-[15rem] font-extrabold text-[#b4c5ff] dark:text-blue-950/60 opacity-30 pointer-events-none z-0 select-none tracking-tighter leading-none -top-10 sm:-top-16 md:-top-20">02</span>
+                                <div className="relative w-56 h-64 sm:w-64 sm:h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+                                    <Image alt="Web Development Responsive Design and User Experience for Modern Businesses and Startups" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500" src="/services/web-dev.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-right relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">Custom Software Development</h3>
-                                <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Turn business requirements into web applications and software tailored to agreed workflows.                                </p>
-                                <Link href="/services/web-dev" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Discuss Your Project</Link>
+                                <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">Custom Software Development</h3>
+                                <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">
+                                    Turn business requirements into web applications and software tailored to agreed workflows.
+                                </p>
+                                <div className="flex flex-wrap items-center gap-4 justify-center md:justify-end">
+                                    <Link href="/services/web-dev" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full text-xs sm:text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Discuss Your Project</Link>
+                                </div>
                             </div>
                         </div>
 
                         {/* Row 3: Mobile App Development */}
-                        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 w-full mb-20 relative">
-                            <div className="relative shrink-0">
-                                <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">03</span>
-                                <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <Image alt="Mobile Apps for Seamless User Experience and Cross-Platform Compatibility" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/mobile-app.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 lg:gap-20 w-full relative">
+                            <div className="relative shrink-0 flex items-center justify-center">
+                                <span className="absolute -left-6 sm:-left-12 md:-left-20 lg:-left-28 text-7xl sm:text-8xl md:text-[12rem] lg:text-[15rem] font-extrabold text-[#b4c5ff] dark:text-blue-950/60 opacity-30 pointer-events-none z-0 select-none tracking-tighter leading-none -top-10 sm:-top-16 md:-top-20">03</span>
+                                <div className="relative w-56 h-64 sm:w-64 sm:h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+                                    <Image alt="Mobile Apps for Seamless User Experience and Cross-Platform Compatibility" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500" src="/services/mobile-app.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">Mobile App Development</h3>
-                                <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Create mobile experiences for customer services and business workflows, where aligned with project needs.</p>
-                                <Link href="/services/mobile-dev" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Discuss Your App</Link>
+                                <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">Mobile App Development</h3>
+                                <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">
+                                    Create mobile experiences for customer services and business workflows, where aligned with project needs.
+                                </p>
+                                <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start">
+                                    <Link href="/services/mobile-dev" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full text-xs sm:text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Discuss Your App</Link>
+                                </div>
                             </div>
                         </div>
 
                         {/* Row 4: AI & Business Automation */}
-                        <div className="flex flex-col md:flex-row-reverse items-center justify-center gap-12 md:gap-20 w-full mb-20 relative">
-                            <div className="relative shrink-0">
-                                <span className="absolute -right-24 md:-right-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">04</span>
-                                <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <Image alt="AI Chatbots for Customer Support and Automated Responses for Growing Businesses" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpOfD-HUh1A0TcZXeh7hxBmcwDvb6q-JukYYCzkg_XDOtcIHUbam8aFwJ-clUcayjSbpIZU9QvV6c1S0RUdhqxQp686QxgLvyM9X3655zZPh-giNp8Ch80KqcRGaKs59sBt1lLipvNg7KrTyRAjKqnroPOXtKF2zs_tTwuT9Oftw__zvas8ZEmtEFC0JqQwfPeI2mufjgY-KFr6Z3f_V0xXVGSABJHRtVwLTvW42XdtMV2xDe-J47DQQ" fill sizes="(max-width: 768px) 100vw, 300px" />
+                        <div className="flex flex-col md:flex-row-reverse items-center justify-center gap-8 md:gap-16 lg:gap-20 w-full relative">
+                            <div className="relative shrink-0 flex items-center justify-center">
+                                <span className="absolute -right-6 sm:-right-12 md:-right-20 lg:-right-28 text-7xl sm:text-8xl md:text-[12rem] lg:text-[15rem] font-extrabold text-[#b4c5ff] dark:text-blue-950/60 opacity-30 pointer-events-none z-0 select-none tracking-tighter leading-none -top-10 sm:-top-16 md:-top-20">04</span>
+                                <div className="relative w-56 h-64 sm:w-64 sm:h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+                                    <Image alt="AI Chatbots for Customer Support and Automated Responses for Growing Businesses" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpOfD-HUh1A0TcZXeh7hxBmcwDvb6q-JukYYCzkg_XDOtcIHUbam8aFwJ-clUcayjSbpIZU9QvV6c1S0RUdhqxQp686QxgLvyM9X3655zZPh-giNp8Ch80KqcRGaKs59sBt1lLipvNg7KrTyRAjKqnroPOXtKF2zs_tTwuT9Oftw__zvas8ZEmtEFC0JqQwfPeI2mufjgY-KFr6Z3f_V0xXVGSABJHRtVwLTvW42XdtMV2xDe-J47DQQ" fill sizes="(max-width: 768px) 100vw, 300px" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-right relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">AI & Business Automation</h3>
-                                <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Explore practical AI assistants, chatbots and workflow automation for repetitive business processes.</p>
-                                <Link href="/services/ai-chatbots" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Explore Automation</Link>
+                                <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">AI & Business Automation</h3>
+                                <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">
+                                    Explore practical AI assistants, chatbots and workflow automation for repetitive business processes.
+                                </p>
+                                <div className="flex flex-wrap items-center gap-4 justify-center md:justify-end">
+                                    <Link href="/services/ai-chatbots" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full text-xs sm:text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Explore Automation</Link>
+                                </div>
                             </div>
                         </div>
 
                         {/* Row 5: AI Chatbots */}
-                        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 w-full mb-20 relative">
-                            <div className="relative shrink-0">
-                                <span className="absolute -left-24 md:-left-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">05</span>
-                                <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="AI Chatbots" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/business-automation.webp" />
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 lg:gap-20 w-full relative">
+                            <div className="relative shrink-0 flex items-center justify-center">
+                                <span className="absolute -left-6 sm:-left-12 md:-left-20 lg:-left-28 text-7xl sm:text-8xl md:text-[12rem] lg:text-[15rem] font-extrabold text-[#b4c5ff] dark:text-blue-950/60 opacity-30 pointer-events-none z-0 select-none tracking-tighter leading-none -top-10 sm:-top-16 md:-top-20">05</span>
+                                <div className="relative w-56 h-64 sm:w-64 sm:h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+                                    <img alt="AI Chatbots" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500" src="/services/business-automation.webp" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">AI Chatbots</h3>
-                                <p className="text-muted-foreground mb-6 leading-relaxed">
+                                <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">AI Chatbots</h3>
+                                <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">
                                     Intelligent conversational agents that automate customer support and enhance user engagement 24/7. Our AI solutions learn from interactions to provide personalized experiences and reduce operational overhead.
                                 </p>
-                                <Link href="/services/ai-chatbots" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
+                                <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start">
+                                    <Link href="/services/ai-chatbots" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full text-xs sm:text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Learn More</Link>
+                                </div>
                             </div>
                         </div>
 
                         {/* Row 6: ERP Software */}
-                        <div className="flex flex-col md:flex-row-reverse items-center justify-center gap-12 md:gap-20 w-full relative">
-                            <div className="relative shrink-0">
-                                <span className="absolute -right-24 md:-right-48 text-8xl md:text-[20rem] font-extrabold text-[#b4c5ff] opacity-30 pointer-events-none z-0 select-none tracking-tighter -top-40 leading-none">06</span>
-                                <div className="relative w-64 h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="ERP Software" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/services/erp.webp" />
+<div className="flex flex-col md:flex-row-reverse items-center justify-center gap-8 md:gap-16 lg:gap-20 w-full relative">
+                            <div className="relative shrink-0 flex items-center justify-center">
+                                <span className="absolute -right-6 sm:-right-12 md:-right-20 lg:-right-28 text-7xl sm:text-8xl md:text-[12rem] lg:text-[15rem] font-extrabold text-[#b4c5ff] dark:text-blue-950/60 opacity-30 pointer-events-none z-0 select-none tracking-tighter leading-none -top-10 sm:-top-16 md:-top-20">06</span>
+                                <div className="relative w-56 h-64 sm:w-64 sm:h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+                                    <img alt="ERP Software" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500" src="/services/erp.webp" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-right relative z-10">
-                                <h3 className="text-3xl font-bold text-foreground mb-4">ERP Software</h3>
-                                <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Connect business processes with ERP solutions designed around your operational requirements.                                </p>
-                                <Link href="/services/erp" className="inline-block bg-primary text-primary-foreground px-8 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Explore ERP Solutions</Link>
+                                <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">ERP Software</h3>
+                                <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">
+                                    Connect business processes with ERP solutions designed around your operational requirements.
+                                </p>
+                                <div className="flex flex-wrap items-center gap-4 justify-center md:justify-end">
+                                    <Link href="/services/erp" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full text-xs sm:text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Explore ERP Solutions</Link>
+                                </div>
                             </div>
                         </div>
                     </div>

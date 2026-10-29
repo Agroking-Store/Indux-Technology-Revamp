@@ -83,10 +83,10 @@ export default function CareersPage() {
                 className="relative group max-w-lg md:ml-auto"
               >
                 {/* Thick border-8 frame matching home page aesthetic */}
-                <img width={800} height={600}
-                  src={heroImage}
+ <img width={800} height={600}
+ src={heroImage}
                   alt="Team collaborating in a meeting at Indux Technology"
-                  className="rounded-[2.5rem] w-full h-72 sm:h-96 object-cover border-8 border-white dark:border-slate-900 shadow-2xl transition-transform duration-500 group-hover:scale-[1.01]"
+ className="rounded-[2.5rem] w-full h-72 sm:h-96 object-cover border-8 border-white dark:border-slate-900 shadow-2xl transition-transform duration-500 "
                 />
                 <span className="absolute -bottom-4 -left-4 flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-4.5 py-3 shadow-xl">
                   <span className="relative flex h-2 w-2">
@@ -172,7 +172,7 @@ export default function CareersPage() {
               </div>
             </motion.div>
             <div className="grid grid-cols-2 gap-4">
-              {galleryImages.map((img, i) => (
+ {galleryImages.map((img, i) => (
                 <motion.div
                   key={img.src}
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -181,10 +181,10 @@ export default function CareersPage() {
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                   className={`overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-md ${i % 2 === 1 ? 'mt-6' : ''}`}
                 >
-                  <img width={800} height={600}
-                    src={img.src}
+ <img width={800} height={600}
+ src={img.src}
                     alt={img.alt}
-                    className="w-full h-40 sm:h-48 object-cover transition-transform duration-700 ease-out hover:scale-105"
+ className="w-full h-40 sm:h-48 object-cover transition-transform duration-700 ease-out "
                   />
                 </motion.div>
               ))}

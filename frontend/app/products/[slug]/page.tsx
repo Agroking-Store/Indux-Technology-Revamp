@@ -1,10 +1,12 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
 import { useParams, notFound } from "next/navigation";
 import { motion } from "framer-motion";
 import { projects as staticProjects } from "@/lib/products-data";
 import { getDynamicProductBySlug, getFullImageUrl } from "@/lib/api";
+
 import {
   ArrowRight,
   Settings,
@@ -20,6 +22,7 @@ import { GetQuoteModal } from "@/components/GetQuoteModal";
 
 export default function ProductDetailPage() {
   const { slug } = useParams();
+
   const slugStr = typeof slug === "string" ? slug : Array.isArray(slug) ? slug[0] : "";
 
   const initialProduct = staticProjects.find((p) => p.slug === slugStr);
@@ -55,6 +58,7 @@ export default function ProductDetailPage() {
 
   const imageSrc = getFullImageUrl(product.image);
 
+
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -71,7 +75,9 @@ export default function ProductDetailPage() {
       "priceCurrency": "INR",
       "price": "Contact for pricing",
       "availability": "https://schema.org/InStock",
+
       "url": `https://induxtechnology.com/products/${slugStr}`
+
     }
   };
 
@@ -101,8 +107,10 @@ export default function ProductDetailPage() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <GetQuoteModal>
+
                   <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold shadow-xl shadow-blue-600/20 cursor-pointer">
                     Get Free Quote <ArrowRight className="ml-2 size-5" />
+
                   </Button>
                 </GetQuoteModal>
               </div>
@@ -117,7 +125,9 @@ export default function ProductDetailPage() {
                 <img
                   width={800}
                   height={600}
+
                   src={imageSrc}
+
                   alt={product.title}
                   className="w-full h-full object-contain"
                 />
@@ -128,6 +138,7 @@ export default function ProductDetailPage() {
       </section>
 
       {/* 2. STATS BAR */}
+
       {product.stats && product.stats.length > 0 && (
         <div className="bg-blue-600 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -150,6 +161,7 @@ export default function ProductDetailPage() {
         </div>
       )}
 
+
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         {/* 3. STICKY CONTENT SECTION */}
         <div className="flex flex-col lg:flex-row gap-20 items-start">
@@ -164,6 +176,7 @@ export default function ProductDetailPage() {
                 {product.fullDescription}
               </p>
             </div>
+
 
             {product.tech && product.tech.length > 0 && (
               <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -183,6 +196,7 @@ export default function ProductDetailPage() {
               </div>
             )}
 
+
             <div className="flex flex-col gap-4">
               <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <ShieldAlert className="text-blue-600 size-5" /> Security
@@ -200,6 +214,7 @@ export default function ProductDetailPage() {
           </aside>
 
           {/* RIGHT: Feature Cards (Vertical Scroll) */}
+
           {product.features && product.features.length > 0 && (
             <div className="w-full lg:w-7/12 space-y-8">
               {product.features.map((feature: any, idx: number) => {
@@ -260,6 +275,7 @@ export default function ProductDetailPage() {
           </section>
         )}
 
+
         {/* 5. BOTTOM CTA */}
         <section className="mt-40 text-left">
           <div className="bg-slate-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden border border-slate-800">
@@ -272,14 +288,18 @@ export default function ProductDetailPage() {
               </h2>
               <div className="flex flex-col sm:flex-row justify-center gap-6 w-full sm:w-auto">
                 <GetQuoteModal>
+
                   <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-10 py-8 rounded-full text-xl font-bold shadow-2xl transition-transform hover:scale-105 border-none cursor-pointer">
                     Schedule a Demo
+
                   </Button>
                 </GetQuoteModal>
                 <Link href="/contact-us" className="w-full sm:w-auto">
                   <Button
                     variant="outline"
+
                     className="w-full sm:w-auto bg-transparent border-slate-700 text-white hover:text-white hover:bg-slate-800 px-10 py-8 rounded-full text-xl font-bold cursor-pointer"
+
                   >
                     Talk to Sales
                   </Button>

@@ -35,64 +35,74 @@ import { GetQuoteModal } from "@/components/GetQuoteModal";
 const reviews = [
   {
     name: "Paras Bora",
+    role: "Director",
+    company: "Bora Logistics",
     rating: 5,
-    body: "Laxman is very good at his work. I use the crm software he has developed for us. Reaping good benefits and is cost effective as well",
-    img: "https://i.pravatar.cc/150?u=10",
+    body: "Laxman is very good at his work. I use the CRM software he has developed for us. Reaping good benefits and is cost effective as well.",
   },
   {
     name: "Subhangi Solunke",
+    role: "Operations Head",
+    company: "Solunke Enterprises",
     rating: 5,
-    body: "Great experience with Indux Technology. They understood my needs and delivered perfectly. Professional team with smooth collaboration.",
-    img: "https://i.pravatar.cc/150?u=20",
+    body: "Great experience with Indux Technology. They understood our needs and delivered perfectly. Professional team with smooth collaboration.",
   },
   {
-    name: "Nikhil Sharma Eventpreneur",
+    name: "Nikhil Sharma",
+    role: "Founder",
+    company: "Eventpreneur",
     rating: 5,
     body: "Laxman has great knowledge about his industry and has been super productive with this delivery. Wishing you many success ahead.",
-    img: "https://i.pravatar.cc/150?u=30",
   },
   {
     name: "Aditya Chakre",
+    role: "Business Owner",
+    company: "Chakre Retail",
     rating: 5,
     body: "Just wanted to share my experience with Indux Technology. I used them for a CRM project and it was a really good experience. The project turned out great!",
-    img: "https://i.pravatar.cc/150?u=40",
   },
   {
-    name: "Aditya Shastri1817",
+    name: "Aditya Shastri",
+    role: "Managing Director",
+    company: "Shastri Digital",
     rating: 5,
-    body: "Indux Technology played a key role in our digital transformation journey. From strategy to execution, they provided end-to-end solutions including development and marketing.",
-    img: "https://i.pravatar.cc/150?u=50",
+    body: "Indux Technology played a key role in our digital transformation journey. From strategy to execution, they provided end-to-end solutions.",
   },
   {
     name: "Satish Mundalik",
+    role: "Sales Director",
+    company: "Mundalik Realty",
     rating: 5,
-    body: "Laxman is a master of CRM — creating strong connections, building trust, and maintaining lasting relationships. He believes every contact is valuable and every follow-up creates new opportunities.",
-    img: "https://i.pravatar.cc/150?u=60",
+    body: "Laxman is a master of CRM — creating strong connections, building trust, and maintaining lasting relationships. Every contact is valuable.",
   },
   {
-    name: "Priyanka V Memories Worldwide",
+    name: "Priyanka V",
+    role: "Managing Partner",
+    company: "Memories Worldwide",
     rating: 5,
-    body: "Give very genuine and correct solutions of your problems thru their CRM software",
-    img: "https://i.pravatar.cc/150?u=70",
+    body: "Gives very genuine and practical solutions to our business problems through their custom CRM software.",
   },
   {
-    name: "atif pervez",
+    name: "Atif Pervez",
+    role: "Technical Lead",
+    company: "AP Technologies",
     rating: 5,
-    body: "Indux Technology delivered a reliable IT solution with a professional and responsive team. A smooth experience and a dependable development partner.",
-    img: "https://i.pravatar.cc/150?u=80",
+    body: "Indux Technology delivered a reliable IT solution with a professional and responsive team. A dependable development partner.",
   },
 ];
 const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);
 
 const ReviewCard = ({
-  img,
   name,
+  role,
+  company,
   rating,
   body,
 }: {
-  img: string;
   name: string;
+  role?: string;
+  company?: string;
   rating: number;
   body: string;
 }) => {
@@ -131,6 +141,13 @@ const ReviewCard = ({
           <figcaption className="text-base font-bold dark:text-white truncate">
             {name}
           </figcaption>
+          {(role || company) && (
+            <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+              {role}
+              {role && company ? " · " : ""}
+              {company}
+            </p>
+          )}
           <div className="flex items-center gap-0.5 mt-0.5">
             {[...Array(5)].map((_, i) => (
               <Star
@@ -154,30 +171,30 @@ const ReviewCard = ({
 const fallbackBlogs = [
   {
     _id: "fallback-1",
-    title: "The Ultimate Guide to Cloud Migration Strategy in 2026",
-    category: "Cloud Computing",
+    title: "How to Choose a CRM Your Sales Team Will Actually Use",
+    category: "CRM Solutions",
     shortDescription:
-      "Discover how moving your legacy systems to the cloud can improve scalability, reduce costs, and accelerate innovation.",
+      "Keep every lead, follow-up, and deal in one place so no opportunity slips away with software tailored to your sales process.",
     featuredImage: "/images/unsplash/img-62ae3366.webp",
-    slug: "#",
+    slug: "how-to-choose-a-crm-your-sales-team-will-actually-use",
   },
   {
     _id: "fallback-2",
-    title: "Top 5 Cybersecurity Threats Every Business Must Know",
-    category: "Cybersecurity",
+    title: "ERP for Small Manufacturers: Where to Start",
+    category: "Manufacturing ERP",
     shortDescription:
-      "A comprehensive look at the emerging cyber threats in the modern digital landscape and how to protect your enterprise data.",
+      "A practical guide to connecting inventory, purchasing, and production so business owners can see what is happening in real time.",
     featuredImage: "/images/unsplash/img-ca777973.webp",
-    slug: "#",
+    slug: "erp-for-small-manufacturers-where-to-start",
   },
   {
     _id: "fallback-3",
-    title: "How AI is Revolutionizing Custom Enterprise Software",
-    category: "AI & Machine Learning",
+    title: "5 Business Tasks You Can Automate with AI This Quarter",
+    category: "AI & Automation",
     shortDescription:
-      "Learn how integrating machine learning and AI into your business applications can automate workflows and drive unprecedented growth.",
+      "Put practical AI assistants and automated workflows to work on repetitive tasks, reporting, and customer inquiries.",
     featuredImage: "/images/unsplash/img-fbc3450c.webp",
-    slug: "#",
+    slug: "5-business-tasks-you-can-automate-with-ai-this-quarter",
   },
 ];
 
@@ -212,6 +229,14 @@ export default function Home() {
 
   const [scrollRange, setScrollRange] = useState(0);
   const [viewportHeight, setViewportHeight] = useState(0);
+  const [activeAboutSlide, setActiveAboutSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveAboutSlide((prev) => (prev + 1) % 3);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -477,22 +502,23 @@ export default function Home() {
 
         {/* HERO SECTION */}
 
-        <section className="relative overflow-hidden w-full pt-0 pb-4 sm:pb-6 lg:pb-8">
+        <section className="relative overflow-hidden w-full pt-0 pb-4 sm:pb-6 lg:pb-8 bg-[#d3e9fe] dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
           <div className="w-full">
-            <div className="relative w-full aspect-[16/7] md:aspect-[16/6] lg:aspect-[21/9] min-h-[260px] xs:min-h-[300px] sm:min-h-[400px] md:min-h-[460px] overflow-hidden shadow-sm border-b border-slate-200 dark:border-slate-800">
-              {/* Background image */}
+            {/* Desktop / Laptop / Large Tablet (md and up): Wide banner with text safely on left and artwork on right */}
+            <div className="hidden md:block relative w-full aspect-[16/7] md:aspect-[16/6] lg:aspect-[21/9] min-h-[420px] md:min-h-[460px] overflow-hidden">
+              {/* Background image: Full clean artwork */}
               <Image
-                src="/image.png"
-                alt="Indux Technology"
+                src="/hero-banner-new.png"
+                alt="Indux Technology Solutions"
                 fill
                 priority
                 sizes="100vw"
-                className="object-cover object-center w-full h-full"
+                className="object-cover object-right lg:object-center w-full h-full"
               />
 
-              {/* Heading */}
-              <div className="absolute left-[4%] sm:left-[5%] lg:left-[8%] top-[12%] sm:top-[18%] md:top-[20%] z-10 w-[58%] sm:w-[55%] max-w-2xl">
-                <h1 className="text-[clamp(14px,3.8vw,56px)] font-bold leading-[1.08] tracking-tight text-[#080b2d]">
+              {/* Heading: Confined to 39% width so it never touches the hand at 45% */}
+              <div className="absolute left-[5%] lg:left-[7%] top-[16%] lg:top-[18%] z-10 w-[40%] max-w-xl">
+                <h1 className="text-[clamp(24px,3.3vw,52px)] font-bold leading-[1.12] tracking-tight text-[#080b2d]">
                   Custom Software,
                   <br />
                   CRM &amp; ERP Solutions
@@ -501,9 +527,9 @@ export default function Home() {
                 </h1>
               </div>
 
-              {/* Description */}
-              <div className="absolute left-[4%] sm:left-[5%] lg:left-[8%] top-[48%] sm:top-[52%] md:top-[53%] z-10 w-[52%] sm:w-[48%] md:w-[45%] max-w-xl">
-                <p className="text-[clamp(8.5px,1.2vw,17px)] leading-[1.3] sm:leading-[1.45] text-[#252a35] line-clamp-3 xs:line-clamp-4 sm:line-clamp-none">
+              {/* Description: Confined to 38% width with ample clearance from the hand */}
+              <div className="absolute left-[5%] lg:left-[7%] top-[52%] lg:top-[53%] z-10 w-[38%] max-w-lg">
+                <p className="text-[clamp(12px,1.1vw,16px)] leading-[1.5] text-[#252a35]">
                   Indux Technology helps businesses streamline operations with
                   CRM and ERP software, custom applications, websites and
                   AI-powered automation. From business process improvement to
@@ -512,53 +538,130 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* CTA Buttons Container */}
-              <div className="absolute left-[4%] sm:left-[5%] lg:left-[8%] top-[78%] sm:top-[74%] z-20 flex items-center gap-1.5 sm:gap-3">
+              {/* Action Buttons */}
+              <div className="absolute left-[5%] lg:left-[7%] top-[76%] z-20 flex items-center gap-3">
                 <Link
                   href="/contact-us"
-                  className="inline-flex h-6 xs:h-7 sm:h-9 md:h-11 items-center justify-center rounded-full bg-[#3049b5] px-2.5 xs:px-3.5 sm:px-5 md:px-6 text-[clamp(8px,0.95vw,14px)] font-semibold text-white hover:bg-[#233894] shadow-sm sm:shadow-md transition-all shrink-0 whitespace-nowrap"
+                  className="inline-flex h-10 lg:h-12 items-center justify-center rounded-full bg-[#3049b5] px-5 lg:px-7 text-xs lg:text-sm font-semibold text-white hover:bg-[#233894] shadow-md transition-all whitespace-nowrap"
                 >
                   Book a Free Consultation
                 </Link>
 
                 <Link
                   href="/services"
-                  className="inline-flex h-6 xs:h-7 sm:h-9 md:h-11 items-center justify-center gap-0.5 sm:gap-1 text-[clamp(8px,0.95vw,14px)] font-semibold text-[#080b2d] hover:text-blue-700 transition-colors whitespace-nowrap"
+                  className="inline-flex h-10 lg:h-12 items-center justify-center gap-1.5 text-xs lg:text-sm font-semibold text-[#080b2d] hover:text-blue-700 transition-colors whitespace-nowrap px-2"
                 >
                   Explore Our Solutions →
                 </Link>
               </div>
             </div>
+
+            {/* Mobile Layout (< 768px): Alternative 1 - Stacked Continuous Banner on seamless #d3e9fe */}
+            <div className="block md:hidden bg-[#d3e9fe] dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+              <div className="px-5 pt-7 pb-2 flex flex-col gap-3.5">
+                {/* Heading: Full width, zero overlap */}
+                <h1 className="text-[25px] xs:text-[28px] sm:text-[32px] font-bold leading-[1.15] tracking-tight text-[#080b2d] dark:text-white">
+                  Custom Software,
+                  <br />
+                  CRM &amp; ERP Solutions
+                  <br />
+                  for Growing Businesses
+                </h1>
+
+                {/* Description: Clean, comfortable font size and full readability */}
+                <p className="text-[13px] xs:text-[14px] leading-relaxed text-[#252a35] dark:text-slate-300">
+                  Indux Technology helps businesses streamline operations with
+                  CRM and ERP software, custom applications, websites and
+                  AI-powered automation. From business process improvement to
+                  tailored software development, we build solutions around your
+                  requirements.
+                </p>
+
+                {/* Primary CTA Buttons: Always in a single horizontal row together */}
+                <div className="flex items-center gap-2 xs:gap-3 pt-1 flex-nowrap">
+                  <Link
+                    href="/contact-us"
+                    className="inline-flex items-center justify-center rounded-full bg-[#3049b5] text-white px-3.5 xs:px-5 py-2.5 text-[11px] xs:text-xs sm:text-sm font-semibold shadow-md hover:bg-[#233894] transition-all text-center whitespace-nowrap shrink-0"
+                  >
+                    Book a Free Consultation
+                  </Link>
+
+                  <Link
+                    href="/services"
+                    className="inline-flex items-center justify-center gap-0.5 text-[11px] xs:text-xs sm:text-sm font-semibold text-[#080b2d] dark:text-white hover:text-blue-700 transition-colors whitespace-nowrap py-2.5 px-1"
+                  >
+                    Explore Our Solutions →
+                  </Link>
+                </div>
+
+                {/* Illustration: Seamless on the identical #d3e9fe blue canvas, 0% overlap, 100% visible hands, ideas, browser & growth */}
+                <div className="relative w-full aspect-[584/380] mt-2">
+                  <Image
+                    src="/hero-artwork.png"
+                    alt="Indux Technology Solutions"
+                    fill
+                    priority
+                    sizes="100vw"
+                    className="object-contain object-center"
+                  />
+                </div>
+              </div></div>
           </div>
         </section>
         {/* ABOUT US SECTION */}
         <section className="relative overflow-hidden bg-white dark:bg-slate-950 pb-8 sm:pb-12 lg:pb-16 pt-0">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center">
-              {/* Left Side: Single Image Showcase with Experience Badge */}
-              <div className="relative w-full aspect-[830/549] max-w-lg mx-auto lg:max-w-none">
-                {/* Main Showcase Image Container */}
-                <div className="relative w-full h-full rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 group">
-                  <Image
-                    src="/about-company-showcase.webp"
-                    alt="Indux Technology - One of the Fastest Ways to Gain Business Success"
-                    fill
-                    loading="eager"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
+              {/* Left Side: 3-Image Showcase Slider fitting cleanly inside the block */}
+              <div className="relative w-full aspect-[1024/677] max-w-lg lg:max-w-none mx-auto flex flex-col justify-center">
+                <div className="relative w-full h-full rounded-2xl sm:rounded-[2.2rem] overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 group">
+                  {[
+                    {
+                      src: "/about-slide-1.webp",
+                      alt: "Indux Technology - Tailored CRM, ERP & App Solutions",
+                    },
+                    {
+                      src: "/about-slide-2.webp",
+                      alt: "Indux Technology - Streamlining Manual Spreadsheets & Processes",
+                    },
+                    {
+                      src: "/about-slide-3.webp",
+                      alt: "Indux Technology - In-house Expert Engineering Team",
+                    },
+                  ].map((slide, idx) => (
+                    <div
+                      key={idx}
+                      className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${
+                        activeAboutSlide === idx ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+                      }`}
+                    >
+                      <Image
+                        src={slide.src}
+                        alt={slide.alt}
+                        fill
+                        loading={idx === 0 ? "eager" : "lazy"}
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="object-cover object-center"
+                      />
+                    </div>
+                  ))}
 
-                {/* Floating Badge (Top Right) */}
-                <div className="absolute -top-4 -right-2 sm:-top-6 sm:-right-4 md:-right-6 bg-blue-600 rounded-2xl sm:rounded-3xl text-white p-5 sm:p-7 md:p-8 shadow-2xl flex flex-col items-center justify-center min-w-[120px] sm:min-w-[150px] z-20 transform hover:-translate-y-2 transition-transform duration-500 border-2 border-white dark:border-slate-800">
-                  <div className="text-3xl sm:text-4xl md:text-5xl font-black mb-1">
-                    5+
+                  {/* Navigation dots on bottom right */}
+                  <div className="absolute bottom-3 right-4 z-20 flex items-center gap-1.5 bg-slate-900/40 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-white/20">
+                    {[0, 1, 2].map((dot) => (
+                      <button
+                        key={dot}
+                        type="button"
+                        onClick={() => setActiveAboutSlide(dot)}
+                        aria-label={`Show slide ${dot + 1}`}
+                        className={`transition-all rounded-full ${
+                          activeAboutSlide === dot
+                            ? "w-5 h-2 bg-blue-500"
+                            : "w-2 h-2 bg-white/60 hover:bg-white"
+                        }`}
+                      />
+                    ))}
                   </div>
-                  <p className="text-[10px] sm:text-xs font-bold tracking-widest uppercase text-blue-100 text-center leading-tight">
-                    Years
-                    <br />
-                    Of Experience
-                  </p>
                 </div>
               </div>
 
@@ -570,27 +673,22 @@ export default function Home() {
                 </div>
 
                 <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-medium text-slate-900 dark:text-white leading-[1.15] tracking-tight">
-                  One of the fastest way to gain{" "}
+                  Software built around how your business{" "}
                   <span className="italic text-slate-600 dark:text-slate-400 font-serif">
-                    Your Business
+                    actually works
                   </span>
                 </h2>
 
                 <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm md:text-base mt-1 sm:mt-2 max-w-lg">
-                  We empower businesses across all industries with cutting-edge IT solutions. From startups to large enterprises, our goal is to leverage the power of technology to help clients reach their target efficiently.
+                  Since 2021, Indux Technology has helped businesses in Pune and across India replace spreadsheets, scattered tools and manual follow-ups with software made for them. Our in-house team builds CRM, ERP, HRMS, and web and mobile apps, and stays with you after launch.
                 </p>
 
                 <div className="mt-2">
-                  <h3 className="font-bold text-slate-900 dark:text-white mb-4 sm:mb-5 text-sm md:text-base">
-                    Development Special Services:
-                  </h3>
-
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-5 gap-x-4">
                     {[
-                      "Emergency Solutions Anytime",
-                      "How to improve business",
-                      "Affordable price upto 2 years",
-                      "Reliable & Experienced Team",
+                      "Quick response on urgent fixes",
+                      "A team that learns your industry",
+                      "Clear scope and pricing before we start",
                     ].map((item, i) => (
                       <div key={i}
                         className="flex items-center gap-3"
@@ -611,7 +709,7 @@ export default function Home() {
 
                 <div className="mt-6 sm:mt-8">
                   <Link href="/contact-us" className="w-full sm:w-auto">
-                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                       Connect With Us{" "}
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
@@ -628,22 +726,27 @@ export default function Home() {
               >
                 {[
                   {
-                    num: 50,
+                    num: 5,
                     suffix: "+",
-                    label: "Technology Partners",
+                    label: "Years of Experience",
                     icon: Cpu,
                   },
                   {
-                    num: 200,
+                    num: 50,
                     suffix: "+",
-                    label: "Completed project",
+                    label: "Projects Delivered",
                     icon: Briefcase,
                   },
-                  { num: 70, suffix: "+", label: "Team Members", icon: Users },
                   {
-                    num: 350,
+                    num: 25,
                     suffix: "+",
-                    label: "Happy clients",
+                    label: "Team Members",
+                    icon: Users,
+                  },
+                  {
+                    num: 160,
+                    suffix: "+",
+                    label: "Happy Clients",
                     icon: Smile,
                   },
                 ].map((stat, idx) => {
@@ -689,8 +792,8 @@ export default function Home() {
                 Our Services
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                Accelerate Growth with Our{" "}
-                <span className="text-blue-600">IT Expertise</span>
+                Software that helps you{" "}
+                <span className="text-blue-600">grow</span>
               </h2>
             </div>
 
@@ -701,33 +804,17 @@ export default function Home() {
                 {
                   title: "Custom CRM",
                   description:
-                    "Tailored Customer Relationship Management systems to streamline sales, marketing, and support pipelines seamlessly.",
-                  image: "/services/crm.webp",
-                  alt: "Custom CRM - Built Around Your Business",
-                  link: "/services/crm",
-                },
-                {
-                  title: "Manufacturing ERP",
-                  description:
-                    "Robust Enterprise Resource Planning software designed to optimize supply chains and inventory management.",
-                  image: "/services/erp.webp",
-                  alt: "Manufacturing ERP - Smarter Operations Higher Productivity",
-                  link: "/services/erp",
-                },
-                {
-                  title: "Sales Automation",
-                  description:
-                    "Intelligent automation tools to accelerate your sales cycle, track performance, and boost revenue effortlessly.",
+                    "Automate reminders, reports and hand-offs so your team spends its time selling.",
                   image: "/services/sales-automation.webp",
                   alt: "Sales Automation - Work Smarter Close Faster",
                   link: "/services/automation",
                 },
                 {
-                  title: "Custom Software Development",
+                  title: "Web and Mobile Apps",
                   description:
-                    "Turn business requirements into web applications and secure software tailored to your agreed workflows.",
+                    "Fast, secure apps your customers enjoy using.",
                   image: "/images/unsplash/softwaredevelopment.webp",
-                  alt: "Custom Software Development - Modern Web Applications",
+                  alt: "Web and Mobile Apps - Fast and Secure",
                   link: "/services/web-dev",
                 },
                 {
@@ -739,11 +826,11 @@ export default function Home() {
                   link: "/services/mobile-dev",
                 },
                 {
-                  title: "AI & Business Automation",
+                  title: "AI Automation",
                   description:
-                    "Practical AI assistants, conversational chatbots, and automated workflows to reduce repetitive tasks and elevate ROI.",
+                    "Put AI to work on repetitive tasks, reporting and decisions.",
                   image: "/images/unsplash/AI.webp",
-                  alt: "AI & Business Automation - Chatbots and Smart Workflows",
+                  alt: "AI Automation - Smart Workflows and Efficiency",
                   link: "/services/ai-chatbots",
                 },
               ].map((service, idx) => (
@@ -759,7 +846,7 @@ export default function Home() {
                         alt={service.alt}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-contain transition-all duration-700 group-hover:scale-105"
+                        className="object-contain transition-all duration-700 "
                       />
                     </div>
                   </div>
@@ -780,7 +867,7 @@ export default function Home() {
             </div>
             <div className="mt-12 sm:mt-16 flex justify-center w-full">
               <Link href="/services" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Services{" "}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -832,7 +919,7 @@ export default function Home() {
                 </ul>
 
                 <Link href="/contact-us" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                     Consult With Our Expertise{" "}
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -844,23 +931,23 @@ export default function Home() {
                 {[
                   {
                     icon: Users,
-                    title: "Expert Development Team",
-                    desc: "Our team consists of highly skilled developers, problem solvers, and tech enthusiasts dedicated to building robust and innovative software solutions tailored to your unique business needs.",
+                    title: "Developers you can talk to",
+                    desc: "You work directly with the people building your software.",
                   },
                   {
                     icon: ClipboardCheck,
-                    title: "Agile Delivery",
-                    desc: "We follow strict agile methodologies to ensure rapid, transparent, and flawless deployment of your IT projects, meeting strict deadlines without ever compromising on quality.",
+                    title: "Delivery in phases",
+                    desc: "You see working software every sprint, not only at the end.",
                   },
                   {
                     icon: Code2,
-                    title: "Scalable Architecture",
-                    desc: "We build scalable, future-proof code architectures that grow with your business, keeping you ahead of the competition and ready for future technological advancements.",
+                    title: "Built to grow",
+                    desc: "Our architecture handles more users, branches and features without a rebuild.",
                   },
                   {
                     icon: LineChart,
-                    title: "Transparent Process",
-                    desc: "Get real-time insights into your project's progress with our transparent tracking and detailed reporting. We believe in open, honest communication at every step of development.",
+                    title: "No surprises",
+                    desc: "Regular progress reports and one point of contact.",
                   },
                 ].map((feature, idx) => {
                   const Icon = feature.icon;
@@ -904,14 +991,8 @@ export default function Home() {
                 Our Work Process
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-4">
-                Step-by-Step to <br className="hidden sm:block" /> Your{" "}
-                <span className="text-blue-600">Growth</span>
+                From idea to a product your team uses every day
               </h2>
-              <p className="text-slate-500 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
-                We collaborate closely with clients to understand their vision,
-                goals, and target audience, conducting in-depth research to
-                craft tailored digital solutions.
-              </p>
             </div>
 
             {/* CSS Grid Container */}
@@ -919,34 +1000,40 @@ export default function Home() {
               {[
                 {
                   step: "01",
-                  title: "Discover & Strategize",
-                  desc: "We collaborate closely to understand your vision, target audience, and business goals, conducting in-depth research to craft a tailored digital roadmap.",
+                  title: "Discover and Plan",
+                  desc: "We learn your goals, users and processes, then agree on scope, timeline and cost.",
                 },
                 {
                   step: "02",
-                  title: "Design & Architecture",
-                  desc: "Our expert team designs intuitive user experiences and plans highly scalable, secure architectures using modern technologies.",
+                  title: "Design and Architect",
+                  desc: "We design simple, intuitive screens and a secure, scalable foundation.",
                 },
                 {
                   step: "03",
-                  title: "Execute & Develop",
-                  desc: "We follow agile methodologies to write clean, robust code, ensuring seamless functionality and rapid, flawless deployment.",
+                  title: "Build and Test",
+                  desc: "We develop in short sprints, so you review working software regularly.",
                 },
                 {
                   step: "04",
-                  title: "Analyze & Grow",
-                  desc: "After launch, we continuously monitor performance, analyze user behavior, and optimize the product to maximize your ROI.",
+                  title: "Launch and Improve",
+                  desc: "We deploy, train your team, then monitor usage and keep improving.",
                 },
               ].map((card, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-col rounded-3xl overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+                  className="relative flex flex-col rounded-3xl overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 group"
                 >
-                  <div className="p-6 md:p-8 relative overflow-hidden flex flex-col justify-center h-full min-h-[300px]">
-                    <div className="absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 text-[6rem] md:text-[8rem] font-bold text-slate-100 dark:text-slate-800/30 pointer-events-none select-none z-0">
+                  <div className="p-6 md:p-8 relative flex flex-col justify-between h-full min-h-[260px] sm:min-h-[290px] md:min-h-[310px]">
+                    {/* Background Step Number - positioned inside card boundaries */}
+                    <div className="absolute right-3 sm:right-4 bottom-2 sm:bottom-3 text-[4.5rem] sm:text-[5.5rem] md:text-[6.5rem] font-black text-slate-100 dark:text-slate-800/40 pointer-events-none select-none leading-none z-0 tracking-tighter">
                       {card.step}
                     </div>
+
+                    {/* Step pill and Content */}
                     <div className="relative z-10 flex flex-col h-full">
+                      <div className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center justify-center mb-4 border border-blue-100 dark:border-blue-900/50">
+                        {card.step}
+                      </div>
                       <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">
                         {card.title}
                       </h3>
@@ -972,11 +1059,10 @@ export default function Home() {
                     <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
                     <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-200 dark:bg-slate-800"></span>
                   </div>
-                  Our Work
+                  Work
                 </div>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                  Work That Drives{" "}
-                  <span className="text-blue-600">Results</span>
+                  Products we have <span className="text-blue-600">built</span>
                 </h2>
               </div>
             </div>
@@ -1027,7 +1113,7 @@ export default function Home() {
                         width="800"
                         height="600"
                         loading="lazy"
-                        className="w-full h-full object-fill grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                        className="w-full h-full object-fill"
                       />
                       <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10">
                         <span className="inline-block bg-[#0f2e4a]/90 backdrop-blur-sm text-white text-[10px] sm:text-xs font-semibold tracking-wide px-3 py-1.5 rounded-full">
@@ -1056,7 +1142,7 @@ export default function Home() {
             {/* View All Button */}
             <div className="mt-12 sm:mt-16 text-center">
               <Link href="/products" className="inline-block">
-                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Work{" "}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -1077,7 +1163,7 @@ export default function Home() {
                 Testimonials
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-2">
-                Trusted by Our <span className="text-blue-600">Clients</span>
+                What our <span className="text-blue-600">clients say</span>
               </h2>
             </div>
             <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
@@ -1116,30 +1202,21 @@ export default function Home() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-6 mt-6">
-                      <div className="flex -space-x-3 justify-center sm:justify-start">
-                        <Image
-                          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
-                          src="https://i.pravatar.cc/150?u=1"
-                          alt="avatar"
-                          width={40}
-                          height={40}
-                        />
-                        <Image
-                          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
-                          src="https://i.pravatar.cc/150?u=2"
-                          alt="avatar"
-                          width={40}
-                          height={40}
-                        />
-                        <Image
-                          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] grayscale hover:grayscale-0 transition-all"
-                          src="https://i.pravatar.cc/150?u=3"
-                          alt="avatar"
-                          width={40}
-                          height={40}
-                        />
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] bg-blue-600 flex items-center justify-center text-white font-bold text-xs z-10">
-                          +37
+                      <div className="flex -space-x-2.5 justify-center sm:justify-start">
+                        {[
+                          { initials: "PB", bg: "bg-blue-600" },
+                          { initials: "SS", bg: "bg-emerald-600" },
+                          { initials: "AC", bg: "bg-indigo-600" },
+                        ].map((avatar, i) => (
+                          <div
+                            key={i}
+                            className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] ${avatar.bg} flex items-center justify-center text-white font-bold text-xs shadow-sm`}
+                          >
+                            {avatar.initials}
+                          </div>
+                        ))}
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#0f2e4a] bg-blue-500 flex items-center justify-center text-white font-bold text-xs z-10 shadow-sm">
+                          +30
                         </div>
                       </div>
 
@@ -1204,7 +1281,7 @@ export default function Home() {
               {displayedBlogs.map((blog, idx) => (
                 <Link
                   key={blog._id || idx}
-                  href={blog.slug === "#" ? "#" : `/blogs/${blog.slug}`}
+                  href={!blog.slug || blog.slug === "#" ? "/blogs" : `/blogs/${blog.slug}`}
                   className="bg-[#153a5c] rounded-3xl overflow-hidden border border-white/5 hover:border-blue-400/30 transition-all shadow-xl group flex flex-col h-full"
                 >
                   {/* Image */}
@@ -1228,7 +1305,7 @@ export default function Home() {
                         width="800"
                         height="600"
                         loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                        className="absolute inset-0 w-full h-full object-cover"
                       />
                     </div>
                   </div>
@@ -1258,7 +1335,7 @@ export default function Home() {
 
             <div className="mt-8 sm:mt-10 flex justify-center">
               <Link href="/blogs" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Blogs{" "}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -1279,8 +1356,11 @@ export default function Home() {
                 Contact Us
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                Let's Get in <span className="text-blue-600">Touch</span>
+                Tell us what you are <span className="text-blue-600">building</span>
               </h2>
+              <p className="mt-3 text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
+                Share a few details and we will reply within one business day with next steps.
+              </p>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-8 lg:gap-14 items-center">
@@ -1297,7 +1377,7 @@ export default function Home() {
                     alt="Contact Us Team"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                    className="object-cover"
                   />
                 </div>
                 {/* Decorative Sparkles */}

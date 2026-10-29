@@ -25,9 +25,19 @@ function formatDate(dateStr: string) {
   });
 }
 
-function getReadingTime(content: string) {
-  const words = content ? content.split(/\s+/).length : 0;
-  const mins = Math.ceil(words / 200);
+function getReadingTime(content?: string, shortDescription?: string) {
+  const text = (content && content.trim().length > 0)
+    ? content
+    : (shortDescription && shortDescription.trim().length > 0)
+      ? shortDescription
+      : "";
+
+  // Strip HTML tags if content has HTML
+  const cleanText = text.replace(/<[^>]*>/g, " ").trim();
+  const words = cleanText ? cleanText.split(/\s+/).filter(Boolean).length : 0;
+
+  // Average reading speed is ~200 wpm; minimum 1 min
+  const mins = Math.max(1, Math.ceil(words / 200));
   return `${mins} min read`;
 }
 
@@ -137,12 +147,12 @@ export default function BlogsPage() {
       />
       <main className="flex-1">
         {/* ===== HERO SECTION ===== */}
-        <section className="relative overflow-hidden pt-16 pb-20 lg:pt-20 lg:pb-28">
+        <section className="relative overflow-hidden pt-12 pb-8 lg:pt-16 lg:pb-10">
           {/* Subtle dot pattern background */}
           <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full h-full opacity-40 dark:opacity-20 pointer-events-none bg-[radial-gradient(#cbd5e1_2px,transparent_2px)] dark:bg-[radial-gradient(#334155_2px,transparent_2px)] bg-[size:32px_32px]"></div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -153,19 +163,16 @@ export default function BlogsPage() {
                   <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
                   Technical Articles
                 </div>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
                   Our Blog &<br />
                   <span className="italic text-slate-600 dark:text-slate-400 font-serif">Insights.</span>
                 </h1>
-                <div className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mt-2 space-y-4">
+                <div className="text-base md:text-lg text-slate-500 dark:text-slate-400 leading-relaxed mt-1 space-y-3">
                   <p>
                     Stay updated with corporate announcements, technical guides, cloud updates, and modern engineering practices from the Indux team.
                   </p>
-                  <p className="hidden md:block">
-                    Our experts share deep dives into CRM implementation strategies, ERP modernization workflows, and how AI can transform standard business operations. Whether you are a technical founder or a business leader, you'll find actionable insights to accelerate your digital growth.
-                  </p>
-                  <p className="hidden md:block text-sm italic">
-                    Explore our latest articles below, or use the category filters to find topics most relevant to your industry.
+                  <p className="hidden md:block text-sm">
+                    Our experts share deep dives into CRM implementation strategies, ERP modernization workflows, and how AI can transform standard business operations.
                   </p>
                 </div>
               </motion.div>
@@ -185,7 +192,7 @@ export default function BlogsPage() {
                   placeholder="Search articles by title or keyword..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="block w-full pl-11 pr-4 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600/50 focus:border-blue-500 transition-all text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 shadow-md dark:shadow-none"
+                  className="block w-full pl-11 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600/50 focus:border-blue-500 transition-all text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 shadow-sm"
                 />
               </motion.div>
             </div>
@@ -194,12 +201,12 @@ export default function BlogsPage() {
 
         {/* ===== CATEGORY PILLS ===== */}
         {!loading && categories.length > 1 && (
-          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-6">
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-4">
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex flex-wrap gap-2.5 pb-6 border-b border-slate-200 dark:border-slate-800"
+              className="flex flex-wrap gap-2.5 pb-4 border-b border-slate-200 dark:border-slate-800"
             >
               {categories.map((cat) => {
                 const count = cat === 'All' 
@@ -272,13 +279,13 @@ export default function BlogsPage() {
                     className="group grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-xl dark:shadow-none transition-all duration-350 mb-12"
                   >
                     <div className="lg:col-span-7 overflow-hidden min-h-[300px] relative bg-slate-100 dark:bg-slate-850">
-                      <Image
-                        src={featured.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${featured.featuredImage}` : fallbackImages[0]}
+ <Image
+ src={featured.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${featured.featuredImage}` : fallbackImages[0]}
                         alt={featured.title}
                         fill
                         priority={true}
                         sizes="(max-width: 1024px) 100vw, 58vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-103"
+ className="object-cover transition-transform duration-700 "
                       />
                     </div>
                     <div className="lg:col-span-5 p-8 sm:p-10 flex flex-col justify-center">
@@ -302,7 +309,7 @@ export default function BlogsPage() {
                         </span>
                         <span className="inline-flex items-center gap-1.5">
                           <Clock className="w-3.5 h-3.5 text-slate-400" />
-                          {getReadingTime(featured.content)}
+                          {getReadingTime(featured.content, featured.shortDescription)}
                         </span>
                       </div>
                       <span className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 dark:text-blue-400 group-hover:gap-2.5 transition-all w-fit">
@@ -328,12 +335,12 @@ export default function BlogsPage() {
                       className="group flex flex-col rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-lg transition-all duration-300 h-full"
                     >
                       <div className="overflow-hidden h-48 relative bg-slate-100 dark:bg-slate-850">
-                        <Image
-                          src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
+ <Image
+ src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
                           alt={blog.title}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-103"
+ className="object-cover transition-transform duration-700 "
                         />
                       </div>
                       <div className="p-6 flex flex-col flex-1">
@@ -354,7 +361,7 @@ export default function BlogsPage() {
                           </span>
                           <span className="inline-flex items-center gap-1">
                             <Clock className="w-3.5 h-3.5" />
-                            {getReadingTime(blog.content)}
+                            {getReadingTime(blog.content, blog.shortDescription)}
                           </span>
                         </div>
                       </div>

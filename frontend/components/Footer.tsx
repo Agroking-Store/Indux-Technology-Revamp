@@ -100,8 +100,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-slate-400 leading-relaxed text-sm">
-              Empowering businesses with cutting-edge IT solutions, from CRM and
-              ERP systems to modern web and mobile applications.
+              Indux Technology builds CRM, ERP, and web and mobile applications for growing businesses.
             </p>
 
             <div className="mt-2">
@@ -183,7 +182,7 @@ export default function Footer() {
 
             <div className="flex flex-col gap-5 mt-2 max-w-md w-full">
               <p className="text-slate-400 text-sm">
-                Subscribe to our newsletter for the latest tech news and updates.(You will receive blogs on monthly basis)
+                One practical tech tip a month. No spam.
               </p>
 
               <form onSubmit={handleSubscribe} className="flex flex-col gap-3">
