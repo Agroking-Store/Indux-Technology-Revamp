@@ -1088,7 +1088,9 @@ export default function Home() {
                   title: "Indux CRM",
                   alt: "Indux CRM dashboard for managing customers and business operations",
                   category: "Business Intelligence",
-                  img: "/induxcrm.webp",
+                  // image: "/services/crm.webp",
+                  image: "/public/services/crm.webp",
+                  img: "/services/crm.webp",
                   link: "/products/indux-crm",
                 },
                 {
@@ -1109,7 +1111,7 @@ export default function Home() {
                   title: "InduxERP",
                   alt: "InduxERP dashboard for managing business processes and operations",
                   category: "Enterprise Software",
-                  img: "/indux_erp.webp",
+                  img: "/services/erp.webp",
                   link: "/products/indux-erp",
                 },
               ].map((project, idx) => (
