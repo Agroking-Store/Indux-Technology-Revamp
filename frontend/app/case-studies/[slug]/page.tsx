@@ -106,7 +106,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6">
           <Link
             href="/case-studies"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition mb-6"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition mb-6 cursor-pointer"
           >
             <ArrowLeft className="size-4" />
             Back to All Case Studies
@@ -218,7 +218,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
             <div className="pt-2 flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact-us"
-                className="bg-white text-slate-900 hover:bg-slate-100 font-bold px-8 py-4 rounded-full inline-flex items-center justify-center transition shadow-lg"
+                className="bg-white text-slate-900 hover:bg-slate-100 font-bold px-8 py-4 rounded-full inline-flex items-center justify-center transition shadow-lg cursor-pointer"
               >
                 Schedule a Free Discovery Session
               </Link>
@@ -236,7 +236,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
                   <Link
                     key={s._id}
                     href={`/case-studies/${s.slug}`}
-                    className="group block p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 transition"
+                    className="group block p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 transition cursor-pointer"
                   >
                     <span className="text-xs font-bold uppercase text-blue-600 dark:text-blue-400">
                       {s.name}

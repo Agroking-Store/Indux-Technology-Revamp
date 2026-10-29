@@ -178,7 +178,7 @@ export default function CaseStudiesPage() {
                 <Button
                   onClick={() => setSearchQuery("")}
                   variant="outline"
-                  className="mt-4"
+                  className="mt-4 cursor-pointer"
                 >
                   Clear Search
                 </Button>
@@ -274,7 +274,7 @@ export default function CaseStudiesPage() {
                     <div className="p-7 sm:p-9 pt-0 border-t border-slate-100 dark:border-slate-800/80 mt-4 flex items-center justify-between">
                       <Link
                         href={`/case-studies/${study.slug}`}
-                        className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 group/link"
+                        className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 group/link cursor-pointer"
                       >
                         Read Full Story
                         <ArrowRight className="size-4 group-hover/link:translate-x-1 transition-transform" />
@@ -282,7 +282,7 @@ export default function CaseStudiesPage() {
 
                       <Link
                         href="/contact-us"
-                        className="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition"
+                        className="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition cursor-pointer"
                       >
                         Discuss Similar Project →
                       </Link>
@@ -306,13 +306,13 @@ export default function CaseStudiesPage() {
             <div className="pt-2 flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact-us"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-500/20 inline-flex items-center justify-center transition"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-500/20 inline-flex items-center justify-center transition cursor-pointer"
               >
                 Book a Discovery Call
               </Link>
               <Link
                 href="/services"
-                className="border border-slate-700 text-slate-200 hover:bg-slate-800 px-8 py-4 rounded-full font-bold inline-flex items-center justify-center transition"
+                className="border border-slate-700 text-slate-200 hover:bg-slate-800 px-8 py-4 rounded-full font-bold inline-flex items-center justify-center transition cursor-pointer"
               >
                 Explore Our Services
               </Link>
