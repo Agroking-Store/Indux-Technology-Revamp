@@ -74,7 +74,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 
 const ourWorksData = {
-  title: "Our Works",
+  title: "Works",
   main: [
     {
       title: "Products",
