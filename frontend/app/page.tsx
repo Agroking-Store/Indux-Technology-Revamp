@@ -471,11 +471,6 @@ export default function Home() {
         id="faq-schema"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <script
-        type="application/ld+json"
-        id="faq-schema"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
       <main className="flex-1 w-full">
         {/* TOP HERO BANNER (BELOW NAVBAR) */}
 
@@ -484,8 +479,8 @@ export default function Home() {
 
         <section className="relative overflow-hidden w-full pt-0 pb-12 sm:pb-16 lg:pb-20">
           <div className="w-full">
-            <div className="relative w-full aspect-[16/7] md:aspect-[16/6] lg:aspect-[21/9] min-h-[300px] sm:min-h-[400px] md:min-h-[460px] overflow-hidden shadow-sm border-b border-slate-200 dark:border-slate-800">
-
+            {/* Desktop / Tablet layout: layered over the full banner illustration */}
+            <div className="hidden md:block relative w-full aspect-[16/7] md:aspect-[16/6] lg:aspect-[21/9] min-h-[400px] md:min-h-[460px] overflow-hidden shadow-sm border-b border-slate-200 dark:border-slate-800">
               {/* Background image */}
               <Image
                 src="/image.png"
@@ -498,7 +493,7 @@ export default function Home() {
 
               {/* Heading */}
               <div className="absolute left-[5%] lg:left-[8%] top-[20%] z-10 w-[55%] max-w-2xl">
-                <h1 className="text-[clamp(18px,3.8vw,56px)] font-bold leading-[1.08] tracking-tight text-[#080b2d]">
+                <h1 className="text-[clamp(26px,3.8vw,56px)] font-bold leading-[1.1] tracking-tight text-[#080b2d]">
                   Custom Software,
                   <br />
                   CRM &amp; ERP Solutions
@@ -509,7 +504,7 @@ export default function Home() {
 
               {/* Description */}
               <div className="absolute left-[5%] lg:left-[8%] top-[53%] z-10 w-[45%] max-w-xl">
-                <p className="text-[clamp(11px,1.2vw,17px)] leading-[1.45] text-[#252a35]">
+                <p className="text-[clamp(13px,1.2vw,17px)] leading-[1.5] text-[#252a35]">
                   Indux Technology helps businesses streamline operations with
                   CRM and ERP software, custom applications, websites and
                   AI-powered automation. From business process improvement to
@@ -521,7 +516,7 @@ export default function Home() {
               {/* Button: Book a Free Consultation */}
               <Link
                 href="/contact-us"
-                className="absolute left-[5%] lg:left-[8%] top-[74%] z-20 flex h-[10%] min-h-[36px] max-h-[52px] w-[22%] min-w-[140px] max-w-[220px] items-center justify-center rounded-full bg-[#3049b5] text-[clamp(10px,1vw,14px)] font-semibold text-white hover:bg-[#233894] shadow-md transition-all"
+                className="absolute left-[5%] lg:left-[8%] top-[74%] z-20 flex h-[10%] min-h-[38px] max-h-[52px] w-[22%] min-w-[150px] max-w-[220px] items-center justify-center rounded-full bg-[#3049b5] text-[clamp(11px,1vw,14px)] font-semibold text-white hover:bg-[#233894] shadow-md transition-all text-center px-3"
               >
                 Book a Free Consultation
               </Link>
@@ -529,11 +524,62 @@ export default function Home() {
               {/* Button: Explore Our Solutions */}
               <Link
                 href="/services"
-                className="absolute left-[29%] lg:left-[24%] top-[74%] z-20 flex h-[10%] min-h-[36px] max-h-[52px] w-[20%] min-w-[140px] items-center justify-center gap-1 text-[clamp(10px,1vw,14px)] font-semibold text-[#080b2d] hover:text-blue-700 transition-colors"
+                className="absolute left-[29%] lg:left-[24%] top-[74%] z-20 flex h-[10%] min-h-[38px] max-h-[52px] w-[20%] min-w-[140px] items-center justify-center gap-1 text-[clamp(11px,1vw,14px)] font-semibold text-[#080b2d] hover:text-blue-700 transition-colors"
               >
                 Explore Our Solutions →
               </Link>
+            </div>
 
+            {/* Mobile layout (< 768px): clean stacked design so text is never cramped or illegible */}
+            <div className="block md:hidden bg-gradient-to-b from-blue-50/50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 border-b border-slate-200 dark:border-slate-800">
+              <div className="px-4 py-8 sm:py-12 flex flex-col gap-5">
+                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs text-blue-600 dark:text-blue-400 uppercase">
+                  <div className="flex gap-1">
+                    <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                    <span className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700"></span>
+                  </div>
+                  Indux Technology
+                </div>
+
+                <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white leading-[1.15] tracking-tight">
+                  Custom Software, CRM &amp; ERP Solutions for Growing Businesses
+                </h1>
+
+                <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+                  Indux Technology helps businesses streamline operations with
+                  CRM and ERP software, custom applications, websites and
+                  AI-powered automation. From business process improvement to
+                  tailored software development, we build solutions around your
+                  requirements.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <Link
+                    href="/contact-us"
+                    className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-[#3049b5] text-white px-6 py-3.5 text-sm font-semibold shadow-md hover:bg-[#233894] transition-all"
+                  >
+                    Book a Free Consultation
+                  </Link>
+                  <Link
+                    href="/services"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-6 py-3.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    Explore Our Solutions →
+                  </Link>
+                </div>
+
+                {/* Mobile visual graphic container */}
+                <div className="relative w-full aspect-[16/9] mt-3 rounded-2xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
+                  <Image
+                    src="/image.png"
+                    alt="Indux Technology Solutions"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover object-center"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -703,100 +749,87 @@ export default function Home() {
 
 
             {/* Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-              {/* Card 1: CRM */}
-              <div
-                onClick={() => router.push('/services/crm')}
-                className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
-              >
-                <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-2">
-                    <Image
-                      src="/services/crm.jpg"
-                      alt="Custom CRM - Built Around Your Business"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-contain transition-all duration-700 group-hover:scale-105"
-                    />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {[
+                {
+                  title: "Custom CRM",
+                  description:
+                    "Tailored Customer Relationship Management systems to streamline sales, marketing, and support pipelines seamlessly.",
+                  image: "/services/crm.jpg",
+                  alt: "Custom CRM - Built Around Your Business",
+                  link: "/services/crm",
+                },
+                {
+                  title: "Manufacturing ERP",
+                  description:
+                    "Robust Enterprise Resource Planning software designed to optimize supply chains and inventory management.",
+                  image: "/services/erp.jpg",
+                  alt: "Manufacturing ERP - Smarter Operations Higher Productivity",
+                  link: "/services/erp",
+                },
+                {
+                  title: "Sales Automation",
+                  description:
+                    "Intelligent automation tools to accelerate your sales cycle, track performance, and boost revenue effortlessly.",
+                  image: "/services/sales-automation.jpg",
+                  alt: "Sales Automation - Work Smarter Close Faster",
+                  link: "/services/automation",
+                },
+                {
+                  title: "Custom Software Development",
+                  description:
+                    "Turn business requirements into web applications and secure software tailored to your agreed workflows.",
+                  image: "/images/unsplash/softwaredevelopment.webp",
+                  alt: "Custom Software Development - Modern Web Applications",
+                  link: "/services/web-dev",
+                },
+                {
+                  title: "Mobile App Development",
+                  description:
+                    "Create high-performance iOS and Android mobile experiences for customer services and business operations.",
+                  image: "/images/unsplash/mobile.webp",
+                  alt: "Mobile App Development - Cross-Platform iOS and Android",
+                  link: "/services/mobile-dev",
+                },
+                {
+                  title: "AI & Business Automation",
+                  description:
+                    "Practical AI assistants, conversational chatbots, and automated workflows to reduce repetitive tasks and elevate ROI.",
+                  image: "/images/unsplash/AI.webp",
+                  alt: "AI & Business Automation - Chatbots and Smart Workflows",
+                  link: "/services/ai-chatbots",
+                },
+              ].map((service, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => router.push(service.link)}
+                  className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
+                >
+                  <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
+                    <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-2">
+                      <Image
+                        src={service.image}
+                        alt={service.alt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-contain transition-all duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                  </div>
+                  <div className="p-6 sm:p-8 pt-2 sm:pt-4 flex flex-col flex-grow">
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-white mb-2 sm:mb-3 transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 group-hover:text-blue-100 mb-6 transition-colors leading-relaxed">
+                      {service.description}
+                    </p>
+                    <div className="mt-auto flex items-center text-sm sm:text-base font-semibold text-blue-600 dark:text-blue-400 group-hover:text-white transition-colors">
+                      Learn more{" "}
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
                 </div>
-                <div className="p-6 sm:p-8 pt-2 sm:pt-4 flex flex-col flex-grow">
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-white mb-2 sm:mb-3 transition-colors">
-                    Custom CRM
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 group-hover:text-blue-100 mb-6 transition-colors leading-relaxed">
-                    Tailored Customer Relationship Management systems to
-                    streamline sales, marketing, and support pipelines
-                    seamlessly.
-                  </p>
-                  <div className="mt-auto flex items-center text-sm sm:text-base font-semibold text-blue-600 dark:text-blue-400 group-hover:text-white transition-colors">
-                    Learn more{" "}
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 2: Manufacturing ERP */}
-              <div
-                onClick={() => router.push('/services/erp')}
-                className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
-              >
-                <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-2">
-                    <Image
-                      src="/services/erp.jpg"
-                      alt="Manufacturing ERP - Smarter Operations Higher Productivity"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-contain transition-all duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                </div>
-                <div className="p-6 sm:p-8 pt-2 sm:pt-4 flex flex-col flex-grow">
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-white mb-2 sm:mb-3 transition-colors">
-                    Manufacturing ERP
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 group-hover:text-blue-100 mb-6 transition-colors leading-relaxed">
-                    Robust Enterprise Resource Planning software designed to
-                    optimize supply chains and inventory management.
-                  </p>
-                  <div className="mt-auto flex items-center text-sm sm:text-base font-semibold text-blue-600 dark:text-blue-400 group-hover:text-white transition-colors">
-                    Learn more{" "}
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 3: Sales Automation */}
-              <div
-                onClick={() => router.push('/services/automation')}
-                className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
-              >
-                <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-2">
-                    <Image
-                      src="/services/sales-automation.jpg"
-                      alt="Sales Automation - Work Smarter Close Faster"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-contain transition-all duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                </div>
-                <div className="p-6 sm:p-8 pt-2 sm:pt-4 flex flex-col flex-grow">
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-white mb-2 sm:mb-3 transition-colors">
-                    Sales Automation
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 group-hover:text-blue-100 mb-6 transition-colors leading-relaxed">
-                    Intelligent automation tools to accelerate your sales cycle,
-                    track performance, and boost revenue effortlessly.
-                  </p>
-                  <div className="mt-auto flex items-center text-sm sm:text-base font-semibold text-blue-600 dark:text-blue-400 group-hover:text-white transition-colors">
-                    Learn more{" "}
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
             <div className="mt-12 sm:mt-16 flex justify-center w-full">
               <Link href="/services" className="w-full sm:w-auto">
@@ -831,14 +864,25 @@ export default function Home() {
                     <span className="w-3.5 h-3.5 rounded-full bg-blue-500"></span>
                     <span className="w-3.5 h-3.5 rounded-full bg-slate-200 dark:bg-slate-800"></span>
                   </div>
-                  Why Choose Us
+                  Why Indux Technology
                 </div>
 
-                <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm sm:text-base max-w-md mb-8 sm:mb-10">
-                  Partner with a technology team that focuses on scalable
-                  architectures, agile delivery, and driving real results for
-                  your company.
-                </p>
+                <ul className="space-y-3 max-w-md mb-8 sm:mb-10 text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+                  {[
+                    "Business-focused solutions designed around actual operational needs.",
+                    "Customized development aligned with agreed requirements.",
+                    "Integration opportunities to connect systems and information flows.",
+                    "Collaborative delivery with clear scope and priorities.",
+                    "Support and enhancements according to the agreed service arrangement.",
+                  ].map((point, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-1 flex-shrink-0 w-4 h-4 rounded-full bg-blue-600/10 dark:bg-blue-400/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                        <Check className="w-2.5 h-2.5 text-blue-600 dark:text-blue-400" strokeWidth={3} />
+                      </span>
+                      <span className="leading-relaxed">{point}</span>
+                    </li>
+                  ))}
+                </ul>
 
                 <Link href="/contact-us" className="w-full sm:w-auto">
                   <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
@@ -1398,9 +1442,9 @@ export default function Home() {
                     <button
                       type="button"
                       onClick={() => setOpenFaq(isOpen ? null : index)}
-                      className="w-full px-6 py-5 sm:px-8 sm:py-6 text-left flex items-center justify-between gap-4 font-bold text-slate-900 dark:text-white text-base sm:text-lg cursor-pointer hover:text-blue-600 transition-colors"
+                      className="w-full px-4 sm:px-8 py-4 sm:py-6 text-left flex items-center justify-between gap-3 sm:gap-4 font-bold text-slate-900 dark:text-white text-base sm:text-lg cursor-pointer hover:text-blue-600 transition-colors"
                     >
-                      <span className="flex items-center gap-3">
+                      <span className="flex items-center gap-2.5 sm:gap-3 text-sm sm:text-base md:text-lg">
                         <HelpCircle className="w-5 h-5 text-blue-600 shrink-0" />
                         {faq.question}
                       </span>
@@ -1410,7 +1454,7 @@ export default function Home() {
                       />
                     </button>
                     {isOpen && (
-                      <div className="px-6 pb-6 sm:px-8 sm:pb-6 pt-0 text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed pl-14 sm:pl-16">
+                      <div className="px-4 pb-5 sm:px-8 sm:pb-6 pt-0 text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed pl-11 sm:pl-16">
                         {faq.answer}
                       </div>
                     )}
