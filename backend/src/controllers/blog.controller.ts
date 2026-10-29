@@ -101,6 +101,7 @@ export const getBlogs = asyncHandler(async (req: Request, res: Response) => {
         title: 1,
         slug: 1,
         shortDescription: 1,
+        content: 1,
         category: 1,
         tags: 1,
         author: 1,

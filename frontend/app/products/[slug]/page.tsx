@@ -77,8 +77,8 @@ export default function ProductDetailPage() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <GetQuoteModal>
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold shadow-xl shadow-blue-600/20 cursor-pointer">
-                    Get Free Quote <ArrowRight className="ml-2 size-5" />
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2">
+                    Get Free Quote <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </GetQuoteModal>
               </div>
@@ -236,14 +236,14 @@ export default function ProductDetailPage() {
               </h2>
               <div className="flex flex-col sm:flex-row justify-center gap-6 w-full sm:w-auto">
                 <GetQuoteModal>
-                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-10 py-8 rounded-full text-xl font-bold shadow-2xl transition-transform hover:scale-105 border-none cursor-pointer">
-                    Schedule a Demo
+                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2">
+                    Schedule a Demo <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </GetQuoteModal>
                 <Link href="/contact-us" className="w-full sm:w-auto">
                   <Button
                     variant="outline"
-                    className="w-full sm:w-auto bg-transparent border-slate-700 text-white hover:text-white hover:bg-slate-800 px-10 py-8 rounded-full text-xl font-bold cursor-pointer"
+                    className="w-full sm:w-auto bg-transparent border-slate-700 text-white hover:text-white hover:bg-slate-800 px-8 py-6 rounded-full font-semibold cursor-pointer"
                   >
                     Talk to Sales
                   </Button>

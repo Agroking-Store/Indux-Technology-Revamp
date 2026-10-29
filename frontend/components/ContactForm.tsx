@@ -295,11 +295,11 @@ export function ContactForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-fit bg-[#0f2e4a] hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white rounded-full px-10 py-7 font-bold tracking-wide text-base transition-all shadow-xl shadow-blue-900/20 mt-4 group disabled:opacity-50 cursor-pointer"
+          className="w-fit bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2 mt-4 disabled:opacity-50"
         >
           {isSubmitting ? "Sending..." : "Send Message"}{" "}
           {!isSubmitting && (
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
           )}
         </Button>
       </form>
