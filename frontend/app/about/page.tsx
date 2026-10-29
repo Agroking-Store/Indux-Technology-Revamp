@@ -1,10 +1,81 @@
 "use client"
+import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Sparkles, Play, Briefcase, Target, ShieldCheck, Asterisk, Trophy, KeyRound, Leaf, Rocket, Eye, CheckCircle2, Globe as GlobeIcon, ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Globe } from "@/components/ui/globe";
+
+// Clocks Component
+const GlobalPresenceClocks = () => {
+  const [indiaTime, setIndiaTime] = useState("");
+  const [uaeTime, setUaeTime] = useState("");
+
+  useEffect(() => {
+    const updateClocks = () => {
+      const now = new Date();
+      const india = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+      const uae = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Dubai" }));
+
+      const format = (date: Date) =>
+        date.getHours().toString().padStart(2, "0") +
+        ":" +
+        date.getMinutes().toString().padStart(2, "0");
+
+      setIndiaTime(format(india));
+      setUaeTime(format(uae));
+    };
+
+    updateClocks();
+    const interval = setInterval(updateClocks, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative max-w-4xl mx-auto">
+      {/* Vertical Separator (Desktop Only) */}
+      <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-800 -translate-x-1/2"></div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0">
+        {/* India Section */}
+        <div className="flex flex-col items-center text-center px-4 sm:px-8 py-4">
+          <div className="text-5xl sm:text-7xl md:text-8xl text-slate-900 dark:text-white font-extrabold tracking-tight mb-4 min-h-[72px] sm:min-h-[96px]">
+            {indiaTime || "00:00"}
+          </div>
+
+          <h3 className="text-2xl sm:text-3xl text-slate-900 dark:text-white font-bold mb-2 flex items-center justify-center">
+            <img src="https://flagcdn.com/w40/in.png" alt="India Flag" className="w-8 h-auto mr-3 rounded-sm shadow-sm" />
+            India
+          </h3>
+          <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+            <span className="font-medium uppercase tracking-widest text-xs sm:text-sm">Pune</span>
+          </div>
+          <div className="mt-4 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-widest">
+            IST (UTC+5:30)
+          </div>
+        </div>
+
+        {/* UAE Section */}
+        <div className="flex flex-col items-center text-center px-4 sm:px-8 py-4">
+          <div className="text-5xl sm:text-7xl md:text-8xl text-slate-900 dark:text-white font-extrabold tracking-tight mb-4 min-h-[72px] sm:min-h-[96px]">
+            {uaeTime || "00:00"}
+          </div>
+          <h3 className="text-2xl sm:text-3xl text-slate-900 dark:text-white font-bold mb-2 flex items-center justify-center">
+            <Image src="https://flagcdn.com/w40/ae.png" alt="UAE Flag" width={32} height={24} className="w-8 h-auto mr-3 rounded-sm shadow-sm" />
+            UAE
+          </h3>
+          <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+            <span className="font-medium uppercase tracking-widest text-xs sm:text-sm">Dubai</span>
+          </div>
+          <div className="mt-4 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-widest">
+            GST (UTC+4:00)
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function AboutPage() {
   const fadeUp: Variants = {
@@ -470,6 +541,21 @@ export default function AboutPage() {
             <div className="absolute inset-0 rounded-full shadow-[inset_0_0_40px_rgba(255,255,255,0.5)] dark:shadow-[inset_0_0_40px_rgba(0,0,0,0.5)] pointer-events-none"></div>
           </motion.div>
 
+        </div>
+      </section>
+
+      {/* Our Global Presence Section */}
+      <section className="py-20 bg-slate-50/50 dark:bg-slate-900/30 border-t border-slate-200/50 dark:border-slate-800/50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4">
+              Our Global Presence
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              Strategically located to serve our enterprise clients across the globe.
+            </p>
+          </div>
+          <GlobalPresenceClocks />
         </div>
       </section>
 
