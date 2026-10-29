@@ -631,9 +631,8 @@ export default function Home() {
                   ].map((slide, idx) => (
                     <div
                       key={idx}
-                      className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${
-                        activeAboutSlide === idx ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-                      }`}
+                      className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${activeAboutSlide === idx ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+                        }`}
                     >
                       <Image
                         src={slide.src}
@@ -654,11 +653,10 @@ export default function Home() {
                         type="button"
                         onClick={() => setActiveAboutSlide(dot)}
                         aria-label={`Show slide ${dot + 1}`}
-                        className={`transition-all rounded-full ${
-                          activeAboutSlide === dot
-                            ? "w-5 h-2 bg-blue-500"
-                            : "w-2 h-2 bg-white/60 hover:bg-white"
-                        }`}
+                        className={`transition-all rounded-full ${activeAboutSlide === dot
+                          ? "w-5 h-2 bg-blue-500"
+                          : "w-2 h-2 bg-white/60 hover:bg-white"
+                          }`}
                       />
                     ))}
                   </div>
@@ -680,7 +678,7 @@ export default function Home() {
                 </h2>
 
                 <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm md:text-base mt-1 sm:mt-2 max-w-lg">
-                  Since 2021, Indux Technology has helped businesses in Pune and across India replace spreadsheets, scattered tools and manual follow-ups with software made for them. Our in-house team builds CRM, ERP, HRMS, and web and mobile apps, and stays with you after launch.
+                  Since 2021, Indux Technology has helped businesses in India and across Globe replace spreadsheets, scattered tools and manual follow-ups with software made for them. Our in-house team builds CRM, ERP, HRMS, web & mobile apps, and stays with you after launch.
                 </p>
 
                 <div className="mt-2">
@@ -732,19 +730,19 @@ export default function Home() {
                     icon: Cpu,
                   },
                   {
-                    num: 50,
+                    num: 187,
                     suffix: "+",
                     label: "Projects Delivered",
                     icon: Briefcase,
                   },
                   {
-                    num: 25,
+                    num: 27,
                     suffix: "+",
                     label: "Team Members",
                     icon: Users,
                   },
                   {
-                    num: 160,
+                    num: 167,
                     suffix: "+",
                     label: "Happy Clients",
                     icon: Smile,
@@ -802,7 +800,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {[
                 {
-                  title: "Custom CRM",
+                  title: "Custom CRM Software",
                   description:
                     "Automate reminders, reports and hand-offs so your team spends its time selling.",
                   image: "/services/sales-automation.webp",
