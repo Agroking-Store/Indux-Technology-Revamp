@@ -57,15 +57,18 @@ export default function PremiumContact() {
 
             {/* Main Heading */}
             <motion.h1 variants={fadeUp} className="mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.15]">
-              Let's build something <br className="hidden lg:block" />
+              Let&apos;s talk about <br className="hidden lg:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">
-                extraordinary.
+                your project
               </span>
             </motion.h1>
 
             {/* Description */}
             <motion.p variants={fadeUp} className="mb-12 max-w-lg text-lg font-medium leading-relaxed text-slate-600 dark:text-slate-400">
-              Whether you have a groundbreaking idea, need enterprise architecture, or just want to chat about the future of tech—we're ready when you are.
+              Tell us what you want to build or fix. We will respond within one business day with questions or a suggested next step. Prefer to talk? Call or WhatsApp{" "}
+              <a href="tel:+918421538753" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
+                +91 84215 38753
+              </a>.
             </motion.p>
 
             {/* Call & Email Info */}
@@ -101,14 +104,14 @@ export default function PremiumContact() {
                 allowFullScreen={false}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0 h-full w-full grayscale dark:invert dark:hue-rotate-180 opacity-90 transition-all duration-700 hover:grayscale-0 dark:hover:invert-0 dark:hover:opacity-100"
+                className="absolute inset-0 h-full w-full opacity-100"
               ></iframe>              
               <div className="pointer-events-none absolute bottom-4 left-4 right-4 flex items-start gap-3 rounded-2xl bg-white/90 dark:bg-slate-900/90 p-4 shadow-lg backdrop-blur-md ring-1 ring-slate-900/5 dark:ring-slate-800">
                 <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
                   <MapPin className="h-4 w-4" />
                 </div>
                 <p className="text-sm font-medium leading-relaxed text-slate-700 dark:text-slate-300">
-                  S. No 5, Geeta Paradise, opposite Zensar IT Park, Rakshak Nagar, Kharadi, Pune, Maharashtra 411014
+                  S. No. 05, Geeta Paradise, Opp. Zensar, Kharadi, Pune, India
                 </p>
               </div>
             </motion.div>
@@ -124,7 +127,7 @@ export default function PremiumContact() {
             <div className="w-full max-w-xl rounded-[2.5rem] bg-white dark:bg-slate-900 p-8 shadow-2xl shadow-slate-200/50 dark:shadow-none ring-1 ring-slate-900/5 dark:ring-slate-800 sm:p-12 transition-colors duration-300">
               <div className="mb-10">
                 <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Send a Message</h2>
-                <p className="mt-2 text-slate-500 dark:text-slate-400">Fill out the form below and our team will get back to you within 24 hours.</p>
+                <p className="mt-2 text-slate-500 dark:text-slate-400">The more detail you share (goals, team size, deadlines), the more useful our first reply will be.</p>
               </div>
 
               <ContactForm />

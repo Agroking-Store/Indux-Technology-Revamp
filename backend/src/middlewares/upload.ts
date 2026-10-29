@@ -2,7 +2,6 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-
 const storage = multer.memoryStorage();
 
 // Disk storage for blog images
@@ -27,6 +26,18 @@ if (!fs.existsSync(eventUploadDir)) {
 const caseStudyUploadDir = path.join(__dirname, "../../uploads/case-studies");
 if (!fs.existsSync(caseStudyUploadDir)) {
   fs.mkdirSync(caseStudyUploadDir, { recursive: true });
+}
+
+// Disk storage for products
+const productUploadDir = path.join(__dirname, "../../uploads/products");
+if (!fs.existsSync(productUploadDir)) {
+  fs.mkdirSync(productUploadDir, { recursive: true });
+}
+
+// Disk storage for recent works
+const recentWorkUploadDir = path.join(__dirname, "../../uploads/recent-works");
+if (!fs.existsSync(recentWorkUploadDir)) {
+  fs.mkdirSync(recentWorkUploadDir, { recursive: true });
 }
 
 const blogDiskStorage = multer.diskStorage({
@@ -73,6 +84,28 @@ const caseStudyDiskStorage = multer.diskStorage({
   },
 });
 
+const productDiskStorage = multer.diskStorage({
+  destination: function (_req, _file, cb) {
+    cb(null, productUploadDir);
+  },
+  filename: function (_req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, "product-" + uniqueSuffix + ext);
+  },
+});
+
+const recentWorkDiskStorage = multer.diskStorage({
+  destination: function (_req, _file, cb) {
+    cb(null, recentWorkUploadDir);
+  },
+  filename: function (_req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, "work-" + uniqueSuffix + ext);
+  },
+});
+
 const uploadBlogDiskInstance = multer({
   storage: blogDiskStorage,
   limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
@@ -99,6 +132,30 @@ const uploadEventDiskInstance = multer({
 
 const uploadCaseStudyDiskInstance = multer({
   storage: caseStudyDiskStorage,
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
+  fileFilter: (_req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only images are allowed") as any, false);
+    }
+  },
+});
+
+const uploadProductDiskInstance = multer({
+  storage: productDiskStorage,
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
+  fileFilter: (_req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only images are allowed") as any, false);
+    }
+  },
+});
+
+const uploadRecentWorkDiskInstance = multer({
+  storage: recentWorkDiskStorage,
   limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
   fileFilter: (_req, file, cb) => {
     if (file.mimetype.startsWith("image/")) {
@@ -142,11 +199,66 @@ const uploadRegistrationFileInstance = multer({
   },
 });
 
+// Helper to automatically convert any uploaded image to .webp and remove original non-webp file
+const convertFileToWebp = async (file?: Express.Multer.File) => {
+  if (!file || !file.path) return;
+  const ext = path.extname(file.path).toLowerCase();
+  if (ext === ".webp") return;
+
+  const originalPath = file.path;
+  const newFilename = file.filename.slice(0, -ext.length) + ".webp";
+  const newPath = path.join(file.destination, newFilename);
+
+  try {
+    const sharp = require(path.resolve(__dirname, "../../../frontend/node_modules/sharp"));
+    await sharp(originalPath).webp({ quality: 85 }).toFile(newPath);
+
+    if (fs.existsSync(newPath) && fs.statSync(newPath).size > 0) {
+      fs.unlinkSync(originalPath);
+      file.filename = newFilename;
+      file.path = newPath;
+      file.mimetype = "image/webp";
+    }
+  } catch (err) {
+    console.error("Error converting uploaded image to WebP:", err);
+  }
+};
+
 // Middleware for single image upload (field name: "featuredImage")
-export const uploadBlogImage = uploadBlogDiskInstance.single("featuredImage");
+export const uploadBlogImage = (req: any, res: any, next: any) => {
+  uploadBlogDiskInstance.single("featuredImage")(req, res, async (err: any) => {
+    if (err) return next(err);
+    if (req.file) await convertFileToWebp(req.file);
+    next();
+  });
+};
 
 // Middleware for single event image upload (field name: "image")
-export const uploadEventImage = uploadEventDiskInstance.single("image");
+export const uploadEventImage = (req: any, res: any, next: any) => {
+  uploadEventDiskInstance.single("image")(req, res, async (err: any) => {
+    if (err) return next(err);
+    if (req.file) await convertFileToWebp(req.file);
+    next();
+  });
+};
+
+// Middleware for single product image upload (field name: "image")
+export const uploadProductImage = (req: any, res: any, next: any) => {
+  uploadProductDiskInstance.single("image")(req, res, async (err: any) => {
+    if (err) return next(err);
+    if (req.file) await convertFileToWebp(req.file);
+    next();
+  });
+};
+
+// Middleware for single recent work image upload (field name: "image")
+export const uploadRecentWorkImage = (req: any, res: any, next: any) => {
+  uploadRecentWorkDiskInstance.single("image")(req, res, async (err: any) => {
+    if (err) return next(err);
+    if (req.file) await convertFileToWebp(req.file);
+    next();
+  });
+};
 
 // Middleware for multiple event images upload (field names: "coverImage", "bannerImage")
 export const uploadEventImages = uploadEventDiskInstance.fields([
@@ -159,6 +271,5 @@ export const uploadResume = uploadResumeDiskInstance.single("resume");
 
 // Middleware for single registration dynamic file upload (field name: "file")
 export const uploadRegistrationFile = uploadRegistrationFileInstance.single("file");
-
 // Middleware for single case study image upload (field name: "image")
 export const uploadCaseStudyImage = uploadCaseStudyDiskInstance.single("image");

@@ -322,7 +322,7 @@ export default function Home() {
     "@type": "LocalBusiness",
     "name": "Indux Technology",
     "description": "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
-    "image": "https://induxtechnology.com/images/og-image.jpg",
+    "image": "https://induxtechnology.com/images/og-image.webp",
     "openingHours": "Mo-Fr 09:00-18:00",
     "@id": "https://induxtechnology.com/#localbusiness",
     "url": "https://induxtechnology.com",
@@ -702,7 +702,7 @@ export default function Home() {
                   title: "Custom CRM",
                   description:
                     "Tailored Customer Relationship Management systems to streamline sales, marketing, and support pipelines seamlessly.",
-                  image: "/services/crm.jpg",
+                  image: "/services/crm.webp",
                   alt: "Custom CRM - Built Around Your Business",
                   link: "/services/crm",
                 },
@@ -710,7 +710,7 @@ export default function Home() {
                   title: "Manufacturing ERP",
                   description:
                     "Robust Enterprise Resource Planning software designed to optimize supply chains and inventory management.",
-                  image: "/services/erp.jpg",
+                  image: "/services/erp.webp",
                   alt: "Manufacturing ERP - Smarter Operations Higher Productivity",
                   link: "/services/erp",
                 },
@@ -718,7 +718,7 @@ export default function Home() {
                   title: "Sales Automation",
                   description:
                     "Intelligent automation tools to accelerate your sales cycle, track performance, and boost revenue effortlessly.",
-                  image: "/services/sales-automation.jpg",
+                  image: "/services/sales-automation.webp",
                   alt: "Sales Automation - Work Smarter Close Faster",
                   link: "/services/automation",
                 },

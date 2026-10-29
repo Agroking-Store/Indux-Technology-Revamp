@@ -282,9 +282,10 @@ export function ContactForm() {
           </Label>
           <Textarea
             {...register("message")}
-            placeholder="Tell us about your project goals..."
+            placeholder="Tell us about your project goals, team size, deadlines..."
             className="min-h-30 p-4 bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 focus-visible:ring-1 focus-visible:ring-blue-500 rounded-xl shadow-sm text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-400 resize-none"
           ></Textarea>
+          <p className="text-xs text-slate-500 dark:text-slate-400">The more detail you share (goals, team size, deadlines), the more useful our first reply will be.</p>
           {errors.message && (
             <p className="text-red-500 text-xs ml-1">
               {errors.message.message}

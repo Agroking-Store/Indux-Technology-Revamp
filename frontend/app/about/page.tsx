@@ -152,7 +152,7 @@ export default function AboutPage() {
           >
             <div className="relative aspect-[3/4] md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl bg-slate-200 dark:bg-slate-800">
               <img
-                src="/owner.jpeg"
+                src="/owner.webp"
                 alt="Founder"
                 width="800"
                 height="600"
