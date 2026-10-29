@@ -201,13 +201,13 @@ export default function ProductsZigzagShowcase() {
           </div>
 
           {hasMore && (
-            <div className="mt-32 flex justify-center">
+            <div className="mt-12 sm:mt-16 flex justify-center">
               <Button
                 variant="outline"
                 onClick={() => setVisibleCount((v) => v + 3)}
-                className="rounded-full px-10 py-8 border-2 hover:bg-slate-50 dark:hover:bg-slate-900 font-bold text-lg cursor-pointer"
+                className="rounded-full px-6 h-11 border hover:bg-slate-50 dark:hover:bg-slate-900 font-semibold text-sm sm:text-base cursor-pointer shadow-xs"
               >
-                <Plus className="mr-2" /> Display More Solutions
+                <Plus className="w-4 h-4 mr-2" /> Display More Solutions
               </Button>
             </div>
           )}

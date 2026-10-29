@@ -98,31 +98,31 @@ export function ContactForm() {
       />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-6 w-full"
+        className="flex flex-col gap-4 sm:gap-5 w-full"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="flex flex-col gap-2">
-            <Label className="text-sm font-semibold text-slate-700 dark:text-slate-500">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-sm font-semibold text-slate-700 dark:text-slate-400">
               Your Name *
             </Label>
             <Input
               {...register("name")}
               placeholder="John Doe"
-              className="h-14 px-4 bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 focus-visible:ring-1 focus-visible:ring-blue-500 rounded-xl shadow-sm text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-400"
+              className="h-11 px-3.5 bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 focus-visible:ring-1 focus-visible:ring-blue-500 rounded-xl shadow-sm text-sm sm:text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
             />
             {errors.name && (
               <p className="text-red-500 text-xs ml-1">{errors.name.message}</p>
             )}
           </div>
-          <div className="flex flex-col gap-2">
-            <Label className="text-sm font-semibold text-slate-700 dark:text-slate-500">
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-sm font-semibold text-slate-700 dark:text-slate-400">
               Email *
             </Label>
             <Input
               {...register("email")}
               type="email"
               placeholder="hello@example.com"
-              className="h-14 px-4 bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 focus-visible:ring-1 focus-visible:ring-blue-500 rounded-xl shadow-sm text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-400"
+              className="h-11 px-3.5 bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 focus-visible:ring-1 focus-visible:ring-blue-500 rounded-xl shadow-sm text-sm sm:text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
             />
             {errors.email && (
               <p className="text-red-500 text-xs ml-1">
@@ -132,8 +132,8 @@ export function ContactForm() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
-  <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+        <div className="flex flex-col gap-1.5">
+  <Label className="text-sm font-semibold text-slate-700 dark:text-slate-400">
     Phone *
   </Label>
   <Controller
@@ -142,7 +142,7 @@ export function ContactForm() {
     render={({ field }) => {
       const FlagComponent = country ? (flags as any)[country] : null;
       return (
-        <div className="flex h-14 w-full rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm items-center transition-all duration-200 focus-within:ring-2 focus-within:ring-blue-500/20 dark:focus-within:ring-blue-500/30 focus-within:border-blue-500 dark:focus-within:border-blue-500">
+        <div className="flex h-11 w-full rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm items-center transition-all duration-200 focus-within:ring-2 focus-within:ring-blue-500/20 dark:focus-within:ring-blue-500/30 focus-within:border-blue-500 dark:focus-within:border-blue-500">
           
           {/* Flag Section (Hover strictly scoped to this button container) */}
           <div
@@ -161,17 +161,17 @@ export function ContactForm() {
                 e.stopPropagation();
                 setCountryOpen((prev) => !prev);
               }}
-              className="flex items-center justify-center px-4 h-full bg-slate-100/80 dark:bg-slate-800/80 border-r border-slate-200 dark:border-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 transition-colors duration-150 cursor-pointer rounded-l-xl shrink-0"
+              className="flex items-center justify-center px-3 h-full bg-slate-100/80 dark:bg-slate-800/80 border-r border-slate-200 dark:border-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 transition-colors duration-150 cursor-pointer rounded-l-xl shrink-0"
             >
               {FlagComponent ? (
                 <FlagComponent
                   title={country}
-                  className="w-6 h-4.5 rounded-xs object-cover shadow-xs"
+                  className="w-5 h-3.5 rounded-xs object-cover shadow-xs"
                 />
               ) : (
-                <div className="w-6 h-4.5 bg-slate-200 dark:bg-slate-700 rounded-xs" />
+                <div className="w-5 h-3.5 bg-slate-200 dark:bg-slate-700 rounded-xs" />
               )}
-              <ChevronsUpDown className="w-4 h-4 ml-2 opacity-60" />
+              <ChevronsUpDown className="w-3.5 h-3.5 ml-1.5 opacity-60" />
             </button>
 
             {/* Custom Dropdown Menu */}
@@ -250,7 +250,7 @@ export function ContactForm() {
           </div>
 
           {/* Country code display */}
-          <span className="pl-4 pr-1 text-base text-slate-600 dark:text-slate-300 select-none font-medium shrink-0">
+          <span className="pl-3 pr-1 text-sm sm:text-base text-slate-600 dark:text-slate-300 select-none font-medium shrink-0">
             +{country ? getCountryCallingCode(country) : ""}
           </span>
 
@@ -265,7 +265,7 @@ export function ContactForm() {
             id="phone"
             type="tel"
             placeholder="Enter number"
-            className="flex-1 pr-4 py-2 bg-transparent outline-none text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 min-w-0 h-full"
+            className="flex-1 pr-3 py-1 bg-transparent outline-none text-sm sm:text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 min-w-0 h-full"
           />
         </div>
       );
@@ -276,14 +276,14 @@ export function ContactForm() {
   )}
 </div>
 
-        <div className="flex flex-col gap-2">
-          <Label className="text-sm font-semibold text-slate-700 dark:text-slate-500">
+        <div className="flex flex-col gap-1.5">
+          <Label className="text-sm font-semibold text-slate-700 dark:text-slate-400">
             Your Message *
           </Label>
           <Textarea
             {...register("message")}
             placeholder="Tell us about your project goals, team size, deadlines..."
-            className="min-h-30 p-4 bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 focus-visible:ring-1 focus-visible:ring-blue-500 rounded-xl shadow-sm text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-400 resize-none"
+            className="min-h-[100px] p-3 bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 focus-visible:ring-1 focus-visible:ring-blue-500 rounded-xl shadow-sm text-sm sm:text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none"
           ></Textarea>
           <p className="text-xs text-slate-500 dark:text-slate-400">The more detail you share (goals, team size, deadlines), the more useful our first reply will be.</p>
           {errors.message && (
@@ -296,11 +296,11 @@ export function ContactForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-fit bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2 mt-4 disabled:opacity-50"
+          className="w-fit bg-blue-600 hover:bg-blue-700 text-white px-7 py-2.5 h-11 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
         >
           {isSubmitting ? "Sending..." : "Send Message"}{" "}
           {!isSubmitting && (
-            <ArrowRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
           )}
         </Button>
       </form>

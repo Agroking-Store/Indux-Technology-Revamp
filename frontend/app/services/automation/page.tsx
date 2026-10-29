@@ -6,17 +6,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {
 
-  CheckCircle2, 
-  Globe, 
-  Code, 
-  Cpu, 
-  Database, 
-  Layers, 
-  Zap, 
-  ShieldCheck, 
-  Search, 
-  Smartphone, 
-  ArrowRight, 
+  CheckCircle2,
+  Globe,
+  Code,
+  Cpu,
+  Database,
+  Layers,
+  Zap,
+  ShieldCheck,
+  Search,
+  Smartphone,
+  ArrowRight,
 
   Terminal,
   Activity,
@@ -241,8 +241,8 @@ export default function BusinessAutomationServicePage() {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
 
 
-            
-            
+
+
 
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start relative">
 
@@ -281,7 +281,7 @@ export default function BusinessAutomationServicePage() {
                   </ul>
                 </div>
 
-                <Button 
+                <Button
 
                   nativeButton={false}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wide text-sm uppercase transition-all shadow-lg shadow-blue-600/20 group cursor-pointer"
@@ -533,7 +533,7 @@ export default function BusinessAutomationServicePage() {
                   Start Conversation <ArrowRight className="w-4 h-4" />
                 </Button>
                 <span className="text-xs text-slate-550 font-medium tracking-wide">
-                  Response within 24 hours • No commitment required
+                  Response within 24 hours
                 </span>
               </div>
 

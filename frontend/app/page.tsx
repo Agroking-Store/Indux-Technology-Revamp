@@ -790,8 +790,8 @@ export default function Home() {
                 Our Services
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                Software that helps you{" "}
-                <span className="text-blue-600">grow</span>
+                Accelerate Growth with Our{" "}
+                <span className="text-blue-600">IT Expertise</span>
               </h2>
             </div>
 
@@ -802,17 +802,33 @@ export default function Home() {
                 {
                   title: "Custom CRM Software",
                   description:
-                    "Automate reminders, reports and hand-offs so your team spends its time selling.",
+                    "Tailored Customer Relationship Management systems to streamline sales, marketing, and support pipelines seamlessly.",
+                  image: "/services/crm.webp",
+                  alt: "Custom CRM - Built Around Your Business",
+                  link: "/services/crm",
+                },
+                {
+                  title: "Manufacturing ERP",
+                  description:
+                    "Robust Enterprise Resource Planning software designed to optimize supply chains and inventory management.",
+                  image: "/services/erp.webp",
+                  alt: "Manufacturing ERP - Smarter Operations Higher Productivity",
+                  link: "/services/erp",
+                },
+                {
+                  title: "Sales Automation",
+                  description:
+                    "Intelligent automation tools to accelerate your sales cycle, track performance, and boost revenue effortlessly.",
                   image: "/services/sales-automation.webp",
                   alt: "Sales Automation - Work Smarter Close Faster",
                   link: "/services/automation",
                 },
                 {
-                  title: "Web and Mobile Apps",
+                  title: "Custom Software Development",
                   description:
-                    "Fast, secure apps your customers enjoy using.",
+                    "Turn business requirements into web applications and secure software tailored to your agreed workflows.",
                   image: "/images/unsplash/softwaredevelopment.webp",
-                  alt: "Web and Mobile Apps - Fast and Secure",
+                  alt: "Custom Software Development - Modern Web Applications",
                   link: "/services/web-dev",
                 },
                 {
@@ -824,11 +840,11 @@ export default function Home() {
                   link: "/services/mobile-dev",
                 },
                 {
-                  title: "AI Automation",
+                  title: "AI & Business Automation",
                   description:
-                    "Put AI to work on repetitive tasks, reporting and decisions.",
+                    "Practical AI assistants, conversational chatbots, and automated workflows to reduce repetitive tasks and elevate ROI.",
                   image: "/images/unsplash/AI.webp",
-                  alt: "AI Automation - Smart Workflows and Efficiency",
+                  alt: "AI & Business Automation - Chatbots and Smart Workflows",
                   link: "/services/ai-chatbots",
                 },
               ].map((service, idx) => (
@@ -1072,7 +1088,9 @@ export default function Home() {
                   title: "Indux CRM",
                   alt: "Indux CRM dashboard for managing customers and business operations",
                   category: "Business Intelligence",
-                  img: "/induxcrm.webp",
+                  // image: "/services/crm.webp",
+                  image: "/public/services/crm.webp",
+                  img: "/services/crm.webp",
                   link: "/products/indux-crm",
                 },
                 {
@@ -1093,7 +1111,7 @@ export default function Home() {
                   title: "InduxERP",
                   alt: "InduxERP dashboard for managing business processes and operations",
                   category: "Enterprise Software",
-                  img: "/indux_erp.webp",
+                  img: "/services/erp.webp",
                   link: "/products/indux-erp",
                 },
               ].map((project, idx) => (
