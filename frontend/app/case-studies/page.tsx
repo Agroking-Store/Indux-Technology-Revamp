@@ -232,9 +232,11 @@ export default function CaseStudiesPage() {
                       <Image
                         src={
                           featured.image
-                            ? featured.image.startsWith("http") || featured.image.startsWith("/")
+                            ? featured.image.startsWith("http")
                               ? featured.image
-                              : `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${featured.image}`
+                              : featured.image.startsWith("/uploads")
+                                ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${featured.image}`
+                                : featured.image
                             : fallbackImages[0]
                         }
                         alt={featured.name}
@@ -286,9 +288,11 @@ export default function CaseStudiesPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 {(!searchQuery ? rest : filteredStudies).map((study, idx) => {
                   const imageSrc = study.image
-                    ? study.image.startsWith("http") || study.image.startsWith("/")
+                    ? study.image.startsWith("http")
                       ? study.image
-                      : `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${study.image}`
+                      : study.image.startsWith("/uploads")
+                        ? `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${study.image}`
+                        : study.image
                     : fallbackImages[(idx + 1) % fallbackImages.length];
 
                   return (

@@ -46,7 +46,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title: `${caseStudy.name}: ${caseStudy.headline}`,
         description: caseStudy.challenge,
         type: "article",
-        images: caseStudy.image ? [caseStudy.image] : [],
+        images: [
+          caseStudy.image
+            ? caseStudy.image.startsWith("http")
+              ? caseStudy.image
+              : `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}${caseStudy.image}`
+            : "/images/unsplash/img-0f36d5cf.webp",
+        ],
       },
     };
   } catch {
