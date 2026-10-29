@@ -1,81 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import { ArrowRight, CheckCircle2, Zap } from "lucide-react";
 import { servicesData } from "@/lib/services-data";
 import Link from "next/link";
 import { GetQuoteModal } from "@/components/GetQuoteModal";
-
-// Clocks Component
-const GlobalPresenceClocks = () => {
-    const [indiaTime, setIndiaTime] = useState("");
-    const [uaeTime, setUaeTime] = useState("");
-
-    useEffect(() => {
-        const updateClocks = () => {
-            const now = new Date();
-            const india = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
-            const uae = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Dubai" }));
-
-            const format = (date: Date) =>
-                date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0');
-
-            setIndiaTime(format(india));
-            setUaeTime(format(uae));
-        };
-
-        updateClocks();
-        const interval = setInterval(updateClocks, 1000);
-        return () => clearInterval(interval);
-    }, []);
-
-    // Hydration fix - return null or placeholders initially if needed, but since it's client component we can just render
-    return (
-        <div className="relative max-w-4xl mx-auto">
-            {/* Vertical Separator (Desktop Only) */}
-            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-border/50 -translate-x-1/2"></div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0">
-                {/* India Section */}
-                <div className="flex flex-col items-center text-center px-4 sm:px-8 py-4">
-                    <div className="text-5xl sm:text-7xl md:text-8xl text-foreground font-extrabold tracking-tight mb-4 min-h-[72px] sm:min-h-[96px]">
-                        {indiaTime || "00:00"}
-                    </div>
-
-                    <h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
- <img src="https://flagcdn.com/w40/in.png" alt="India Flag" className="w-8 h-auto mr-3" />
-                        India
-                    </h3>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                        <span className="font-medium uppercase tracking-widest text-xs sm:text-sm">Pune</span>
-                    </div>
-                    <div className="mt-4 text-xs sm:text-sm text-muted-foreground font-semibold uppercase tracking-widest">
-                        IST (UTC+5:30)
-                    </div>
-                </div>
-
-                {/* UAE Section */}
-                <div className="flex flex-col items-center text-center px-4 sm:px-8 py-4">
-                    <div className="text-5xl sm:text-7xl md:text-8xl text-foreground font-extrabold tracking-tight mb-4 min-h-[72px] sm:min-h-[96px]">
-                        {uaeTime || "00:00"}
-                    </div>
-                    <h3 className="text-3xl text-foreground font-bold mb-2 flex items-center justify-center">
- <Image src="https://flagcdn.com/w40/ae.png" alt="UAE Flag with Indux Technology Office to Showcase the Global Presence and Innovation" width={32} height={32} className="w-8 h-auto mr-3" />
-                        UAE
-                    </h3>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                        <span className="font-medium uppercase tracking-widest text-xs sm:text-sm">Dubai</span>
-                    </div>
-                    <div className="mt-4 text-xs sm:text-sm text-muted-foreground font-semibold uppercase tracking-widest">
-                        GST (UTC+4:00)
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
 
 export default function ServicesPage() {
     return (
@@ -96,7 +26,7 @@ export default function ServicesPage() {
                             "@type": "OfferCatalog",
                             "name": "IT Services",
                             "itemListElement": [
-                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "CRM Solutions" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Solutions" } },
                                 { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Development" } },
                                 { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mobile Apps" } },
                                 { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Chatbots" } },
@@ -135,20 +65,7 @@ export default function ServicesPage() {
                 </div>
             </section>
 
-            {/* Global Presence Section */}
-            <section className="py-20 bg-background border-b border-border/50">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="text-center mb-12">
-                        <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Our Global Presence</h2>
-                        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                            Strategically located to serve our enterprise clients across the globe.
-                        </p>
-                    </div>
-                    <GlobalPresenceClocks />
-                </div>
-            </section>
-
-            {/* Services Grid */}
+                        {/* Services Grid */}
             <section className="py-32 bg-muted/30 border-y border-border/50">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-16">
@@ -159,21 +76,21 @@ export default function ServicesPage() {
                     </div>
 
                     <div className="flex flex-col items-center gap-12 sm:gap-16 md:gap-24 py-8 sm:py-12">
-                        {/* Row 1: CRM Software */}
+                        {/* Row 1: Custom Solutions */}
                         <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 lg:gap-20 w-full relative">
                             <div className="relative shrink-0 flex items-center justify-center">
                                 <span className="absolute -left-6 sm:-left-12 md:-left-20 lg:-left-28 text-7xl sm:text-8xl md:text-[12rem] lg:text-[15rem] font-extrabold text-[#b4c5ff] dark:text-blue-950/60 opacity-30 pointer-events-none z-0 select-none tracking-tighter leading-none -top-10 sm:-top-16 md:-top-20">01</span>
                                 <div className="relative w-56 h-64 sm:w-64 sm:h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <Image alt="CRM Solutions for Growing Business" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500" src="/services/crm.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
+                                    <Image alt="Custom CRM Solutions for Growing Business" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500" src="/services/crm.webp" fill sizes="(max-width: 768px) 100vw, 300px" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-left relative z-10">
-                                <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">CRM Software</h3>
+                                <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">Custom CRM Solutions</h3>
                                 <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">
-                                    Manage leads, organize customer information, track sales activities and schedule follow-ups with Indux CRM or a customized CRM solution.
+                                    Manage leads, organize customer information, track sales activities and schedule follow-ups with customized software solutions tailored to your business.
                                 </p>
                                 <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start">
-                                    <Link href="/services/crm" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full text-xs sm:text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Explore CRM Solutions</Link>
+                                    <Link href="/services/crm" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full text-xs sm:text-sm font-semibold hover:opacity-90 transition-all uppercase tracking-wider">Explore Custom Solutions</Link>
                                 </div>
                             </div>
                         </div>
