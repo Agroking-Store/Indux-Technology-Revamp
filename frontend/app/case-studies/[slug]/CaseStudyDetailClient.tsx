@@ -35,6 +35,29 @@ function formatDate(dateStr?: string) {
   });
 }
 
+/**
+ * Parses multiline input and renders each paragraph with proper spacing and newline preservation.
+ */
+function formatParagraphs(text?: string) {
+  if (!text) return null;
+  const normalized = text.replace(/\r\n/g, '\n');
+  const paragraphs = normalized.split(/\n\s*\n/).filter((p) => p.trim().length > 0);
+
+  if (paragraphs.length <= 1) {
+    return <p className="whitespace-pre-line leading-relaxed">{normalized.trim()}</p>;
+  }
+
+  return (
+    <div className="space-y-4">
+      {paragraphs.map((p, idx) => (
+        <p key={idx} className="whitespace-pre-line leading-relaxed">
+          {p.trim()}
+        </p>
+      ))}
+    </div>
+  );
+}
+
 const fallbackImages = [
   '/images/unsplash/img-0f36d5cf.webp',
   '/images/unsplash/img-3be447cf.webp',
@@ -223,9 +246,9 @@ export default function CaseStudyDetailClient({
                     The Operational Challenge
                   </h2>
                 </div>
-                <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed pl-0 sm:pl-9">
-                  {caseStudy.challenge}
-                </p>
+                <div className="text-slate-700 dark:text-slate-300 text-sm sm:text-base pl-0 sm:pl-9">
+                  {formatParagraphs(caseStudy.challenge)}
+                </div>
               </div>
 
               {/* Section 2: What We Engineered */}
@@ -238,9 +261,9 @@ export default function CaseStudyDetailClient({
                     The Engineered Solution
                   </h2>
                 </div>
-                <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed pl-0 sm:pl-9">
-                  {caseStudy.solution}
-                </p>
+                <div className="text-slate-700 dark:text-slate-300 text-sm sm:text-base pl-0 sm:pl-9">
+                  {formatParagraphs(caseStudy.solution)}
+                </div>
               </div>
 
               {/* Section 3: Verified Business Outcomes */}
@@ -260,13 +283,13 @@ export default function CaseStudyDetailClient({
                     <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
                       <TrendingUp className="w-6 h-6" />
                     </div>
-                    <div>
+                    <div className="w-full">
                       <span className="text-[10px] uppercase font-bold text-emerald-700 dark:text-emerald-400 tracking-wider">
                         Measured ROI & Efficiency
                       </span>
-                      <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-relaxed mt-1">
-                        {caseStudy.result}
-                      </p>
+                      <div className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-1">
+                        {formatParagraphs(caseStudy.result)}
+                      </div>
                     </div>
                   </div>
                 </div>
