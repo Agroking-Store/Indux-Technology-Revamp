@@ -27,26 +27,27 @@ import {
   FaJava,
   FaNodeJs,
   FaDatabase,
-  FaSalesforce,
-  FaHubspot
+  FaReact,
+  FaAws
 } from 'react-icons/fa';
 import {
   TbBrandTypescript,
-  TbBrandMongodb
+  TbBrandMongodb,
+  TbBrandNextjs
 } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 // Tech stack data
 const techStack = [
-  { name: 'Salesforce', category: 'Platforms', desc: 'Enterprise CRM ecosystem', icon: FaSalesforce, color: 'text-blue-500 bg-blue-500/10' },
-  { name: 'HubSpot', category: 'Platforms', desc: 'Inbound marketing & sales', icon: FaHubspot, color: 'text-orange-500 bg-orange-500/10' },
+  { name: 'Next.js', category: 'Frontend', desc: 'Performant SSR & CRM dashboards', icon: TbBrandNextjs, color: 'text-slate-900 dark:text-white bg-slate-900/10 dark:bg-white/10' },
+  { name: 'React', category: 'Frontend', desc: 'Interactive UI & lead pipelines', icon: FaReact, color: 'text-cyan-500 bg-cyan-500/10' },
   { name: 'TypeScript', category: 'Languages', desc: 'Type-safe JS architecture', icon: TbBrandTypescript, color: 'text-blue-600 bg-blue-600/10' },
-  { name: 'Python', category: 'Languages', desc: 'Data processing & AI computing', icon: FaPython, color: 'text-emerald-600 bg-emerald-600/10' },
-  { name: 'Java', category: 'Languages', desc: 'Robust enterprise processes', icon: FaJava, color: 'text-rose-500 bg-rose-500/10' },
-  { name: 'Node.js', category: 'Backend', desc: 'High-performance runtimes', icon: FaNodeJs, color: 'text-green-600 bg-green-600/10' },
-  { name: 'PostgreSQL', category: 'Databases', desc: 'Structured relational data', icon: FaDatabase, color: 'text-blue-600 bg-blue-600/10' },
+  { name: 'Node.js', category: 'Backend', desc: 'High-performance runtimes & APIs', icon: FaNodeJs, color: 'text-green-600 bg-green-600/10' },
+  { name: 'Python', category: 'Languages', desc: 'Data processing & AI automation', icon: FaPython, color: 'text-emerald-600 bg-emerald-600/10' },
+  { name: 'PostgreSQL', category: 'Databases', desc: 'Structured relational customer data', icon: FaDatabase, color: 'text-blue-600 bg-blue-600/10' },
   { name: 'MongoDB', category: 'Databases', desc: 'Scalable NoSQL document stores', icon: TbBrandMongodb, color: 'text-emerald-500 bg-emerald-500/10' },
+  { name: 'AWS Cloud', category: 'Infrastructure', desc: 'Secure cloud hosting & scaling', icon: FaAws, color: 'text-orange-500 bg-orange-500/10' },
 ];
 
 // 12 capabilities for CRM
@@ -57,8 +58,8 @@ const capabilities = [
     icon: Settings,
   },
   {
-    title: 'CRM Implementation',
-    desc: 'Expert deployment and configuration of industry-leading platforms like Salesforce, HubSpot, and Microsoft Dynamics.',
+    title: 'Cloud & API Integration',
+    desc: 'Seamless integration with communication channels, WhatsApp Business, payment gateways, and custom database pipelines.',
     icon: Cloud,
   },
   {
