@@ -28,6 +28,7 @@ const allLinks = [
   { name: "Services", href: "/services" },
   { name: "Products", href: "/products" },
   { name: "Blogs", href: "/blogs" },
+  { name: "Case Studies", href: "/case-studies" },
   { name: "About Us", href: "/about" },
   { name: "Contact Us", href: "/contact-us" },
   { name: "Careers", href: "/careers" },

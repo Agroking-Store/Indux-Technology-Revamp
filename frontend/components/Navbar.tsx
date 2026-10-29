@@ -131,6 +131,12 @@ const companyData = {
       icon: ImBlog,
     },
     {
+      title: "Case Studies",
+      desc: "Client stories & verified results",
+      href: "/case-studies",
+      icon: Briefcase,
+    },
+    {
       title: "Careers",
       desc: "Join our growing team",
       href: "/careers",

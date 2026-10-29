@@ -23,6 +23,12 @@ if (!fs.existsSync(eventUploadDir)) {
   fs.mkdirSync(eventUploadDir, { recursive: true });
 }
 
+// Disk storage for case studies
+const caseStudyUploadDir = path.join(__dirname, "../../uploads/case-studies");
+if (!fs.existsSync(caseStudyUploadDir)) {
+  fs.mkdirSync(caseStudyUploadDir, { recursive: true });
+}
+
 const blogDiskStorage = multer.diskStorage({
   destination: function (_req, _file, cb) {
     cb(null, blogUploadDir);
@@ -56,6 +62,17 @@ const eventDiskStorage = multer.diskStorage({
   },
 });
 
+const caseStudyDiskStorage = multer.diskStorage({
+  destination: function (_req, _file, cb) {
+    cb(null, caseStudyUploadDir);
+  },
+  filename: function (_req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
+  },
+});
+
 const uploadBlogDiskInstance = multer({
   storage: blogDiskStorage,
   limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
@@ -70,6 +87,18 @@ const uploadBlogDiskInstance = multer({
 
 const uploadEventDiskInstance = multer({
   storage: eventDiskStorage,
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
+  fileFilter: (_req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only images are allowed") as any, false);
+    }
+  },
+});
+
+const uploadCaseStudyDiskInstance = multer({
+  storage: caseStudyDiskStorage,
   limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
   fileFilter: (_req, file, cb) => {
     if (file.mimetype.startsWith("image/")) {
@@ -130,3 +159,6 @@ export const uploadResume = uploadResumeDiskInstance.single("resume");
 
 // Middleware for single registration dynamic file upload (field name: "file")
 export const uploadRegistrationFile = uploadRegistrationFileInstance.single("file");
+
+// Middleware for single case study image upload (field name: "image")
+export const uploadCaseStudyImage = uploadCaseStudyDiskInstance.single("image");
