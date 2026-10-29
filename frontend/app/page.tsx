@@ -800,7 +800,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {[
                 {
-                  title: "Custom CRM",
+                  title: "Custom CRM Software",
                   description:
                     "Keep every lead, follow-up and deal in one place so no opportunity slips away.",
                   image: "/services/crm.jpg",
