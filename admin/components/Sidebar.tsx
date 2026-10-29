@@ -14,7 +14,8 @@ import {
   Users,
   LogOut,
   Sparkles,
-  Award
+  Award,
+  Package,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -65,7 +66,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         { href: '/events', label: 'All Events', icon: Calendar },
         { href: '/events/registrations', label: 'Registrations', icon: Users },
       ]
-    }
+    },
+    {
+      title: 'Our Works Management',
+      items: [
+        { href: '/products', label: 'Products', icon: Package },
+        { href: '/recent-works', label: 'Recent Works', icon: Sparkles },
+      ]
+    },
   ];
 
   // Helper to accurately identify active routes without sibling collisions

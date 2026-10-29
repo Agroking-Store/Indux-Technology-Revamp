@@ -347,7 +347,7 @@ export default function Home() {
     "@type": "LocalBusiness",
     "name": "Indux Technology",
     "description": "Indux Technology helps businesses grow with custom CRM, ERP, AI, automation, and web & mobile solutions designed to simplify work and improve efficiency.",
-    "image": "https://induxtechnology.com/images/og-image.jpg",
+    "image": "https://induxtechnology.com/images/og-image.webp",
     "openingHours": "Mo-Fr 09:00-18:00",
     "@id": "https://induxtechnology.com/#localbusiness",
     "url": "https://induxtechnology.com",
@@ -804,24 +804,8 @@ export default function Home() {
                 {
                   title: "Custom CRM",
                   description:
-                    "Keep every lead, follow-up and deal in one place so no opportunity slips away.",
-                  image: "/services/crm.jpg",
-                  alt: "Custom CRM - Built Around Your Business",
-                  link: "/services/crm",
-                },
-                {
-                  title: "Manufacturing ERP",
-                  description:
-                    "Connect inventory, purchasing and production, and see what is happening in real time.",
-                  image: "/services/erp.jpg",
-                  alt: "Manufacturing ERP - Smarter Operations Higher Productivity",
-                  link: "/services/erp",
-                },
-                {
-                  title: "Sales Automation",
-                  description:
                     "Automate reminders, reports and hand-offs so your team spends its time selling.",
-                  image: "/services/sales-automation.jpg",
+                  image: "/services/sales-automation.webp",
                   alt: "Sales Automation - Work Smarter Close Faster",
                   link: "/services/automation",
                 },

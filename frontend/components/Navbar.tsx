@@ -27,6 +27,8 @@ import {
   Mail,
   MapPin,
   Calendar,
+  Package,
+  Sparkles,
 } from "lucide-react";
 import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { FaXTwitter, FaWhatsapp, FaHandshake, FaUsersGear } from "react-icons/fa6";
@@ -70,6 +72,25 @@ import {
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+
+const ourWorksData = {
+  title: "Our Works",
+  main: [
+    {
+      title: "Products",
+      desc: "Innovative software solutions built for performance",
+      href: "/products",
+      icon: Package,
+    },
+    {
+      title: "Our Recent Works",
+      desc: "Explore client success stories & custom platforms",
+      href: "/our-recent-works",
+      icon: Sparkles,
+    },
+  ],
+  side: [],
+};
 
 const servicesData = {
   title: "Services",
@@ -311,7 +332,7 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <nav className="hidden lg:flex items-center h-full gap-8">
-            <NavLink href="/products" title="Products" pathname={pathname} />
+            <DropdownMenu data={ourWorksData} pathname={pathname} />
             <DropdownMenu data={servicesData} pathname={pathname} />
             <DropdownMenu data={companyData} pathname={pathname} />
             <NavLink
@@ -381,6 +402,9 @@ function DropdownMenu({
   pathname: string;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const isCurrentActive =
+    (data.href && pathname === data.href) ||
+    data.main.some((m) => pathname === m.href);
 
   return (
     <div
@@ -391,7 +415,12 @@ function DropdownMenu({
       {data.href ? (
         <Link
           href={data.href}
-          className="flex h-full items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+className={cn(
+            "flex h-full items-center gap-1 cursor-pointer text-lg font-medium transition-colors",
+            isCurrentActive
+              ? "text-blue-600"
+              : "text-slate-600 dark:text-slate-300 hover:text-blue-600",
+          )}
         >
           {data.title}
           <motion.div
@@ -402,9 +431,14 @@ function DropdownMenu({
           </motion.div>
         </Link>
       ) : (
-        <button
+<button
           type="button"
-          className="flex h-full items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+          className={cn(
+            "flex h-full items-center gap-1 cursor-pointer text-lg font-medium transition-colors",
+            isCurrentActive
+              ? "text-blue-600"
+              : "text-slate-600 dark:text-slate-300 hover:text-blue-600",
+          )}
         >
           {data.title}
           <motion.div
@@ -419,7 +453,7 @@ function DropdownMenu({
       <motion.span
         className="absolute bottom-[28px] left-0 w-full h-[3px] rounded-full bg-blue-600 origin-left"
         initial={false}
-        animate={{ scaleX: isHovered ? 1 : 0 }}
+        animate={{ scaleX: isCurrentActive || isHovered ? 1 : 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       />
 
@@ -435,14 +469,16 @@ function DropdownMenu({
                   ? "w-[1240px]"
                   : data.main.length === 4
                     ? "w-[1000px]"
-                    : "w-[750px]",
+                    : data.main.length === 2
+                      ? "w-[620px]"
+                      : "w-[750px]",
             )}
             initial={{ opacity: 0, y: 10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.98 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            <div className="bg-white rounded-3xl shadow-lg border border-slate-100 p-6 flex gap-6 max-h-[80vh] overflow-y-auto">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl dark:shadow-slate-950/80 border border-slate-100 dark:border-slate-800 p-6 flex gap-6 max-h-[80vh] overflow-y-auto">
               {/* Left Side: Horizontal Grid Cards */}
               <div
                 className={cn(
@@ -451,25 +487,32 @@ function DropdownMenu({
                     ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
                     : data.main.length === 4
                       ? "grid-cols-1 md:grid-cols-2"
-                      : "grid-cols-1 md:grid-cols-2",
+                      : data.main.length === 2
+                        ? "grid-cols-1 sm:grid-cols-2"
+                        : "grid-cols-1 md:grid-cols-2",
                 )}
               >
                 {data.main.map((item, idx) => (
                   <Link
                     key={idx}
                     href={item.href || "#"}
-                    className="relative flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 transition-all group/card overflow-hidden cursor-pointer"
+className="relative flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all group/card overflow-hidden border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60 cursor-pointer"
                   >
                     {/* Grid Background Pattern */}
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-20 group-hover/card:opacity-100 transition-opacity duration-300" />
 
-                    <div className="relative z-10 text-slate-700 group-hover/card:text-blue-600 transition-colors shrink-0">
+                    <div className="relative z-10 text-slate-700 dark:text-slate-300 group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors shrink-0 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover/card:bg-blue-50 dark:group-hover/card:bg-blue-950/50">
                       <item.icon className="size-6" />
                     </div>
                     <div className="relative z-10 text-left">
-                      <h4 className="font-bold text-slate-900 text-sm group-hover/card:text-blue-700 transition-colors">
+                      <h4 className="font-bold text-slate-900 dark:text-white text-sm group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors">
                         {item.title}
                       </h4>
+                      {item.desc && (
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">
+                          {item.desc}
+                        </p>
+                      )}
                     </div>
                   </Link>
                 ))}
@@ -477,12 +520,12 @@ function DropdownMenu({
 
               {/* Right Side: Vertical List with Hover Effects */}
               {data.side && data.side.length > 0 && (
-                <div className="w-64 flex flex-col justify-center border-l pl-6 gap-1 shrink-0">
+                <div className="w-64 flex flex-col justify-center border-l dark:border-slate-800 pl-6 gap-1 shrink-0">
                   {data.side.map((item, idx) => (
                     <Link
                       key={idx}
                       href={item.href}
-                      className="text-base font-medium text-slate-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl p-3 transition-all flex items-center justify-between group/link"
+                      className="text-base font-medium text-slate-600 dark:text-slate-400 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40 rounded-xl p-3 transition-all flex items-center justify-between group/link"
                     >
                       <div className="flex items-center gap-3">
                         <div className="text-slate-400 group-hover/link:text-blue-600 transition-colors">
@@ -544,17 +587,39 @@ function MobileNav({ pathname }: { pathname: string }) {
         </div>
 
         <div className="flex-1 overflow-y-auto py-6 px-6 sm:px-8 flex flex-col gap-5">
-          {/* Products Link */}
-          <SheetClose
-            render={
-              <Link
-                href="/products"
-                className="block text-xl sm:text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+          {/* Our Works Accordion */}
+          <div>
+            <button
+              onClick={() => toggleSection("our-works")}
+              className="flex items-center justify-between w-full text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 cursor-pointer"
+            >
+              Our Works
+              <ChevronDown
+                className={cn(
+                  "size-6 transition-transform",
+                  openSection === "our-works" && "rotate-180",
+                )}
               />
-            }
-          >
-            Products
-          </SheetClose>
+            </button>
+            {openSection === "our-works" && (
+              <div className="flex flex-col gap-3 mt-3 ml-4 border-l-2 dark:border-slate-800 pl-4">
+                {ourWorksData.main.map((item) => (
+                  <SheetClose
+                    key={item.title}
+                    render={
+                      <Link
+                        href={item.href || "#"}
+                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                      />
+                    }
+                  >
+                    <item.icon className="size-5 shrink-0 text-blue-600 dark:text-blue-400" />
+                    <span>{item.title}</span>
+                  </SheetClose>
+                ))}
+              </div>
+            )}
+          </div>
 
           {/* Services Accordion */}
           <div>

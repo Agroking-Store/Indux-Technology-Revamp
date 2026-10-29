@@ -152,9 +152,9 @@ export default function AboutPage() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative"
           >
- <div className="relative aspect-[3/4] md:aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl bg-slate-200 dark:bg-slate-800">
- <img
- src="/owner.jpeg"
+<div className="relative aspect-[3/4] md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl bg-slate-200 dark:bg-slate-800">
+              <img
+                src="/owner.webp"
                 alt="Founder"
                 width="800"
                 height="600"

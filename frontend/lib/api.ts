@@ -339,3 +339,95 @@ export const getVisitorCount = async (log = true): Promise<number> => {
 };
 
 export default api;
+
+// ===== Dynamic Products & Recent Works Types & API =====
+export interface DynamicProduct {
+  _id?: string;
+  id?: number | string;
+  title: string;
+  slug: string;
+  category: string;
+  shortDescription: string;
+  fullDescription: string;
+  themeColor: "blue" | "emerald" | "cyan" | "indigo";
+  iconName?: string;
+  image: string;
+  features: { title: string; desc: string }[];
+  stats: { label: string; value: string }[];
+  faq: { q: string; a: string }[];
+  tech: string[];
+  status?: "Draft" | "Published";
+  order?: number;
+}
+
+export interface DynamicRecentWork {
+  _id?: string;
+  id?: number | string;
+  title: string;
+  slug: string;
+  tagline: string;
+  category: string;
+  image: string;
+  client: string;
+  year: string;
+  shortDescription: string;
+  fullDescription: string;
+  highlights: string[];
+  technologies: string[];
+  metrics: { label: string; value: string }[];
+  liveUrl?: string;
+  status?: "Draft" | "Published";
+  order?: number;
+}
+
+export const getFullImageUrl = (img?: string): string => {
+  if (!img) return "/placeholder.svg";
+  if (img.startsWith("http://") || img.startsWith("https://") || img.startsWith("data:")) {
+    return img;
+  }
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL
+    ? process.env.NEXT_PUBLIC_API_BASE_URL.replace(/\/api\/v1\/?$/, "")
+    : "http://localhost:5000";
+  if (img.startsWith("/uploads/")) {
+    return `${base}${img}`;
+  }
+  return img.startsWith("/") ? img : `/${img}`;
+};
+
+export const getDynamicProducts = async (): Promise<DynamicProduct[]> => {
+  try {
+    const res = await api.get("/products?status=Published");
+    const list = res.data?.data?.products || (Array.isArray(res.data?.data) ? res.data.data : []);
+    if (list && list.length > 0) {
+      return list;
+    }
+  } catch (error) {
+    console.warn("Could not fetch dynamic products, using fallback static data.", error);
+  }
+  return [];
+};
+
+export const getDynamicProductBySlug = async (slug: string): Promise<DynamicProduct | null> => {
+  try {
+    const res = await api.get(`/products/${slug}`);
+    if (res.data?.data) {
+      return res.data.data;
+    }
+  } catch (error) {
+    console.warn(`Could not fetch dynamic product for slug ${slug}:`, error);
+  }
+  return null;
+};
+
+export const getDynamicRecentWorks = async (): Promise<DynamicRecentWork[]> => {
+  try {
+    const res = await api.get("/recent-works?status=Published");
+    const list = res.data?.data?.recentWorks || (Array.isArray(res.data?.data) ? res.data.data : []);
+    if (list && list.length > 0) {
+      return list;
+    }
+  } catch (error) {
+    console.warn("Could not fetch dynamic recent works, using fallback static data.", error);
+  }
+  return [];
+};

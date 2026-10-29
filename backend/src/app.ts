@@ -20,14 +20,40 @@ import eventRegistrationRoutes from "./routes/event-registration.routes";
 import visitorRoutes from "./routes/visitor.routes";
 import newsLetterRoutes from "./routes/newsletter.routes";
 import caseStudyRoutes from "./routes/case-study.routes";
+import productRoutes from "./routes/product.routes";
+import recentWorkRoutes from "./routes/recent-work.routes";
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const app: Application = express();
 
 // Core middleware
+const allowedOrigins = [
+  env.CLIENT_URL,
+  env.ADMIN_URL,
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "http://127.0.0.1:3000",
+  "http://127.0.0.1:3001",
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: [env.CLIENT_URL, env.ADMIN_URL],
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (
+        allowedOrigins.includes(origin) ||
+        origin.includes("localhost") ||
+        origin.includes("127.0.0.1") ||
+        origin.startsWith("http://192.168.") ||
+        origin.startsWith("http://10.") ||
+        origin.startsWith("http://172.")
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
   }),
 );
 app.use(
@@ -62,6 +88,8 @@ app.use("/api/v1/event-registrations", eventRegistrationRoutes);
 app.use("/api/v1/visitors", visitorRoutes);
 app.use("/api/v1/news-letter", newsLetterRoutes);
 app.use("/api/v1/case-studies", caseStudyRoutes);
+app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/recent-works", recentWorkRoutes);
 // 404 handler (for unmatched routes)
 app.use((_req: Request, res: Response) => {
   res.status(404).json({ success: false, message: "Route not found" });

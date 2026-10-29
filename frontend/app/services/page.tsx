@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle2, Zap } from "lucide-react";
+import { servicesData } from "@/lib/services-data";
 import Link from "next/link";
 import { GetQuoteModal } from "@/components/GetQuoteModal";
 
@@ -123,10 +124,10 @@ export default function ServicesPage() {
                         <span className="text-xs sm:text-sm font-semibold tracking-wider uppercase">Expert Solutions</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl md:text-7xl text-foreground mb-6 max-w-4xl mx-auto font-bold tracking-tight">
-                        Our Specialized IT Services
+                        Software services for growing businesses
                     </h1>
                     <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-                        Cutting-edge solutions to scale your business operations. We build robust, secure, and scalable technology tailored to your enterprise needs.
+                        Whether you need to organise your sales pipeline, run a factory more efficiently, or launch a new app, we design, build and support software that fits how you work.
                     </p>
                     <div className="flex justify-center gap-4">
                         {/* Explore Offerings button removed as requested */}
@@ -254,11 +255,11 @@ export default function ServicesPage() {
                         </div>
 
                         {/* Row 6: ERP Software */}
-                        <div className="flex flex-col md:flex-row-reverse items-center justify-center gap-8 md:gap-16 lg:gap-20 w-full relative">
+<div className="flex flex-col md:flex-row-reverse items-center justify-center gap-8 md:gap-16 lg:gap-20 w-full relative">
                             <div className="relative shrink-0 flex items-center justify-center">
                                 <span className="absolute -right-6 sm:-right-12 md:-right-20 lg:-right-28 text-7xl sm:text-8xl md:text-[12rem] lg:text-[15rem] font-extrabold text-[#b4c5ff] dark:text-blue-950/60 opacity-30 pointer-events-none z-0 select-none tracking-tighter leading-none -top-10 sm:-top-16 md:-top-20">06</span>
                                 <div className="relative w-56 h-64 sm:w-64 sm:h-72 md:w-72 md:h-80 group overflow-hidden z-10" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                                    <img alt="ERP Software" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500" src="/services/erp.avif" />
+                                    <img alt="ERP Software" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500" src="/services/erp.webp" />
                                 </div>
                             </div>
                             <div className="max-w-md text-center md:text-right relative z-10">

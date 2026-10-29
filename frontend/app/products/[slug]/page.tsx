@@ -1,8 +1,12 @@
 "use client";
 
+
+import { useEffect, useState } from "react";
 import { useParams, notFound } from "next/navigation";
 import { motion } from "framer-motion";
-import { projects } from "@/lib/products-data";
+import { projects as staticProjects } from "@/lib/products-data";
+import { getDynamicProductBySlug, getFullImageUrl } from "@/lib/api";
+
 import {
   ArrowRight,
   Settings,
@@ -19,17 +23,41 @@ import { GetQuoteModal } from "@/components/GetQuoteModal";
 export default function ProductDetailPage() {
   const { slug } = useParams();
 
-  // Find product based on the URL slug
-  const product = projects.find((p) => p.slug === slug);
+  const slugStr = typeof slug === "string" ? slug : Array.isArray(slug) ? slug[0] : "";
+
+  const initialProduct = staticProjects.find((p) => p.slug === slugStr);
+  const [product, setProduct] = useState<any>(initialProduct || null);
+  const [loading, setLoading] = useState<boolean>(!initialProduct);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (slugStr) {
+      getDynamicProductBySlug(slugStr).then((dynamicProd) => {
+        if (isMounted) {
+          if (dynamicProd) {
+            setProduct(dynamicProd);
+          }
+          setLoading(false);
+        }
+      });
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [slugStr]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   if (!product) return notFound();
 
-  // Helper to ensure leading slash for images
-  const imageSrc = product.image.startsWith("http")
-    ? product.image
-    : product.image.startsWith("/")
-      ? product.image
-      : `/${product.image}`;
+  const imageSrc = getFullImageUrl(product.image);
+
 
   const productJsonLd = {
     "@context": "https://schema.org",
@@ -47,7 +75,9 @@ export default function ProductDetailPage() {
       "priceCurrency": "INR",
       "price": "Contact for pricing",
       "availability": "https://schema.org/InStock",
-      "url": `https://induxtechnology.com/products/${slug}`
+
+      "url": `https://induxtechnology.com/products/${slugStr}`
+
     }
   };
 
@@ -77,8 +107,10 @@ export default function ProductDetailPage() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <GetQuoteModal>
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2">
-                    Get Free Quote <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
+
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold shadow-xl shadow-blue-600/20 cursor-pointer">
+                    Get Free Quote <ArrowRight className="ml-2 size-5" />
+
                   </Button>
                 </GetQuoteModal>
               </div>
@@ -93,7 +125,9 @@ export default function ProductDetailPage() {
                 <img
                   width={800}
                   height={600}
-                  src={product.image}
+
+                  src={imageSrc}
+
                   alt={product.title}
                   className="w-full h-full object-contain"
                 />
@@ -104,25 +138,29 @@ export default function ProductDetailPage() {
       </section>
 
       {/* 2. STATS BAR */}
-      <div className="bg-blue-600 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
-            {product.stats.map((stat, i) => (
-              <div
-                key={i}
-                className="md:border-r last:border-0 border-blue-400/30"
-              >
-                <div className="text-4xl font-bold text-white mb-1">
-                  {stat.value}
+
+      {product.stats && product.stats.length > 0 && (
+        <div className="bg-blue-600 py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+              {product.stats.map((stat: any, i: number) => (
+                <div
+                  key={i}
+                  className="md:border-r last:border-0 border-blue-400/30"
+                >
+                  <div className="text-4xl font-bold text-white mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-blue-100/70 text-sm font-bold uppercase tracking-widest">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-blue-100/70 text-sm font-bold uppercase tracking-widest">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         {/* 3. STICKY CONTENT SECTION */}
@@ -139,21 +177,25 @@ export default function ProductDetailPage() {
               </p>
             </div>
 
-            <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm">
-              <h4 className="font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
-                <Cpu className="text-blue-600 size-5" /> Built With Modern Tech
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {product.tech.map((t, i) => (
-                  <span
-                    key={i}
-                    className="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700"
-                  >
-                    {t}
-                  </span>
-                ))}
+
+            {product.tech && product.tech.length > 0 && (
+              <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm">
+                <h4 className="font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                  <Cpu className="text-blue-600 size-5" /> Built With Modern Tech
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {product.tech.map((t: string, i: number) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+
 
             <div className="flex flex-col gap-4">
               <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
@@ -172,57 +214,67 @@ export default function ProductDetailPage() {
           </aside>
 
           {/* RIGHT: Feature Cards (Vertical Scroll) */}
-          <div className="w-full lg:w-7/12 space-y-8">
-            {product.features.map((feature, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm group hover:border-blue-500/30 transition-all text-left"
-              >
-                <div className="flex justify-between items-start mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-lg">
-                    <Settings className="size-7" />
-                  </div>
-                  <span className="text-5xl font-black text-slate-100 dark:text-slate-800/50">
-                    0{idx + 1}
-                  </span>
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
-                  {feature.title}
-                </h3>
-                <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-lg">
-                  {feature.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+
+          {product.features && product.features.length > 0 && (
+            <div className="w-full lg:w-7/12 space-y-8">
+              {product.features.map((feature: any, idx: number) => {
+                const title = typeof feature === "object" ? feature.title : `Feature ${idx + 1}`;
+                const desc = typeof feature === "object" ? feature.desc : feature;
+                return (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm group hover:border-blue-500/30 transition-all text-left"
+                  >
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-lg">
+                        <Settings className="size-7" />
+                      </div>
+                      <span className="text-5xl font-black text-slate-100 dark:text-slate-800/50">
+                        0{idx + 1}
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+                      {title}
+                    </h3>
+                    <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-lg">
+                      {desc}
+                    </p>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* 4. FAQ SECTION */}
-        <section className="mt-40 border-t border-slate-200 dark:border-slate-900 pt-24 text-left">
-          <div className="max-w-3xl">
-            <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-12 flex items-center gap-3">
-              <HelpCircle className="text-blue-600 size-10" /> FAQ
-            </h2>
-            <div className="space-y-6">
-              {product.faq.map((item, i) => (
-                <div
-                  key={i}
-                  className="p-8 bg-white dark:bg-slate-900/50 rounded-3xl border border-slate-100 dark:border-slate-800 transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
-                >
-                  <h4 className="font-bold text-slate-900 dark:text-white mb-2 text-lg">
-                    Q: {item.q}
-                  </h4>
-                  <p className="text-slate-500 dark:text-slate-400">
-                    A: {item.a}
-                  </p>
-                </div>
-              ))}
+        {product.faq && product.faq.length > 0 && (
+          <section className="mt-40 border-t border-slate-200 dark:border-slate-900 pt-24 text-left">
+            <div className="max-w-3xl">
+              <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-12 flex items-center gap-3">
+                <HelpCircle className="text-blue-600 size-10" /> FAQ
+              </h2>
+              <div className="space-y-6">
+                {product.faq.map((item: any, i: number) => (
+                  <div
+                    key={i}
+                    className="p-8 bg-white dark:bg-slate-900/50 rounded-3xl border border-slate-100 dark:border-slate-800 transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
+                  >
+                    <h4 className="font-bold text-slate-900 dark:text-white mb-2 text-lg">
+                      Q: {item.q}
+                    </h4>
+                    <p className="text-slate-500 dark:text-slate-400">
+                      A: {item.a}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
+
 
         {/* 5. BOTTOM CTA */}
         <section className="mt-40 text-left">
@@ -236,14 +288,18 @@ export default function ProductDetailPage() {
               </h2>
               <div className="flex flex-col sm:flex-row justify-center gap-6 w-full sm:w-auto">
                 <GetQuoteModal>
-                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2">
-                    Schedule a Demo <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
+
+                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-10 py-8 rounded-full text-xl font-bold shadow-2xl transition-transform hover:scale-105 border-none cursor-pointer">
+                    Schedule a Demo
+
                   </Button>
                 </GetQuoteModal>
                 <Link href="/contact-us" className="w-full sm:w-auto">
                   <Button
                     variant="outline"
-                    className="w-full sm:w-auto bg-transparent border-slate-700 text-white hover:text-white hover:bg-slate-800 px-8 py-6 rounded-full font-semibold cursor-pointer"
+
+                    className="w-full sm:w-auto bg-transparent border-slate-700 text-white hover:text-white hover:bg-slate-800 px-10 py-8 rounded-full text-xl font-bold cursor-pointer"
+
                   >
                     Talk to Sales
                   </Button>
