@@ -229,6 +229,14 @@ export default function Home() {
 
   const [scrollRange, setScrollRange] = useState(0);
   const [viewportHeight, setViewportHeight] = useState(0);
+  const [activeAboutSlide, setActiveAboutSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveAboutSlide((prev) => (prev + 1) % 3);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -494,23 +502,23 @@ export default function Home() {
 
         {/* HERO SECTION */}
 
-        <section className="relative overflow-hidden w-full pt-0 pb-4 sm:pb-6 lg:pb-8">
+        <section className="relative overflow-hidden w-full pt-0 pb-4 sm:pb-6 lg:pb-8 bg-[#d3e9fe] dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
           <div className="w-full">
-            {/* Desktop / Laptop / Tablet Layout (md and up): EXACT MATCH to reference screenshot */}
-            <div className="hidden md:block relative w-full aspect-[16/7] md:aspect-[16/6] lg:aspect-[21/9] min-h-[420px] md:min-h-[460px] overflow-hidden shadow-sm border-b border-slate-200 dark:border-slate-800">
-              {/* Background image */}
+            {/* Desktop / Laptop / Large Tablet (md and up): Wide banner with text safely on left and artwork on right */}
+            <div className="hidden md:block relative w-full aspect-[16/7] md:aspect-[16/6] lg:aspect-[21/9] min-h-[420px] md:min-h-[460px] overflow-hidden">
+              {/* Background image: Full clean artwork */}
               <Image
-                src="/image.png"
-                alt="Indux Technology"
+                src="/hero-banner-new.png"
+                alt="Indux Technology Solutions"
                 fill
                 priority
                 sizes="100vw"
-                className="object-cover object-center w-full h-full"
+                className="object-cover object-right lg:object-center w-full h-full"
               />
 
-              {/* Heading */}
-              <div className="absolute left-[5%] lg:left-[8%] top-[20%] z-10 w-[55%] max-w-2xl">
-                <h1 className="text-[clamp(26px,3.8vw,56px)] font-bold leading-[1.1] tracking-tight text-[#080b2d]">
+              {/* Heading: Confined to 39% width so it never touches the hand at 45% */}
+              <div className="absolute left-[5%] lg:left-[7%] top-[16%] lg:top-[18%] z-10 w-[40%] max-w-xl">
+                <h1 className="text-[clamp(24px,3.3vw,52px)] font-bold leading-[1.12] tracking-tight text-[#080b2d]">
                   Custom Software,
                   <br />
                   CRM &amp; ERP Solutions
@@ -519,9 +527,9 @@ export default function Home() {
                 </h1>
               </div>
 
-              {/* Description */}
-              <div className="absolute left-[5%] lg:left-[8%] top-[53%] z-10 w-[45%] max-w-xl">
-                <p className="text-[clamp(13px,1.2vw,17px)] leading-[1.5] text-[#252a35]">
+              {/* Description: Confined to 38% width with ample clearance from the hand */}
+              <div className="absolute left-[5%] lg:left-[7%] top-[52%] lg:top-[53%] z-10 w-[38%] max-w-lg">
+                <p className="text-[clamp(12px,1.1vw,16px)] leading-[1.5] text-[#252a35]">
                   Indux Technology helps businesses streamline operations with
                   CRM and ERP software, custom applications, websites and
                   AI-powered automation. From business process improvement to
@@ -530,88 +538,130 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Button: Book a Free Consultation */}
-              <Link
-                href="/contact-us"
-                className="absolute left-[5%] lg:left-[8%] top-[74%] z-20 flex h-[10%] min-h-[38px] max-h-[52px] w-[22%] min-w-[150px] max-w-[220px] items-center justify-center rounded-full bg-[#3049b5] text-[clamp(11px,1vw,14px)] font-semibold text-white hover:bg-[#233894] shadow-md transition-all text-center px-3"
-              >
-                Book a Free Consultation
-              </Link>
-
-              {/* Button: Explore Our Solutions */}
-              <Link
-                href="/services"
-                className="absolute left-[29%] lg:left-[24%] top-[74%] z-20 flex h-[10%] min-h-[38px] max-h-[52px] w-[20%] min-w-[140px] items-center justify-center gap-1 text-[clamp(11px,1vw,14px)] font-semibold text-[#080b2d] hover:text-blue-700 transition-colors"
-              >
-                Explore Our Solutions →
-              </Link>
-            </div>
-
-            {/* Mobile Layout (< 768px): Unified banner scaled cleanly for small screens */}
-            <div className="block md:hidden relative w-full aspect-[16/9] xs:aspect-[16/8.8] overflow-hidden shadow-sm border-b border-slate-200 dark:border-slate-800">
-              {/* Background image */}
-              <Image
-                src="/image.png"
-                alt="Indux Technology"
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover object-center w-full h-full"
-              />
-
-              {/* Heading */}
-              <div className="absolute left-[5%] top-[14%] z-10 w-[57%] max-w-xl">
-                <h1 className="text-[clamp(12px,3.4vw,24px)] font-bold leading-[1.12] tracking-tight text-[#080b2d]">
-                  Custom Software,
-                  <br />
-                  CRM &amp; ERP Solutions
-                  <br />
-                  for Growing Businesses
-                </h1>
-              </div>
-
-              {/* Description */}
-              <div className="absolute left-[5%] top-[48%] z-10 w-[53%] max-w-md">
-                <p className="text-[clamp(7.5px,1.2vw,12px)] leading-[1.3] text-[#252a35] line-clamp-3">
-                  Indux Technology helps businesses streamline operations with CRM and ERP software, custom applications, websites and AI-powered automation.
-                </p>
-              </div>
-
-              {/* CTA Buttons Container */}
-              <div className="absolute left-[5%] top-[76%] z-20 flex items-center gap-1.5 xs:gap-2">
+              {/* Action Buttons */}
+              <div className="absolute left-[5%] lg:left-[7%] top-[76%] z-20 flex items-center gap-3">
                 <Link
                   href="/contact-us"
-                  className="inline-flex h-6 xs:h-7 items-center justify-center rounded-full bg-[#3049b5] px-2.5 xs:px-3 text-[clamp(7.5px,1vw,11px)] font-semibold text-white hover:bg-[#233894] shadow-sm transition-all shrink-0 whitespace-nowrap"
+                  className="inline-flex h-10 lg:h-12 items-center justify-center rounded-full bg-[#3049b5] px-5 lg:px-7 text-xs lg:text-sm font-semibold text-white hover:bg-[#233894] shadow-md transition-all whitespace-nowrap"
                 >
                   Book a Free Consultation
                 </Link>
 
                 <Link
                   href="/services"
-                  className="inline-flex h-6 xs:h-7 items-center justify-center gap-0.5 text-[clamp(7.5px,1vw,11px)] font-semibold text-[#080b2d] hover:text-blue-700 transition-colors whitespace-nowrap"
+                  className="inline-flex h-10 lg:h-12 items-center justify-center gap-1.5 text-xs lg:text-sm font-semibold text-[#080b2d] hover:text-blue-700 transition-colors whitespace-nowrap px-2"
                 >
                   Explore Our Solutions →
                 </Link>
               </div>
             </div>
+
+            {/* Mobile Layout (< 768px): Alternative 1 - Stacked Continuous Banner on seamless #d3e9fe */}
+            <div className="block md:hidden bg-[#d3e9fe] dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+              <div className="px-5 pt-7 pb-2 flex flex-col gap-3.5">
+                {/* Heading: Full width, zero overlap */}
+                <h1 className="text-[25px] xs:text-[28px] sm:text-[32px] font-bold leading-[1.15] tracking-tight text-[#080b2d] dark:text-white">
+                  Custom Software,
+                  <br />
+                  CRM &amp; ERP Solutions
+                  <br />
+                  for Growing Businesses
+                </h1>
+
+                {/* Description: Clean, comfortable font size and full readability */}
+                <p className="text-[13px] xs:text-[14px] leading-relaxed text-[#252a35] dark:text-slate-300">
+                  Indux Technology helps businesses streamline operations with
+                  CRM and ERP software, custom applications, websites and
+                  AI-powered automation. From business process improvement to
+                  tailored software development, we build solutions around your
+                  requirements.
+                </p>
+
+                {/* Primary CTA Buttons: Always in a single horizontal row together */}
+                <div className="flex items-center gap-2 xs:gap-3 pt-1 flex-nowrap">
+                  <Link
+                    href="/contact-us"
+                    className="inline-flex items-center justify-center rounded-full bg-[#3049b5] text-white px-3.5 xs:px-5 py-2.5 text-[11px] xs:text-xs sm:text-sm font-semibold shadow-md hover:bg-[#233894] transition-all text-center whitespace-nowrap shrink-0"
+                  >
+                    Book a Free Consultation
+                  </Link>
+
+                  <Link
+                    href="/services"
+                    className="inline-flex items-center justify-center gap-0.5 text-[11px] xs:text-xs sm:text-sm font-semibold text-[#080b2d] dark:text-white hover:text-blue-700 transition-colors whitespace-nowrap py-2.5 px-1"
+                  >
+                    Explore Our Solutions →
+                  </Link>
+                </div>
+
+                {/* Illustration: Seamless on the identical #d3e9fe blue canvas, 0% overlap, 100% visible hands, ideas, browser & growth */}
+                <div className="relative w-full aspect-[584/380] mt-2">
+                  <Image
+                    src="/hero-artwork.png"
+                    alt="Indux Technology Solutions"
+                    fill
+                    priority
+                    sizes="100vw"
+                    className="object-contain object-center"
+                  />
+                </div>
+              </div></div>
           </div>
         </section>
         {/* ABOUT US SECTION */}
         <section className="relative overflow-hidden bg-white dark:bg-slate-950 pb-8 sm:pb-12 lg:pb-16 pt-0">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center">
-              {/* Left Side: Single Image Showcase */}
-              <div className="relative w-full aspect-[830/549] max-w-lg mx-auto lg:max-w-none">
-                {/* Main Showcase Image Container */}
-                <div className="relative w-full h-full rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 group">
-                  <Image
-                    src="/about-company-showcase.webp"
-                    alt="Indux Technology - One of the Fastest Ways to Gain Business Success"
-                    fill
-                    loading="eager"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover object-center transition-transform duration-700 "
-                  />
+              {/* Left Side: 3-Image Showcase Slider fitting cleanly inside the block */}
+              <div className="relative w-full aspect-[1024/677] max-w-lg lg:max-w-none mx-auto flex flex-col justify-center">
+                <div className="relative w-full h-full rounded-2xl sm:rounded-[2.2rem] overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 group">
+                  {[
+                    {
+                      src: "/about-slide-1.webp",
+                      alt: "Indux Technology - Tailored CRM, ERP & App Solutions",
+                    },
+                    {
+                      src: "/about-slide-2.webp",
+                      alt: "Indux Technology - Streamlining Manual Spreadsheets & Processes",
+                    },
+                    {
+                      src: "/about-slide-3.webp",
+                      alt: "Indux Technology - In-house Expert Engineering Team",
+                    },
+                  ].map((slide, idx) => (
+                    <div
+                      key={idx}
+                      className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${
+                        activeAboutSlide === idx ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+                      }`}
+                    >
+                      <Image
+                        src={slide.src}
+                        alt={slide.alt}
+                        fill
+                        loading={idx === 0 ? "eager" : "lazy"}
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="object-cover object-center"
+                      />
+                    </div>
+                  ))}
+
+                  {/* Navigation dots on bottom right */}
+                  <div className="absolute bottom-3 right-4 z-20 flex items-center gap-1.5 bg-slate-900/40 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-white/20">
+                    {[0, 1, 2].map((dot) => (
+                      <button
+                        key={dot}
+                        type="button"
+                        onClick={() => setActiveAboutSlide(dot)}
+                        aria-label={`Show slide ${dot + 1}`}
+                        className={`transition-all rounded-full ${
+                          activeAboutSlide === dot
+                            ? "w-5 h-2 bg-blue-500"
+                            : "w-2 h-2 bg-white/60 hover:bg-white"
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
 
