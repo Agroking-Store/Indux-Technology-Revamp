@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -96,9 +95,11 @@ export default function CaseStudyDetailClient({
 
   const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || '';
   const displayImage = caseStudy.image
-    ? caseStudy.image.startsWith('http') || caseStudy.image.startsWith('/')
+    ? caseStudy.image.startsWith('http')
       ? caseStudy.image
-      : `${apiBase}${caseStudy.image}`
+      : caseStudy.image.startsWith('/uploads')
+        ? `${apiBase}${caseStudy.image}`
+        : caseStudy.image
     : fallbackImages[0];
 
   return (
@@ -191,13 +192,11 @@ export default function CaseStudyDetailClient({
             >
               {/* Featured Hero Image */}
               <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[21/10] max-h-[460px] rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800 shadow-sm">
-                <Image
+                <img
                   src={displayImage}
                   alt={caseStudy.name}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 800px"
-                  className="object-cover object-center"
+                  className="w-full h-full object-cover object-center"
+                  loading="eager"
                 />
               </div>
 
