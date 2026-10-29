@@ -219,27 +219,27 @@ export default function CaseStudiesPage() {
       {/* Case Studies Table */}
       <Card className="border-border shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <Table>
+          <Table className="w-full table-fixed">
             <TableHeader>
               <TableRow className="bg-muted/50 hover:bg-muted/50">
-                <TableHead className="w-[220px]">Client / Project</TableHead>
-                <TableHead className="min-w-[280px]">Headline</TableHead>
-                <TableHead className="w-[120px] text-center">Image</TableHead>
-                <TableHead className="w-[120px]">Status</TableHead>
-                <TableHead className="w-[120px]">Created</TableHead>
-                <TableHead className="w-[140px] text-right">Actions</TableHead>
+                <TableHead className="w-[180px]">Client / Project</TableHead>
+                <TableHead className="w-auto min-w-[200px]">Headline</TableHead>
+                <TableHead className="w-[80px] text-center">Image</TableHead>
+                <TableHead className="w-[110px] text-center">Status</TableHead>
+                <TableHead className="w-[100px] text-center whitespace-nowrap">Created</TableHead>
+                <TableHead className="w-[120px] text-right whitespace-nowrap">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {loading ? (
                 Array.from({ length: 5 }).map((_, i) => (
                   <TableRow key={i}>
-                    <TableCell><Skeleton className="h-4 w-32" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-64" /></TableCell>
-                    <TableCell><Skeleton className="h-8 w-12 mx-auto" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-16" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-20" /></TableCell>
-                    <TableCell><Skeleton className="h-8 w-24 ml-auto" /></TableCell>
+                    <TableCell><Skeleton className="h-4 w-28" /></TableCell>
+                    <TableCell><Skeleton className="h-4 w-48" /></TableCell>
+                    <TableCell><Skeleton className="h-7 w-10 mx-auto rounded" /></TableCell>
+                    <TableCell><Skeleton className="h-4 w-16 mx-auto" /></TableCell>
+                    <TableCell><Skeleton className="h-4 w-16 mx-auto" /></TableCell>
+                    <TableCell><Skeleton className="h-8 w-20 ml-auto" /></TableCell>
                   </TableRow>
                 ))
               ) : caseStudies.length === 0 ? (
@@ -257,25 +257,27 @@ export default function CaseStudiesPage() {
               ) : (
                 caseStudies.map((item) => (
                   <TableRow key={item._id} className="hover:bg-muted/40 transition">
-                    <TableCell>
-                      <div className="font-semibold text-foreground">{item.name}</div>
-                      <div className="text-xs text-muted-foreground font-mono">
+                    <TableCell className="w-[180px] py-3">
+                      <div className="font-semibold text-foreground truncate" title={item.name}>
+                        {item.name}
+                      </div>
+                      <div className="text-xs text-muted-foreground font-mono truncate">
                         /{item.slug}
                       </div>
                     </TableCell>
 
-                    <TableCell>
-                      <p className="text-sm text-foreground line-clamp-1 font-medium">
+                    <TableCell className="py-3">
+                      <p className="text-sm text-foreground font-medium truncate" title={item.headline}>
                         {item.headline}
                       </p>
-                      <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
+                      <p className="text-xs text-muted-foreground truncate mt-0.5" title={item.challenge}>
                         {item.challenge}
                       </p>
                     </TableCell>
 
-                    <TableCell className="text-center">
+                    <TableCell className="text-center py-3">
                       {item.image ? (
-                        <div className="relative inline-block w-12 h-8 rounded border border-border overflow-hidden bg-slate-100 dark:bg-slate-800">
+                        <div className="relative inline-block w-10 h-7 rounded border border-border overflow-hidden bg-slate-100 dark:bg-slate-800">
                           <img
                             src={`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}${item.image}`}
                             alt={item.name}
@@ -286,15 +288,15 @@ export default function CaseStudiesPage() {
                           />
                         </div>
                       ) : (
-                        <span className="text-xs text-muted-foreground italic">None</span>
+                        <span className="text-[11px] text-muted-foreground italic">None</span>
                       )}
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell className="text-center py-3">
                       <Badge
                         variant={item.status === "Published" ? "default" : "secondary"}
                         className={cn(
-                          "cursor-pointer select-none",
+                          "cursor-pointer select-none text-xs px-2 py-0.5 whitespace-nowrap",
                           item.status === "Published"
                             ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20"
                             : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 hover:bg-amber-500/20"
@@ -306,7 +308,7 @@ export default function CaseStudiesPage() {
                       </Badge>
                     </TableCell>
 
-                    <TableCell className="text-xs text-muted-foreground">
+                    <TableCell className="text-center text-xs text-muted-foreground whitespace-nowrap py-3">
                       {new Date(item.createdAt).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
@@ -314,7 +316,7 @@ export default function CaseStudiesPage() {
                       })}
                     </TableCell>
 
-                    <TableCell className="text-right">
+                    <TableCell className="text-right py-3 whitespace-nowrap">
                       <div className="flex items-center justify-end gap-1">
                         <TooltipProvider>
                           <Tooltip>
