@@ -291,12 +291,12 @@ export default function CaseStudyForm({
                     onValueChange={field.onChange}
                     disabled={isViewMode}
                   >
-                    <SelectTrigger className="mt-1.5">
+                    <SelectTrigger className="mt-1.5 cursor-pointer">
                       <SelectValue placeholder="Select status" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Published">Published</SelectItem>
-                      <SelectItem value="Draft">Draft</SelectItem>
+                      <SelectItem value="Published" className="cursor-pointer">Published</SelectItem>
+                      <SelectItem value="Draft" className="cursor-pointer">Draft</SelectItem>
                     </SelectContent>
                   </Select>
                 )}
@@ -324,7 +324,7 @@ export default function CaseStudyForm({
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium cursor-pointer disabled:cursor-not-allowed"
                 >
                   {loading
                     ? "Saving..."
@@ -360,7 +360,7 @@ export default function CaseStudyForm({
                   <button
                     type="button"
                     onClick={handleRemoveImage}
-                    className="absolute top-2 right-2 p-1.5 rounded-full bg-red-600 text-white hover:bg-red-700 transition shadow"
+                    className="absolute top-2 right-2 p-1.5 rounded-full bg-red-600 text-white hover:bg-red-700 transition shadow cursor-pointer"
                     title="Remove Image"
                   >
                     <X className="size-4" />

@@ -63,7 +63,7 @@ export default function ViewCaseStudyPage() {
             variant="ghost"
             size="icon"
             onClick={() => router.push("/case-studies")}
-            className="text-muted-foreground"
+            className="text-muted-foreground cursor-pointer"
           >
             <ArrowLeft size={20} />
           </Button>
@@ -80,7 +80,7 @@ export default function ViewCaseStudyPage() {
         {!fetching && (
           <Button
             onClick={() => router.push(`/case-studies/edit/${id}`)}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white gap-2 font-medium"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white gap-2 font-medium cursor-pointer"
           >
             <Pencil size={16} />
             Edit Case Study

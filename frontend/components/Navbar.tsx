@@ -496,7 +496,7 @@ className={cn(
                   <Link
                     key={idx}
                     href={item.href || "#"}
-                    className="relative flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all group/card overflow-hidden border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60"
+className="relative flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all group/card overflow-hidden border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60 cursor-pointer"
                   >
                     {/* Grid Background Pattern */}
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-20 group-hover/card:opacity-100 transition-opacity duration-300" />
@@ -643,7 +643,7 @@ function MobileNav({ pathname }: { pathname: string }) {
                     render={
                       <Link
                         href={item.href || "#"}
-                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                       />
                     }
                   >
@@ -677,7 +677,7 @@ function MobileNav({ pathname }: { pathname: string }) {
                     render={
                       <Link
                         href={item.href || "#"}
-                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                       />
                     }
                   >
