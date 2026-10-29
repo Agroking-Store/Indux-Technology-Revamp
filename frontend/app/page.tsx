@@ -477,10 +477,9 @@ export default function Home() {
 
         {/* HERO SECTION */}
 
-        <section className="relative overflow-hidden w-full pt-0 pb-12 sm:pb-16 lg:pb-20">
+        <section className="relative overflow-hidden w-full pt-0 pb-4 sm:pb-6 lg:pb-8">
           <div className="w-full">
-            {/* Desktop / Tablet layout: layered over the full banner illustration */}
-            <div className="hidden md:block relative w-full aspect-[16/7] md:aspect-[16/6] lg:aspect-[21/9] min-h-[400px] md:min-h-[460px] overflow-hidden shadow-sm border-b border-slate-200 dark:border-slate-800">
+            <div className="relative w-full aspect-[16/7] md:aspect-[16/6] lg:aspect-[21/9] min-h-[260px] xs:min-h-[300px] sm:min-h-[400px] md:min-h-[460px] overflow-hidden shadow-sm border-b border-slate-200 dark:border-slate-800">
               {/* Background image */}
               <Image
                 src="/image.png"
@@ -492,8 +491,8 @@ export default function Home() {
               />
 
               {/* Heading */}
-              <div className="absolute left-[5%] lg:left-[8%] top-[20%] z-10 w-[55%] max-w-2xl">
-                <h1 className="text-[clamp(26px,3.8vw,56px)] font-bold leading-[1.1] tracking-tight text-[#080b2d]">
+              <div className="absolute left-[4%] sm:left-[5%] lg:left-[8%] top-[12%] sm:top-[18%] md:top-[20%] z-10 w-[58%] sm:w-[55%] max-w-2xl">
+                <h1 className="text-[clamp(14px,3.8vw,56px)] font-bold leading-[1.08] tracking-tight text-[#080b2d]">
                   Custom Software,
                   <br />
                   CRM &amp; ERP Solutions
@@ -503,8 +502,8 @@ export default function Home() {
               </div>
 
               {/* Description */}
-              <div className="absolute left-[5%] lg:left-[8%] top-[53%] z-10 w-[45%] max-w-xl">
-                <p className="text-[clamp(13px,1.2vw,17px)] leading-[1.5] text-[#252a35]">
+              <div className="absolute left-[4%] sm:left-[5%] lg:left-[8%] top-[48%] sm:top-[52%] md:top-[53%] z-10 w-[52%] sm:w-[48%] md:w-[45%] max-w-xl">
+                <p className="text-[clamp(8.5px,1.2vw,17px)] leading-[1.3] sm:leading-[1.45] text-[#252a35] line-clamp-3 xs:line-clamp-4 sm:line-clamp-none">
                   Indux Technology helps businesses streamline operations with
                   CRM and ERP software, custom applications, websites and
                   AI-powered automation. From business process improvement to
@@ -513,80 +512,29 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Button: Book a Free Consultation */}
-              <Link
-                href="/contact-us"
-                className="absolute left-[5%] lg:left-[8%] top-[74%] z-20 flex h-[10%] min-h-[38px] max-h-[52px] w-[22%] min-w-[150px] max-w-[220px] items-center justify-center rounded-full bg-[#3049b5] text-[clamp(11px,1vw,14px)] font-semibold text-white hover:bg-[#233894] shadow-md transition-all text-center px-3"
-              >
-                Book a Free Consultation
-              </Link>
+              {/* CTA Buttons Container */}
+              <div className="absolute left-[4%] sm:left-[5%] lg:left-[8%] top-[78%] sm:top-[74%] z-20 flex items-center gap-1.5 sm:gap-3">
+                <Link
+                  href="/contact-us"
+                  className="inline-flex h-6 xs:h-7 sm:h-9 md:h-11 items-center justify-center rounded-full bg-[#3049b5] px-2.5 xs:px-3.5 sm:px-5 md:px-6 text-[clamp(8px,0.95vw,14px)] font-semibold text-white hover:bg-[#233894] shadow-sm sm:shadow-md transition-all shrink-0 whitespace-nowrap"
+                >
+                  Book a Free Consultation
+                </Link>
 
-              {/* Button: Explore Our Solutions */}
-              <Link
-                href="/services"
-                className="absolute left-[29%] lg:left-[24%] top-[74%] z-20 flex h-[10%] min-h-[38px] max-h-[52px] w-[20%] min-w-[140px] items-center justify-center gap-1 text-[clamp(11px,1vw,14px)] font-semibold text-[#080b2d] hover:text-blue-700 transition-colors"
-              >
-                Explore Our Solutions →
-              </Link>
-            </div>
-
-            {/* Mobile layout (< 768px): clean stacked design so text is never cramped or illegible */}
-            <div className="block md:hidden bg-gradient-to-b from-blue-50/50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 border-b border-slate-200 dark:border-slate-800">
-              <div className="px-4 py-8 sm:py-12 flex flex-col gap-5">
-                <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs text-blue-600 dark:text-blue-400 uppercase">
-                  <div className="flex gap-1">
-                    <span className="w-2 h-2 rounded-full bg-blue-500"></span>
-                    <span className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700"></span>
-                  </div>
-                  Indux Technology
-                </div>
-
-                <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white leading-[1.15] tracking-tight">
-                  Custom Software, CRM &amp; ERP Solutions for Growing Businesses
-                </h1>
-
-                <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
-                  Indux Technology helps businesses streamline operations with
-                  CRM and ERP software, custom applications, websites and
-                  AI-powered automation. From business process improvement to
-                  tailored software development, we build solutions around your
-                  requirements.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <Link
-                    href="/contact-us"
-                    className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-[#3049b5] text-white px-6 py-3.5 text-sm font-semibold shadow-md hover:bg-[#233894] transition-all"
-                  >
-                    Book a Free Consultation
-                  </Link>
-                  <Link
-                    href="/services"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-6 py-3.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                  >
-                    Explore Our Solutions →
-                  </Link>
-                </div>
-
-                {/* Mobile visual graphic container */}
-                <div className="relative w-full aspect-[16/9] mt-3 rounded-2xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
-                  <Image
-                    src="/image.png"
-                    alt="Indux Technology Solutions"
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover object-center"
-                  />
-                </div>
+                <Link
+                  href="/services"
+                  className="inline-flex h-6 xs:h-7 sm:h-9 md:h-11 items-center justify-center gap-0.5 sm:gap-1 text-[clamp(8px,0.95vw,14px)] font-semibold text-[#080b2d] hover:text-blue-700 transition-colors whitespace-nowrap"
+                >
+                  Explore Our Solutions →
+                </Link>
               </div>
             </div>
           </div>
         </section>
         {/* ABOUT US SECTION */}
-        <section className="relative overflow-hidden bg-white dark:bg-slate-950 pb-16 sm:pb-20 lg:pb-32 pt-0">
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-32">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-24 items-center">
+        <section className="relative overflow-hidden bg-white dark:bg-slate-950 pb-8 sm:pb-12 lg:pb-16 pt-0">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center">
               {/* Left Side: Single Image Showcase with Experience Badge */}
               <div className="relative w-full aspect-[830/549] max-w-lg mx-auto lg:max-w-none">
                 {/* Main Showcase Image Container */}
@@ -674,8 +622,7 @@ export default function Home() {
           </div>
 
           {/* Solid Bottom Banner */}
-          {/* Solid Bottom Banner */}
-          <div className="bg-[#0f2e4a] dark:bg-slate-900 w-full py-16 sm:py-20 md:py-24">
+          <div className="bg-[#0f2e4a] dark:bg-slate-900 w-full py-10 sm:py-12 md:py-14">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-4 md:divide-x divide-blue-800/40 dark:divide-slate-800"
               >
@@ -730,10 +677,10 @@ export default function Home() {
         </section>
 
         {/* SERVICES SECTION */}
-        <section className="relative overflow-hidden pb-16 sm:pb-24 lg:pb-32 pt-0 bg-slate-50 dark:bg-slate-950">
+        <section className="relative overflow-hidden pb-8 sm:pb-12 lg:pb-16 pt-0 bg-slate-50 dark:bg-slate-950">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header Area */}
-            <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
               <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
                 <div className="flex gap-1">
                   <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
@@ -843,9 +790,9 @@ export default function Home() {
         </section>
 
         {/* WHY CHOOSE US SECTION - STICKY SCROLL */}
-        <section className="bg-slate-50/50 dark:bg-slate-950/50 relative overflow-visible py-16 sm:py-24 lg:py-32">
+        <section className="bg-slate-50/50 dark:bg-slate-950/50 relative overflow-visible py-8 sm:py-12 lg:py-16">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row gap-12 sm:gap-16 lg:gap-24 items-start relative">
+            <div className="flex flex-col lg:flex-row gap-8 sm:gap-12 lg:gap-16 items-start relative">
               {/* Left Side: Sticky Content */}
               <div className="w-full lg:w-5/12 lg:sticky lg:top-32 z-10">
                 <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15] sm:leading-[1.1] mb-3 sm:mb-4">
@@ -893,7 +840,7 @@ export default function Home() {
               </div>
 
               {/* Right Side: Scrollable Cards */}
-              <div className="w-full lg:w-7/12 flex flex-col gap-6 lg:gap-8 lg:pb-32">
+              <div className="w-full lg:w-7/12 flex flex-col gap-6 lg:gap-8 lg:pb-12">
                 {[
                   {
                     icon: Users,
@@ -950,13 +897,13 @@ export default function Home() {
           </div>
         </section>
         {/* WORK PROCESS SECTION */}
-        <section className="relative bg-slate-50 dark:bg-slate-950 py-16 sm:py-24 lg:py-32 overflow-hidden">
+        <section className="relative bg-slate-50 dark:bg-slate-950 py-8 sm:py-12 lg:py-16 overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-              <div className="inline-flex items-center gap-2 font-bold tracking-wider text-sm text-blue-600 uppercase mb-4 justify-center">
+            <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10">
+              <div className="inline-flex items-center gap-2 font-bold tracking-wider text-sm text-blue-600 uppercase mb-3 justify-center">
                 Our Work Process
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-4">
                 Step-by-Step to <br className="hidden sm:block" /> Your{" "}
                 <span className="text-blue-600">Growth</span>
               </h2>
@@ -1015,10 +962,10 @@ export default function Home() {
         </section>
 
         {/* OUR WORK / PROJECTS SECTION */}
-        <section className="relative overflow-hidden py-16 sm:py-24 lg:py-32 bg-white dark:bg-slate-950">
+        <section className="relative overflow-hidden py-8 sm:py-12 lg:py-16 bg-white dark:bg-slate-950">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header */}
-            <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
               <div >
                 <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
                   <div className="flex gap-1">
@@ -1119,9 +1066,9 @@ export default function Home() {
         </section>
 
         {/* TESTIMONIALS SECTION */}
-        <section className="relative pb-16 sm:pb-24 lg:pb-32 pt-0 bg-slate-50 dark:bg-slate-950 overflow-hidden">
+        <section className="relative pb-8 sm:pb-12 lg:pb-16 pt-0 bg-slate-50 dark:bg-slate-950 overflow-hidden">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
               <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-4 justify-center">
                 <div className="flex gap-1">
                   <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
@@ -1232,12 +1179,12 @@ export default function Home() {
         </section>
 
         {/* BLOGS SECTION */}
-        <section className="py-16 sm:py-24 lg:py-32 bg-[#0f2e4a] relative overflow-hidden">
+        <section className="py-8 sm:py-12 lg:py-16 bg-[#0f2e4a] relative overflow-hidden">
           {/* Subtle dot pattern background */}
           <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-start gap-6 sm:gap-8 mb-12 sm:mb-16">
+            <div className="flex flex-col md:flex-row md:items-end justify-start gap-4 sm:gap-6 mb-8 sm:mb-10">
               <div className="flex flex-col gap-3 sm:gap-4">
                 <div className="inline-flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-400 uppercase">
                   <div className="flex gap-1">
@@ -1309,7 +1256,7 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="mt-12 sm:mt-16 flex justify-center">
+            <div className="mt-8 sm:mt-10 flex justify-center">
               <Link href="/blogs" className="w-full sm:w-auto">
                 <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Blogs{" "}
@@ -1321,9 +1268,9 @@ export default function Home() {
         </section>
 
         {/* CONTACT US SECTION */}
-        <section className="pt-16 sm:pt-24 lg:pt-32 pb-12 lg:pb-16 bg-white dark:bg-slate-900 relative overflow-hidden">
+        <section className="py-8 sm:py-12 lg:py-16 bg-white dark:bg-slate-900 relative overflow-hidden">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-24">
+            <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
               <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
                 <div className="flex gap-1">
                   <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
@@ -1336,7 +1283,7 @@ export default function Home() {
               </h2>
             </div>
 
-            <div className="flex flex-col lg:flex-row gap-10 lg:gap-20 items-center">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-14 items-center">
               {/* Left Side: Form */}
               <div className="w-full lg:w-1/2">
                 <ContactForm />
@@ -1370,9 +1317,9 @@ export default function Home() {
 
 
         {/* FAQS SECTION */}
-        <section className="py-16 sm:py-24 lg:py-32 bg-slate-50 dark:bg-slate-950 border-t border-slate-200/60 dark:border-slate-800 relative overflow-hidden">
+        <section className="py-8 sm:py-12 lg:py-16 bg-slate-50 dark:bg-slate-950 border-t border-slate-200/60 dark:border-slate-800 relative overflow-hidden">
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
               <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
                 <div className="flex gap-1">
                   <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
