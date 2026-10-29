@@ -15,9 +15,19 @@ function formatDate(dateStr: string) {
   });
 }
 
-function getReadingTime(content: string) {
-  const words = content ? content.split(/\s+/).length : 0;
-  const mins = Math.ceil(words / 200);
+function getReadingTime(content?: string, shortDescription?: string) {
+  const text = (content && content.trim().length > 0) 
+    ? content 
+    : (shortDescription && shortDescription.trim().length > 0) 
+      ? shortDescription 
+      : "";
+  
+  // Strip HTML tags if content has HTML
+  const cleanText = text.replace(/<[^>]*>/g, " ").trim();
+  const words = cleanText ? cleanText.split(/\s+/).filter(Boolean).length : 0;
+  
+  // Average reading speed is ~200 wpm; guarantee at least 1 min for any blog
+  const mins = Math.max(1, Math.ceil(words / 200));
   return `${mins} min read`;
 }
 
@@ -167,7 +177,7 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
             <span className="w-1.5 h-1.5 rounded-full bg-slate-800" />
             <span className="inline-flex items-center gap-2">
               <Clock className="w-4 h-4 text-blue-400/80" />
-              {getReadingTime(blog.content)}
+              {getReadingTime(blog.content, blog.shortDescription)}
             </span>
           </div>
         </div>
@@ -196,12 +206,12 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
               className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-800/80 p-6 sm:p-10 shadow-sm overflow-hidden flex flex-col gap-8"
             >
               
-              {/* Featured Image with shine overlay on hover */}
+ {/* Featured Image with shine overlay on hover */}
               <div className="relative h-80 w-full rounded-2xl overflow-hidden">
-  <img width={800} height={600}
-    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
+ <img width={800} height={600}
+ src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
     alt={blog.title}
-    className="w-full h-full object-cover"
+ className="w-full h-full object-cover"
   />
 </div>
 
@@ -310,11 +320,11 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
                     >
                       {/* Mini image with hover shine & zoom */}
                       <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 flex-shrink-0">
-                        <img width={800} height={600}
-                          src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
+ <img width={800} height={600}
+ src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
                           alt={item.title}
                           sizes="64px"
-                          className="object-cover group-hover:scale-110 transition-transform duration-[800ms]"
+ className="object-cover transition-transform duration-[800ms]"
                         />
                         <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-[25deg] pointer-events-none group-hover:animate-shine" />
                       </div>
@@ -412,15 +422,15 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
                   className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-4 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col justify-between group text-left"
                 >
                   <div className="space-y-4">
-                    {/* Image with shine overlay on hover */}
-                    <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/40">
-                      <img 
-                        src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
+ {/* Image with shine overlay on hover */}
+ <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/40">
+ <img 
+ src={item.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${item.featuredImage}` : ""} 
                         alt={item.title}
                         width={800}
                         height={500}
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500 w-full h-full"
+ className="object-cover transition-transform duration-500 w-full h-full"
                       />
                       <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-[25deg] pointer-events-none group-hover:animate-shine" />
                     </div>
@@ -440,7 +450,7 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
                   {/* Meta */}
                   <div className="flex items-center justify-between border-t border-slate-50 dark:border-slate-800/40 mt-4 pt-3.5 px-1 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
                     <span>{formatDate(item.createdAt)}</span>
-                    <span>{getReadingTime(item.content || "")}</span>
+                    <span>{getReadingTime(item.content, item.shortDescription)}</span>
                   </div>
                 </div>
               ))}

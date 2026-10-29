@@ -187,10 +187,10 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="flex items-center gap-1 px-3 border rounded-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 h-10 notranslate">
-      <Globe className="size-4 text-slate-500 shrink-0" />
+    <div className="flex items-center gap-1 px-2.5 sm:px-3 border rounded-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 h-9 sm:h-10 notranslate shrink-0">
+      <Globe className="size-3.5 sm:size-4 text-slate-500 shrink-0" />
       <Select value={currentLang} onValueChange={changeLanguage}>
-        <SelectTrigger className="w-auto min-w-[60px] border-none bg-transparent dark:bg-transparent hover:bg-transparent dark:hover:bg-transparent h-full focus:ring-0 text-[13px] font-bold cursor-pointer gap-2 px-1 shadow-none">
+        <SelectTrigger className="w-auto min-w-[50px] sm:min-w-[60px] border-none bg-transparent dark:bg-transparent hover:bg-transparent dark:hover:bg-transparent h-full focus:ring-0 text-xs sm:text-[13px] font-bold cursor-pointer gap-1 sm:gap-2 px-1 shadow-none">
           <SelectValue>{languageNames[currentLang]}</SelectValue>
         </SelectTrigger>
         <SelectContent alignItemWithTrigger={false} sideOffset={8} className="min-w-[120px] rounded-lg border-slate-200 dark:border-slate-800 shadow-lg">
@@ -285,18 +285,18 @@ export default function Navbar() {
       </div>
 
       <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60 dark:bg-slate-950/80 dark:border-slate-800">
-        <div className="mx-auto flex h-16 md:h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-16 md:h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2 cursor-pointer group"
+            className="flex items-center gap-2 cursor-pointer group shrink-0"
           >
             <Image
               src="/induxtechnologylogo_blue.webp"
               alt="Indux Technology Logo"
               width={390}
               height={113}
-              className="w-[125px] md:w-[160px] h-auto object-contain dark:hidden"
+              className="w-[110px] xs:w-[125px] sm:w-[140px] md:w-[160px] h-auto object-contain dark:hidden"
               priority
             />
             <Image
@@ -304,7 +304,7 @@ export default function Navbar() {
               alt="Indux Technology Logo"
               width={390}
               height={113}
-              className="w-[125px] md:w-[160px] h-auto object-contain hidden dark:block"
+              className="w-[110px] xs:w-[125px] sm:w-[140px] md:w-[160px] h-auto object-contain hidden dark:block"
               priority
             />
           </Link>
@@ -322,10 +322,10 @@ export default function Navbar() {
           </nav>
 
           {/* Right Section & Mobile Menu */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-4 shrink-0">
             <LanguageSwitcher />
-            <AnimatedThemeToggler className="flex size-10 sm:size-12 items-center justify-center rounded-full bg-slate-100/80 dark:bg-slate-900 text-slate-600 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-850 hover:text-blue-600 transition-colors cursor-pointer border border-slate-200 dark:border-slate-800" />
-            <div className="hidden lg:block">
+            <AnimatedThemeToggler className="flex size-9 xs:size-10 sm:size-12 items-center justify-center rounded-full bg-slate-100/80 dark:bg-slate-900 text-slate-600 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-850 hover:text-blue-600 transition-colors cursor-pointer border border-slate-200 dark:border-slate-800 shrink-0" />
+            <div className="hidden lg:block shrink-0">
               <GetQuoteModal />
             </div>
 
@@ -639,7 +639,7 @@ function MobileNav({ pathname }: { pathname: string }) {
 
         <div className="p-6 border-t dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 flex flex-col gap-4">
           <GetQuoteModal>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group mt-4">
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2 mt-4">
               Get Quote
             </Button>
           </GetQuoteModal>
