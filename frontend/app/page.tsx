@@ -549,9 +549,9 @@ export default function Home() {
 
                 <Link
                   href="/services"
-                  className="inline-flex h-10 lg:h-12 items-center justify-center gap-1.5 text-xs lg:text-sm font-semibold text-[#080b2d] hover:text-blue-700 transition-colors whitespace-nowrap px-2"
+                  className="inline-flex h-10 lg:h-12 items-center justify-center rounded-full bg-[#3049b5] px-5 lg:px-7 text-xs lg:text-sm font-semibold text-white hover:bg-[#233894] shadow-md transition-all whitespace-nowrap"
                 >
-                  Explore Our Solutions →
+                  Explore Our Solutions
                 </Link>
               </div>
             </div>
@@ -588,7 +588,7 @@ export default function Home() {
 
                   <Link
                     href="/services"
-                    className="inline-flex items-center justify-center gap-0.5 text-[11px] xs:text-xs sm:text-sm font-semibold text-[#080b2d] dark:text-white hover:text-blue-700 transition-colors whitespace-nowrap py-2.5 px-1"
+                    className="inline-flex items-center justify-center rounded-full bg-[#3049b5] text-white px-3.5 xs:px-5 py-2.5 text-[11px] xs:text-xs sm:text-sm font-semibold shadow-md hover:bg-[#233894] transition-all text-center whitespace-nowrap"
                   >
                     Explore Our Solutions →
                   </Link>
@@ -736,13 +736,13 @@ export default function Home() {
                     icon: Briefcase,
                   },
                   {
-                    num: 27,
+                    num: 30,
                     suffix: "+",
                     label: "Team Members",
                     icon: Users,
                   },
                   {
-                    num: 167,
+                    num: 170,
                     suffix: "+",
                     label: "Happy Clients",
                     icon: Smile,
@@ -1387,7 +1387,7 @@ export default function Home() {
               <div className="w-full lg:w-1/2 relative mt-8 lg:mt-0 max-w-lg mx-auto lg:max-w-none">
                 <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl aspect-[4/5] md:aspect-[4/3] lg:aspect-square">
                   <Image
-                    src="/images/unsplash/img-48a7747e.webp"
+                    src="/contact-us.png"
                     alt="Contact Us Team"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
