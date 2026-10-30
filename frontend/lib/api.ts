@@ -1,14 +1,12 @@
 import axios from "axios";
 
-// 🔍 DEBUG: Check if the env variable is loaded correctly in the browser console
-console.log(
-  "🔍 Frontend API URL:",
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1",
-);
+const resolvedApiBase =
+  process.env.NEXT_PUBLIC_API_URL ||
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "http://localhost:5000/api/v1";
 
 export const api = axios.create({
-  baseURL:
-    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1",
+  baseURL: resolvedApiBase,
   headers: { "Content-Type": "application/json" },
 });
 
@@ -393,11 +391,13 @@ export const getFullImageUrl = (img?: string): string => {
   if (img.startsWith("http://") || img.startsWith("https://") || img.startsWith("data:")) {
     return img;
   }
-  const base = process.env.NEXT_PUBLIC_API_BASE_URL
-    ? process.env.NEXT_PUBLIC_API_BASE_URL.replace(/\/api\/v1\/?$/, "")
-    : "http://localhost:5000";
+  const rawApi =
+    process.env.NEXT_PUBLIC_API_URL ||
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    "http://localhost:5000/api/v1";
+  const base = rawApi.replace(/\/api\/v1\/?$/, "");
   if (img.startsWith("/uploads/")) {
-    return `${base}${img}`;
+    return `${base}/api/v1${img}`;
   }
   return img.startsWith("/") ? img : `/${img}`;
 };

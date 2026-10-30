@@ -210,9 +210,9 @@ export default function AiSolutionsServicePage() {
 
               {/* Right Column: Premium AI mockup browser graphic */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.85, rotate: -2, y: 30 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative max-w-lg w-full lg:ml-auto"
               >
                 <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-20 blur-xl animate-pulse"></div>

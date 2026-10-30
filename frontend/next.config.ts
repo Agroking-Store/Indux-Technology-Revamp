@@ -1,7 +1,8 @@
 const getApiConfig = () => {
   try {
-    if (process.env.NEXT_PUBLIC_API_BASE_URL) {
-      const parsed = new URL(process.env.NEXT_PUBLIC_API_BASE_URL);
+    const raw = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_API_BASE_URL;
+    if (raw) {
+      const parsed = new URL(raw);
       return {
         protocol: parsed.protocol.replace(':', '') as 'http' | 'https',
         hostname: parsed.hostname,
@@ -22,6 +23,15 @@ const apiConfig = getApiConfig();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    const backendOrigin = `${apiConfig.protocol}://${apiConfig.hostname}${apiConfig.port ? `:${apiConfig.port}` : ''}`;
+    return [
+      {
+        source: '/uploads/:path*',
+        destination: `${backendOrigin}/api/v1/uploads/:path*`,
+      },
+    ];
+  },
   trailingSlash: false,
   async redirects() {
     return [
@@ -90,6 +100,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'i.pravatar.cc',
+      },
+      {
+        protocol: 'https',
+        hostname: '**',
       },
       {
         protocol: apiConfig.protocol,

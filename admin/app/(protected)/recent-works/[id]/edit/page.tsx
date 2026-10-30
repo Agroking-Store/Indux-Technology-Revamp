@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { ArrowLeft, Save, Plus, Trash2, Upload, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { getAdminRecentWorkById, updateRecentWork } from '@/lib/api';
+import { getAdminRecentWorkById, updateRecentWork, getAdminImageUrl } from '@/lib/api';
 
 export default function EditRecentWorkPage() {
   const router = useRouter();
@@ -139,11 +139,7 @@ export default function EditRecentWorkPage() {
     );
   }
 
-  const currentPreview = imagePreview || (existingImage.startsWith('http')
-    ? existingImage
-    : existingImage.startsWith('/')
-      ? `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '') || 'http://localhost:5000'}${existingImage}`
-      : existingImage);
+  const currentPreview = imagePreview || getAdminImageUrl(existingImage);
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-20">

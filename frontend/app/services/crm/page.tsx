@@ -132,7 +132,7 @@ export default function CRMServicePage() {
 
       <main className="flex-grow">
         {/* ===== HERO SECTION ===== */}
-        <section className="relative pt-10 pb-12 lg:pt-14 lg:pb-16 font-sans">
+        <section className="relative pt-16 pb-20 lg:pt-24 lg:pb-32 font-sans">
           {/* Subtle grid pattern overlay */}
           <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none bg-[radial-gradient(#cbd5e1_2px,transparent_2px)] dark:bg-[radial-gradient(#334155_2px,transparent_2px)] bg-[size:32px_32px]"></div>
 
@@ -147,14 +147,13 @@ export default function CRMServicePage() {
                 className="flex flex-col gap-4 text-left max-w-xl font-sans"
               >
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide w-fit">
-
                   Service Overview
                 </div>
                 <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] font-sans">
                   CRM Solutions <br />
                   <span className="text-blue-600">Redefined.</span>
                 </h1>
-                <p className="text-lg text-slate-555 dark:text-slate-400 leading-relaxed mt-2 font-sans">
+                <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mt-2 font-sans">
                   Indux Technology builds custom CRM software for businesses in Pune and
                   across India. We develop CRM systems for lead management, sales pipelines,
                   customer management, workflow automation, analytics, WhatsApp integration,
@@ -178,7 +177,7 @@ export default function CRMServicePage() {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4">
+                <div className="flex flex-wrap items-center gap-4 pt-4">
                   <Button
                     nativeButton={false}
                     className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
@@ -199,9 +198,9 @@ export default function CRMServicePage() {
 
               {/* Right Column: Premium Floating Graphic */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.85, rotate: -2, y: 30 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative max-w-lg w-full lg:ml-auto"
               >
                 <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-20 blur-xl animate-pulse"></div>
