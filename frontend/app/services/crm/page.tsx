@@ -217,7 +217,7 @@ export default function CRMServicePage() {
                   {/* Illustration Image */}
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
                     <Image
-                      src="/services/crm-banner.webp"
+                      src="/services/crm-solution-banner.webp"
                       alt="CRM Dashboard Mockup"
                       fill
                       priority

@@ -40,6 +40,12 @@ if (!fs.existsSync(recentWorkUploadDir)) {
   fs.mkdirSync(recentWorkUploadDir, { recursive: true });
 }
 
+// Disk storage for team members
+const teamUploadDir = path.join(__dirname, "../../uploads/team");
+if (!fs.existsSync(teamUploadDir)) {
+  fs.mkdirSync(teamUploadDir, { recursive: true });
+}
+
 const blogDiskStorage = multer.diskStorage({
   destination: function (_req, _file, cb) {
     cb(null, blogUploadDir);
@@ -106,6 +112,17 @@ const recentWorkDiskStorage = multer.diskStorage({
   },
 });
 
+const teamDiskStorage = multer.diskStorage({
+  destination: function (_req, _file, cb) {
+    cb(null, teamUploadDir);
+  },
+  filename: function (_req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, "member-" + uniqueSuffix + ext);
+  },
+});
+
 const uploadBlogDiskInstance = multer({
   storage: blogDiskStorage,
   limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
@@ -156,6 +173,18 @@ const uploadProductDiskInstance = multer({
 
 const uploadRecentWorkDiskInstance = multer({
   storage: recentWorkDiskStorage,
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
+  fileFilter: (_req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only images are allowed") as any, false);
+    }
+  },
+});
+
+const uploadTeamDiskInstance = multer({
+  storage: teamDiskStorage,
   limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
   fileFilter: (_req, file, cb) => {
     if (file.mimetype.startsWith("image/")) {
@@ -273,3 +302,12 @@ export const uploadResume = uploadResumeDiskInstance.single("resume");
 export const uploadRegistrationFile = uploadRegistrationFileInstance.single("file");
 // Middleware for single case study image upload (field name: "image")
 export const uploadCaseStudyImage = uploadCaseStudyDiskInstance.single("image");
+
+// Middleware for single team member photo upload (field name: "image")
+export const uploadTeamMemberImage = (req: any, res: any, next: any) => {
+  uploadTeamDiskInstance.single("image")(req, res, async (err: any) => {
+    if (err) return next(err);
+    if (req.file) await convertFileToWebp(req.file);
+    next();
+  });
+};

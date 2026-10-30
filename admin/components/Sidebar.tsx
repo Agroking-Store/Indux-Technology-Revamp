@@ -72,6 +72,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       items: [
         { href: '/products', label: 'Products', icon: Package },
         { href: '/recent-works', label: 'Recent Works', icon: Sparkles },
+        { href: '/team', label: 'Our Team', icon: Users },
       ]
     },
   ];

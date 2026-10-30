@@ -239,6 +239,28 @@ export interface RecentWork {
   updatedAt: string;
 }
 
+export interface TeamMemberSocialLinks {
+  linkedin?: string;
+  twitter?: string;
+  github?: string;
+  email?: string;
+}
+
+export interface TeamMember {
+  _id: string;
+  name: string;
+  role: string;
+  department?: string;
+  image: string;
+  bio?: string;
+  socialLinks?: TeamMemberSocialLinks;
+  status: "Draft" | "Published";
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+
 // Products API
 export const getAdminProducts = async (params?: { page?: number; limit?: number; search?: string; status?: string }) => {
   const res = await api.get('/products', { params });
@@ -298,6 +320,37 @@ export const deleteRecentWork = async (id: string) => {
 
 export const updateRecentWorkStatus = async (id: string, status: 'Draft' | 'Published') => {
   const res = await api.patch(`/recent-works/${id}/status`, { status });
+  return res.data;
+};
+
+// Team Members API
+export const getAdminTeamMembers = async (params?: { page?: number; limit?: number; search?: string; department?: string; status?: string }) => {
+  const res = await api.get('/team/admin/list', { params });
+  return res.data.data;
+};
+
+export const getAdminTeamMemberById = async (id: string) => {
+  const res = await api.get(`/team/${id}`);
+  return res.data.data;
+};
+
+export const createTeamMember = async (data: FormData | any) => {
+  const res = await api.post('/team', data);
+  return res.data;
+};
+
+export const updateTeamMember = async (id: string, data: FormData | any) => {
+  const res = await api.put(`/team/${id}`, data);
+  return res.data;
+};
+
+export const deleteTeamMember = async (id: string) => {
+  const res = await api.delete(`/team/${id}`);
+  return res.data;
+};
+
+export const updateTeamMemberStatus = async (id: string, status: 'Draft' | 'Published') => {
+  const res = await api.patch(`/team/${id}/status`, { status });
   return res.data;
 };
 

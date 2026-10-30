@@ -7,7 +7,8 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "seed:works": "tsx scripts/seed-works-and-products.ts"
+    "seed:works": "tsx scripts/seed-works-and-products.ts",
+    "seed:team": "tsx scripts/seed-team.ts"
   },
   "keywords": [],
   "author": "",

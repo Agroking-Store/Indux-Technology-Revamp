@@ -116,7 +116,7 @@ export default function ServicesPage() {
                   <Image
                     alt="Custom CRM Solutions for Growing Business"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    src="/services/crm-banner.webp"
+                    src="/services/crm-solution-banner.webp"
                     fill
                     sizes="(max-width: 768px) 100vw, 400px"
                   />
@@ -389,7 +389,7 @@ export default function ServicesPage() {
                   <Image
                     alt="AI & Business Automation"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    src="/services/automation-banner.webp"
+                    src="/services/business-automation-banner.webp"
                     fill
                     sizes="(max-width: 768px) 100vw, 400px"
                   />
@@ -480,7 +480,7 @@ export default function ServicesPage() {
                   <Image
                     alt="AI Chatbots"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    src="/services/ai-chatbots-banner.webp"
+                    src="/services/ai-solutions-banner.webp"
                     fill
                     sizes="(max-width: 768px) 100vw, 400px"
                   />
