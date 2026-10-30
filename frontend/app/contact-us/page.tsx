@@ -32,7 +32,7 @@ const slideInRight: Variants = {
 
 export default function PremiumContact() {
   return (
-    <div className="min-h-screen bg-[#fafbfc] dark:bg-slate-950 font-sans text-slate-900 dark:text-white selection:bg-blue-100 selection:text-blue-900 transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-white selection:bg-blue-100 selection:text-blue-900 transition-colors duration-300">
       {/* Reduced top padding: pt-6 on mobile, lg:pt-10 on desktop */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-6 pb-16 lg:pt-8 lg:pb-24">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16 items-start">
@@ -56,7 +56,7 @@ export default function PremiumContact() {
             </motion.div>
 
             {/* Main Heading */}
-            <motion.h1 variants={fadeUp} className="mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.15]">
+            <motion.h1 variants={fadeUp} className="mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
               Let&apos;s talk about <br className="hidden lg:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">
                 your project
@@ -64,7 +64,7 @@ export default function PremiumContact() {
             </motion.h1>
 
             {/* Description */}
-            <motion.p variants={fadeUp} className="mb-8 max-w-lg text-base sm:text-lg font-medium leading-relaxed text-slate-600 dark:text-slate-400">
+            <motion.p variants={fadeUp} className="mb-8 max-w-lg text-base sm:text-lg leading-relaxed text-slate-600 dark:text-slate-400">
               Tell us what you want to build or fix. We will respond within one business day with questions or a suggested next step. Prefer to talk? Call or WhatsApp{" "}
               <a href="tel:+918421538753" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
                 +91 84215 38753
@@ -78,8 +78,8 @@ export default function PremiumContact() {
                   <Phone className="h-5 w-5 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Call Us</h3>
-                  <p className="mt-1 font-semibold text-slate-900 dark:text-slate-100">+91 84215 38753</p>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Call Us</h3>
+                  <p className="mt-1 font-semibold text-slate-900 dark:text-white">+91 84215 38753</p>
                 </div>
               </motion.div>
 
@@ -88,8 +88,8 @@ export default function PremiumContact() {
                   <Mail className="h-5 w-5 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Email Us</h3>
-                  <p className="mt-1 font-semibold text-slate-900 dark:text-slate-100">connect@induxtechnology.com</p>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Email Us</h3>
+                  <p className="mt-1 font-semibold text-slate-900 dark:text-white">connect@induxtechnology.com</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -110,7 +110,7 @@ export default function PremiumContact() {
                 <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
                   <MapPin className="h-4 w-4" />
                 </div>
-                <p className="text-sm font-medium leading-relaxed text-slate-700 dark:text-slate-300">
+                <p className="text-sm font-medium leading-relaxed text-slate-800 dark:text-slate-200">
                   S. No. 05, Geeta Paradise, Opp. Zensar, Kharadi, Pune, India
                 </p>
               </div>

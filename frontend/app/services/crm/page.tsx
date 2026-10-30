@@ -215,14 +215,14 @@ export default function CRMServicePage() {
                     </div>
                   </div>
                   {/* Illustration Image */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 flex items-center justify-center p-1 sm:p-2">
                     <Image
                       src="/services/crm-solution-banner.webp"
                       alt="CRM Dashboard Mockup"
                       fill
                       priority
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                 </div>
