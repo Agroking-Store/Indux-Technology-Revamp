@@ -231,12 +231,12 @@ export default function MobileDevServicePage() {
                   {/* Illustration Image */}
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
                     <Image
-                      src="/images/unsplash/mobile.webp"
+                      src="/services/mobile-dev-banner.webp"
                       alt="Mobile App Development Showcase"
                       fill
                       priority
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-contain opacity-95 transition-transform duration-500"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                 </div>
