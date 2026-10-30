@@ -14,23 +14,31 @@ import {
   ExternalLink,
   Mail,
 } from "lucide-react";
-import { recentWorks as staticRecentWorks, RecentWork } from "@/lib/recent-works-data";
 import { getDynamicRecentWorks, getFullImageUrl, formatLiveUrl } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { GetQuoteModal } from "@/components/GetQuoteModal";
 
 export default function OurRecentWorksPage() {
-  const [works, setWorks] = useState<any[]>(staticRecentWorks);
+  const [works, setWorks] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activeModalProject, setActiveModalProject] = useState<any | null>(null);
 
   useEffect(() => {
     let isMounted = true;
-    getDynamicRecentWorks().then((data) => {
-      if (isMounted && data && data.length > 0) {
-        setWorks(data);
-      }
-    });
+    getDynamicRecentWorks()
+      .then((data) => {
+        if (isMounted) {
+          setWorks(data || []);
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setWorks([]);
+          setIsLoading(false);
+        }
+      });
     return () => {
       isMounted = false;
     };
@@ -39,7 +47,7 @@ export default function OurRecentWorksPage() {
   // Compute dynamic categories based on available works
   const categories = useMemo(() => {
     const cats = Array.from(new Set(works.map((w) => w.category).filter(Boolean)));
-    return ["All", ...cats];
+    return cats.length > 0 ? ["All", ...cats] : [];
   }, [works]);
 
   const filteredWorks =
@@ -150,6 +158,7 @@ export default function OurRecentWorksPage() {
             </motion.div>
 
             {/* Category Filter Tabs */}
+            {categories.length > 1 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -173,11 +182,23 @@ export default function OurRecentWorksPage() {
                 );
               })}
             </motion.div>
+            )}
           </div>
         </section>
 
         {/* WORKS LIST / SHOWCASE */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+          {!isLoading && works.length === 0 ? (
+            <div className="py-20 text-center">
+              <div className="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 flex items-center justify-center mx-auto mb-4 text-blue-600">
+                <Sparkles className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No Works Published Yet</h3>
+              <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto text-sm">
+                Our recent work portfolio will appear here as soon as projects are published from the admin panel.
+              </p>
+            </div>
+          ) : (
           <div className="space-y-20 lg:space-y-32">
             <AnimatePresence mode="popLayout">
               {filteredWorks.map((work, index) => {
@@ -354,6 +375,7 @@ export default function OurRecentWorksPage() {
               })}
             </AnimatePresence>
           </div>
+          )}
         </div>
 
         {/* BOTTOM CALL TO ACTION */}
