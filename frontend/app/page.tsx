@@ -808,7 +808,7 @@ export default function Home() {
                   title: "Custom CRM Software",
                   description:
                     "Tailored Customer Relationship Management systems to streamline sales, marketing, and support pipelines seamlessly.",
-                  image: "/services/crm.webp",
+                  image: "/services/crm-solution-banner.webp",
                   alt: "Custom CRM - Built Around Your Business",
                   link: "/services/crm",
                 },
@@ -816,7 +816,7 @@ export default function Home() {
                   title: "Manufacturing ERP",
                   description:
                     "Robust Enterprise Resource Planning software designed to optimize supply chains and inventory management.",
-                  image: "/services/erp.webp",
+                  image: "/services/erp-banner.webp",
                   alt: "Manufacturing ERP - Smarter Operations Higher Productivity",
                   link: "/services/erp",
                 },
@@ -824,7 +824,7 @@ export default function Home() {
                   title: "Sales Automation",
                   description:
                     "Intelligent automation tools to accelerate your sales cycle, track performance, and boost revenue effortlessly.",
-                  image: "/services/sales-automation.webp",
+                  image: "/services/automation-banner.webp",
                   alt: "Sales Automation - Work Smarter Close Faster",
                   link: "/services/automation",
                 },
@@ -832,7 +832,7 @@ export default function Home() {
                   title: "Custom Software Development",
                   description:
                     "Turn business requirements into web applications and secure software tailored to your agreed workflows.",
-                  image: "/images/unsplash/softwaredevelopment.webp",
+                  image: "/services/web-dev-banner.webp",
                   alt: "Custom Software Development - Modern Web Applications",
                   link: "/services/web-dev",
                 },
@@ -840,7 +840,7 @@ export default function Home() {
                   title: "Mobile App Development",
                   description:
                     "Create high-performance iOS and Android mobile experiences for customer services and business operations.",
-                  image: "/images/unsplash/mobile.webp",
+                  image: "/services/mobile-dev-banner.webp",
                   alt: "Mobile App Development - Cross-Platform iOS and Android",
                   link: "/services/mobile-dev",
                 },
@@ -848,7 +848,7 @@ export default function Home() {
                   title: "AI & Business Automation",
                   description:
                     "Practical AI assistants, conversational chatbots, and automated workflows to reduce repetitive tasks and elevate ROI.",
-                  image: "/images/unsplash/AI.webp",
+                  image: "/services/ai-solutions-banner.webp",
                   alt: "AI & Business Automation - Chatbots and Smart Workflows",
                   link: "/services/ai-chatbots",
                 },
@@ -858,15 +858,16 @@ export default function Home() {
                   onClick={() => router.push(service.link)}
                   className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
                 >
-                                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
+                  <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
                     <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-2">
                       <Image
                         src={service.image}
                         alt={service.alt}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-contain transition-all duration-700 "
-                      />                    </div>
+                        className="object-contain transition-all duration-700"
+                      />
+                    </div>
                   </div>
                   <div className="p-6 sm:p-8 pt-2 sm:pt-4 flex flex-col flex-grow">
                     <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-white mb-2 sm:mb-3 transition-colors">
@@ -1098,9 +1099,7 @@ export default function Home() {
                   title: "Indux CRM",
                   alt: "Indux CRM dashboard for managing customers and business operations",
                   category: "Business Intelligence",
-                  // image: "/services/crm.webp",
-                  image: "/public/services/crm.webp",
-                  img: "/services/crm.webp",
+                  img: "/induxcrm.webp",
                   link: "/products/indux-crm",
                 },
                 {
@@ -1121,7 +1120,7 @@ export default function Home() {
                   title: "InduxERP",
                   alt: "InduxERP dashboard for managing business processes and operations",
                   category: "Enterprise Software",
-                  img: "/services/erp.webp",
+                  img: "/indux_erp.webp",
                   link: "/products/indux-erp",
                 },
               ].map((project, idx) => (
