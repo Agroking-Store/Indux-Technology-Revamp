@@ -551,7 +551,7 @@ export default function Home() {
                   href="/services"
                   className="inline-flex h-10 lg:h-12 items-center justify-center gap-1.5 px-5 lg:px-6 text-xs lg:text-sm font-semibold text-blue-600 bg-transparent border-2 border-blue-600 hover:bg-blue-600 hover:text-white rounded-full shadow-sm hover:shadow-lg hover:shadow-blue-600/20 hover:scale-105 transition-all whitespace-nowrap"
                 >
-                  Explore Our Solutions →
+                  Explore Our Solutions
                 </Link>
               </div>
             </div>
@@ -1399,7 +1399,7 @@ export default function Home() {
               <div className="w-full lg:w-1/2 relative mt-8 lg:mt-0 max-w-lg mx-auto lg:max-w-none">
                 <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl aspect-[4/5] md:aspect-[4/3] lg:aspect-square">
                   <Image
-                    src="/images/unsplash/img-48a7747e.webp"
+                    src="/contact-us.png"
                     alt="Contact Us Team"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
