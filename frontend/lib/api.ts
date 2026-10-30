@@ -465,7 +465,7 @@ export const getDynamicTeamMembers = async (department?: string): Promise<TeamMe
     const params = department && department !== "All" ? { department } : {};
     const res = await api.get("/team", { params });
     const list = res.data?.data || [];
-    if (Array.isArray(list) && list.length > 0) {
+    if (Array.isArray(list)) {
       return list;
     }
   } catch (error) {
