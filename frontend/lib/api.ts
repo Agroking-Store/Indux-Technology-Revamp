@@ -406,7 +406,7 @@ export const getDynamicProducts = async (): Promise<DynamicProduct[]> => {
   try {
     const res = await api.get("/products?status=Published");
     const list = res.data?.data?.products || (Array.isArray(res.data?.data) ? res.data.data : []);
-    if (list && list.length > 0) {
+    if (Array.isArray(list)) {
       return list;
     }
   } catch (error) {
@@ -431,7 +431,7 @@ export const getDynamicRecentWorks = async (): Promise<DynamicRecentWork[]> => {
   try {
     const res = await api.get("/recent-works?status=Published");
     const list = res.data?.data?.recentWorks || (Array.isArray(res.data?.data) ? res.data.data : []);
-    if (list && list.length > 0) {
+    if (Array.isArray(list)) {
       return list;
     }
   } catch (error) {
