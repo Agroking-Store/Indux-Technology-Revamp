@@ -301,4 +301,17 @@ export const updateRecentWorkStatus = async (id: string, status: 'Draft' | 'Publ
   return res.data;
 };
 
+export const getAdminImageUrl = (img?: string): string => {
+  if (!img) return '';
+  if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:') || img.startsWith('blob:')) {
+    return img;
+  }
+  const rawApi = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+  const base = rawApi.replace(/\/api\/v1\/?$/, '');
+  if (img.startsWith('/uploads/')) {
+    return `${base}/api/v1${img}`;
+  }
+  return img.startsWith('/') ? img : `/${img}`;
+};
+
 export default api;

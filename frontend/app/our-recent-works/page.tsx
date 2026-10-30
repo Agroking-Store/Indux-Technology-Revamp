@@ -199,6 +199,17 @@ export default function OurRecentWorksPage() {
                     {/* Visual Media Showcase */}
                     <div className="w-full lg:w-1/2 relative group">
                       <div className="absolute -inset-4 rounded-[2.5rem] bg-blue-600/5 dark:bg-blue-600/10 blur-2xl group-hover:bg-blue-600/10 dark:group-hover:bg-blue-600/20 transition-all duration-700"></div>
+
+                      {/* Category Label strictly ABOVE the image frame - zero overlap */}
+                      <div className="flex items-center justify-between mb-2.5 px-1 sm:px-2">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 text-xs font-semibold border border-blue-200/80 dark:border-blue-900/80 shadow-2xs">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                          {work.category}
+                        </span>
+                        <span className="text-xs font-mono font-medium text-slate-400 dark:text-slate-500">
+                          {work.client} • {work.year}
+                        </span>
+                      </div>
                       
                       <div
                         onClick={() => setActiveModalProject(work)}
@@ -216,10 +227,7 @@ export default function OurRecentWorksPage() {
                           />
                         </div>
 
-                        {/* Top-Right Pill */}
-                        <div className="absolute top-5 right-5 z-10 px-3 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-white text-[11px] font-semibold border border-white/20 shadow-md">
-                          {work.category}
-                        </div>
+
 
                         {/* Hover Overlay Preview Button */}
                         <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-[2rem]">
