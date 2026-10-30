@@ -229,7 +229,7 @@ export default function AiSolutionsServicePage() {
                   {/* Illustration Image */}
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
                     <Image
-                      src="/services/ai-chatbots-banner.webp"
+                      src="/services/ai-solutions-banner.webp"
                       alt="AI Solutions Mockup"
                       fill
                       priority

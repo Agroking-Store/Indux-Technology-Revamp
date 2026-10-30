@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Sparkles, Play, Briefcase, Target, ShieldCheck, Asterisk, Trophy, KeyRound, Leaf, Rocket, Eye, CheckCircle2, Globe as GlobeIcon, ArrowRight, Check } from "lucide-react";
+import { Sparkles, Play, Briefcase, Target, ShieldCheck, Asterisk, Trophy, KeyRound, Leaf, Rocket, Eye, CheckCircle2, Globe as GlobeIcon, ArrowRight, Check, Users, Mail } from "lucide-react";
+import { getDynamicTeamMembers, getFullImageUrl, TeamMember } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Globe } from "@/components/ui/globe";
 
@@ -77,6 +78,72 @@ const GlobalPresenceClocks = () => {
   );
 };
 
+// Team Member Social Icons
+const LinkedInIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+  </svg>
+);
+
+const TwitterIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+const GitHubIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+  </svg>
+);
+
+const FALLBACK_TEAM: TeamMember[] = [
+  {
+    name: "Laxman Jadhav",
+    role: "Founder & Chief Technology Officer",
+    department: "Leadership",
+    image: "/images/unsplash/img-08e8b61c.webp",
+    bio: "Pioneering enterprise architectures, distributed cloud systems, and strategic technology direction at Indux Technology.",
+    socialLinks: {
+      linkedin: "https://linkedin.com",
+      github: "https://github.com",
+      email: "contact@induxtechnology.com",
+    },
+  },
+  {
+    name: "Shubham Kulkarni",
+    role: "Lead Full-Stack Architect",
+    department: "Engineering",
+    image: "/images/unsplash/img-256cf641.webp",
+    bio: "Specializing in resilient microservices, high-performance web applications, and real-time backend pipelines.",
+    socialLinks: {
+      linkedin: "https://linkedin.com",
+      github: "https://github.com",
+    },
+  },
+  {
+    name: "Pooja Deshmukh",
+    role: "Lead UI/UX & Design Systems",
+    department: "Design",
+    image: "/images/unsplash/img-40db8c24.webp",
+    bio: "Crafting modern, accessible user interfaces and intuitive design systems that delight clients and scale effortlessly.",
+    socialLinks: {
+      linkedin: "https://linkedin.com",
+    },
+  },
+  {
+    name: "Rohan Patil",
+    role: "Senior AI & Automation Engineer",
+    department: "Engineering",
+    image: "/images/unsplash/img-3fffc6e4.webp",
+    bio: "Building autonomous workflow automations, intelligent LLM integrations, and custom ERP business logic.",
+    socialLinks: {
+      linkedin: "https://linkedin.com",
+      github: "https://github.com",
+    },
+  },
+];
+
 export default function AboutPage() {
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 30 },
@@ -90,6 +157,20 @@ export default function AboutPage() {
       transition: { staggerChildren: 0.2 },
     },
   };
+
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(FALLBACK_TEAM);
+
+  useEffect(() => {
+    let isMounted = true;
+    getDynamicTeamMembers().then((res) => {
+      if (isMounted && res && res.length > 0) {
+        setTeamMembers(res);
+      }
+    }).catch(() => {});
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const orgJsonLd = {
     "@context": "https://schema.org",
@@ -262,6 +343,155 @@ export default function AboutPage() {
               </p>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ===== DYNAMIC OUR TEAM SECTION ===== */}
+      <section className="px-6 py-20 md:py-24 bg-slate-50/80 dark:bg-slate-900/40 border-y border-slate-200/80 dark:border-slate-800/80 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full overflow-hidden pointer-events-none -z-10">
+          <div className="absolute -top-40 left-1/4 w-96 h-96 bg-blue-500/10 dark:bg-blue-600/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-40 right-1/4 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-600/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto mb-14 md:mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-blue-100 text-blue-700 dark:bg-blue-950/80 dark:text-blue-400 border border-blue-200/80 dark:border-blue-800/70 mb-4"
+            >
+              <Users className="w-3.5 h-3.5" />
+              <span>Meet The Builders</span>
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white"
+            >
+              The Minds Behind Indux Technology
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="mt-4 text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed"
+            >
+              A collective of seasoned engineers, enterprise architects, and designers committed to transforming complex business problems into elegant, scalable software.
+            </motion.p>
+          </div>
+
+          {/* Team Members Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {teamMembers.map((member, index) => {
+              const fullImg = getFullImageUrl(member.image);
+              return (
+                <motion.div
+                  key={member._id || member.name + index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group relative flex flex-col rounded-2xl bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1.5 transition-all duration-300"
+                >
+                  {/* Member Photo */}
+                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-slate-100 dark:bg-slate-900">
+                    <Image
+                      src={fullImg}
+                      alt={member.name}
+                      fill
+                      unoptimized={fullImg.startsWith("http://localhost") || fullImg.startsWith("http")}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    {/* Gradient Overlay for photo bottom */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                    {/* Department Badge */}
+                    {member.department && (
+                      <div className="absolute top-3 left-3">
+                        <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-slate-200 backdrop-blur-md shadow-sm border border-white/20">
+                          {member.department}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Member Info */}
+                  <div className="flex flex-col flex-grow p-5 sm:p-6">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      {member.name}
+                    </h3>
+                    <p className="text-xs sm:text-sm font-medium text-blue-600 dark:text-blue-400 mt-1">
+                      {member.role}
+                    </p>
+
+                    {member.bio && (
+                      <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3">
+                        {member.bio}
+                      </p>
+                    )}
+
+                    {/* Social Links Footer */}
+                    {member.socialLinks && Object.values(member.socialLinks).some(Boolean) && (
+                      <div className="mt-auto pt-4 flex items-center gap-2 border-t border-slate-100 dark:border-slate-800/80">
+                        {member.socialLinks.linkedin && (
+                          <a
+                            href={member.socialLinks.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${member.name} on LinkedIn`}
+                            className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-colors"
+                          >
+                            <LinkedInIcon className="w-4 h-4" />
+                          </a>
+                        )}
+                        {member.socialLinks.github && (
+                          <a
+                            href={member.socialLinks.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${member.name} on GitHub`}
+                            className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                          >
+                            <GitHubIcon className="w-4 h-4" />
+                          </a>
+                        )}
+                        {member.socialLinks.twitter && (
+                          <a
+                            href={member.socialLinks.twitter}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${member.name} on X/Twitter`}
+                            className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-500 hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-colors"
+                          >
+                            <TwitterIcon className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                        {member.socialLinks.email && (
+                          <a
+                            href={`mailto:${member.socialLinks.email}`}
+                            aria-label={`Email ${member.name}`}
+                            className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 transition-colors ml-auto"
+                          >
+                            <Mail className="w-4 h-4" />
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -532,13 +762,27 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="relative h-[360px] md:h-[440px] w-full flex items-center justify-center rounded-full bg-blue-500/5 dark:bg-blue-500/10 shadow-[0_0_80px_rgba(59,130,246,0.1)]"
+            className="relative w-full max-w-[440px] aspect-square mx-auto flex items-center justify-center"
           >
-            <div className="absolute inset-0 max-w-full max-h-full">
+            {/* Ambient Background Glow */}
+            <div className="absolute inset-4 rounded-full bg-blue-500/10 dark:bg-blue-600/20 blur-3xl pointer-events-none -z-10" />
+
+            <div className="w-full h-full relative flex items-center justify-center">
               <Globe />
             </div>
-            {/* Overlay Gradient for depth */}
-            <div className="absolute inset-0 rounded-full shadow-[inset_0_0_40px_rgba(255,255,255,0.5)] dark:shadow-[inset_0_0_40px_rgba(0,0,0,0.5)] pointer-events-none"></div>
+            {/* Dynamic floating location pills matching Indux offices */}
+            <div className="absolute top-2 left-2 sm:left-4 z-10 px-3 py-1.5 rounded-full bg-white/95 dark:bg-slate-900/95 border border-slate-200/90 dark:border-slate-800 shadow-md backdrop-blur-md flex items-center gap-2 text-xs font-semibold text-slate-800 dark:text-slate-200 pointer-events-none">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Pune, India</span>
+              <span className="text-[10px] text-slate-400 font-normal">HQ</span>
+            </div>
+
+            <div className="absolute bottom-4 right-2 sm:right-4 z-10 px-3 py-1.5 rounded-full bg-white/95 dark:bg-slate-900/95 border border-slate-200/90 dark:border-slate-800 shadow-md backdrop-blur-md flex items-center gap-2 text-xs font-semibold text-slate-800 dark:text-slate-200 pointer-events-none">
+              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+              <span>Dubai, UAE</span>
+              <span className="text-[10px] text-slate-400 font-normal">Hub</span>
+            </div>
+
           </motion.div>
 
         </div>

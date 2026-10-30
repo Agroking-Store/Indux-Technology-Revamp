@@ -439,3 +439,37 @@ export const getDynamicRecentWorks = async (): Promise<DynamicRecentWork[]> => {
   }
   return [];
 };
+
+// ===== Dynamic Team Members Types & API =====
+export interface TeamMember {
+  _id?: string;
+  name: string;
+  role: string;
+  department?: string;
+  image: string;
+  bio?: string;
+  socialLinks?: {
+    linkedin?: string;
+    twitter?: string;
+    github?: string;
+    email?: string;
+  };
+  status?: "Draft" | "Published";
+  order?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export const getDynamicTeamMembers = async (department?: string): Promise<TeamMember[]> => {
+  try {
+    const params = department && department !== "All" ? { department } : {};
+    const res = await api.get("/team", { params });
+    const list = res.data?.data || [];
+    if (Array.isArray(list) && list.length > 0) {
+      return list;
+    }
+  } catch (error) {
+    console.warn("Could not fetch dynamic team members:", error);
+  }
+  return [];
+};

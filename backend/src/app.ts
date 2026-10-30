@@ -22,6 +22,7 @@ import newsLetterRoutes from "./routes/newsletter.routes";
 import caseStudyRoutes from "./routes/case-study.routes";
 import productRoutes from "./routes/product.routes";
 import recentWorkRoutes from "./routes/recent-work.routes";
+import teamRoutes from "./routes/team.routes";
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const app: Application = express();
 
@@ -90,6 +91,7 @@ app.use("/api/v1/news-letter", newsLetterRoutes);
 app.use("/api/v1/case-studies", caseStudyRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/recent-works", recentWorkRoutes);
+app.use("/api/v1/team", teamRoutes);
 // 404 handler (for unmatched routes)
 app.use((_req: Request, res: Response) => {
   res.status(404).json({ success: false, message: "Route not found" });

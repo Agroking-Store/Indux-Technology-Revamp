@@ -226,7 +226,7 @@ export default function BusinessAutomationServicePage() {
                   {/* Illustration Image */}
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
                     <Image
-                      src="/services/automation-banner.webp"
+                      src="/services/business-automation-banner.webp"
                       alt="AI & Business Automation Solutions Banner"
                       fill
                       priority

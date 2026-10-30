@@ -30,7 +30,7 @@ export const servicesData: Record<string, ServiceOffer> = {
     summary:
       "Indux Technology builds custom CRM software for businesses in Pune and across India. We develop CRM systems for lead management, sales pipelines, customer management, workflow automation, analytics, WhatsApp integration, and business operations.",
     badge: "Custom CRM Development",
-    image: "/services/crm-banner.webp",
+    image: "/services/crm-solution-banner.webp",
   },
   erp: {
     id: "erp",
@@ -67,7 +67,7 @@ export const servicesData: Record<string, ServiceOffer> = {
     summary:
       "Eliminate manual data entry and routine busywork. Our automation engineers integrate webhook pipelines, background workers, and trigger-based notifications so your team can focus on closing deals.",
     badge: "Sales Automation",
-    image: "/services/automation-banner.webp",
+    image: "/services/business-automation-banner.webp",
   },
   webDev: {
     id: "web-dev",
@@ -121,6 +121,6 @@ export const servicesData: Record<string, ServiceOffer> = {
     summary:
       "Pragmatic, high-ROI AI integrations tailored to your proprietary knowledge base. Build generative assistants, automated document parsers, and smart workflow triggers.",
     badge: "AI Automation",
-    image: "/services/ai-chatbots-banner.webp",
+    image: "/services/ai-solutions-banner.webp",
   },
 };
