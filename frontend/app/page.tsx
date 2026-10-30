@@ -542,25 +542,25 @@ export default function Home() {
               <div className="absolute left-[5%] lg:left-[7%] top-[76%] z-20 flex items-center gap-3">
                 <Link
                   href="/contact-us"
-                  className="inline-flex h-10 lg:h-12 items-center justify-center rounded-full bg-[#3049b5] px-5 lg:px-7 text-xs lg:text-sm font-semibold text-white hover:bg-[#233894] shadow-md transition-all whitespace-nowrap"
+                  className="inline-flex h-10 lg:h-12 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 px-5 lg:px-7 text-xs lg:text-sm font-semibold text-white shadow-lg shadow-blue-600/20 hover:scale-105 transition-all whitespace-nowrap"
                 >
                   Book a Free Consultation
                 </Link>
 
                 <Link
                   href="/services"
-                  className="inline-flex h-10 lg:h-12 items-center justify-center gap-1.5 text-xs lg:text-sm font-semibold text-[#080b2d] hover:text-blue-700 transition-colors whitespace-nowrap px-2"
+                  className="inline-flex h-10 lg:h-12 items-center justify-center gap-1.5 px-5 lg:px-6 text-xs lg:text-sm font-semibold text-blue-600 bg-transparent border-2 border-blue-600 hover:bg-blue-600 hover:text-white rounded-full shadow-sm hover:shadow-lg hover:shadow-blue-600/20 hover:scale-105 transition-all whitespace-nowrap"
                 >
                   Explore Our Solutions →
                 </Link>
               </div>
             </div>
 
-            {/* Mobile Layout (< 768px): Alternative 1 - Stacked Continuous Banner on seamless #d3e9fe */}
+            {/* Mobile Layout (< 768px): Centered Stacked Layout */}
             <div className="block md:hidden bg-[#d3e9fe] dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
-              <div className="px-5 pt-7 pb-2 flex flex-col gap-3.5">
-                {/* Heading: Full width, zero overlap */}
-                <h1 className="text-[25px] xs:text-[28px] sm:text-[32px] font-bold leading-[1.15] tracking-tight text-[#080b2d] dark:text-white">
+              <div className="px-5 pt-8 pb-4 flex flex-col items-center text-center gap-4">
+                {/* Heading: Centered */}
+                <h1 className="text-[26px] xs:text-[30px] font-bold leading-[1.2] tracking-tight text-[#080b2d] dark:text-white">
                   Custom Software,
                   <br />
                   CRM &amp; ERP Solutions
@@ -568,8 +568,8 @@ export default function Home() {
                   for Growing Businesses
                 </h1>
 
-                {/* Description: Clean, comfortable font size and full readability */}
-                <p className="text-[13px] xs:text-[14px] leading-relaxed text-[#252a35] dark:text-slate-300">
+                {/* Description: Centered with comfortable width */}
+                <p className="text-[14px] leading-relaxed text-[#252a35] dark:text-slate-300 max-w-md">
                   Indux Technology helps businesses streamline operations with
                   CRM and ERP software, custom applications, websites and
                   AI-powered automation. From business process improvement to
@@ -577,25 +577,25 @@ export default function Home() {
                   requirements.
                 </p>
 
-                {/* Primary CTA Buttons: Always in a single horizontal row together */}
-                <div className="flex items-center gap-2 xs:gap-3 pt-1 flex-nowrap">
+                {/* CTA Buttons: Stacked vertically (ek ke upar ek), full width, centered */}
+                <div className="flex flex-col w-full max-w-xs gap-3 pt-2">
                   <Link
                     href="/contact-us"
-                    className="inline-flex items-center justify-center rounded-full bg-[#3049b5] text-white px-3.5 xs:px-5 py-2.5 text-[11px] xs:text-xs sm:text-sm font-semibold shadow-md hover:bg-[#233894] transition-all text-center whitespace-nowrap shrink-0"
+                    className="w-full inline-flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 text-sm font-semibold shadow-md shadow-blue-600/20 active:scale-[0.98] transition-all text-center whitespace-nowrap"
                   >
                     Book a Free Consultation
                   </Link>
 
                   <Link
                     href="/services"
-                    className="inline-flex items-center justify-center gap-0.5 text-[11px] xs:text-xs sm:text-sm font-semibold text-[#080b2d] dark:text-white hover:text-blue-700 transition-colors whitespace-nowrap py-2.5 px-1"
+                    className="w-full inline-flex items-center justify-center gap-1.5 py-3 px-6 text-sm font-semibold text-[#080b2d] dark:text-white bg-transparent border-2 border-blue-600/60 hover:border-blue-600 hover:bg-blue-600/10 active:scale-[0.98] rounded-full transition-all text-center whitespace-nowrap"
                   >
                     Explore Our Solutions →
                   </Link>
                 </div>
 
-                {/* Illustration: Seamless on the identical #d3e9fe blue canvas, 0% overlap, 100% visible hands, ideas, browser & growth */}
-                <div className="relative w-full aspect-[584/380] mt-2">
+                {/* Illustration: Clean centered artwork */}
+                <div className="relative w-full aspect-[584/380] mt-3">
                   <Image
                     src="/hero-artwork.png"
                     alt="Indux Technology Solutions"
@@ -605,7 +605,8 @@ export default function Home() {
                     className="object-contain object-center"
                   />
                 </div>
-              </div></div>
+              </div>
+            </div>
           </div>
         </section>
         {/* ABOUT US SECTION */}
@@ -667,6 +668,10 @@ export default function Home() {
               <div className="flex flex-col gap-4 sm:gap-6"
               >
                 <div className="text-blue-600 dark:text-blue-500 font-bold tracking-wider text-xs sm:text-sm uppercase flex items-center gap-2">
+                  <div className="flex gap-1">
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-300 dark:bg-slate-700"></span>
+                  </div>
                   COMPANY ABOUT
                 </div>
 
@@ -736,13 +741,13 @@ export default function Home() {
                     icon: Briefcase,
                   },
                   {
-                    num: 27,
+                    num: 30,
                     suffix: "+",
                     label: "Team Members",
                     icon: Users,
                   },
                   {
-                    num: 167,
+                    num: 170,
                     suffix: "+",
                     label: "Happy Clients",
                     icon: Smile,
@@ -853,7 +858,7 @@ export default function Home() {
                   onClick={() => router.push(service.link)}
                   className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
                 >
-                  <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
+                                 <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
                     <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-2">
                       <Image
                         src={service.image}
@@ -861,19 +866,20 @@ export default function Home() {
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-contain transition-all duration-700 "
-                      />
-                    </div>
+                      />                    </div>
                   </div>
                   <div className="p-6 sm:p-8 pt-2 sm:pt-4 flex flex-col flex-grow">
                     <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-white mb-2 sm:mb-3 transition-colors">
                       {service.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 group-hover:text-blue-100 mb-6 transition-colors leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 group-hover:text-blue-100 mb-3 transition-colors leading-relaxed">
                       {service.description}
                     </p>
-                    <div className="mt-auto flex items-center text-sm sm:text-base font-semibold text-blue-600 dark:text-blue-400 group-hover:text-white transition-colors">
-                      Learn more{" "}
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    <div className="mt-auto">
+                      <span className="inline-flex items-center text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 px-3.5 py-1.5 rounded-full border border-blue-600/20 dark:border-blue-400/20 bg-blue-50/50 dark:bg-blue-950/30 group-hover:bg-white group-hover:text-blue-600 group-hover:border-white group-hover:shadow-md transition-all duration-300">
+                        Learn more{" "}
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform text-blue-600 dark:text-blue-400 group-hover:text-blue-600" />
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -1001,7 +1007,11 @@ export default function Home() {
         <section className="relative bg-slate-50 dark:bg-slate-950 py-8 sm:py-12 lg:py-16 overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10">
-              <div className="inline-flex items-center gap-2 font-bold tracking-wider text-sm text-blue-600 uppercase mb-3 justify-center">
+              <div className="inline-flex items-center justify-center gap-2 font-bold tracking-wider text-xs sm:text-sm text-blue-600 uppercase mb-3 sm:mb-4">
+                <div className="flex gap-1">
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-300 dark:bg-slate-700"></span>
+                </div>
                 Our Work Process
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-4">
@@ -1073,7 +1083,7 @@ export default function Home() {
                     <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
                     <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-200 dark:bg-slate-800"></span>
                   </div>
-                  Work
+                  Our Creation
                 </div>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
                   Products we have <span className="text-blue-600">built</span>

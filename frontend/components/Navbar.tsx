@@ -603,9 +603,22 @@ function MobileNav({ pathname }: { pathname: string }) {
         showCloseButton={false}
       >
         <div className="flex h-20 items-center justify-between border-b dark:border-slate-800 px-6 sm:px-8">
-          <p className="font-sans text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            Indux<span className="text-blue-600">.</span>
-          </p>
+          <Link href="/" className="flex items-center gap-2 cursor-pointer shrink-0">
+            <Image
+              src="/induxtechnologylogo_blue.webp"
+              alt="Indux Technology Logo"
+              width={390}
+              height={113}
+              className="w-[125px] sm:w-[140px] h-auto object-contain dark:hidden"
+            />
+            <Image
+              src="/induxtechnologylogo_white.webp"
+              alt="Indux Technology Logo"
+              width={390}
+              height={113}
+              className="w-[125px] sm:w-[140px] h-auto object-contain hidden dark:block"
+            />
+          </Link>
           <SheetClose
             render={
               <Button size="icon" variant="ghost" className="rounded-full" />
