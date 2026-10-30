@@ -213,7 +213,7 @@ export default function BusinessAutomationServicePage() {
                 className="relative max-w-lg w-full lg:ml-auto"
               >
                 <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-20 blur-xl animate-pulse"></div>
-                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl">
+                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl group">
                   {/* Mock Browser Header */}
                   <div className="bg-slate-950/80 px-4 py-3 flex items-center gap-2 border-b border-slate-800">
                     <div className="w-3 h-3 rounded-full bg-rose-500"></div>
@@ -224,11 +224,16 @@ export default function BusinessAutomationServicePage() {
                     </div>
                   </div>
                   {/* Illustration Image */}
-                  <img width={800} height={600}
-                    src="/images/unsplash/img-f53fe912.webp"
-                    alt="Automation Workflow Illustration and Data Accuracy Guarantee with Robotic Process Automation and API Integration Solutions"
-                    className="w-full h-auto object-cover opacity-90 transition-transform duration-500"
-                  />
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
+                    <Image
+                      src="/services/automation-banner.webp"
+                      alt="AI & Business Automation Solutions Banner"
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
                 </div>
               </motion.div>
 

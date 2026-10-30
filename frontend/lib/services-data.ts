@@ -30,7 +30,7 @@ export const servicesData: Record<string, ServiceOffer> = {
     summary:
       "Indux Technology builds custom CRM software for businesses in Pune and across India. We develop CRM systems for lead management, sales pipelines, customer management, workflow automation, analytics, WhatsApp integration, and business operations.",
     badge: "Custom CRM Development",
-    image: "/services/crm.webp",
+    image: "/services/crm-banner.webp",
   },
   erp: {
     id: "erp",
@@ -49,7 +49,7 @@ export const servicesData: Record<string, ServiceOffer> = {
     summary:
       "We architect, integrate, and deploy robust Enterprise Resource Planning solutions that streamline operations, centralize data, and drive unprecedented business efficiency.",
     badge: "Manufacturing ERP",
-    image: "/services/erp.webp",
+    image: "/services/erp-banner.webp",
   },
   automation: {
     id: "automation",
@@ -67,7 +67,7 @@ export const servicesData: Record<string, ServiceOffer> = {
     summary:
       "Eliminate manual data entry and routine busywork. Our automation engineers integrate webhook pipelines, background workers, and trigger-based notifications so your team can focus on closing deals.",
     badge: "Sales Automation",
-    image: "/services/sales-automation.webp",
+    image: "/services/automation-banner.webp",
   },
   webDev: {
     id: "web-dev",
@@ -85,7 +85,7 @@ export const servicesData: Record<string, ServiceOffer> = {
     summary:
       "We engineer performant web applications, custom digital portals, and scalable cloud architectures designed for responsiveness, search engine dominance, and high conversion.",
     badge: "Web Development",
-    image: "/services/web-dev.webp",
+    image: "/services/web-dev-banner.webp",
   },
   mobileDev: {
     id: "mobile-dev",
@@ -103,7 +103,7 @@ export const servicesData: Record<string, ServiceOffer> = {
     summary:
       "High-performance iOS and Android mobile applications designed with fluid UI, offline-first reliability, push telemetry, and frictionless user flows.",
     badge: "Mobile App Development",
-    image: "/services/mobile-app.webp",
+    image: "/services/mobile-dev-banner.webp",
   },
   aiChatbots: {
     id: "ai-chatbots",
@@ -121,6 +121,6 @@ export const servicesData: Record<string, ServiceOffer> = {
     summary:
       "Pragmatic, high-ROI AI integrations tailored to your proprietary knowledge base. Build generative assistants, automated document parsers, and smart workflow triggers.",
     badge: "AI Automation",
-    image: "/images/unsplash/ai-solutions.webp",
+    image: "/services/ai-chatbots-banner.webp",
   },
 };
