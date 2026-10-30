@@ -1,24 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
-  Settings,
   Plus,
   Package,
   CheckCircle2,
-  Sparkles,
+  ExternalLink,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { projects } from "@/lib/products-data";
+import { getDynamicProducts, getFullImageUrl, formatLiveUrl } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 
 export default function ProductsZigzagShowcase() {
-  const [visibleCount, setVisibleCount] = useState(4);
-  const visibleProjects = projects.slice(0, visibleCount);
-  const hasMore = visibleCount < projects.length;
+  const [productsList, setProductsList] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(6);
+
+  useEffect(() => {
+    let isMounted = true;
+    getDynamicProducts()
+      .then((data) => {
+        if (isMounted) {
+          setProductsList(data || []);
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setProductsList([]);
+          setIsLoading(false);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const visibleProjects = productsList.slice(0, visibleCount);
+  const hasMore = visibleCount < productsList.length;
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
@@ -72,31 +94,45 @@ export default function ProductsZigzagShowcase() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 sm:mb-6"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 sm:mb-6 max-w-5xl mx-auto"
             >
-              Built for <span className="text-blue-600">Performance.</span>
+              Software products built for{" "}
+              <span className="text-blue-600">real business problems</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="max-w-2xl mx-auto text-lg text-slate-500 dark:text-slate-400"
+              className="max-w-3xl mx-auto text-lg text-slate-500 dark:text-slate-400"
             >
-              Industry-leading software solutions designed to streamline
-              operations and drive exponential business growth.
+              Explore Indux CRM, HRMS, Jemsoft insurance ERP and InduxERP — ready-to-use business software from Indux Technology in Pune designed to streamline operations and drive exponential business growth.
             </motion.p>
           </div>
         </section>
 
         {/* ZIGZAG LIST */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {!isLoading && productsList.length === 0 ? (
+            <div className="py-20 text-center">
+              <div className="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 flex items-center justify-center mx-auto mb-4 text-blue-600">
+                <Package className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No Products Published Yet</h3>
+              <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto text-sm">
+                Software solutions and products will appear here as soon as they are published from the admin panel.
+              </p>
+            </div>
+          ) : (
           <div className="space-y-24 lg:space-y-40">
             <AnimatePresence mode="popLayout">
               {visibleProjects.map((project, index) => {
                 const isEven = index % 2 === 0;
+                const imageSrc = getFullImageUrl(project.image);
+                const itemKey = project._id || project.id || project.slug;
+
                 return (
                   <motion.div
-                    key={project.id}
+                    key={itemKey}
                     layout
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -106,13 +142,14 @@ export default function ProductsZigzagShowcase() {
  {/* Image Column */}
                     <div className="w-full lg:w-1/2 relative">
                       <div className="absolute -inset-4 rounded-[2.5rem] bg-blue-600/5 dark:bg-blue-600/10 blur-2xl"></div>
- <div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xl group aspect-[16/10] flex items-center justify-center p-3 sm:p-4">
- <Image
- src={project.image}
+<div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xl group aspect-[16/10] flex items-center justify-center p-3 sm:p-4">
+                        <Image
+                          src={imageSrc}
                           alt={project.title}
                           fill
                           sizes="(max-width: 768px) 100vw, 50vw"
- className="object-contain"
+                          className="object-contain transition-all duration-700 group-hover:scale-105"
+                          unoptimized={imageSrc.startsWith("http")}
                         />
                       </div>
                     </div>
@@ -131,47 +168,66 @@ export default function ProductsZigzagShowcase() {
                       </p>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                        {project.features
-                          .slice(0, 4)
-                          .map((f: any, i: number) => {
-                            const featureText =
-                              typeof f === "object" ? f.title : f;
+                        {project.features &&
+                          project.features
+                            .slice(0, 4)
+                            .map((f: any, i: number) => {
+                              const featureText =
+                                typeof f === "object" ? f.title : f;
 
-                            return (
-                              <div
-                                key={i}
-                                className="flex items-center gap-3 text-slate-600 dark:text-slate-300"
-                              >
-                                <CheckCircle2 className="size-5 text-blue-600 shrink-0" />
-                                <span className="text-sm font-medium">
-                                  {featureText}
-                                </span>
-                              </div>
-                            );
-                          })}
+                              return (
+                                <div
+                                  key={i}
+                                  className="flex items-center gap-3 text-slate-600 dark:text-slate-300"
+                                >
+                                  <CheckCircle2 className="size-5 text-blue-600 shrink-0" />
+                                  <span className="text-sm font-medium">
+                                    {featureText}
+                                  </span>
+                                </div>
+                              );
+                            })}
                       </div>
 
-                      <Link href={`/products/${project.slug}`}>
-                        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer">
-                          Explore Details{" "}
-                          <ArrowRight className="ml-2 size-5 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                      </Link>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <Link href={`/products/${project.slug}`}>
+                          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer">
+                            Explore Details{" "}
+                            <ArrowRight className="ml-2 size-5 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                        </Link>
+                        {formatLiveUrl(project.liveUrl) && (
+                          <a
+                            href={formatLiveUrl(project.liveUrl)!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Button
+                              variant="outline"
+                              className="px-6 py-6 rounded-full font-semibold border-2 border-slate-200 dark:border-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all cursor-pointer"
+                            >
+                              Live Demo
+                              <ExternalLink className="ml-2 size-4" />
+                            </Button>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </motion.div>
                 );
               })}
             </AnimatePresence>
           </div>
+          )}
 
           {hasMore && (
-            <div className="mt-32 flex justify-center">
+            <div className="mt-8 sm:mt-10 flex justify-center">
               <Button
                 variant="outline"
                 onClick={() => setVisibleCount((v) => v + 3)}
-                className="rounded-full px-10 py-8 border-2 hover:bg-slate-50 dark:hover:bg-slate-900 font-bold text-lg cursor-pointer"
+                className="rounded-full px-5 h-9 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium text-xs sm:text-sm cursor-pointer shadow-2xs transition-all hover:scale-[1.02]"
               >
-                <Plus className="mr-2" /> Display More Solutions
+                <Plus className="w-3.5 h-3.5 mr-1.5" /> Display More Solutions
               </Button>
             </div>
           )}

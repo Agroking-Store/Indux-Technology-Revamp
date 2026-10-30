@@ -8,6 +8,7 @@ import {
   Scale,
   Users,
   Zap,
+  Sun,
 } from "lucide-react";
 
 export interface Project {
@@ -24,6 +25,7 @@ export interface Project {
   stats: { label: string; value: string }[];
   faq: { q: string; a: string }[];
   tech: string[];
+  liveUrl?: string;
 }
 
 export const projects: Project[] = [
@@ -306,6 +308,100 @@ export const projects: Project[] = [
       {
         q: "Can it integrate with biometrics?",
         a: "We support integration with most major fingerprint and facial recognition hardware for attendance.",
+      },
+    ],
+  },
+  {
+    id: 7,
+    slug: "cardz365",
+    title: "cardz365",
+    category: "Smart Networking & AI",
+    shortDescription:
+      "A contactless digital networking ecosystem enabling instant QR card sharing, AI OCR paper card scanning, and centralized cloud contact management.",
+    fullDescription:
+      "cardz365 redefines professional networking by making business cards contactless, smart, and permanent. Users can design digital QR profile cards, scan physical paper visiting cards using AI optical character recognition (OCR) in seconds, organize contacts by company or event, and sync contacts seamlessly across devices.",
+    themeColor: "indigo",
+    icon: CreditCard,
+    image: "/cardz365.webp",
+    stats: [
+      { label: "Cards Shared", value: "85K+" },
+      { label: "OCR Accuracy", value: "99.2%" },
+      { label: "Paper Waste Saved", value: "95%" },
+    ],
+    features: [
+      {
+        title: "Contactless QR Cards",
+        desc: "Create virtual, NFC, and dynamic QR business profiles with custom branding, social links, and contact vCard downloads.",
+      },
+      {
+        title: "AI OCR Card Scanner",
+        desc: "Snap photos of paper business cards to instantly extract contact details, phone numbers, and addresses with 99.2% accuracy.",
+      },
+      {
+        title: "Smart Contact Organization",
+        desc: "Tag and organize connections by company, conference, or deal stage for fast retrieval and relationship nurturing.",
+      },
+      {
+        title: "Seamless CRM & Cloud Sync",
+        desc: "Automatically synchronize contacts across iOS, Android, and export directly to Salesforce, HubSpot, or Google Contacts.",
+      },
+    ],
+    tech: ["Next.js", "TypeScript", "AI OCR Engine", "Tailwind CSS", "Cloud Sync", "PostgreSQL"],
+    faq: [
+      {
+        q: "Do recipients need an app to receive my card?",
+        a: "No, anyone can view and save your cardz365 profile directly in their phone browser without installing any app.",
+      },
+      {
+        q: "Can teams and enterprises manage staff cards centrally?",
+        a: "Yes, our Corporate Dashboard lets administrators provision branded cards, lock company templates, and revoke access upon employee exit.",
+      },
+    ],
+  },
+  {
+    id: 8,
+    slug: "indux-solar",
+    title: "Indux Solar",
+    category: "Clean Energy Engineering",
+    shortDescription:
+      "Turnkey commercial and industrial rooftop solar engineering solutions with intelligent generation monitoring and high ROI payback.",
+    fullDescription:
+      "Indux Solar delivers end-to-end photovoltaic rooftop solar installations for manufacturing plants, commercial complexes, and academic institutions. From structural engineering and feasibility assessments to grid-tie synchronization and live SCADA generation telemetry, we power industries sustainably.",
+    themeColor: "emerald",
+    icon: Sun,
+    image: "/indux-solar.webp",
+    stats: [
+      { label: "Solar Capacity", value: "15+ MW" },
+      { label: "Commercial Leads", value: "+210%" },
+      { label: "Carbon Offset", value: "18K Tons" },
+    ],
+    features: [
+      {
+        title: "Rooftop Engineering & EPC",
+        desc: "Complete structural assessment, high-yield tier-1 PV panel integration, and compliant grid-tie inverter installations.",
+      },
+      {
+        title: "Intelligent ROI Calculator",
+        desc: "Interactive financial modeling tool estimating solar power generation, monthly energy savings, and payback period within 3-4 years.",
+      },
+      {
+        title: "Live SCADA Generation Telemetry",
+        desc: "Real-time remote cloud monitoring of power yield, inverter efficiency, string diagnostics, and automated fault alerts.",
+      },
+      {
+        title: "Government Subsidy & Net-Metering",
+        desc: "Full liaisoning for DISCOM grid synchronization, net-metering approvals, and industrial solar subsidy processing.",
+      },
+    ],
+    tech: ["Solar Photovoltaics", "IoT Telemetry", "Next.js", "React", "Cloud Analytics"],
+    faq: [
+      {
+        q: "What is the typical ROI on commercial solar installations?",
+        a: "Most industrial and commercial installations break even within 3 to 4 years, delivering free green electricity for the remaining 20+ years of panel life.",
+      },
+      {
+        q: "Do you handle grid net-metering and government approvals?",
+        a: "Yes, our engineering team manages complete state DISCOM net-metering paperwork, CEIG approvals, and commissioning end-to-end.",
       },
     ],
   },

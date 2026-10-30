@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     siteName: "Indux Technology",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "/images/og-image.webp",
         width: 1200,
         height: 630,
         alt: "Indux Technology - Custom IT Solutions",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Software Development Company in Pune | Indux Technology",
     description: "Indux Technology builds custom CRM, ERP, AI automation, web and mobile apps for growing businesses in Pune and across India. Get a free quote.",
-    images: ["/images/og-image.jpg"],
+    images: ["/images/og-image.webp"],
     creator: "@InduxTech",
   },
   alternates: {

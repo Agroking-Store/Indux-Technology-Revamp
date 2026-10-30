@@ -27,7 +27,9 @@ const FacebookLogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
 const allLinks = [
   { name: "Services", href: "/services" },
   { name: "Products", href: "/products" },
+  { name: "Recent Works", href: "/our-recent-works" },
   { name: "Blogs", href: "/blogs" },
+  { name: "Case Studies", href: "/case-studies" },
   { name: "About Us", href: "/about" },
   { name: "Contact Us", href: "/contact-us" },
   { name: "Careers", href: "/careers" },

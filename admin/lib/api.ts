@@ -176,4 +176,195 @@ export interface JobApplication {
   updatedAt: string;
 }
 
+
+export interface ProductFeature {
+  title: string;
+  desc: string;
+}
+
+export interface ProductStat {
+  label: string;
+  value: string;
+}
+
+export interface ProductFaq {
+  q: string;
+  a: string;
+}
+
+export interface Product {
+  _id: string;
+  title: string;
+  slug: string;
+  category: string;
+  shortDescription: string;
+  fullDescription: string;
+  themeColor: "blue" | "emerald" | "cyan" | "indigo";
+  iconName?: string;
+  image: string;
+  features: ProductFeature[];
+  stats: ProductStat[];
+  faq: ProductFaq[];
+  tech: string[];
+  liveUrl?: string;
+  status: "Draft" | "Published";
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RecentWorkMetric {
+  label: string;
+  value: string;
+}
+
+export interface RecentWork {
+  _id: string;
+  title: string;
+  slug: string;
+  tagline: string;
+  category: string;
+  client: string;
+  year: string;
+  shortDescription: string;
+  fullDescription: string;
+  image: string;
+  highlights: string[];
+  technologies: string[];
+  metrics: RecentWorkMetric[];
+  liveUrl?: string;
+  status: "Draft" | "Published";
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TeamMemberSocialLinks {
+  linkedin?: string;
+  twitter?: string;
+  github?: string;
+  email?: string;
+}
+
+export interface TeamMember {
+  _id: string;
+  name: string;
+  role: string;
+  department?: string;
+  image: string;
+  bio?: string;
+  socialLinks?: TeamMemberSocialLinks;
+  status: "Draft" | "Published";
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+
+// Products API
+export const getAdminProducts = async (params?: { page?: number; limit?: number; search?: string; status?: string }) => {
+  const res = await api.get('/products', { params });
+  return res.data.data;
+};
+
+export const getAdminProductById = async (id: string) => {
+  const res = await api.get(`/products/${id}`);
+  return res.data.data;
+};
+
+export const createProduct = async (data: FormData | any) => {
+  const res = await api.post('/products', data);
+  return res.data;
+};
+
+export const updateProduct = async (id: string, data: FormData | any) => {
+  const res = await api.put(`/products/${id}`, data);
+  return res.data;
+};
+
+export const deleteProduct = async (id: string) => {
+  const res = await api.delete(`/products/${id}`);
+  return res.data;
+};
+
+export const updateProductStatus = async (id: string, status: 'Draft' | 'Published') => {
+  const res = await api.patch(`/products/${id}/status`, { status });
+  return res.data;
+};
+
+// Recent Works API
+export const getAdminRecentWorks = async (params?: { page?: number; limit?: number; search?: string; category?: string; status?: string }) => {
+  const res = await api.get('/recent-works', { params });
+  return res.data.data;
+};
+
+export const getAdminRecentWorkById = async (id: string) => {
+  const res = await api.get(`/recent-works/${id}`);
+  return res.data.data;
+};
+
+export const createRecentWork = async (data: FormData | any) => {
+  const res = await api.post('/recent-works', data);
+  return res.data;
+};
+
+export const updateRecentWork = async (id: string, data: FormData | any) => {
+  const res = await api.put(`/recent-works/${id}`, data);
+  return res.data;
+};
+
+export const deleteRecentWork = async (id: string) => {
+  const res = await api.delete(`/recent-works/${id}`);
+  return res.data;
+};
+
+export const updateRecentWorkStatus = async (id: string, status: 'Draft' | 'Published') => {
+  const res = await api.patch(`/recent-works/${id}/status`, { status });
+  return res.data;
+};
+
+// Team Members API
+export const getAdminTeamMembers = async (params?: { page?: number; limit?: number; search?: string; department?: string; status?: string }) => {
+  const res = await api.get('/team/admin/list', { params });
+  return res.data.data;
+};
+
+export const getAdminTeamMemberById = async (id: string) => {
+  const res = await api.get(`/team/${id}`);
+  return res.data.data;
+};
+
+export const createTeamMember = async (data: FormData | any) => {
+  const res = await api.post('/team', data);
+  return res.data;
+};
+
+export const updateTeamMember = async (id: string, data: FormData | any) => {
+  const res = await api.put(`/team/${id}`, data);
+  return res.data;
+};
+
+export const deleteTeamMember = async (id: string) => {
+  const res = await api.delete(`/team/${id}`);
+  return res.data;
+};
+
+export const updateTeamMemberStatus = async (id: string, status: 'Draft' | 'Published') => {
+  const res = await api.patch(`/team/${id}/status`, { status });
+  return res.data;
+};
+
+export const getAdminImageUrl = (img?: string): string => {
+  if (!img) return '';
+  if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:') || img.startsWith('blob:')) {
+    return img;
+  }
+  const rawApi = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+  const base = rawApi.replace(/\/api\/v1\/?$/, '');
+  if (img.startsWith('/uploads/')) {
+    return `${base}/api/v1${img}`;
+  }
+  return img.startsWith('/') ? img : `/${img}`;
+};
+
 export default api;

@@ -1,9 +1,12 @@
 'use client';
 
+import { servicesData } from '@/lib/services-data';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
+
+  CheckCircle2,
   Globe,
   Code,
   Cpu,
@@ -14,6 +17,7 @@ import {
   Search,
   Smartphone,
   ArrowRight,
+
   Terminal,
   Activity,
   Server,
@@ -161,7 +165,28 @@ export default function BusinessAutomationServicePage() {
                 <p className="text-lg text-slate-555 dark:text-slate-400 leading-relaxed mt-2 font-sans">
                   We orchestrate automated software workflows that replace repetitive data handling. Connect your CRMs, ERP databases, inventory systems, and email chains.
                 </p>
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4">
+
+
+                {/* Core Promise & Target Audience */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-blue-500/[0.04] dark:bg-blue-500/[0.08] border border-blue-500/20 backdrop-blur-sm space-y-2.5 my-1">
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                      <Zap className="size-3 fill-blue-500 text-blue-500" />
+                      Our Promise
+                    </span>
+                  </div>
+                  <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
+                    &ldquo;{servicesData.automation.promise}&rdquo;
+                  </p>
+                  {servicesData.automation.bestFor && (
+                    <div className="pt-2 border-t border-slate-200/60 dark:border-slate-800/80 flex items-start gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+                      <span className="font-semibold text-slate-900 dark:text-slate-200 shrink-0">Best for:</span>
+                      <span>{servicesData.automation.bestFor}</span>
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-wrap items-center gap-4 pt-4">
+
                   <Button
                     nativeButton={false}
                     className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
@@ -171,8 +196,8 @@ export default function BusinessAutomationServicePage() {
                   </Button>
                   <Button
                     nativeButton={false}
-                    variant="ghost"
-                    className="px-8 py-6 rounded-full text-base font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200/50 dark:hover:bg-slate-900 cursor-pointer"
+                    variant="outline"
+                    className="w-full sm:w-auto px-8 py-6 rounded-full text-base font-semibold border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 shadow-sm transition-all hover:scale-105 cursor-pointer flex items-center justify-center"
                     render={<a href="#capabilities" />}
                   >
                     Explore Capabilities
@@ -182,13 +207,13 @@ export default function BusinessAutomationServicePage() {
 
               {/* Right Column: Premium Automation mockup browser graphic */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.85, rotate: -2, y: 30 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative max-w-lg w-full lg:ml-auto"
               >
                 <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-20 blur-xl animate-pulse"></div>
-                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl">
+                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl group">
                   {/* Mock Browser Header */}
                   <div className="bg-slate-950/80 px-4 py-3 flex items-center gap-2 border-b border-slate-800">
                     <div className="w-3 h-3 rounded-full bg-rose-500"></div>
@@ -199,11 +224,16 @@ export default function BusinessAutomationServicePage() {
                     </div>
                   </div>
                   {/* Illustration Image */}
-                  <img width={800} height={600}
-                    src="/images/unsplash/img-f53fe912.webp"
-                    alt="Automation Workflow Illustration and Data Accuracy Guarantee with Robotic Process Automation and API Integration Solutions"
-                    className="w-full h-auto object-cover opacity-90 transition-transform duration-500"
-                  />
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 flex items-center justify-center p-1 sm:p-2">
+                    <Image
+                      src="/services/business-automation-banner.webp"
+                      alt="AI & Business Automation Solutions Banner"
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
                 </div>
               </motion.div>
 
@@ -214,6 +244,10 @@ export default function BusinessAutomationServicePage() {
         {/* ===== CAPABILITIES SECTION ===== */}
         <section id="capabilities" className="relative overflow-visible border-t border-slate-200/60 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-950/50">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+
+
+
+
 
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start relative">
 
@@ -235,7 +269,25 @@ export default function BusinessAutomationServicePage() {
                   We deploy secure data synchronizers, robotic scraper actions, document PDF generators, and fail-safe error monitoring lines.
                 </p>
 
+
+                {/* Core Deliverables Included */}
+                <div className="mb-8 p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 shadow-sm text-left">
+                  <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-2">
+                    <CheckCircle2 className="size-4 text-emerald-500" />
+                    Key Deliverables Included
+                  </div>
+                  <ul className="space-y-2 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">
+                    {servicesData.automation.includes.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 mt-2 shrink-0"></span>
+                        <span className="leading-snug">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
                 <Button
+
                   nativeButton={false}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wide text-sm uppercase transition-all shadow-lg shadow-blue-600/20 group cursor-pointer"
                   render={<Link href="/contact-us" />}
@@ -486,7 +538,7 @@ export default function BusinessAutomationServicePage() {
                   Start Conversation <ArrowRight className="w-4 h-4" />
                 </Button>
                 <span className="text-xs text-slate-550 font-medium tracking-wide">
-                  Response within 24 hours • No commitment required
+                  Response within 24 hours
                 </span>
               </div>
 

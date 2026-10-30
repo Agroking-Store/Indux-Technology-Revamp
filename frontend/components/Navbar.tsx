@@ -27,6 +27,8 @@ import {
   Mail,
   MapPin,
   Calendar,
+  Package,
+  Sparkles,
 } from "lucide-react";
 import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { FaXTwitter, FaWhatsapp, FaHandshake, FaUsersGear } from "react-icons/fa6";
@@ -70,6 +72,25 @@ import {
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+
+const ourWorksData = {
+  title: "Works",
+  main: [
+    {
+      title: "Products",
+      desc: "Innovative software solutions built for performance",
+      href: "/products",
+      icon: Package,
+    },
+    {
+      title: "Our Recent Works",
+      desc: "Explore client success stories & custom platforms",
+      href: "/our-recent-works",
+      icon: Sparkles,
+    },
+  ],
+  side: [],
+};
 
 const servicesData = {
   title: "Services",
@@ -129,6 +150,12 @@ const companyData = {
       desc: "Latest news and articles",
       href: "/blogs",
       icon: ImBlog,
+    },
+    {
+      title: "Case Studies",
+      desc: "Client stories & verified results",
+      href: "/case-studies",
+      icon: Briefcase,
     },
     {
       title: "Careers",
@@ -305,7 +332,7 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <nav className="hidden lg:flex items-center h-full gap-8">
-            <NavLink href="/products" title="Products" pathname={pathname} />
+            <DropdownMenu data={ourWorksData} pathname={pathname} />
             <DropdownMenu data={servicesData} pathname={pathname} />
             <DropdownMenu data={companyData} pathname={pathname} />
             <NavLink
@@ -375,6 +402,10 @@ function DropdownMenu({
   pathname: string;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const isCompact = data.title === "Our Works";
+  const isCurrentActive =
+    (data.href && pathname === data.href) ||
+    data.main.some((m) => pathname === m.href);
 
   return (
     <div
@@ -385,7 +416,12 @@ function DropdownMenu({
       {data.href ? (
         <Link
           href={data.href}
-          className="flex h-full items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+className={cn(
+            "flex h-full items-center gap-1 cursor-pointer text-lg font-medium transition-colors",
+            isCurrentActive
+              ? "text-blue-600"
+              : "text-slate-600 dark:text-slate-300 hover:text-blue-600",
+          )}
         >
           {data.title}
           <motion.div
@@ -396,9 +432,14 @@ function DropdownMenu({
           </motion.div>
         </Link>
       ) : (
-        <button
+<button
           type="button"
-          className="flex h-full items-center gap-1 cursor-pointer text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+          className={cn(
+            "flex h-full items-center gap-1 cursor-pointer text-lg font-medium transition-colors",
+            isCurrentActive
+              ? "text-blue-600"
+              : "text-slate-600 dark:text-slate-300 hover:text-blue-600",
+          )}
         >
           {data.title}
           <motion.div
@@ -413,87 +454,125 @@ function DropdownMenu({
       <motion.span
         className="absolute bottom-[28px] left-0 w-full h-[3px] rounded-full bg-blue-600 origin-left"
         initial={false}
-        animate={{ scaleX: isHovered ? 1 : 0 }}
+        animate={{ scaleX: isCurrentActive || isHovered ? 1 : 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       />
 
-      {/* Dropdown Content - Bento Grid Mega Menu */}
+      {/* Dropdown Content - Bento Grid Mega Menu / Compact Anchored Dropdown */}
       <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            className={cn(
-              "fixed top-20 left-1/2 -translate-x-1/2 pt-2 z-50 max-w-[calc(100vw-2rem)]",
-              data.side && data.side.length > 0
-                ? "w-[900px]"
-                : data.main.length === 6
-                  ? "w-[1240px]"
-                  : data.main.length === 4
-                    ? "w-[1000px]"
-                    : "w-[750px]",
-            )}
-            initial={{ opacity: 0, y: 10, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.98 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-          >
-            <div className="bg-white rounded-3xl shadow-lg border border-slate-100 p-6 flex gap-6 max-h-[80vh] overflow-y-auto">
-              {/* Left Side: Horizontal Grid Cards */}
-              <div
-                className={cn(
-                  "flex-1 grid gap-2 md:gap-4",
-                  data.main.length === 6
-                    ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
-                    : data.main.length === 4
-                      ? "grid-cols-1 md:grid-cols-2"
-                      : "grid-cols-1 md:grid-cols-2",
-                )}
-              >
+        {isHovered &&
+          (isCompact ? (
+            <motion.div
+              className="absolute top-full -left-6 pt-2 z-50 w-[580px] sm:w-[620px]"
+              initial={{ opacity: 0, y: 8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.98 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+            >
+              <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl dark:shadow-slate-950/90 border border-slate-100 dark:border-slate-800 p-3 grid grid-cols-2 gap-3">
                 {data.main.map((item, idx) => (
                   <Link
                     key={idx}
                     href={item.href || "#"}
-                    className="relative flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 transition-all group/card overflow-hidden"
+                    className="relative flex items-center gap-3.5 p-3.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/70 transition-all group/card overflow-hidden border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60 cursor-pointer text-left"
                   >
-                    {/* Grid Background Pattern */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-20 group-hover/card:opacity-100 transition-opacity duration-300" />
-
-                    <div className="relative z-10 text-slate-700 group-hover/card:text-blue-600 transition-colors shrink-0">
-                      <item.icon className="size-6" />
+                    <div className="relative z-10 text-slate-700 dark:text-slate-300 group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors shrink-0 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover/card:bg-blue-50 dark:group-hover/card:bg-blue-950/50">
+                      <item.icon className="size-5" />
                     </div>
                     <div className="relative z-10 text-left">
-                      <h4 className="font-bold text-slate-900 text-sm group-hover/card:text-blue-700 transition-colors">
+                      <h4 className="font-bold text-slate-900 dark:text-white text-sm group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors">
                         {item.title}
                       </h4>
+                      {item.desc && (
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">
+                          {item.desc}
+                        </p>
+                      )}
                     </div>
                   </Link>
                 ))}
               </div>
-
-              {/* Right Side: Vertical List with Hover Effects */}
-              {data.side && data.side.length > 0 && (
-                <div className="w-64 flex flex-col justify-center border-l pl-6 gap-1 shrink-0">
-                  {data.side.map((item, idx) => (
+            </motion.div>
+          ) : (
+            <motion.div
+              className={cn(
+                "fixed top-20 left-1/2 -translate-x-1/2 pt-2 z-50 max-w-[calc(100vw-2rem)]",
+                data.side && data.side.length > 0
+                  ? "w-[900px]"
+                  : data.main.length === 6
+                    ? "w-[1240px]"
+                    : data.main.length === 4
+                      ? "w-[1000px]"
+                      : "w-[750px]",
+              )}
+              initial={{ opacity: 0, y: 10, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.98 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl dark:shadow-slate-950/80 border border-slate-100 dark:border-slate-800 p-6 flex gap-6 max-h-[80vh] overflow-y-auto">
+                {/* Left Side: Horizontal Grid Cards */}
+                <div
+                  className={cn(
+                    "flex-1 grid gap-2 md:gap-4",
+                    data.main.length === 6
+                      ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+                      : data.main.length === 4
+                        ? "grid-cols-1 md:grid-cols-2"
+                        : "grid-cols-1 md:grid-cols-2",
+                  )}
+                >
+                  {data.main.map((item, idx) => (
                     <Link
                       key={idx}
-                      href={item.href}
-                      className="text-base font-medium text-slate-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl p-3 transition-all flex items-center justify-between group/link"
+                      href={item.href || "#"}
+                      className="relative flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all group/card overflow-hidden border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60 cursor-pointer"
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="text-slate-400 group-hover/link:text-blue-600 transition-colors">
-                          <item.icon className="size-5" />
-                        </div>
-                        {item.title}
+                      {/* Grid Background Pattern */}
+                      <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-20 group-hover/card:opacity-100 transition-opacity duration-300" />
+
+                      <div className="relative z-10 text-slate-700 dark:text-slate-300 group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors shrink-0 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover/card:bg-blue-50 dark:group-hover/card:bg-blue-950/50">
+                        <item.icon className="size-6" />
                       </div>
-                      <span className="text-slate-400 opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300">
-                        →
-                      </span>
+                      <div className="relative z-10 text-left">
+                        <h4 className="font-bold text-slate-900 dark:text-white text-sm group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors">
+                          {item.title}
+                        </h4>
+                        {item.desc && (
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">
+                            {item.desc}
+                          </p>
+                        )}
+                      </div>
                     </Link>
                   ))}
                 </div>
-              )}
-            </div>
-          </motion.div>
-        )}
+
+                {/* Right Side: Vertical List with Hover Effects */}
+                {data.side && data.side.length > 0 && (
+                  <div className="w-64 flex flex-col justify-center border-l dark:border-slate-800 pl-6 gap-1 shrink-0">
+                    {data.side.map((item, idx) => (
+                      <Link
+                        key={idx}
+                        href={item.href}
+                        className="text-base font-medium text-slate-600 dark:text-slate-400 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40 rounded-xl p-3 transition-all flex items-center justify-between group/link"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="text-slate-400 group-hover/link:text-blue-600 transition-colors">
+                            <item.icon className="size-5" />
+                          </div>
+                          {item.title}
+                        </div>
+                        <span className="text-slate-400 opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300">
+                          →
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
       </AnimatePresence>
     </div>
   );
@@ -524,9 +603,22 @@ function MobileNav({ pathname }: { pathname: string }) {
         showCloseButton={false}
       >
         <div className="flex h-20 items-center justify-between border-b dark:border-slate-800 px-6 sm:px-8">
-          <p className="font-sans text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            Indux<span className="text-blue-600">.</span>
-          </p>
+          <Link href="/" className="flex items-center gap-2 cursor-pointer shrink-0">
+            <Image
+              src="/induxtechnologylogo_blue.webp"
+              alt="Indux Technology Logo"
+              width={390}
+              height={113}
+              className="w-[125px] sm:w-[140px] h-auto object-contain dark:hidden"
+            />
+            <Image
+              src="/induxtechnologylogo_white.webp"
+              alt="Indux Technology Logo"
+              width={390}
+              height={113}
+              className="w-[125px] sm:w-[140px] h-auto object-contain hidden dark:block"
+            />
+          </Link>
           <SheetClose
             render={
               <Button size="icon" variant="ghost" className="rounded-full" />
@@ -538,17 +630,39 @@ function MobileNav({ pathname }: { pathname: string }) {
         </div>
 
         <div className="flex-1 overflow-y-auto py-6 px-6 sm:px-8 flex flex-col gap-5">
-          {/* Products Link */}
-          <SheetClose
-            render={
-              <Link
-                href="/products"
-                className="block text-xl sm:text-2xl font-bold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+          {/* Our Works Accordion */}
+          <div>
+            <button
+              onClick={() => toggleSection("our-works")}
+              className="flex items-center justify-between w-full text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 cursor-pointer"
+            >
+              Our Works
+              <ChevronDown
+                className={cn(
+                  "size-6 transition-transform",
+                  openSection === "our-works" && "rotate-180",
+                )}
               />
-            }
-          >
-            Products
-          </SheetClose>
+            </button>
+            {openSection === "our-works" && (
+              <div className="flex flex-col gap-3 mt-3 ml-4 border-l-2 dark:border-slate-800 pl-4">
+                {ourWorksData.main.map((item) => (
+                  <SheetClose
+                    key={item.title}
+                    render={
+                      <Link
+                        href={item.href || "#"}
+                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                      />
+                    }
+                  >
+                    <item.icon className="size-5 shrink-0 text-blue-600 dark:text-blue-400" />
+                    <span>{item.title}</span>
+                  </SheetClose>
+                ))}
+              </div>
+            )}
+          </div>
 
           {/* Services Accordion */}
           <div>
@@ -572,7 +686,7 @@ function MobileNav({ pathname }: { pathname: string }) {
                     render={
                       <Link
                         href={item.href || "#"}
-                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                       />
                     }
                   >
@@ -606,7 +720,7 @@ function MobileNav({ pathname }: { pathname: string }) {
                     render={
                       <Link
                         href={item.href || "#"}
-                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                        className="flex items-center gap-3 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                       />
                     }
                   >

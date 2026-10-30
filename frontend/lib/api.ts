@@ -1,14 +1,12 @@
 import axios from "axios";
 
-// 🔍 DEBUG: Check if the env variable is loaded correctly in the browser console
-console.log(
-  "🔍 Frontend API URL:",
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1",
-);
+const resolvedApiBase =
+  process.env.NEXT_PUBLIC_API_URL ||
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "http://localhost:5000/api/v1";
 
 export const api = axios.create({
-  baseURL:
-    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1",
+  baseURL: resolvedApiBase,
   headers: { "Content-Type": "application/json" },
 });
 
@@ -88,6 +86,37 @@ export const getBlogBySlug = async (slug: string): Promise<Blog> => {
 
 export const incrementBlogView = async (id: string) => {
   const res = await api.patch(`/blogs/${id}/view`);
+  return res.data;
+};
+
+// ===== Case Study Types & API =====
+export interface CaseStudy {
+  _id: string;
+  name: string;
+  slug: string;
+  headline: string;
+  challenge: string;
+  solution: string; // What we built
+  result: string; // The result
+  image?: string;
+  status: "Draft" | "Published";
+  views?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const getCaseStudies = async (): Promise<CaseStudy[]> => {
+  const res = await api.get("/case-studies?limit=100&status=Published");
+  return res.data.data.caseStudies;
+};
+
+export const getCaseStudyBySlug = async (slug: string): Promise<CaseStudy> => {
+  const res = await api.get(`/case-studies/${slug}`);
+  return res.data.data;
+};
+
+export const incrementCaseStudyView = async (id: string) => {
+  const res = await api.patch(`/case-studies/${id}/view`);
   return res.data;
 };
 
@@ -308,3 +337,139 @@ export const getVisitorCount = async (log = true): Promise<number> => {
 };
 
 export default api;
+
+// ===== Dynamic Products & Recent Works Types & API =====
+export const formatLiveUrl = (url?: string): string | null => {
+  if (!url) return null;
+  const trimmed = url.trim();
+  if (!trimmed) return null;
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+};
+
+export interface DynamicProduct {
+  _id?: string;
+  id?: number | string;
+  title: string;
+  slug: string;
+  category: string;
+  shortDescription: string;
+  fullDescription: string;
+  themeColor: "blue" | "emerald" | "cyan" | "indigo";
+  iconName?: string;
+  image: string;
+  features: { title: string; desc: string }[];
+  stats: { label: string; value: string }[];
+  faq: { q: string; a: string }[];
+  tech: string[];
+  liveUrl?: string;
+  status?: "Draft" | "Published";
+  order?: number;
+}
+
+export interface DynamicRecentWork {
+  _id?: string;
+  id?: number | string;
+  title: string;
+  slug: string;
+  tagline: string;
+  category: string;
+  image: string;
+  client: string;
+  year: string;
+  shortDescription: string;
+  fullDescription: string;
+  highlights: string[];
+  technologies: string[];
+  metrics: { label: string; value: string }[];
+  liveUrl?: string;
+  status?: "Draft" | "Published";
+  order?: number;
+}
+
+export const getFullImageUrl = (img?: string): string => {
+  if (!img) return "/placeholder.svg";
+  if (img.startsWith("http://") || img.startsWith("https://") || img.startsWith("data:")) {
+    return img;
+  }
+  const rawApi =
+    process.env.NEXT_PUBLIC_API_URL ||
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    "http://localhost:5000/api/v1";
+  const base = rawApi.replace(/\/api\/v1\/?$/, "");
+  if (img.startsWith("/uploads/")) {
+    return `${base}/api/v1${img}`;
+  }
+  return img.startsWith("/") ? img : `/${img}`;
+};
+
+export const getDynamicProducts = async (): Promise<DynamicProduct[]> => {
+  try {
+    const res = await api.get("/products?status=Published");
+    const list = res.data?.data?.products || (Array.isArray(res.data?.data) ? res.data.data : []);
+    if (Array.isArray(list)) {
+      return list;
+    }
+  } catch (error) {
+    console.warn("Could not fetch dynamic products, using fallback static data.", error);
+  }
+  return [];
+};
+
+export const getDynamicProductBySlug = async (slug: string): Promise<DynamicProduct | null> => {
+  try {
+    const res = await api.get(`/products/${slug}`);
+    if (res.data?.data) {
+      return res.data.data;
+    }
+  } catch (error) {
+    console.warn(`Could not fetch dynamic product for slug ${slug}:`, error);
+  }
+  return null;
+};
+
+export const getDynamicRecentWorks = async (): Promise<DynamicRecentWork[]> => {
+  try {
+    const res = await api.get("/recent-works?status=Published");
+    const list = res.data?.data?.recentWorks || (Array.isArray(res.data?.data) ? res.data.data : []);
+    if (Array.isArray(list)) {
+      return list;
+    }
+  } catch (error) {
+    console.warn("Could not fetch dynamic recent works, using fallback static data.", error);
+  }
+  return [];
+};
+
+// ===== Dynamic Team Members Types & API =====
+export interface TeamMember {
+  _id?: string;
+  name: string;
+  role: string;
+  department?: string;
+  image: string;
+  bio?: string;
+  socialLinks?: {
+    linkedin?: string;
+    twitter?: string;
+    github?: string;
+    email?: string;
+  };
+  status?: "Draft" | "Published";
+  order?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export const getDynamicTeamMembers = async (department?: string): Promise<TeamMember[]> => {
+  try {
+    const params = department && department !== "All" ? { department } : {};
+    const res = await api.get("/team", { params });
+    const list = res.data?.data || [];
+    if (Array.isArray(list)) {
+      return list;
+    }
+  } catch (error) {
+    console.warn("Could not fetch dynamic team members:", error);
+  }
+  return [];
+};

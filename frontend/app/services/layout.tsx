@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Our IT Services",
-  description: "Explore the custom IT services provided by Indux Technology. From custom CRM development and manufacturing ERP systems to sales automation, cloud migration, and cybersecurity.",
+  title: "CRM, ERP and Custom Software Development in Pune | Indux",
+  description:
+    "Custom CRM, manufacturing ERP, sales automation, AI automation, and web and mobile app development from Indux Technology, Pune.",
   alternates: {
     canonical: "https://induxtechnology.com/services",
   },

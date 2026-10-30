@@ -1,9 +1,11 @@
 'use client';
 
+import { servicesData } from '@/lib/services-data';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
+  CheckCircle2,
   Users,
   BarChart3,
   Settings,
@@ -25,26 +27,27 @@ import {
   FaJava,
   FaNodeJs,
   FaDatabase,
-  FaSalesforce,
-  FaHubspot
+  FaReact,
+  FaAws
 } from 'react-icons/fa';
 import {
   TbBrandTypescript,
-  TbBrandMongodb
+  TbBrandMongodb,
+  TbBrandNextjs
 } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 // Tech stack data
 const techStack = [
-  { name: 'Salesforce', category: 'Platforms', desc: 'Enterprise CRM ecosystem', icon: FaSalesforce, color: 'text-blue-500 bg-blue-500/10' },
-  { name: 'HubSpot', category: 'Platforms', desc: 'Inbound marketing & sales', icon: FaHubspot, color: 'text-orange-500 bg-orange-500/10' },
+  { name: 'Next.js', category: 'Frontend', desc: 'Performant SSR & CRM dashboards', icon: TbBrandNextjs, color: 'text-slate-900 dark:text-white bg-slate-900/10 dark:bg-white/10' },
+  { name: 'React', category: 'Frontend', desc: 'Interactive UI & lead pipelines', icon: FaReact, color: 'text-cyan-500 bg-cyan-500/10' },
   { name: 'TypeScript', category: 'Languages', desc: 'Type-safe JS architecture', icon: TbBrandTypescript, color: 'text-blue-600 bg-blue-600/10' },
-  { name: 'Python', category: 'Languages', desc: 'Data processing & AI computing', icon: FaPython, color: 'text-emerald-600 bg-emerald-600/10' },
-  { name: 'Java', category: 'Languages', desc: 'Robust enterprise processes', icon: FaJava, color: 'text-rose-500 bg-rose-500/10' },
-  { name: 'Node.js', category: 'Backend', desc: 'High-performance runtimes', icon: FaNodeJs, color: 'text-green-600 bg-green-600/10' },
-  { name: 'PostgreSQL', category: 'Databases', desc: 'Structured relational data', icon: FaDatabase, color: 'text-blue-600 bg-blue-600/10' },
+  { name: 'Node.js', category: 'Backend', desc: 'High-performance runtimes & APIs', icon: FaNodeJs, color: 'text-green-600 bg-green-600/10' },
+  { name: 'Python', category: 'Languages', desc: 'Data processing & AI automation', icon: FaPython, color: 'text-emerald-600 bg-emerald-600/10' },
+  { name: 'PostgreSQL', category: 'Databases', desc: 'Structured relational customer data', icon: FaDatabase, color: 'text-blue-600 bg-blue-600/10' },
   { name: 'MongoDB', category: 'Databases', desc: 'Scalable NoSQL document stores', icon: TbBrandMongodb, color: 'text-emerald-500 bg-emerald-500/10' },
+  { name: 'AWS Cloud', category: 'Infrastructure', desc: 'Secure cloud hosting & scaling', icon: FaAws, color: 'text-orange-500 bg-orange-500/10' },
 ];
 
 // 12 capabilities for CRM
@@ -55,8 +58,8 @@ const capabilities = [
     icon: Settings,
   },
   {
-    title: 'CRM Implementation',
-    desc: 'Expert deployment and configuration of industry-leading platforms like Salesforce, HubSpot, and Microsoft Dynamics.',
+    title: 'Cloud & API Integration',
+    desc: 'Seamless integration with communication channels, WhatsApp Business, payment gateways, and custom database pipelines.',
     icon: Cloud,
   },
   {
@@ -129,7 +132,7 @@ export default function CRMServicePage() {
 
       <main className="flex-grow">
         {/* ===== HERO SECTION ===== */}
-        <section className="relative pt-10 pb-12 lg:pt-14 lg:pb-16 font-sans">
+        <section className="relative pt-16 pb-20 lg:pt-24 lg:pb-32 font-sans">
           {/* Subtle grid pattern overlay */}
           <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none bg-[radial-gradient(#cbd5e1_2px,transparent_2px)] dark:bg-[radial-gradient(#334155_2px,transparent_2px)] bg-[size:32px_32px]"></div>
 
@@ -144,19 +147,37 @@ export default function CRMServicePage() {
                 className="flex flex-col gap-4 text-left max-w-xl font-sans"
               >
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide w-fit">
-
                   Service Overview
                 </div>
                 <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] font-sans">
                   CRM Solutions <br />
                   <span className="text-blue-600">Redefined.</span>
                 </h1>
-                <p className="text-lg text-slate-555 dark:text-slate-400 leading-relaxed mt-2 font-sans">
+                <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mt-2 font-sans">
                   Indux Technology builds custom CRM software for businesses in Pune and
                   across India. We develop CRM systems for lead management, sales pipelines,
                   customer management, workflow automation, analytics, WhatsApp integration,
                   and business operations.                </p>
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-4">
+
+                {/* Core Promise & Target Audience */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-blue-500/[0.04] dark:bg-blue-500/[0.08] border border-blue-500/20 backdrop-blur-sm space-y-2.5 my-1">
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                      <Zap className="size-3 fill-blue-500 text-blue-500" />
+                      Our Promise
+                    </span>
+                  </div>
+                  <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
+                    &ldquo;{servicesData.crm.promise}&rdquo;
+                  </p>
+                  {servicesData.crm.bestFor && (
+                    <div className="pt-2 border-t border-slate-200/60 dark:border-slate-800/80 flex items-start gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+                      <span className="font-semibold text-slate-900 dark:text-slate-200 shrink-0">Best for:</span>
+                      <span>{servicesData.crm.bestFor}</span>
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-wrap items-center gap-4 pt-4">
                   <Button
                     nativeButton={false}
                     className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
@@ -166,8 +187,8 @@ export default function CRMServicePage() {
                   </Button>
                   <Button
                     nativeButton={false}
-                    variant="ghost"
-                    className="px-8 py-6 rounded-full text-base font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200/50 dark:hover:bg-slate-900 cursor-pointer"
+                    variant="outline"
+                    className="w-full sm:w-auto px-8 py-6 rounded-full text-base font-semibold border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 shadow-sm transition-all hover:scale-105 cursor-pointer flex items-center justify-center"
                     render={<a href="#capabilities" />}
                   >
                     Explore Capabilities
@@ -177,9 +198,9 @@ export default function CRMServicePage() {
 
               {/* Right Column: Premium Floating Graphic */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.85, rotate: -2, y: 30 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative max-w-lg w-full lg:ml-auto"
               >
                 <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-20 blur-xl animate-pulse"></div>
@@ -194,14 +215,14 @@ export default function CRMServicePage() {
                     </div>
                   </div>
                   {/* Illustration Image */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 flex items-center justify-center p-1 sm:p-2">
                     <Image
-                      src="/images/unsplash/crm.webp"
+                      src="/services/crm-solution-banner.webp"
                       alt="CRM Dashboard Mockup"
                       fill
                       priority
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover object-top opacity-90 transition-transform duration-500"
+                      className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                 </div>
@@ -214,6 +235,8 @@ export default function CRMServicePage() {
         {/* ===== CAPABILITIES SECTION ===== */}
         <section id="capabilities" className="relative overflow-visible border-t border-slate-200/60 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-950/50">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
+
+
 
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start relative">
 
@@ -235,6 +258,22 @@ export default function CRMServicePage() {
                 <p className="text-slate-555 dark:text-slate-400 leading-relaxed text-lg max-w-md mb-10 font-sans">
                   We cover everything from initial implementation and data migration to complex workflow automation and custom portal development.
                 </p>
+
+                {/* Core Deliverables Included */}
+                <div className="mb-8 p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 shadow-sm text-left">
+                  <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-2">
+                    <CheckCircle2 className="size-4 text-emerald-500" />
+                    Key Deliverables Included
+                  </div>
+                  <ul className="space-y-2 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">
+                    {servicesData.crm.includes.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 mt-2 shrink-0"></span>
+                        <span className="leading-snug">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
                 <Button
                   nativeButton={false}
@@ -487,7 +526,7 @@ export default function CRMServicePage() {
                   Start Conversation <ArrowRight className="w-4 h-4" />
                 </Button>
                 <span className="text-xs text-slate-500 font-medium tracking-wide">
-                  Response within 24 hours • No commitment required
+                  Response within 24 hours
                 </span>
               </div>
 
