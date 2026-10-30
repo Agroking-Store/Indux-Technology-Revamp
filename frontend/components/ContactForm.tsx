@@ -296,7 +296,7 @@ export function ContactForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full sm:w-auto self-start bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 h-10 rounded-full font-semibold transition-all hover:scale-[1.02] shadow-md shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2 mt-1 disabled:opacity-50 text-sm"
+          className="w-full sm:w-auto self-start bg-blue-600 hover:bg-blue-700 text-white px-7 py-2.5 h-11 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2 mt-2 disabled:opacity-50 text-sm"
         >
           {isSubmitting ? "Sending..." : "Send Message"}{" "}
           {!isSubmitting && (
