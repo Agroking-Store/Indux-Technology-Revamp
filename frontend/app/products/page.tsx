@@ -11,21 +11,29 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { projects as staticProjects } from "@/lib/products-data";
 import { getDynamicProducts, getFullImageUrl, formatLiveUrl } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 
 export default function ProductsZigzagShowcase() {
-  const [productsList, setProductsList] = useState<any[]>(staticProjects);
+  const [productsList, setProductsList] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
     let isMounted = true;
-    getDynamicProducts().then((data) => {
-      if (isMounted && data && data.length > 0) {
-        setProductsList(data);
-      }
-    });
+    getDynamicProducts()
+      .then((data) => {
+        if (isMounted) {
+          setProductsList(data || []);
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setProductsList([]);
+          setIsLoading(false);
+        }
+      });
     return () => {
       isMounted = false;
     };
@@ -104,6 +112,17 @@ export default function ProductsZigzagShowcase() {
 
         {/* ZIGZAG LIST */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {!isLoading && productsList.length === 0 ? (
+            <div className="py-20 text-center">
+              <div className="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 flex items-center justify-center mx-auto mb-4 text-blue-600">
+                <Package className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No Products Published Yet</h3>
+              <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto text-sm">
+                Software solutions and products will appear here as soon as they are published from the admin panel.
+              </p>
+            </div>
+          ) : (
           <div className="space-y-24 lg:space-y-40">
             <AnimatePresence mode="popLayout">
               {visibleProjects.map((project, index) => {
@@ -199,6 +218,7 @@ export default function ProductsZigzagShowcase() {
               })}
             </AnimatePresence>
           </div>
+          )}
 
           {hasMore && (
             <div className="mt-8 sm:mt-10 flex justify-center">

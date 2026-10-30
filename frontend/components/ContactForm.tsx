@@ -102,27 +102,27 @@ export function ContactForm() {
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
+            <Label className="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
               Your Name *
             </Label>
             <Input
               {...register("name")}
               placeholder="John Doe"
-              className="h-10 px-3.5 bg-slate-50/70 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 focus-visible:ring-2 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 rounded-lg sm:rounded-xl shadow-2xs text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors"
+              className="h-10 px-3.5 bg-slate-50/70 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 focus-visible:ring-2 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 rounded-lg sm:rounded-xl shadow-2xs text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors"
             />
             {errors.name && (
               <p className="text-red-500 text-xs ml-1">{errors.name.message}</p>
             )}
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
+            <Label className="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
               Email *
             </Label>
             <Input
               {...register("email")}
               type="email"
               placeholder="hello@example.com"
-              className="h-10 px-3.5 bg-slate-50/70 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 focus-visible:ring-2 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 rounded-lg sm:rounded-xl shadow-2xs text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors"
+              className="h-10 px-3.5 bg-slate-50/70 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 focus-visible:ring-2 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 rounded-lg sm:rounded-xl shadow-2xs text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors"
             />
             {errors.email && (
               <p className="text-red-500 text-xs ml-1">
@@ -133,7 +133,7 @@ export function ContactForm() {
         </div>
 
         <div className="flex flex-col gap-1.5">
-  <Label className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
+  <Label className="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
     Phone *
   </Label>
   <Controller
@@ -185,7 +185,7 @@ export function ContactForm() {
                       placeholder="Search country or code..."
                       value={countrySearch}
                       onChange={(e) => setCountrySearch(e.target.value)}
-                      className="w-full px-3 py-2 text-sm rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full px-3 py-2 text-sm rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none focus:ring-1 focus:ring-blue-500"
                     />
                   </div>
 
@@ -265,7 +265,7 @@ export function ContactForm() {
             id="phone"
             type="tel"
             placeholder="Enter number"
-            className="flex-1 pr-3 py-1 bg-transparent outline-none text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 min-w-0 h-full"
+            className="flex-1 pr-3 py-1 bg-transparent outline-none text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 min-w-0 h-full"
           />
         </div>
       );
@@ -277,13 +277,13 @@ export function ContactForm() {
 </div>
 
         <div className="flex flex-col gap-1.5">
-          <Label className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
+          <Label className="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
             Your Message *
           </Label>
           <Textarea
             {...register("message")}
             placeholder="Tell us about your project goals, team size, deadlines..."
-            className="min-h-[90px] p-3 bg-slate-50/70 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 focus-visible:ring-2 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 rounded-lg sm:rounded-xl shadow-2xs text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none transition-colors"
+            className="min-h-[90px] p-3 bg-slate-50/70 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 focus-visible:ring-2 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 rounded-lg sm:rounded-xl shadow-2xs text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none transition-colors"
           ></Textarea>
           
           {errors.message && (
@@ -296,7 +296,7 @@ export function ContactForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full sm:w-auto self-start bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 h-10 rounded-full font-semibold transition-all hover:scale-[1.02] shadow-md shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2 mt-1 disabled:opacity-50 text-sm"
+          className="w-full sm:w-auto self-start bg-blue-600 hover:bg-blue-700 text-white px-7 py-2.5 h-11 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2 mt-2 disabled:opacity-50 text-sm"
         >
           {isSubmitting ? "Sending..." : "Send Message"}{" "}
           {!isSubmitting && (

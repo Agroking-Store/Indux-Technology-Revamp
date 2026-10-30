@@ -97,53 +97,6 @@ const GitHubIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   </svg>
 );
 
-const FALLBACK_TEAM: TeamMember[] = [
-  {
-    name: "Laxman Jadhav",
-    role: "Founder & Chief Technology Officer",
-    department: "Leadership",
-    image: "/images/unsplash/img-08e8b61c.webp",
-    bio: "Pioneering enterprise architectures, distributed cloud systems, and strategic technology direction at Indux Technology.",
-    socialLinks: {
-      linkedin: "https://linkedin.com",
-      github: "https://github.com",
-      email: "contact@induxtechnology.com",
-    },
-  },
-  {
-    name: "Shubham Kulkarni",
-    role: "Lead Full-Stack Architect",
-    department: "Engineering",
-    image: "/images/unsplash/img-256cf641.webp",
-    bio: "Specializing in resilient microservices, high-performance web applications, and real-time backend pipelines.",
-    socialLinks: {
-      linkedin: "https://linkedin.com",
-      github: "https://github.com",
-    },
-  },
-  {
-    name: "Pooja Deshmukh",
-    role: "Lead UI/UX & Design Systems",
-    department: "Design",
-    image: "/images/unsplash/img-40db8c24.webp",
-    bio: "Crafting modern, accessible user interfaces and intuitive design systems that delight clients and scale effortlessly.",
-    socialLinks: {
-      linkedin: "https://linkedin.com",
-    },
-  },
-  {
-    name: "Rohan Patil",
-    role: "Senior AI & Automation Engineer",
-    department: "Engineering",
-    image: "/images/unsplash/img-3fffc6e4.webp",
-    bio: "Building autonomous workflow automations, intelligent LLM integrations, and custom ERP business logic.",
-    socialLinks: {
-      linkedin: "https://linkedin.com",
-      github: "https://github.com",
-    },
-  },
-];
-
 export default function AboutPage() {
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 30 },
@@ -158,15 +111,21 @@ export default function AboutPage() {
     },
   };
 
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(FALLBACK_TEAM);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
 
   useEffect(() => {
     let isMounted = true;
-    getDynamicTeamMembers().then((res) => {
-      if (isMounted && res && res.length > 0) {
-        setTeamMembers(res);
-      }
-    }).catch(() => {});
+    getDynamicTeamMembers()
+      .then((res) => {
+        if (isMounted) {
+          setTeamMembers(res || []);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setTeamMembers([]);
+        }
+      });
     return () => {
       isMounted = false;
     };
@@ -347,6 +306,7 @@ export default function AboutPage() {
       </section>
 
       {/* ===== DYNAMIC OUR TEAM SECTION ===== */}
+      {teamMembers.length > 0 && (
       <section className="px-6 py-20 md:py-24 bg-slate-50/80 dark:bg-slate-900/40 border-y border-slate-200/80 dark:border-slate-800/80 relative overflow-hidden">
         {/* Subtle background glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full overflow-hidden pointer-events-none -z-10">
@@ -494,6 +454,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Mission Section */}
       <section className="px-6 py-16 md:py-20 bg-white dark:bg-slate-950 relative overflow-hidden">

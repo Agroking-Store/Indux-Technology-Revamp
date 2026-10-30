@@ -4,7 +4,6 @@
 import { useEffect, useState } from "react";
 import { useParams, notFound } from "next/navigation";
 import { motion } from "framer-motion";
-import { projects as staticProjects } from "@/lib/products-data";
 import { getDynamicProductBySlug, getFullImageUrl, formatLiveUrl } from "@/lib/api";
 
 import {
@@ -26,21 +25,25 @@ export default function ProductDetailPage() {
 
   const slugStr = typeof slug === "string" ? slug : Array.isArray(slug) ? slug[0] : "";
 
-  const initialProduct = staticProjects.find((p) => p.slug === slugStr);
-  const [product, setProduct] = useState<any>(initialProduct || null);
-  const [loading, setLoading] = useState<boolean>(!initialProduct);
+  const [product, setProduct] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     let isMounted = true;
     if (slugStr) {
-      getDynamicProductBySlug(slugStr).then((dynamicProd) => {
-        if (isMounted) {
-          if (dynamicProd) {
-            setProduct(dynamicProd);
+      getDynamicProductBySlug(slugStr)
+        .then((dynamicProd) => {
+          if (isMounted) {
+            setProduct(dynamicProd || null);
+            setLoading(false);
           }
-          setLoading(false);
-        }
-      });
+        })
+        .catch(() => {
+          if (isMounted) {
+            setProduct(null);
+            setLoading(false);
+          }
+        });
     }
     return () => {
       isMounted = false;

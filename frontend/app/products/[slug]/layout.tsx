@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { projects } from "@/lib/products-data";
+import { getDynamicProductBySlug } from "@/lib/api";
 
 export async function generateMetadata({
   params,
@@ -7,7 +7,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = projects.find((p) => p.slug === slug);
+  const product = await getDynamicProductBySlug(slug);
   if (!product) return {};
 
   if (slug === "indux-crm") {
