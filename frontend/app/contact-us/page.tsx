@@ -34,8 +34,8 @@ export default function PremiumContact() {
   return (
     <div className="min-h-screen bg-[#fafbfc] dark:bg-slate-950 font-sans text-slate-900 dark:text-white selection:bg-blue-100 selection:text-blue-900 transition-colors duration-300">
       {/* Reduced top padding: pt-6 on mobile, lg:pt-10 on desktop */}
-      <div className="mx-auto max-w-[90rem] px-6 pt-6 pb-20 lg:px-12 lg:pt-10 lg:pb-28">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-6 pb-16 lg:pt-8 lg:pb-24">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16 items-start">
           
           {/* Left Column: Info & Map */}
           <motion.div
@@ -64,7 +64,7 @@ export default function PremiumContact() {
             </motion.h1>
 
             {/* Description */}
-            <motion.p variants={fadeUp} className="mb-12 max-w-lg text-lg font-medium leading-relaxed text-slate-600 dark:text-slate-400">
+            <motion.p variants={fadeUp} className="mb-8 max-w-lg text-base sm:text-lg font-medium leading-relaxed text-slate-600 dark:text-slate-400">
               Tell us what you want to build or fix. We will respond within one business day with questions or a suggested next step. Prefer to talk? Call or WhatsApp{" "}
               <a href="tel:+918421538753" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
                 +91 84215 38753
@@ -72,7 +72,7 @@ export default function PremiumContact() {
             </motion.p>
 
             {/* Call & Email Info */}
-            <motion.div variants={staggerContainer} className="mb-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
+            <motion.div variants={staggerContainer} className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
               <motion.div variants={fadeUp} className="group flex flex-col gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white dark:bg-slate-900 shadow-sm ring-1 ring-slate-900/5 dark:ring-slate-800 transition-colors group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 group-hover:ring-blue-100 dark:group-hover:ring-blue-800">
                   <Phone className="h-5 w-5 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
@@ -95,7 +95,7 @@ export default function PremiumContact() {
             </motion.div>
 
             {/* Map Frame */}
-            <motion.div variants={fadeUp} className="relative h-[300px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-900 shadow-inner ring-1 ring-slate-900/5 dark:ring-slate-800">
+            <motion.div variants={fadeUp} className="relative h-[260px] sm:h-[280px] w-full overflow-hidden rounded-2xl bg-slate-200 dark:bg-slate-900 shadow-inner ring-1 ring-slate-900/5 dark:ring-slate-800">
               <iframe
                 src="https://maps.google.com/maps?q=Indux Technology&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 width="100%"
@@ -124,8 +124,8 @@ export default function PremiumContact() {
             animate="visible"
             className="flex items-center justify-center lg:justify-end"
           >
-            <div className="w-full max-w-xl rounded-[2.5rem] bg-white dark:bg-slate-900 p-8 shadow-2xl shadow-slate-200/50 dark:shadow-none ring-1 ring-slate-900/5 dark:ring-slate-800 sm:p-12 transition-colors duration-300">
-              <div className="mb-10">
+            <div className="w-full max-w-lg lg:max-w-xl rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 p-6 sm:p-8 lg:p-9 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/80 dark:border-slate-800 transition-colors duration-300">
+              <div className="mb-6">
                 <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Send a Message</h2>
                 <p className="mt-2 text-slate-500 dark:text-slate-400">The more detail you share (goals, team size, deadlines), the more useful our first reply will be.</p>
               </div>
