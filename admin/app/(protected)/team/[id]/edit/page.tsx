@@ -35,6 +35,7 @@ export default function EditTeamMemberPage({ params }: { params: Promise<{ id: s
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
   const [department, setDepartment] = useState('Leadership');
+  const [isCustomDept, setIsCustomDept] = useState(false);
   const [bio, setBio] = useState('');
   const [status, setStatus] = useState<'Draft' | 'Published'>('Published');
   const [order, setOrder] = useState('0');
@@ -285,18 +286,46 @@ export default function EditTeamMemberPage({ params }: { params: Promise<{ id: s
               </label>
               <div className="relative">
                 <Layers className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
-                <select
-                  value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white text-sm font-semibold focus:ring-2 focus:ring-indigo-600 outline-none"
-                >
-                  <option value="Leadership">Leadership</option>
-                  <option value="Engineering">Engineering</option>
-                  <option value="Design">Design</option>
-                  <option value="Marketing">Marketing & Growth</option>
-                  <option value="Product">Product Management</option>
-                  <option value="General">General</option>
-                </select>
+                <div className="space-y-2">
+                  <select
+                    value={
+                      ['CEO', 'Development', 'Designer', 'Digital Marketing', 'HR', 'Leadership', 'Engineering', 'Design', 'Product Management', 'General'].includes(department)
+                        ? department
+                        : 'Custom'
+                    }
+                    onChange={(e) => {
+                      if (e.target.value === 'Custom') {
+                        setIsCustomDept(true);
+                        setDepartment('');
+                      } else {
+                        setIsCustomDept(false);
+                        setDepartment(e.target.value);
+                      }
+                    }}
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white text-sm font-semibold focus:ring-2 focus:ring-indigo-600 outline-none"
+                  >
+                    <option value="CEO">CEO</option>
+                    <option value="Development">Development</option>
+                    <option value="Designer">Designer</option>
+                    <option value="Digital Marketing">Digital Marketing</option>
+                    <option value="HR">HR</option>
+                    <option value="Leadership">Leadership</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Design">Design</option>
+                    <option value="Product Management">Product Management</option>
+                    <option value="General">General</option>
+                    <option value="Custom">+ Custom Department...</option>
+                  </select>
+                  {isCustomDept && (
+                    <input
+                      type="text"
+                      placeholder="Enter custom department (e.g. Sales, QA)..."
+                      value={department}
+                      onChange={(e) => setDepartment(e.target.value)}
+                      className="w-full px-4 py-2 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/30 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-600 outline-none"
+                    />
+                  )}
+                </div>
               </div>
             </div>
 
