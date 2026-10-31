@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { getDynamicProducts, getFullImageUrl, formatLiveUrl } from "@/lib/api";
+import { projects as fallbackProjects } from "@/lib/products-data";
 import { Button } from "@/components/ui/button";
 
 export default function ProductsZigzagShowcase() {
@@ -24,13 +25,17 @@ export default function ProductsZigzagShowcase() {
     getDynamicProducts()
       .then((data) => {
         if (isMounted) {
-          setProductsList(data || []);
+          if (data && data.length > 0) {
+            setProductsList(data);
+          } else {
+            setProductsList(fallbackProjects);
+          }
           setIsLoading(false);
         }
       })
       .catch(() => {
         if (isMounted) {
-          setProductsList([]);
+          setProductsList(fallbackProjects);
           setIsLoading(false);
         }
       });
@@ -127,7 +132,26 @@ export default function ProductsZigzagShowcase() {
             <AnimatePresence mode="popLayout">
               {visibleProjects.map((project, index) => {
                 const isEven = index % 2 === 0;
-                const imageSrc = getFullImageUrl(project.image);
+                const localFallbackMap: Record<string, string> = {
+                  "indux-crm": "/indux-dashboard.png",
+                  "induxcrm": "/indux-dashboard.png",
+                  "hrms": "/hrms-dashboard.png",
+                  "hrms-suite": "/hrms-dashboard.png",
+                  "jemsoft": "/jem-dashboard.png",
+                  "jem-soft": "/jem-dashboard.png",
+                  "indux-erp": "/induxerp-dashboard.png",
+                  "induxerp": "/induxerp-dashboard.png",
+                  "indux-solar": "/indux-solar.jpg",
+                  "solar": "/indux-solar.jpg",
+                  "sales-automation": "/salesautomation.webp",
+                  "salesautomation": "/salesautomation.webp",
+                };
+                const projectSlug = (project.slug || "").toLowerCase();
+                const resolvedImage =
+                  localFallbackMap[projectSlug] ||
+                  (project.image && localFallbackMap[project.image.replace(/^\//, "").replace(/\.webp$/, "")]) ||
+                  project.image;
+                const imageSrc = getFullImageUrl(resolvedImage);
                 const itemKey = project._id || project.id || project.slug;
 
                 return (

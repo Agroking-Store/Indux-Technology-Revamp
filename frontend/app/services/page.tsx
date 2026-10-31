@@ -114,13 +114,13 @@ export default function ServicesPage() {
                 </span>
                 <div className="relative group transition-transform duration-500 hover:scale-[1.02] filter drop-shadow-2xl">
                   <div
-                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-slate-900"
+                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-white dark:bg-slate-900"
                     style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
                   >
                     <Image
                       alt="Custom CRM Solutions for Growing Business"
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      src="/services/crm.webp"
+                      src="/services/crm1.webp"
                       fill
                       sizes="(max-width: 768px) 100vw, 550px"
                     />
@@ -207,7 +207,7 @@ export default function ServicesPage() {
                 </span>
                 <div className="relative group transition-transform duration-500 hover:scale-[1.02] filter drop-shadow-2xl">
                   <div
-                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-slate-900"
+                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-white dark:bg-slate-900"
                     style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
                   >
                     <Image
@@ -300,7 +300,7 @@ export default function ServicesPage() {
                 </span>
                 <div className="relative group transition-transform duration-500 hover:scale-[1.02] filter drop-shadow-2xl">
                   <div
-                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-slate-900"
+                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-white dark:bg-slate-900"
                     style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
                   >
                     <Image
@@ -393,7 +393,7 @@ export default function ServicesPage() {
                 </span>
                 <div className="relative group transition-transform duration-500 hover:scale-[1.02] filter drop-shadow-2xl">
                   <div
-                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-slate-900"
+                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-white dark:bg-slate-900"
                     style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
                   >
                     <Image
@@ -486,7 +486,7 @@ export default function ServicesPage() {
                 </span>
                 <div className="relative group transition-transform duration-500 hover:scale-[1.02] filter drop-shadow-2xl">
                   <div
-                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-slate-900"
+                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-white dark:bg-slate-900"
                     style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
                   >
                     <Image
@@ -579,13 +579,13 @@ export default function ServicesPage() {
                 </span>
                 <div className="relative group transition-transform duration-500 hover:scale-[1.02] filter drop-shadow-2xl">
                   <div
-                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-slate-900"
+                    className="relative w-[300px] h-[340px] sm:w-[380px] sm:h-[430px] md:w-[440px] md:h-[490px] lg:w-[480px] lg:h-[540px] overflow-hidden z-10 bg-white dark:bg-slate-900"
                     style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
                   >
                     <Image
                       alt="ERP Software"
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      src="/services/erp.webp"
+                      src="/services/erp1.webp"
                       fill
                       sizes="(max-width: 768px) 100vw, 550px"
                     />
@@ -684,7 +684,7 @@ export default function ServicesPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
               {/* Step 1 */}
               <div className="bg-white dark:bg-slate-900 p-6 rounded-sm border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
-                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold mb-4 mx-auto md:absolute md:-top-5 md:left-1/2 md:-translate-x-1/2 border-4 border-slate-50 dark:border-slate-950 shadow-md">
+                <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold mb-4 mx-auto md:absolute md:-top-5 md:left-1/2 md:-translate-x-1/2 border-4 border-slate-50 dark:border-slate-950">
                   1
                 </div>
                 <h4 className="text-xl font-bold text-slate-900 dark:text-white text-center mb-2 mt-4 md:mt-6">Consultation</h4>
