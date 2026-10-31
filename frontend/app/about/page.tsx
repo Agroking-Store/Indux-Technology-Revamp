@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Sparkles, Play, Briefcase, Target, ShieldCheck, Asterisk, Trophy, KeyRound, Leaf, Rocket, Eye, CheckCircle2, Globe as GlobeIcon, ArrowRight, Check, Users, Mail } from "lucide-react";
+import { Sparkles, Play, Briefcase, Target, ShieldCheck, Asterisk, Trophy, KeyRound, Leaf, Rocket, Eye, CheckCircle2, Globe as GlobeIcon, ArrowRight, Check, Users, Mail, Crown, Quote } from "lucide-react";
 import { getDynamicTeamMembers, getFullImageUrl, TeamMember } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Globe } from "@/components/ui/globe";
@@ -397,6 +397,92 @@ export default function AboutPage() {
         </div>
 
         <div className="max-w-7xl mx-auto">
+          {/* Founder Section */}
+          <div className="mb-20 md:mb-24">
+            <div className="text-center max-w-3xl mx-auto mb-10">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-amber-500/10 text-amber-700 dark:bg-amber-400/10 dark:text-amber-400 border border-amber-300/40 dark:border-amber-500/20 mb-3"
+              >
+                <Crown className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                <span>Our Founder</span>
+              </motion.div>
+
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white"
+              >
+                The <span className="text-blue-600">Heart &amp; Vision</span> Behind Indux
+              </motion.h2>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mt-3 text-base md:text-lg text-slate-600 dark:text-slate-400"
+              >
+                Passionate leadership committed to delivering robust engineering and practical technology.
+              </motion.p>
+            </div>
+
+            {/* Compact Single Founder Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="max-w-2xl mx-auto bg-white dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden"
+            >
+              <div className="flex flex-col sm:flex-row items-stretch">
+                {/* Photo: Fully flush without black bands */}
+                <div className="sm:w-5/12 relative aspect-[4/5] sm:aspect-auto min-h-[220px] sm:min-h-[240px] bg-slate-100 dark:bg-slate-800 shrink-0 overflow-hidden">
+                  <Image
+                    src="/founder-profile.jpg"
+                    alt="Laxman Jadhav - Founder"
+                    fill
+                    className="object-cover object-center"
+                    sizes="(max-width: 640px) 100vw, 280px"
+                  />
+                </div>
+
+                {/* Details Column: Clean, no bottom location section */}
+                <div className="sm:w-7/12 p-6 sm:p-7 flex flex-col justify-center">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
+                        Laxman Jadhav
+                      </h3>
+                      <div className="mt-1.5 inline-block px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-blue-50 text-blue-700 dark:bg-blue-950/70 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60">
+                        Founder
+                      </div>
+                    </div>
+
+                    <a
+                      href="https://www.linkedin.com/in/laxman-jadhav-2187311ba/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Laxman Jadhav on LinkedIn"
+                      className="w-8 h-8 rounded-md flex items-center justify-center text-slate-400 hover:text-white hover:bg-blue-600 bg-slate-100 dark:bg-slate-800 transition-colors shrink-0"
+                    >
+                      <LinkedInIcon className="w-4 h-4" />
+                    </a>
+                  </div>
+
+                  <p className="mt-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Laxman Jadhav is the Founder of Indux Technology. An enterprise software engineer passionate about digital transformation, helping businesses eliminate manual spreadsheets and scale smoothly with tailored CRM, ERP, and automation solutions.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
           {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto mb-14 md:mb-16">
             <motion.div
@@ -684,11 +770,11 @@ export default function AboutPage() {
           >
  {/* Image 1 (Back/Top Right) */}
             <div className="absolute top-0 right-0 w-[65%] h-[72%] rounded-sm overflow-hidden shadow-2xl z-10 border-4 border-slate-50 dark:border-slate-900">
- <Image src="/images/unsplash/img-5b65630e.webp" alt="Innovation" fill className="object-cover" unoptimized />
+ <Image src="/vision-office-team.webp" alt="Indux Technology Workspace & Engineering Team" fill className="object-cover object-center" />
             </div>
  {/* Image 2 (Front/Bottom Left) */}
             <div className="absolute bottom-0 left-0 w-[65%] h-[72%] rounded-sm overflow-hidden shadow-2xl z-20 border-4 border-slate-50 dark:border-slate-900">
- <Image src="/images/unsplash/img-0ffac912.webp" alt="Global Reach" fill className="object-cover" unoptimized />
+ <Image src="/vision-compass.webp" alt="Vision and Mission Compass" fill className="object-cover object-center" />
             </div>
             {/* Decorative dot pattern */}
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[radial-gradient(#6366f1_2px,transparent_2px)] [background-size:12px_12px] opacity-30 z-0"></div>

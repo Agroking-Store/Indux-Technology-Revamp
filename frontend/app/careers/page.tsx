@@ -113,7 +113,7 @@ export default function CareersPage() {
               className="grid grid-cols-3 gap-8 md:divide-x divide-blue-800/40 dark:divide-slate-800"
             >
               {[
-                { value: 350, label: 'Trusted Clients', suffix: '+', icon: Users },
+                { value: 170, label: 'Trusted Clients', suffix: '+', icon: Users },
                 { value: 98, label: 'Retention Rate', suffix: '%', icon: HeartHandshake },
                 { value: 24, label: 'Systems Monitoring', suffix: '/7', icon: Activity },
               ].map((stat, idx) => {
