@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import {
   ArrowRight,
@@ -16,9 +17,11 @@ import {
   Smartphone,
   Bot,
   Factory,
-  ChevronRight
+  ChevronRight,
+  Mail
 } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { GetQuoteModal } from "@/components/GetQuoteModal";
 
 export default function ServicesPage() {
@@ -724,30 +727,46 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Bottom Call to Action Section (PDF Section 6) */}
-      <section className="px-6 py-20 md:py-24 bg-blue-600 text-white text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[length:24px_24px] opacity-30"></div>
-        <div className="max-w-4xl mx-auto relative z-10 flex flex-col items-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white leading-tight">
-            Ready to Transform Your Business?
-          </h2>
-          <p className="text-blue-100 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
-            Discover how the right technology can simplify your operations, improve productivity, and help your business grow. Let&apos;s build a solution tailored to your goals.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
-            <Link href="/contact-us" className="w-full sm:w-auto">
-              <button className="w-full sm:w-auto bg-white text-blue-600 hover:bg-blue-50 font-semibold px-8 py-4 rounded-full text-sm sm:text-base transition-all hover:scale-105 shadow-xl flex items-center justify-center gap-2 cursor-pointer group">
-                Discuss Your Project
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </Link>
-            <Link href="#services" className="w-full sm:w-auto">
-              <button className="w-full sm:w-auto bg-blue-700/60 hover:bg-blue-700 text-white border border-white/20 px-8 py-4 rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 flex items-center justify-center gap-2 cursor-pointer">
-                Explore Our Services
-              </button>
-            </Link>
+      {/* ===== BOTTOM CTA SECTION ===== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12 mb-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 30 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="relative bg-[#0F172A] text-white rounded-[2rem] p-8 md:p-12 overflow-hidden border border-slate-850 shadow-2xl"
+        >
+          {/* High-tech Glowing Background Accents */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-gradient-to-r from-blue-600/20 to-indigo-600/20 blur-[100px] pointer-events-none"></div>
+
+          {/* Subtle Grid overlay */}
+          <div className="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+
+            {/* Left Column: Heading and description */}
+            <div className="text-left lg:max-w-2xl space-y-4">
+              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.15] text-white">
+                Ready to Transform Your Business?
+              </h2>
+              <p className="text-slate-400 text-base md:text-lg leading-relaxed font-sans">
+                Discover how the right technology can simplify your operations, improve productivity, and help your business grow. Let&apos;s build a solution tailored to your goals.
+              </p>
+            </div>
+
+            {/* Right Column: Button */}
+            <div className="flex flex-col items-center lg:items-end w-full lg:w-auto flex-shrink-0">
+              <Button
+                nativeButton={false}
+                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
+                render={<Link href="/contact-us" />}
+              >
+                Start Conversation <ArrowRight className="w-4 h-4" />
+              </Button>
+            </div>
+
           </div>
-        </div>
+        </motion.div>
       </section>
     </>
   );
