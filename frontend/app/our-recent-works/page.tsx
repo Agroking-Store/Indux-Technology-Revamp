@@ -220,7 +220,7 @@ export default function OurRecentWorksPage() {
                   >
                     {/* Visual Media Showcase */}
                     <div className="w-full lg:w-1/2 relative group">
-                      <div className="absolute -inset-4 rounded-[2.5rem] bg-blue-600/5 dark:bg-blue-600/10 blur-2xl group-hover:bg-blue-600/10 dark:group-hover:bg-blue-600/20 transition-all duration-700"></div>
+                      <div className="absolute -inset-3 rounded-sm bg-blue-600/0 group-hover:bg-blue-600/15 dark:group-hover:bg-blue-600/25 blur-xl transition-all duration-500 pointer-events-none"></div>
 
                       {/* Category Label strictly ABOVE the image frame - zero overlap */}
                       <div className="flex items-center justify-between mb-2.5 px-1 sm:px-2">
@@ -235,15 +235,15 @@ export default function OurRecentWorksPage() {
                       
                       <div
                         onClick={() => setActiveModalProject(work)}
-                        className="relative rounded-[2rem] border border-slate-200/90 dark:border-slate-800 bg-slate-100/70 dark:bg-slate-900/80 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer p-2 sm:p-3"
+                        className="relative rounded-sm border border-slate-200/90 dark:border-slate-800 bg-slate-100/70 dark:bg-slate-900/80 overflow-hidden shadow-md group-hover:shadow-2xl group-hover:shadow-blue-500/20 group-hover:border-blue-500/40 dark:group-hover:border-blue-500/40 transition-all duration-500 cursor-pointer p-2 sm:p-3"
                       >
-                        <div className="relative w-full h-[260px] sm:h-[340px] lg:h-[380px] rounded-[1.5rem] overflow-hidden bg-white/60 dark:bg-slate-950 flex items-center justify-center">
+                        <div className="relative w-full h-[260px] sm:h-[340px] lg:h-[380px] rounded-sm overflow-hidden bg-white/60 dark:bg-slate-950 flex items-center justify-center">
                           <Image
                             src={imageSrc}
                             alt={work.title}
                             fill
                             sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                            className="object-contain transition-all duration-500 rounded-sm"
                             priority={index < 2}
                             unoptimized={imageSrc.startsWith("http")}
                           />
@@ -252,7 +252,7 @@ export default function OurRecentWorksPage() {
 
 
                         {/* Hover Overlay Preview Button */}
-                        <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-[2rem]">
+                        <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-sm">
                           <span className="px-5 py-2.5 rounded-full bg-white text-slate-900 font-bold text-xs sm:text-sm shadow-xl flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition-transform">
                             View Project Details <ArrowRight className="size-4" />
                           </span>
@@ -462,12 +462,12 @@ export default function OurRecentWorksPage() {
               {/* Scrollable Body */}
               <div className="p-6 sm:p-8 overflow-y-auto space-y-6">
                 {/* Full-width Screenshot (Uncropped) */}
-                <div className="relative w-full h-[260px] sm:h-[380px] md:h-[460px] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950/[0.03] dark:bg-slate-950 shadow-lg flex items-center justify-center p-2">
+                <div className="relative w-full h-[260px] sm:h-[380px] md:h-[460px] rounded-sm overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950/[0.03] dark:bg-slate-950 shadow-lg flex items-center justify-center p-2">
                   <Image
                     src={getFullImageUrl(activeModalProject.image)}
                     alt={activeModalProject.title}
                     fill
-                    className="object-contain rounded-xl"
+                    className="object-contain rounded-sm"
                     unoptimized={getFullImageUrl(activeModalProject.image).startsWith("http")}
                   />
                 </div>
