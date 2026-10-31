@@ -91,7 +91,7 @@ export default function TermsOfService() {
 
             <section>
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">9. Contact Us</h2>
-              <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800">
+              <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-sm border border-slate-100 dark:border-slate-800">
                 <p className="font-bold text-slate-900 dark:text-white mb-2">Indux Technologies</p>
                 <p>S. No. 05, Geeta Paradise, Opp. Zensar, Kharadi, Pune, Maharashtra, India</p>
                 <p>Email: <a href="mailto:connect@induxtechnology.com" className="text-blue-600 dark:text-blue-400 hover:underline">connect@induxtechnology.com</a></p>

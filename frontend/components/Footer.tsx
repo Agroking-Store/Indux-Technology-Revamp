@@ -38,7 +38,7 @@ const allLinks = [
 ];
 
 export default function Footer() {
-  const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/v1`;
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -132,7 +132,7 @@ export default function Footer() {
                 href="mailto:connect@induxtechnology.com"
                 className="flex items-start gap-4 text-slate-300 hover:text-blue-400 transition-colors group cursor-pointer w-fit"
               >
-                <div className="p-3 rounded-2xl bg-slate-800/50 group-hover:bg-blue-900/40 transition-colors border border-slate-700/50 shrink-0 mt-0.5">
+                <div className="p-3 rounded-sm bg-slate-800/50 group-hover:bg-blue-900/40 transition-colors border border-slate-700/50 shrink-0 mt-0.5">
                   <Mail className="size-5 text-blue-400" />
                 </div>
                 <div className="flex flex-col">
@@ -147,7 +147,7 @@ export default function Footer() {
                 href="tel:+918421538753"
                 className="flex items-start gap-4 text-slate-300 hover:text-blue-400 transition-colors group cursor-pointer w-fit"
               >
-                <div className="p-3 rounded-2xl bg-slate-800/50 group-hover:bg-blue-900/40 transition-colors border border-slate-700/50 shrink-0 mt-0.5">
+                <div className="p-3 rounded-sm bg-slate-800/50 group-hover:bg-blue-900/40 transition-colors border border-slate-700/50 shrink-0 mt-0.5">
                   <Phone className="size-5 text-blue-400" />
                 </div>
                 <div className="flex flex-col">
@@ -159,7 +159,7 @@ export default function Footer() {
               </a>
 
               <div className="flex items-start gap-4 text-slate-300 group">
-                <div className="p-3 rounded-2xl bg-slate-800/50 border border-slate-700/50 shrink-0 mt-0.5">
+                <div className="p-3 rounded-sm bg-slate-800/50 border border-slate-700/50 shrink-0 mt-0.5">
                   <MapPin className="size-5 text-blue-400" />
                 </div>
                 <div className="flex flex-col">
@@ -192,13 +192,13 @@ export default function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loading}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  className="w-full bg-slate-950/50 border border-slate-700 rounded-sm px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                   suppressHydrationWarning
                 />
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? "Subscribing..." : "Subscribe"}
 
@@ -227,7 +227,7 @@ export default function Footer() {
               href="https://www.facebook.com/885831577953764/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-lg bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
               <FacebookLogoIcon className="size-5" />
             </a>
@@ -235,7 +235,7 @@ export default function Footer() {
               href="https://x.com/induxtechnology"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-lg bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
               <FaXTwitter className="size-5" />
             </a>
@@ -243,7 +243,7 @@ export default function Footer() {
               href="https://www.linkedin.com/company/indux-technology/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-lg bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
               <LinkedInLogoIcon className="size-5" />
             </a>
@@ -251,7 +251,7 @@ export default function Footer() {
               href="https://www.instagram.com/indux.technology"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-lg bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
               <InstagramLogoIcon className="size-5" />
             </a>
@@ -259,7 +259,7 @@ export default function Footer() {
               href="https://wa.me/918421538753"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-[#25D366] hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-lg bg-slate-800 text-slate-300 hover:bg-[#25D366] hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
               <FaWhatsapp className="size-5" />
             </a>

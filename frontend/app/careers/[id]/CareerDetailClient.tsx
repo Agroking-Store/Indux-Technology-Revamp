@@ -176,7 +176,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="max-w-xl mx-auto bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-8 sm:p-12 text-center shadow-xl"
+            className="max-w-xl mx-auto bg-white dark:bg-slate-900 rounded-sm border border-slate-200 dark:border-slate-800 p-8 sm:p-12 text-center shadow-xl"
           >
             <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto mb-6" />
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">Application Submitted!</h2>
@@ -185,7 +185,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
             </p>
             <Button
               onClick={() => router.push("/careers")}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 cursor-pointer flex items-center gap-2"
+              className="h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2"
             >
               Return to Careers
             </Button>
@@ -195,7 +195,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
             
             {/* Left Column: Job Description details */}
             <div className="lg:col-span-6 flex flex-col gap-6">
-              <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-8 shadow-md">
+              <div className="bg-white dark:bg-slate-900 rounded-sm border border-slate-200 dark:border-slate-800 p-8 shadow-md">
                 <span className="inline-flex items-center text-[10px] uppercase tracking-wider font-bold bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full mb-4">
                   {career.department}
                 </span>
@@ -282,7 +282,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         {career.skills.map((skill, i) => (
                           <span
                             key={i}
-                            className="text-xs font-bold px-3.5 py-1.5 rounded-xl bg-blue-50/50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 border border-blue-100/40 dark:border-blue-900/30 hover:bg-blue-100/40 dark:hover:bg-blue-900/40 hover:scale-[1.04] transition-all duration-300 select-none cursor-default"
+                            className="text-xs font-bold px-3 py-1.5 rounded-sm bg-blue-50/50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 border border-blue-100/40 dark:border-blue-900/30 hover:bg-blue-100/40 dark:hover:bg-blue-900/40 transition-all select-none cursor-default"
                           >
                             {skill}
                           </span>
@@ -296,7 +296,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
 
             {/* Right Column: Application Form */}
             <div className="lg:col-span-6">
-              <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-8 shadow-md">
+              <div className="bg-white dark:bg-slate-900 rounded-sm border border-slate-200 dark:border-slate-800 p-8 shadow-md">
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Apply for this Position</h3>
                 <p className="text-xs text-slate-500 mb-6">Complete the form below. Required fields are marked *</p>
 
@@ -315,7 +315,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="e.g. John Doe"
-                      className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.fullName ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
+                      className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.fullName ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
                     />
                     {formErrors.fullName && <p className="text-red-500 text-xs mt-1.5 px-2">{formErrors.fullName}</p>}
                   </div>
@@ -329,7 +329,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="name@domain.com"
-                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.email ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
+                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.email ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
                       />
                       {formErrors.email && <p className="text-red-500 text-xs mt-1.5 px-2">{formErrors.email}</p>}
                     </div>
@@ -341,7 +341,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="10-digit number"
-                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.phone ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
+                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.phone ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
                       />
                       {formErrors.phone && <p className="text-red-500 text-xs mt-1.5 px-2">{formErrors.phone}</p>}
                     </div>
@@ -356,7 +356,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={experience}
                         onChange={(e) => setExperience(e.target.value)}
                         placeholder="e.g. 3 Years"
-                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.experience ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
+                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.experience ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
                       />
                       {formErrors.experience && <p className="text-red-500 text-xs mt-1.5 px-2">{formErrors.experience}</p>}
                     </div>
@@ -367,7 +367,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={noticePeriod}
                         onChange={(e) => setNoticePeriod(e.target.value)}
                         placeholder="e.g. Immediate / 30 Days"
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       />
                     </div>
                     <div>
@@ -377,7 +377,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={expectedCTC}
                         onChange={(e) => setExpectedCTC(e.target.value)}
                         placeholder="e.g. $90,000"
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       />
                     </div>
                   </div>
@@ -391,7 +391,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={skills}
                         onChange={(e) => setSkills(e.target.value)}
                         placeholder="e.g. React, Next.js, Node.js, MongoDB"
-                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.skills ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
+                        className={`w-full bg-slate-50 dark:bg-slate-950 border ${formErrors.skills ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
                       />
                       {formErrors.skills && <p className="text-red-500 text-xs mt-1.5 px-2">{formErrors.skills}</p>}
                     </div>
@@ -402,7 +402,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={preferredLocation}
                         onChange={(e) => setPreferredLocation(e.target.value)}
                         placeholder="e.g. Remote / Pune"
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       />
                     </div>
                   </div>
@@ -415,7 +415,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={portfolio}
                         onChange={(e) => setPortfolio(e.target.value)}
                         placeholder="https://..."
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       />
                     </div>
                     <div>
@@ -425,7 +425,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={linkedin}
                         onChange={(e) => setLinkedin(e.target.value)}
                         placeholder="https://linkedin.com/in/..."
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       />
                     </div>
                     <div>
@@ -435,7 +435,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                         value={github}
                         onChange={(e) => setGithub(e.target.value)}
                         placeholder="https://github.com/..."
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       />
                     </div>
                   </div>
@@ -447,7 +447,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                       value={coverLetter}
                       onChange={(e) => setCoverLetter(e.target.value)}
                       placeholder="Briefly introduce yourself and why you're a good fit..."
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm px-5 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none"
                     />
                   </div>
 
@@ -471,7 +471,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                                 required={field.required}
                                 value={val}
                                 onChange={(e) => handleAnswerChange(field.name, e.target.value)}
-                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm px-5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                               />
                             )}
 
@@ -481,7 +481,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                                 value={val}
                                 onChange={(e) => handleAnswerChange(field.name, e.target.value)}
                                 rows={2}
-                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none"
+                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm px-5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none"
                               />
                             )}
 
@@ -490,7 +490,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                                 required={field.required}
                                 value={val}
                                 onChange={(e) => handleAnswerChange(field.name, e.target.value)}
-                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full px-5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
+                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm px-5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
                               >
                                 <option value="">Select option...</option>
                                 {field.options?.map(opt => (
@@ -554,7 +554,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                     />
                     <div
                       onClick={() => fileInputRef.current?.click()}
-                      className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 hover:border-blue-500 dark:hover:border-blue-500 rounded-2xl p-5 bg-slate-50 dark:bg-slate-950 cursor-pointer transition-all duration-300"
+                      className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 hover:border-blue-500 dark:hover:border-blue-500 rounded-sm p-5 bg-slate-50 dark:bg-slate-950 cursor-pointer transition-all duration-300"
                     >
                       {resumeFile ? (
                         <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
@@ -577,7 +577,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                   <Button
                     type="submit"
                     disabled={submitting}
-                    className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 w-full flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-600/10 cursor-pointer font-bold uppercase text-xs tracking-wider mt-4"
+                    className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold shadow-lg shadow-blue-500/20 hover:scale-[1.02] transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
                     {submitting ? (
                       <>

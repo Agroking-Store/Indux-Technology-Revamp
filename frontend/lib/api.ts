@@ -396,10 +396,11 @@ export const getFullImageUrl = (img?: string): string => {
     process.env.NEXT_PUBLIC_API_BASE_URL ||
     "http://localhost:5000/api/v1";
   const base = rawApi.replace(/\/api\/v1\/?$/, "");
-  if (img.startsWith("/uploads/")) {
-    return `${base}/api/v1${img}`;
+  const clean = img.startsWith("/") ? img : `/${img}`;
+  if (clean.startsWith("/uploads/")) {
+    return `${base}/api/v1${clean}`;
   }
-  return img.startsWith("/") ? img : `/${img}`;
+  return clean;
 };
 
 export const getDynamicProducts = async (): Promise<DynamicProduct[]> => {

@@ -111,7 +111,7 @@ export default function ProductDetailPage() {
               </p>
               <div className="flex flex-wrap gap-4 items-center">
                 <GetQuoteModal>
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold shadow-xl shadow-blue-600/20 cursor-pointer">
+                  <Button className="h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold shadow-xl shadow-blue-600/20 cursor-pointer flex items-center justify-center gap-2">
                     Get Free Quote <ArrowRight className="ml-2 size-5" />
                   </Button>
                 </GetQuoteModal>
@@ -123,7 +123,7 @@ export default function ProductDetailPage() {
                   >
                     <Button
                       variant="outline"
-                      className="px-8 py-6 rounded-full font-bold border-2 border-slate-200 dark:border-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all cursor-pointer"
+                      className="h-12 px-7 rounded-lg text-sm sm:text-base font-semibold border-2 border-slate-200 dark:border-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all cursor-pointer flex items-center justify-center gap-2"
                     >
                       Visit Live Project <ExternalLink className="ml-2 size-5" />
                     </Button>
@@ -242,10 +242,10 @@ export default function ProductDetailPage() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm group hover:border-blue-500/30 transition-all text-left"
+                    className="bg-white dark:bg-slate-900 p-10 rounded-sm border border-slate-200 dark:border-slate-800 shadow-sm group hover:border-blue-500/30 transition-all text-left"
                   >
                     <div className="flex justify-between items-start mb-6">
-                      <div className="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-lg">
+                      <div className="w-14 h-14 rounded-sm bg-slate-900 text-white flex items-center justify-center shadow-lg">
                         <Settings className="size-7" />
                       </div>
                       <span className="text-5xl font-black text-slate-100 dark:text-slate-800/50">
@@ -276,7 +276,7 @@ export default function ProductDetailPage() {
                 {product.faq.map((item: any, i: number) => (
                   <div
                     key={i}
-                    className="p-8 bg-white dark:bg-slate-900/50 rounded-3xl border border-slate-100 dark:border-slate-800 transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
+                    className="p-8 bg-white dark:bg-slate-900/50 rounded-sm border border-slate-100 dark:border-slate-800 transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
                   >
                     <h4 className="font-bold text-slate-900 dark:text-white mb-2 text-lg">
                       Q: {item.q}
@@ -294,7 +294,7 @@ export default function ProductDetailPage() {
 
         {/* 5. BOTTOM CTA */}
         <section className="mt-40 text-left">
-          <div className="bg-slate-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden border border-slate-800">
+          <div className="bg-slate-900 rounded-sm p-12 md:p-20 text-center relative overflow-hidden border border-slate-800">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-blue-600/10 blur-[100px] pointer-events-none"></div>
 
             <div className="relative z-10 flex flex-col items-center">
@@ -305,7 +305,7 @@ export default function ProductDetailPage() {
               <div className="flex flex-col sm:flex-row justify-center gap-6 w-full sm:w-auto">
                 <GetQuoteModal>
 
-                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-10 py-8 rounded-full text-xl font-bold shadow-2xl transition-transform hover:scale-105 border-none cursor-pointer">
+                  <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold shadow-2xl transition-transform hover:scale-105 border-none cursor-pointer flex items-center justify-center gap-2">
                     Schedule a Demo
 
                   </Button>
@@ -314,7 +314,7 @@ export default function ProductDetailPage() {
                   <Button
                     variant="outline"
 
-                    className="w-full sm:w-auto bg-transparent border-slate-700 text-white hover:text-white hover:bg-slate-800 px-10 py-8 rounded-full text-xl font-bold cursor-pointer"
+                    className="w-full sm:w-auto h-12 px-7 rounded-lg text-sm sm:text-base font-semibold bg-transparent border-2 border-slate-700 text-white hover:text-white hover:bg-slate-800 cursor-pointer flex items-center justify-center gap-2"
 
                   >
                     Talk to Sales

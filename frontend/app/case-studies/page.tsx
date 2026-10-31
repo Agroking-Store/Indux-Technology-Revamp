@@ -167,7 +167,7 @@ export default function CaseStudiesPage() {
                   placeholder="Search case studies by keyword..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="block w-full pl-11 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600/50 focus:border-blue-500 transition-all text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 shadow-sm"
+                  className="block w-full pl-11 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600/50 focus:border-blue-500 transition-all text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 shadow-sm"
                 />
               </motion.div>
             </div>
@@ -181,7 +181,7 @@ export default function CaseStudiesPage() {
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden animate-pulse"
+                  className="rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden animate-pulse"
                 >
                   <div className="h-48 bg-slate-100 dark:bg-slate-800" />
                   <div className="p-6 space-y-3">
@@ -196,7 +196,7 @@ export default function CaseStudiesPage() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center py-20 rounded-[2rem] border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+              className="text-center py-20 rounded-sm border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
             >
               <Building2 className="w-12 h-12 text-slate-300 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-slate-800 dark:text-slate-200">
@@ -209,7 +209,7 @@ export default function CaseStudiesPage() {
                 <Button
                   onClick={() => setSearchQuery("")}
                   variant="outline"
-                  className="mt-4 rounded-full cursor-pointer"
+                  className="mt-4 rounded-lg cursor-pointer"
                 >
                   Clear Search
                 </Button>
@@ -226,7 +226,7 @@ export default function CaseStudiesPage() {
                 >
                   <Link
                     href={`/case-studies/${featured.slug}`}
-                    className="group grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-xl dark:shadow-none transition-all duration-300 mb-12"
+                    className="group grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-xl dark:shadow-none transition-all duration-300 mb-12"
                   >
                     <div className="lg:col-span-7 overflow-hidden min-h-[320px] relative bg-slate-100 dark:bg-slate-850">
                       <Image
@@ -265,7 +265,7 @@ export default function CaseStudiesPage() {
                         {featured.challenge}
                       </p>
 
-                      <div className="p-4 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30 mb-6">
+                      <div className="p-4 rounded-sm bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30 mb-6">
                         <span className="text-[10px] uppercase font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1 mb-1">
                           <TrendingUp className="w-3.5 h-3.5" />
                           Verified Outcome
@@ -304,7 +304,7 @@ export default function CaseStudiesPage() {
                     >
                       <Link
                         href={`/case-studies/${study.slug}`}
-                        className="group flex flex-col h-full bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200/90 dark:border-slate-800 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-xl dark:shadow-none transition-all duration-300 text-left"
+                        className="group flex flex-col h-full bg-white dark:bg-slate-900 rounded-sm border border-slate-200/90 dark:border-slate-800 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-xl dark:shadow-none transition-all duration-300 text-left"
                       >
                         {/* Image Header */}
                         <div className="relative w-full aspect-[16/10] bg-slate-100 dark:bg-slate-950 overflow-hidden">
@@ -357,7 +357,7 @@ export default function CaseStudiesPage() {
           )}
 
           {/* ===== CONSULTATION CTA BANNER ===== */}
-          <div className="mt-16 sm:mt-20 rounded-[2.5rem] p-8 sm:p-12 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 text-white shadow-2xl relative overflow-hidden border border-blue-900/30 text-center">
+          <div className="mt-16 sm:mt-20 rounded-sm p-8 sm:p-12 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 text-white shadow-2xl relative overflow-hidden border border-blue-900/30 text-center">
             <div className="relative z-10 max-w-2xl mx-auto space-y-4">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-400/30">
                 <Sparkles className="w-3.5 h-3.5" />
@@ -371,7 +371,7 @@ export default function CaseStudiesPage() {
               </p>
               <div className="pt-2 flex justify-center">
                 <Link href="/contact-us">
-                  <Button className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-6 rounded-full text-sm sm:text-base shadow-xl shadow-blue-600/30 cursor-pointer group">
+                  <Button className="h-12 px-7 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg text-sm sm:text-base shadow-xl shadow-blue-600/30 cursor-pointer group flex items-center justify-center">
                     Schedule a Discovery Session
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>

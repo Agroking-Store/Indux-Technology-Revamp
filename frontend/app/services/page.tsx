@@ -80,13 +80,13 @@ export default function ServicesPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="#services"
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-full text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white h-12 px-7 rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 cursor-pointer"
             >
               Explore Capabilities <ArrowRight className="size-4" />
             </Link>
             <Link
               href="/contact-us"
-              className="inline-flex items-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 px-8 py-3.5 rounded-full text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 h-12 px-7 rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
             >
               Discuss Your Project
             </Link>
@@ -141,7 +141,7 @@ export default function ServicesPage() {
 
                 {/* 4 Feature Cards from PDF */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-left">
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <CheckCircle2 className="size-4 text-blue-600 shrink-0" />
                       Tailored CRM Features
@@ -151,7 +151,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Workflow className="size-4 text-blue-600 shrink-0" />
                       Seamless System Integration
@@ -161,7 +161,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <ShieldCheck className="size-4 text-blue-600 shrink-0" />
                       Role-Based Access Control
@@ -171,7 +171,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <BarChart3 className="size-4 text-blue-600 shrink-0" />
                       Built for Business Growth
@@ -185,13 +185,13 @@ export default function ServicesPage() {
                 <div className="flex flex-wrap items-center gap-4 justify-center lg:justify-start">
                   <Link
                     href="/services/crm"
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
                   >
                     Explore Custom CRM <ChevronRight className="size-4" />
                   </Link>
                   <Link
                     href="/contact-us"
-                    className="inline-flex items-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
                   >
                     Discuss Your Project
                   </Link>
@@ -234,7 +234,7 @@ export default function ServicesPage() {
 
                 {/* 4 Feature Cards from PDF */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-left">
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Zap className="size-4 text-blue-600 shrink-0" />
                       Business Process Automation
@@ -244,7 +244,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Layers className="size-4 text-blue-600 shrink-0" />
                       Web Application Development
@@ -254,7 +254,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Database className="size-4 text-blue-600 shrink-0" />
                       Enterprise Software Solutions
@@ -264,7 +264,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <BarChart3 className="size-4 text-blue-600 shrink-0" />
                       Scalable Architecture
@@ -278,13 +278,13 @@ export default function ServicesPage() {
                 <div className="flex flex-wrap items-center gap-4 justify-center lg:justify-start">
                   <Link
                     href="/services/web-dev"
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
                   >
                     Explore Custom Software <ChevronRight className="size-4" />
                   </Link>
                   <Link
                     href="/contact-us"
-                    className="inline-flex items-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
                   >
                     Discuss Your Project
                   </Link>
@@ -327,7 +327,7 @@ export default function ServicesPage() {
 
                 {/* 4 Feature Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-left">
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Smartphone className="size-4 text-blue-600 shrink-0" />
                       iOS & Android Engineering
@@ -337,7 +337,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Layers className="size-4 text-blue-600 shrink-0" />
                       Flutter & React Native
@@ -347,7 +347,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Database className="size-4 text-blue-600 shrink-0" />
                       Offline-First Reliability
@@ -357,7 +357,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Zap className="size-4 text-blue-600 shrink-0" />
                       Push & Telemetry Analytics
@@ -371,13 +371,13 @@ export default function ServicesPage() {
                 <div className="flex flex-wrap items-center gap-4 justify-center lg:justify-start">
                   <Link
                     href="/services/mobile-dev"
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
                   >
                     Discuss Your App <ChevronRight className="size-4" />
                   </Link>
                   <Link
                     href="/contact-us"
-                    className="inline-flex items-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
                   >
                     Discuss Your Project
                   </Link>
@@ -420,7 +420,7 @@ export default function ServicesPage() {
 
                 {/* 4 Feature Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-left">
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Zap className="size-4 text-blue-600 shrink-0" />
                       Automate Repetitive Workflows
@@ -430,7 +430,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Workflow className="size-4 text-blue-600 shrink-0" />
                       Connect Your Business Tools
@@ -440,7 +440,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Cpu className="size-4 text-blue-600 shrink-0" />
                       Intelligent Document Processing
@@ -450,7 +450,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <BarChart3 className="size-4 text-blue-600 shrink-0" />
                       Real-Time Business Insights
@@ -464,13 +464,13 @@ export default function ServicesPage() {
                 <div className="flex flex-wrap items-center gap-4 justify-center lg:justify-start">
                   <Link
                     href="/services/automation"
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
                   >
                     Explore Automation <ChevronRight className="size-4" />
                   </Link>
                   <Link
                     href="/contact-us"
-                    className="inline-flex items-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
                   >
                     Discuss Your Project
                   </Link>
@@ -513,7 +513,7 @@ export default function ServicesPage() {
 
                 {/* 4 Feature Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-left">
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Sparkles className="size-4 text-blue-600 shrink-0" />
                       Domain-Specific Training
@@ -523,7 +523,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Workflow className="size-4 text-blue-600 shrink-0" />
                       Omnichannel Deployment
@@ -533,7 +533,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <ShieldCheck className="size-4 text-blue-600 shrink-0" />
                       Seamless Human Escalation
@@ -543,7 +543,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <BarChart3 className="size-4 text-blue-600 shrink-0" />
                       Lead Capture & CRM Sync
@@ -557,13 +557,13 @@ export default function ServicesPage() {
                 <div className="flex flex-wrap items-center gap-4 justify-center lg:justify-start">
                   <Link
                     href="/services/ai-chatbots"
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
                   >
                     Learn More <ChevronRight className="size-4" />
                   </Link>
                   <Link
                     href="/contact-us"
-                    className="inline-flex items-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
                   >
                     Discuss Your Project
                   </Link>
@@ -606,7 +606,7 @@ export default function ServicesPage() {
 
                 {/* 4 Feature Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-left">
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Database className="size-4 text-blue-600 shrink-0" />
                       Inventory & Purchase Tracking
@@ -616,7 +616,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <Factory className="size-4 text-blue-600 shrink-0" />
                       Shop Floor Production
@@ -626,7 +626,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <ShieldCheck className="size-4 text-blue-600 shrink-0" />
                       GST Invoicing & Accounting
@@ -636,7 +636,7 @@ export default function ServicesPage() {
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
+                  <div className="p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-sm transition-all">
                     <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2 mb-1">
                       <BarChart3 className="size-4 text-blue-600 shrink-0" />
                       Executive KPI Dashboards
@@ -650,13 +650,13 @@ export default function ServicesPage() {
                 <div className="flex flex-wrap items-center gap-4 justify-center lg:justify-start">
                   <Link
                     href="/services/erp"
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer"
                   >
                     Explore ERP Solutions <ChevronRight className="size-4" />
                   </Link>
                   <Link
                     href="/contact-us"
-                    className="inline-flex items-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm cursor-pointer"
                   >
                     Discuss Your Project
                   </Link>
@@ -683,7 +683,7 @@ export default function ServicesPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
               {/* Step 1 */}
-              <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-sm border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
                 <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold mb-4 mx-auto md:absolute md:-top-5 md:left-1/2 md:-translate-x-1/2 border-4 border-slate-50 dark:border-slate-950 shadow-md">
                   1
                 </div>
@@ -693,7 +693,7 @@ export default function ServicesPage() {
                 </p>
               </div>
               {/* Step 2 */}
-              <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-sm border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
                 <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold mb-4 mx-auto md:absolute md:-top-5 md:left-1/2 md:-translate-x-1/2 border-4 border-slate-50 dark:border-slate-950">
                   2
                 </div>
@@ -703,7 +703,7 @@ export default function ServicesPage() {
                 </p>
               </div>
               {/* Step 3 */}
-              <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-sm border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
                 <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold mb-4 mx-auto md:absolute md:-top-5 md:left-1/2 md:-translate-x-1/2 border-4 border-slate-50 dark:border-slate-950">
                   3
                 </div>
@@ -713,7 +713,7 @@ export default function ServicesPage() {
                 </p>
               </div>
               {/* Step 4 */}
-              <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-sm border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
                 <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold mb-4 mx-auto md:absolute md:-top-5 md:left-1/2 md:-translate-x-1/2 border-4 border-slate-50 dark:border-slate-950">
                   4
                 </div>
@@ -734,7 +734,7 @@ export default function ServicesPage() {
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative bg-[#0F172A] text-white rounded-[2rem] p-8 md:p-12 overflow-hidden border border-slate-850 shadow-2xl"
+          className="relative bg-[#0F172A] text-white rounded-sm p-8 md:p-12 overflow-hidden border border-slate-850 shadow-2xl"
         >
           {/* High-tech Glowing Background Accents */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-gradient-to-r from-blue-600/20 to-indigo-600/20 blur-[100px] pointer-events-none"></div>
@@ -758,7 +758,7 @@ export default function ServicesPage() {
             <div className="flex flex-col items-center lg:items-end w-full lg:w-auto flex-shrink-0">
               <Button
                 nativeButton={false}
-                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
+                className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
                 render={<Link href="/contact-us" />}
               >
                 Start Conversation <ArrowRight className="w-4 h-4" />

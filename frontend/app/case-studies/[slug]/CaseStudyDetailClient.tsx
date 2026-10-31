@@ -188,7 +188,7 @@ export default function CaseStudyDetailClient({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="bg-white dark:bg-slate-900 rounded-3xl sm:rounded-[2.5rem] border border-slate-200/80 dark:border-slate-800/80 p-6 sm:p-8 md:p-10 shadow-sm overflow-hidden flex flex-col gap-8 text-left"
+              className="bg-white dark:bg-slate-900 rounded-sm border border-slate-200/80 dark:border-slate-800/80 p-6 sm:p-8 md:p-10 shadow-sm overflow-hidden flex flex-col gap-8 text-left"
             >
               {/* Featured Hero Image */}
               <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[21/10] max-h-[460px] rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800 shadow-sm">
@@ -208,7 +208,7 @@ export default function CaseStudyDetailClient({
               </div>
 
               {/* Quick Summary Pill Bar */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 rounded-sm bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
                 <div>
                   <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
                     Client System
@@ -277,9 +277,9 @@ export default function CaseStudyDetailClient({
                 </div>
 
                 {/* Elegant Outcome Highlight Box */}
-                <div className="rounded-2xl p-6 sm:p-7 bg-gradient-to-br from-emerald-50/80 via-teal-50/40 to-slate-50 dark:from-emerald-950/40 dark:via-slate-900 dark:to-slate-900 border border-emerald-200/80 dark:border-emerald-900/50">
+                <div className="rounded-sm p-6 sm:p-7 bg-gradient-to-br from-emerald-50/80 via-teal-50/40 to-slate-50 dark:from-emerald-950/40 dark:via-slate-900 dark:to-slate-900 border border-emerald-200/80 dark:border-emerald-900/50">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
+                    <div className="p-3 rounded-sm bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
                       <TrendingUp className="w-6 h-6" />
                     </div>
                     <div className="w-full">
@@ -303,7 +303,7 @@ export default function CaseStudyDetailClient({
                 <button
                   type="button"
                   onClick={handleCopyLink}
-                  className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
                 >
                   <Share2 className="w-3.5 h-3.5" />
                   {copied ? 'Link Copied!' : 'Share Case Study'}
@@ -319,7 +319,7 @@ export default function CaseStudyDetailClient({
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 shadow-sm text-left flex flex-col gap-4"
+              className="bg-white dark:bg-slate-900 rounded-sm border border-slate-200/80 dark:border-slate-800/80 p-6 shadow-sm text-left flex flex-col gap-4"
             >
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800/60 pb-3">
                 Project Overview
@@ -371,7 +371,7 @@ export default function CaseStudyDetailClient({
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-950 rounded-3xl p-6 text-white shadow-xl text-left flex flex-col gap-4 relative overflow-hidden"
+              className="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-950 rounded-sm p-6 text-white shadow-xl text-left flex flex-col gap-4 relative overflow-hidden"
             >
               <div className="relative z-10">
                 <span className="text-[10px] uppercase tracking-widest font-extrabold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full border border-blue-400/20">
@@ -386,7 +386,7 @@ export default function CaseStudyDetailClient({
 
                 <div className="pt-4">
                   <Link href="/contact-us" className="w-full block">
-                    <Button className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-5 rounded-full text-xs sm:text-sm shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 cursor-pointer group">
+                    <Button className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg text-sm sm:text-base shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 cursor-pointer group">
                       Schedule a Discovery Call
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
@@ -401,7 +401,7 @@ export default function CaseStudyDetailClient({
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 shadow-sm text-left flex flex-col gap-4"
+                className="bg-white dark:bg-slate-900 rounded-sm border border-slate-200/80 dark:border-slate-800/80 p-6 shadow-sm text-left flex flex-col gap-4"
               >
                 <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800/60 pb-3">
                   More Case Studies
@@ -413,7 +413,7 @@ export default function CaseStudyDetailClient({
                       onClick={() => router.push(`/case-studies/${item.slug}`)}
                       className="flex gap-3 group cursor-pointer items-start"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/60 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0 mt-0.5">
+                      <div className="w-10 h-10 rounded-sm bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/60 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0 mt-0.5">
                         <Building2 className="w-5 h-5" />
                       </div>
                       <div className="flex flex-col gap-1 min-w-0 flex-1">
@@ -438,7 +438,7 @@ export default function CaseStudyDetailClient({
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 shadow-sm text-left flex flex-col gap-3"
+              className="bg-white dark:bg-slate-900 rounded-sm border border-slate-200/80 dark:border-slate-800/80 p-6 shadow-sm text-left flex flex-col gap-3"
             >
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800/60 pb-3">
                 Share This Case Study
@@ -449,7 +449,7 @@ export default function CaseStudyDetailClient({
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="w-full py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60 font-semibold text-xs text-slate-700 dark:text-slate-200 flex items-center justify-center gap-2 transition cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60 font-semibold text-xs text-slate-700 dark:text-slate-200 flex items-center justify-center gap-2 transition cursor-pointer"
               >
                 <Share2 className="w-3.5 h-3.5" />
                 Copy Link

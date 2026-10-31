@@ -208,7 +208,7 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="flex items-center gap-1 px-2.5 sm:px-3 border rounded-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 h-9 sm:h-10 notranslate shrink-0">
+    <div className="flex items-center gap-1 px-2.5 sm:px-3 border rounded-lg bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 h-9 sm:h-10 notranslate shrink-0">
       <Globe className="size-3.5 sm:size-4 text-slate-500 shrink-0" />
       <Select value={currentLang} onValueChange={changeLanguage}>
         <SelectTrigger className="w-auto min-w-[50px] sm:min-w-[60px] border-none bg-transparent dark:bg-transparent hover:bg-transparent dark:hover:bg-transparent h-full focus:ring-0 text-xs sm:text-[13px] font-bold cursor-pointer gap-1 sm:gap-2 px-1 shadow-none">
@@ -469,14 +469,14 @@ className={cn(
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
               transition={{ duration: 0.18, ease: "easeOut" }}
             >
-              <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl dark:shadow-slate-950/90 border border-slate-100 dark:border-slate-800 p-3 grid grid-cols-2 gap-3">
+              <div className="bg-white dark:bg-slate-900 rounded-sm shadow-2xl dark:shadow-slate-950/90 border border-slate-100 dark:border-slate-800 p-3 grid grid-cols-2 gap-3">
                 {data.main.map((item, idx) => (
                   <Link
                     key={idx}
                     href={item.href || "#"}
-                    className="relative flex items-center gap-3.5 p-3.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/70 transition-all group/card overflow-hidden border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60 cursor-pointer text-left"
+                    className="relative flex items-center gap-3.5 p-3.5 rounded-sm hover:bg-slate-50 dark:hover:bg-slate-800/70 transition-all group/card overflow-hidden border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60 cursor-pointer text-left"
                   >
-                    <div className="relative z-10 text-slate-700 dark:text-slate-300 group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors shrink-0 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover/card:bg-blue-50 dark:group-hover/card:bg-blue-950/50">
+                    <div className="relative z-10 text-slate-700 dark:text-slate-300 group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors shrink-0 p-2.5 rounded-sm bg-slate-100 dark:bg-slate-800 group-hover/card:bg-blue-50 dark:group-hover/card:bg-blue-950/50">
                       <item.icon className="size-5" />
                     </div>
                     <div className="relative z-10 text-left">
@@ -510,7 +510,7 @@ className={cn(
               exit={{ opacity: 0, y: 10, scale: 0.98 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
             >
-              <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl dark:shadow-slate-950/80 border border-slate-100 dark:border-slate-800 p-6 flex gap-6 max-h-[80vh] overflow-y-auto">
+              <div className="bg-white dark:bg-slate-900 rounded-sm shadow-xl dark:shadow-slate-950/80 border border-slate-100 dark:border-slate-800 p-6 flex gap-6 max-h-[80vh] overflow-y-auto">
                 {/* Left Side: Horizontal Grid Cards */}
                 <div
                   className={cn(
@@ -526,12 +526,12 @@ className={cn(
                     <Link
                       key={idx}
                       href={item.href || "#"}
-                      className="relative flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all group/card overflow-hidden border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60 cursor-pointer"
+                      className="relative flex items-center gap-4 p-4 rounded-sm hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all group/card overflow-hidden border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60 cursor-pointer"
                     >
                       {/* Grid Background Pattern */}
                       <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f61a_1px,transparent_1px),linear-gradient(to_bottom,#3b82f61a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-20 group-hover/card:opacity-100 transition-opacity duration-300" />
 
-                      <div className="relative z-10 text-slate-700 dark:text-slate-300 group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors shrink-0 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover/card:bg-blue-50 dark:group-hover/card:bg-blue-950/50">
+                      <div className="relative z-10 text-slate-700 dark:text-slate-300 group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors shrink-0 p-2.5 rounded-sm bg-slate-100 dark:bg-slate-800 group-hover/card:bg-blue-50 dark:group-hover/card:bg-blue-950/50">
                         <item.icon className="size-6" />
                       </div>
                       <div className="relative z-10 text-left">
@@ -747,7 +747,7 @@ function MobileNav({ pathname }: { pathname: string }) {
 
         <div className="p-6 border-t dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 flex flex-col gap-4">
           <GetQuoteModal>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2 mt-4">
+            <Button className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2 mt-4">
               Get Quote
             </Button>
           </GetQuoteModal>
