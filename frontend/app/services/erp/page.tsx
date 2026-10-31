@@ -36,6 +36,7 @@ import {
   TbBrandMongodb
 } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
+import { ProcessTimeline } from '@/components/ProcessTimeline';
 import { cn } from '@/lib/utils';
 
 // Tech stack data
@@ -365,68 +366,12 @@ export default function ERPServicePage() {
           </div>
         </section>
 
-        {/* ===== DEVELOPMENT PROCESS SECTION ===== */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-slate-200/60 dark:border-slate-900">
-          <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">Our Process</h2>
-            <p className="text-slate-555 dark:text-slate-455 text-sm md:text-base leading-relaxed font-sans">
-              We employ a methodical, phased rollout approach to minimize business disruption and ensure seamless ERP integration.
-            </p>
-          </div>
-
-          <div className="relative max-w-5xl mx-auto">
-            {/* Central Progress Line */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-4 bottom-4 w-1 bg-gradient-to-b from-blue-600 via-indigo-500 to-slate-200 dark:to-slate-800 rounded-full hidden md:block"></div>
-
-            <div className="space-y-12">
-              {processSteps.map((step, idx) => {
-                const isEven = idx % 2 === 0;
-                return (
-                  <motion.div
-                    initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.7, ease: "easeOut" }}
-                    key={idx}
-                    className={cn(
-                      "flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 relative w-full",
-                      isEven ? "md:flex-row" : "md:flex-row-reverse"
-                    )}
-                  >
-                    {/* Process Card */}
-                    <div className="w-full md:w-[45%] bg-white dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 hover:border-blue-500/30 hover:shadow-2xl dark:hover:shadow-none transition-all duration-300 relative overflow-hidden group">
-
-                      {/* Stylized background number */}
-                      <span className="absolute right-6 top-6 text-7xl font-extrabold text-slate-100 dark:text-slate-800/80 select-none group-hover:scale-110 transition-transform duration-500">
-                        {step.step}
-                      </span>
-
-                      <div className="relative z-10 text-left space-y-3">
-                        <div className="inline-flex items-center justify-center px-3 py-1 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide">
-                          Phase {step.step}
-                        </div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                          {step.title}
-                        </h3>
-                        <p className="text-slate-555 dark:text-slate-400 text-sm leading-relaxed font-sans">
-                          {step.desc}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Central pulsing node marker */}
-                    <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full border-4 border-white dark:border-slate-950 bg-blue-600 z-20 shadow-md hidden md:block">
-                      <div className="w-full h-full rounded-full bg-blue-500 animate-ping opacity-60"></div>
-                    </div>
-
-                    {/* Spacer to balance flex layout */}
-                    <div className="w-full md:w-[45%] hidden md:block"></div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+        {/* ===== PROCESS SECTION ===== */}
+        <ProcessTimeline
+          steps={processSteps}
+          title="Our Process"
+          subtitle="We employ a methodical, phased rollout approach to minimize business disruption and ensure seamless ERP integration."
+        />
 
         {/* ===== WHY INDUX SECTION ===== */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-slate-200/60 dark:border-slate-900">
