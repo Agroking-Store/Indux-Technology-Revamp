@@ -198,7 +198,7 @@ export default function Footer() {
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? "Subscribing..." : "Subscribe"}
 
@@ -227,7 +227,7 @@ export default function Footer() {
               href="https://www.facebook.com/885831577953764/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-lg bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
               <FacebookLogoIcon className="size-5" />
             </a>
@@ -235,7 +235,7 @@ export default function Footer() {
               href="https://x.com/induxtechnology"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-lg bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
               <FaXTwitter className="size-5" />
             </a>
@@ -243,7 +243,7 @@ export default function Footer() {
               href="https://www.linkedin.com/company/indux-technology/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-lg bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
               <LinkedInLogoIcon className="size-5" />
             </a>
@@ -251,7 +251,7 @@ export default function Footer() {
               href="https://www.instagram.com/indux.technology"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-lg bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-blue-600 hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
               <InstagramLogoIcon className="size-5" />
             </a>
@@ -259,7 +259,7 @@ export default function Footer() {
               href="https://wa.me/918421538753"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-lg bg-slate-800 text-slate-300 hover:bg-[#25D366] hover:text-white transition-all cursor-pointer hover:-translate-y-1"
+              className="p-3 rounded-full bg-slate-800 text-slate-300 hover:bg-[#25D366] hover:text-white transition-all cursor-pointer hover:-translate-y-1"
             >
               <FaWhatsapp className="size-5" />
             </a>

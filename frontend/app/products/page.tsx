@@ -191,7 +191,7 @@ export default function ProductsZigzagShowcase() {
 
                       <div className="flex flex-wrap items-center gap-3">
                         <Link href={`/products/${project.slug}`}>
-                          <Button className="h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2">
+                          <Button className="h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2">
                             Explore Details{" "}
                             <ArrowRight className="ml-2 size-5 group-hover:translate-x-1 transition-transform" />
                           </Button>
@@ -204,7 +204,7 @@ export default function ProductsZigzagShowcase() {
                           >
                             <Button
                               variant="outline"
-                              className="h-12 px-7 rounded-lg text-sm sm:text-base font-semibold border-2 border-slate-200 dark:border-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all cursor-pointer flex items-center justify-center gap-2"
+                              className="h-12 px-7 rounded-full text-sm sm:text-base font-semibold border-2 border-slate-200 dark:border-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all cursor-pointer flex items-center justify-center gap-2"
                             >
                               Live Demo
                               <ExternalLink className="ml-2 size-4" />
@@ -225,7 +225,7 @@ export default function ProductsZigzagShowcase() {
               <Button
                 variant="outline"
                 onClick={() => setVisibleCount((v) => v + 3)}
-                className="rounded-lg px-5 h-10 text-xs sm:text-sm border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium text-xs sm:text-sm cursor-pointer shadow-2xs transition-all hover:scale-[1.02]"
+                className="rounded-full px-5 h-10 text-xs sm:text-sm border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium text-xs sm:text-sm cursor-pointer shadow-2xs transition-all hover:scale-[1.02]"
               >
                 <Plus className="w-3.5 h-3.5 mr-1.5" /> Display More Solutions
               </Button>

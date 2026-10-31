@@ -635,7 +635,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                 </div>
                 <Button
                   onClick={() => router.push("/events")}
-                  className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold"
+                  className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold"
                 >
                   Return to Feed
                 </Button>
@@ -655,7 +655,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                 <Button
                   onClick={() => router.push("/events")}
                   variant="outline"
-                  className="w-full h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold"
+                  className="w-full h-10 px-5 rounded-full text-xs sm:text-sm font-semibold"
                 >
                   Explore Other Events
                 </Button>
@@ -1025,7 +1025,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                   <Button
                     type="submit"
                     disabled={registering}
-                    className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold shadow-lg shadow-blue-500/20 transition disabled:opacity-50 mt-6 cursor-pointer"
+                    className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold shadow-lg shadow-blue-500/20 transition disabled:opacity-50 mt-6 cursor-pointer"
                   >
                     {registering
                       ? "Processing..."
@@ -1109,13 +1109,13 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                 <Button
                   onClick={handleCancelMockPayment}
                   variant="outline"
-                  className="flex-1 h-12 px-7 rounded-lg text-sm sm:text-base font-semibold cursor-pointer"
+                  className="flex-1 h-12 px-7 rounded-full text-sm sm:text-base font-semibold cursor-pointer"
                 >
                   Cancel
                 </Button>
                 <Button
                   onClick={handleSimulatePaymentSuccess}
-                  className="flex-1 h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold shadow-lg shadow-blue-500/20 cursor-pointer"
+                  className="flex-1 h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold shadow-lg shadow-blue-500/20 cursor-pointer"
                 >
                   Confirm Payment
                 </Button>

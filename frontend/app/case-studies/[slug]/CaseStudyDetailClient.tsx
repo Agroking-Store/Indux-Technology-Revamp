@@ -303,7 +303,7 @@ export default function CaseStudyDetailClient({
                 <button
                   type="button"
                   onClick={handleCopyLink}
-                  className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
                 >
                   <Share2 className="w-3.5 h-3.5" />
                   {copied ? 'Link Copied!' : 'Share Case Study'}
@@ -386,7 +386,7 @@ export default function CaseStudyDetailClient({
 
                 <div className="pt-4">
                   <Link href="/contact-us" className="w-full block">
-                    <Button className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg text-sm sm:text-base shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 cursor-pointer group">
+                    <Button className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full text-sm sm:text-base shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 cursor-pointer group">
                       Schedule a Discovery Call
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
@@ -449,7 +449,7 @@ export default function CaseStudyDetailClient({
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="w-full py-2.5 px-4 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60 font-semibold text-xs text-slate-700 dark:text-slate-200 flex items-center justify-center gap-2 transition cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-full border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60 font-semibold text-xs text-slate-700 dark:text-slate-200 flex items-center justify-center gap-2 transition cursor-pointer"
               >
                 <Share2 className="w-3.5 h-3.5" />
                 Copy Link

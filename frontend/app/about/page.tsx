@@ -446,7 +446,7 @@ export default function AboutPage() {
                   <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                    className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                       isActive
                         ? "bg-blue-600 text-white shadow-md shadow-blue-500/25"
                         : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -898,7 +898,7 @@ export default function AboutPage() {
             Let's discuss how we can build custom CRM, ERP, or web software around how your business works.
           </p>
           <Link href="/contact-us">
-            <Button className="h-12 px-7 rounded-lg bg-white text-blue-600 hover:bg-blue-50 text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-xl">
+            <Button className="h-12 px-7 rounded-full bg-white text-blue-600 hover:bg-blue-50 text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-xl">
               Book a free consultation
             </Button>
           </Link>

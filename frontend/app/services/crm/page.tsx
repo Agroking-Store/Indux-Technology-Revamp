@@ -181,7 +181,7 @@ export default function CRMServicePage() {
                 <div className="flex flex-wrap items-center gap-4 pt-4">
                   <Button
                     nativeButton={false}
-                    className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
                     render={<Link href="/contact-us" />}
                   >
                     Start Your Project
@@ -189,7 +189,7 @@ export default function CRMServicePage() {
                   <Button
                     nativeButton={false}
                     variant="outline"
-                    className="w-full sm:w-auto h-12 px-7 rounded-lg text-sm sm:text-base font-semibold border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 shadow-sm transition-all hover:scale-105 cursor-pointer flex items-center justify-center"
+                    className="w-full sm:w-auto h-12 px-7 rounded-full text-sm sm:text-base font-semibold border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 shadow-sm transition-all hover:scale-105 cursor-pointer flex items-center justify-center"
                     render={<a href="#capabilities" />}
                   >
                     Explore Capabilities
@@ -278,7 +278,7 @@ export default function CRMServicePage() {
 
                 <Button
                   nativeButton={false}
-                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
                   render={<Link href="/contact-us" />}
                 >
                   Consult with Our Experts <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -465,7 +465,7 @@ export default function CRMServicePage() {
               <div className="flex flex-col items-center lg:items-end w-full lg:w-auto flex-shrink-0">
                 <Button
                   nativeButton={false}
-                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
                   render={<Link href="/contact-us" />}
                 >
                   Start Conversation <ArrowRight className="w-4 h-4" />

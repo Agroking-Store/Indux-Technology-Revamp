@@ -216,7 +216,7 @@ export default function BlogsPage() {
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className="text-xs font-semibold px-5 py-2.5 rounded-lg border transition-all duration-300 flex items-center gap-2 cursor-pointer hover:scale-103"
+                    className="text-xs font-semibold px-5 py-2.5 rounded-full border transition-all duration-300 flex items-center gap-2 cursor-pointer hover:scale-103"
                     style={{
                       backgroundColor: activeCategory === cat ? '#2563eb' : 'transparent',
                       color: activeCategory === cat ? '#ffffff' : 'inherit',

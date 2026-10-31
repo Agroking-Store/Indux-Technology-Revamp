@@ -111,7 +111,7 @@ export default function ProductDetailPage() {
               </p>
               <div className="flex flex-wrap gap-4 items-center">
                 <GetQuoteModal>
-                  <Button className="h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold shadow-xl shadow-blue-600/20 cursor-pointer flex items-center justify-center gap-2">
+                  <Button className="h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold shadow-xl shadow-blue-600/20 cursor-pointer flex items-center justify-center gap-2">
                     Get Free Quote <ArrowRight className="ml-2 size-5" />
                   </Button>
                 </GetQuoteModal>
@@ -123,7 +123,7 @@ export default function ProductDetailPage() {
                   >
                     <Button
                       variant="outline"
-                      className="h-12 px-7 rounded-lg text-sm sm:text-base font-semibold border-2 border-slate-200 dark:border-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all cursor-pointer flex items-center justify-center gap-2"
+                      className="h-12 px-7 rounded-full text-sm sm:text-base font-semibold border-2 border-slate-200 dark:border-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all cursor-pointer flex items-center justify-center gap-2"
                     >
                       Visit Live Project <ExternalLink className="ml-2 size-5" />
                     </Button>
@@ -305,7 +305,7 @@ export default function ProductDetailPage() {
               <div className="flex flex-col sm:flex-row justify-center gap-6 w-full sm:w-auto">
                 <GetQuoteModal>
 
-                  <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold shadow-2xl transition-transform hover:scale-105 border-none cursor-pointer flex items-center justify-center gap-2">
+                  <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold shadow-2xl transition-transform hover:scale-105 border-none cursor-pointer flex items-center justify-center gap-2">
                     Schedule a Demo
 
                   </Button>
@@ -314,7 +314,7 @@ export default function ProductDetailPage() {
                   <Button
                     variant="outline"
 
-                    className="w-full sm:w-auto h-12 px-7 rounded-lg text-sm sm:text-base font-semibold bg-transparent border-2 border-slate-700 text-white hover:text-white hover:bg-slate-800 cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto h-12 px-7 rounded-full text-sm sm:text-base font-semibold bg-transparent border-2 border-slate-700 text-white hover:text-white hover:bg-slate-800 cursor-pointer flex items-center justify-center gap-2"
 
                   >
                     Talk to Sales

@@ -185,7 +185,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
             </p>
             <Button
               onClick={() => router.push("/careers")}
-              className="h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2"
+              className="h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2"
             >
               Return to Careers
             </Button>
@@ -577,7 +577,7 @@ export default function CareerDetailClient({ career }: CareerDetailClientProps) 
                   <Button
                     type="submit"
                     disabled={submitting}
-                    className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold shadow-lg shadow-blue-500/20 hover:scale-[1.02] transition-all cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold shadow-lg shadow-blue-500/20 hover:scale-[1.02] transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
                     {submitting ? (
                       <>

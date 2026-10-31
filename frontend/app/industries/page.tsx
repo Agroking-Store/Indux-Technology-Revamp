@@ -265,7 +265,7 @@ export default function IndustriesShowcase() {
                   <motion.button 
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`inline-flex items-center justify-center gap-2 rounded-lg h-12 px-7 text-sm sm:text-base font-semibold text-white transition-colors cursor-pointer ${theme.bg} ${theme.buttonHover}`}
+                    className={`inline-flex items-center justify-center gap-2 rounded-full h-12 px-7 text-sm sm:text-base font-semibold text-white transition-colors cursor-pointer ${theme.bg} ${theme.buttonHover}`}
                   >
                     Explore Industry Solutions <ArrowRight className="h-4 w-4" />
                   </motion.button>
@@ -304,7 +304,7 @@ export default function IndustriesShowcase() {
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center gap-2 rounded-lg bg-white h-12 px-7 text-sm sm:text-base font-semibold text-blue-600 shadow-lg transition-colors hover:bg-slate-50"
+                className="flex items-center justify-center gap-2 rounded-full bg-white h-12 px-7 text-sm sm:text-base font-semibold text-blue-600 shadow-lg transition-colors hover:bg-slate-50"
               >
                 Get in Touch <ArrowRight className="h-4 w-4" />
               </motion.button>
@@ -312,7 +312,7 @@ export default function IndustriesShowcase() {
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center gap-2 rounded-lg border border-blue-400 bg-blue-600/50 h-12 px-7 text-sm sm:text-base font-semibold text-white backdrop-blur-sm transition-colors hover:bg-blue-500"
+                className="flex items-center justify-center gap-2 rounded-full border border-blue-400 bg-blue-600/50 h-12 px-7 text-sm sm:text-base font-semibold text-white backdrop-blur-sm transition-colors hover:bg-blue-500"
               >
                 Explore Solutions <ArrowRight className="h-4 w-4" />
               </motion.button>
