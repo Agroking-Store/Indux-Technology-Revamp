@@ -225,8 +225,8 @@ export default function MobileDevServicePage() {
                     <div className="w-3 h-3 rounded-full bg-rose-500"></div>
                     <div className="w-3 h-3 rounded-full bg-amber-500"></div>
                     <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
-                    <div className="w-40 h-4 rounded bg-slate-800/60 mx-auto text-[10px] text-slate-500 flex items-center justify-center font-mono select-none">
-                      induxtech.com/mobile-dev
+                    <div className="w-40 h-4 rounded bg-slate-800/60 mx-auto text-[10px] text-slate-300 flex items-center justify-center font-mono select-none">
+                      induxtechnology.com/mobile-dev
                     </div>
                   </div>
                   {/* Illustration Image */}

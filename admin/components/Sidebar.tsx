@@ -4,10 +4,10 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { 
-  LayoutDashboard, 
-  FileText, 
-  Briefcase, 
+import {
+  LayoutDashboard,
+  FileText,
+  Briefcase,
   Inbox,
   MessageSquare,
   Calendar,
@@ -81,12 +81,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const isItemActive = (href: string) => {
     if (pathname === href) return true;
     if (href === '/dashboard') return false;
-    
+
     // Prevent /events from remaining active when on /events/registrations
     if (href === '/events' && pathname.startsWith('/events/registrations')) {
       return false;
     }
-    
+
     return pathname.startsWith(href + '/');
   };
 
@@ -113,7 +113,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">Control Center</span>
           </div>
         </div>
-</SidebarHeader>
+      </SidebarHeader>
 
       <SidebarContent>
         {groups.map((group, gIdx) => (
@@ -127,7 +127,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   const active = isItemActive(item.href);
                   return (
                     <SidebarMenuItem key={item.href}>
-                      <SidebarMenuButton 
+                      <SidebarMenuButton
                         render={<Link href={item.href} />}
                         isActive={active}
                         tooltip={item.label}
@@ -167,7 +167,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </span>
             </div>
           </div>
-          
+
           <ConfirmDialog
             title="Are you sure you want to sign out?"
             description="You will be redirected to the login page and will need to enter your credentials to access the admin panel again."
