@@ -518,7 +518,7 @@ export default function ERPServicePage() {
               </div>
 
               {/* Right Column: Button & footnote */}
-              <div className="flex flex-col items-center lg:items-end gap-3 w-full lg:w-auto flex-shrink-0">
+              <div className="flex flex-col items-center lg:items-end w-full lg:w-auto flex-shrink-0">
                 <Button
                   nativeButton={false}
                   className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
@@ -526,9 +526,7 @@ export default function ERPServicePage() {
                 >
                   Start Conversation <ArrowRight className="w-4 h-4" />
                 </Button>
-                <span className="text-xs text-slate-500 font-medium tracking-wide">
-                  Response within 24 hours
-                </span>
+
               </div>
 
             </div>
