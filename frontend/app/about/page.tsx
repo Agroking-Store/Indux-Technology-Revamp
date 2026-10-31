@@ -1,6 +1,6 @@
 "use client"
-import { useState, useEffect } from "react";
-import { motion, Variants } from "framer-motion";
+import { useState, useEffect, useMemo } from "react";
+import { motion, Variants, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Sparkles, Play, Briefcase, Target, ShieldCheck, Asterisk, Trophy, KeyRound, Leaf, Rocket, Eye, CheckCircle2, Globe as GlobeIcon, ArrowRight, Check, Users, Mail } from "lucide-react";
@@ -112,6 +112,88 @@ export default function AboutPage() {
   };
 
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
+  // Dynamic categories with core requested filters + any custom departments from DB
+  const categories = useMemo(() => {
+    const core = ["All", "CEO", "Development", "Designer", "Digital Marketing", "HR"];
+    const customDepts = new Set<string>();
+
+    teamMembers.forEach((m) => {
+      const d = m.department?.trim();
+      if (d) {
+        const isCore = core.some((c) => {
+          if (c.toLowerCase() === d.toLowerCase()) return true;
+          if (c === "Development" && /^(engineering|development|developer)$/i.test(d)) return true;
+          if (c === "Designer" && /^(design|designer|ui\/ux)$/i.test(d)) return true;
+          if (c === "CEO" && /^(ceo|leadership|founder)$/i.test(d)) return true;
+          if (c === "Digital Marketing" && /^(marketing|digital marketing|growth)$/i.test(d)) return true;
+          if (c === "HR" && /^(hr|human resources)$/i.test(d)) return true;
+          return false;
+        });
+        if (!isCore) {
+          customDepts.add(d);
+        }
+      }
+    });
+
+    return [...core, ...Array.from(customDepts)];
+  }, [teamMembers]);
+
+  const filteredMembers = useMemo(() => {
+    if (selectedCategory === "All") return teamMembers;
+
+    return teamMembers.filter((m) => {
+      const d = (m.department || "").trim().toLowerCase();
+      const r = (m.role || "").trim().toLowerCase();
+      const sel = selectedCategory.toLowerCase();
+
+      if (sel === "development") {
+        return (
+          d === "development" ||
+          d === "engineering" ||
+          r.includes("developer") ||
+          r.includes("architect") ||
+          r.includes("engineer")
+        );
+      }
+      if (sel === "designer") {
+        return (
+          d === "designer" ||
+          d === "design" ||
+          r.includes("design") ||
+          r.includes("ui/ux")
+        );
+      }
+      if (sel === "ceo") {
+        return (
+          d === "ceo" ||
+          r.includes("ceo") ||
+          r.includes("founder") ||
+          d === "leadership"
+        );
+      }
+      if (sel === "digital marketing") {
+        return (
+          d.includes("market") ||
+          d === "digital marketing" ||
+          r.includes("market") ||
+          r.includes("seo")
+        );
+      }
+      if (sel === "hr") {
+        return (
+          d === "hr" ||
+          d === "human resources" ||
+          r.includes("hr") ||
+          r.includes("talent") ||
+          r.includes("recruiter")
+        );
+      }
+
+      return d === sel || r.includes(sel);
+    });
+  }, [teamMembers, selectedCategory]);
 
   useEffect(() => {
     let isMounted = true;
@@ -204,7 +286,7 @@ export default function AboutPage() {
               <motion.div
                 key={imgSrc}
                 variants={fadeUp}
- className={`relative w-full aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden shadow-xl ${index % 2 !== 0 ? 'md:mt-6' : ''}`}
+ className={`relative w-full aspect-square md:aspect-[4/5] rounded-sm overflow-hidden shadow-xl ${index % 2 !== 0 ? 'md:mt-6' : ''}`}
               >
                 <div className="absolute inset-0 bg-slate-200 dark:bg-slate-800">
  <Image
@@ -263,7 +345,7 @@ export default function AboutPage() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative"
           >
-<div className="relative aspect-[3/4] md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl bg-slate-200 dark:bg-slate-800">
+<div className="relative aspect-[3/4] md:aspect-[4/5] rounded-sm overflow-hidden shadow-2xl bg-slate-200 dark:bg-slate-800">
               <img
                 src="/owner.webp"
                 alt="Founder"
@@ -274,7 +356,7 @@ export default function AboutPage() {
               />
             </div>
             {/* Floating Card */}
-            <div className="absolute -bottom-6 -right-2 md:-right-8 bg-white dark:bg-slate-800 p-5 md:p-6 rounded-2xl shadow-xl max-w-[260px] border border-slate-200/60 dark:border-slate-700/60">
+            <div className="absolute -bottom-6 -right-2 md:-right-8 bg-white dark:bg-slate-800 p-5 md:p-6 rounded-sm shadow-xl max-w-[260px] border border-slate-200/60 dark:border-slate-700/60">
               <p className="font-bold text-base md:text-lg text-slate-900 dark:text-white leading-tight">
                 "Making an impact, together"
               </p>
@@ -349,9 +431,49 @@ export default function AboutPage() {
             </motion.p>
           </div>
 
-          {/* Team Members Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {teamMembers.map((member, index) => {
+          {/* Department Filter Tabs */}
+          {categories.length > 1 && (
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className="flex flex-wrap items-center justify-center gap-2 mb-12"
+            >
+              {categories.map((category) => {
+                const isActive = selectedCategory === category;
+                return (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                      isActive
+                        ? "bg-blue-600 text-white shadow-md shadow-blue-500/25"
+                        : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    }`}
+                  >
+                    {category}
+                  </button>
+                );
+              })}
+            </motion.div>
+          )}
+
+          {/* Team Members Grid / Empty State */}
+          {filteredMembers.length === 0 ? (
+            <div className="py-16 text-center bg-white/50 dark:bg-slate-950/50 rounded-sm border border-slate-200/60 dark:border-slate-800/60 max-w-md mx-auto">
+              <Users className="w-10 h-10 text-slate-400 mx-auto mb-3" />
+              <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">
+                No members found in {selectedCategory}
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Team members assigned to this department will appear here.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+              <AnimatePresence mode="popLayout">
+                {filteredMembers.map((member, index) => {
               const fullImg = getFullImageUrl(member.image);
               return (
                 <motion.div
@@ -360,7 +482,7 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative flex flex-col rounded-2xl bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1.5 transition-all duration-300"
+                  className="group relative flex flex-col rounded-sm bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1.5 transition-all duration-300"
                 >
                   {/* Member Photo */}
                   <div className="relative aspect-[4/5] w-full overflow-hidden bg-slate-100 dark:bg-slate-900">
@@ -451,7 +573,9 @@ export default function AboutPage() {
                 </motion.div>
               );
             })}
-          </div>
+              </AnimatePresence>
+            </div>
+          )}
         </div>
       </section>
       )}
@@ -469,11 +593,11 @@ export default function AboutPage() {
             className="relative h-[340px] md:h-[420px] w-full"
           >
  {/* Image 1 (Back/Top Left) */}
-            <div className="absolute top-0 left-0 w-[65%] h-[72%] rounded-3xl overflow-hidden shadow-2xl z-10 border-4 border-white dark:border-slate-950">
+            <div className="absolute top-0 left-0 w-[65%] h-[72%] rounded-sm overflow-hidden shadow-2xl z-10 border-4 border-white dark:border-slate-950">
  <Image src="/images/unsplash/img-9799f8ae.webp" alt="Team Collaboration at Indux Technology" fill className="object-cover" unoptimized />
             </div>
  {/* Image 2 (Front/Bottom Right) */}
-            <div className="absolute bottom-0 right-0 w-[65%] h-[72%] rounded-3xl overflow-hidden shadow-2xl z-20 border-4 border-white dark:border-slate-950">
+            <div className="absolute bottom-0 right-0 w-[65%] h-[72%] rounded-sm overflow-hidden shadow-2xl z-20 border-4 border-white dark:border-slate-950">
  <Image src="/images/unsplash/img-b27e33a3.webp" alt="Mission Execution at Indux Technology" fill className="object-cover" unoptimized />
             </div>
             {/* Decorative dot pattern */}
@@ -559,11 +683,11 @@ export default function AboutPage() {
             className="relative h-[340px] md:h-[420px] w-full order-1 lg:order-2"
           >
  {/* Image 1 (Back/Top Right) */}
-            <div className="absolute top-0 right-0 w-[65%] h-[72%] rounded-3xl overflow-hidden shadow-2xl z-10 border-4 border-slate-50 dark:border-slate-900">
+            <div className="absolute top-0 right-0 w-[65%] h-[72%] rounded-sm overflow-hidden shadow-2xl z-10 border-4 border-slate-50 dark:border-slate-900">
  <Image src="/images/unsplash/img-5b65630e.webp" alt="Innovation" fill className="object-cover" unoptimized />
             </div>
  {/* Image 2 (Front/Bottom Left) */}
-            <div className="absolute bottom-0 left-0 w-[65%] h-[72%] rounded-3xl overflow-hidden shadow-2xl z-20 border-4 border-slate-50 dark:border-slate-900">
+            <div className="absolute bottom-0 left-0 w-[65%] h-[72%] rounded-sm overflow-hidden shadow-2xl z-20 border-4 border-slate-50 dark:border-slate-900">
  <Image src="/images/unsplash/img-0ffac912.webp" alt="Global Reach" fill className="object-cover" unoptimized />
             </div>
             {/* Decorative dot pattern */}
@@ -627,9 +751,9 @@ export default function AboutPage() {
                 <motion.div
                   key={idx}
                   variants={fadeUp}
-                  className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-7 flex flex-col items-start shadow-sm hover:shadow-md transition-shadow"
+                  className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm p-6 md:p-7 flex flex-col items-start shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center mb-5 shadow-inner">
+                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-sm flex items-center justify-center mb-5 shadow-inner">
                     <Icon size={24} />
                   </div>
                   <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">{step.title}</h3>
@@ -647,7 +771,7 @@ export default function AboutPage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             variants={fadeUp}
-            className="rounded-3xl bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50 p-6 sm:p-8 md:p-10 text-center"
+            className="rounded-sm bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50 p-6 sm:p-8 md:p-10 text-center"
           >
             <span className="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider text-xs sm:text-sm">
               Our Values
@@ -656,15 +780,15 @@ export default function AboutPage() {
               Honest estimates. Clear communication. Software that gets used.
             </h3>
             <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto text-left">
-              <div className="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-sm border border-slate-200/80 dark:border-slate-800 shadow-sm">
                 <h4 className="font-bold text-slate-900 dark:text-white text-base mb-1.5">Honest estimates</h4>
                 <p className="text-sm text-slate-600 dark:text-slate-400">Realistic timelines and transparent scope before we start.</p>
               </div>
-              <div className="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-sm border border-slate-200/80 dark:border-slate-800 shadow-sm">
                 <h4 className="font-bold text-slate-900 dark:text-white text-base mb-1.5">Clear communication</h4>
                 <p className="text-sm text-slate-600 dark:text-slate-400">One direct point of contact with weekly demos and updates.</p>
               </div>
-              <div className="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-sm border border-slate-200/80 dark:border-slate-800 shadow-sm">
                 <h4 className="font-bold text-slate-900 dark:text-white text-base mb-1.5">Software that gets used</h4>
                 <p className="text-sm text-slate-600 dark:text-slate-400">Built around actual staff workflows, not theoretical checklists.</p>
               </div>
@@ -774,7 +898,7 @@ export default function AboutPage() {
             Let's discuss how we can build custom CRM, ERP, or web software around how your business works.
           </p>
           <Link href="/contact-us">
-            <Button className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-8 py-4 rounded-full text-sm sm:text-base transition-all hover:scale-105 shadow-xl">
+            <Button className="h-12 px-7 rounded-full bg-white text-blue-600 hover:bg-blue-50 text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-xl">
               Book a free consultation
             </Button>
           </Link>

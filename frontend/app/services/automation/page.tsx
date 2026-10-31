@@ -45,6 +45,7 @@ import {
 } from 'react-icons/si';
 import { FaSlack } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
+import { ProcessTimeline } from '@/components/ProcessTimeline';
 import { cn } from '@/lib/utils';
 
 // Tech Stack List using react-icons/si
@@ -168,7 +169,7 @@ export default function BusinessAutomationServicePage() {
 
 
                 {/* Core Promise & Target Audience */}
-                <div className="p-4 sm:p-5 rounded-2xl bg-blue-500/[0.04] dark:bg-blue-500/[0.08] border border-blue-500/20 backdrop-blur-sm space-y-2.5 my-1">
+                <div className="p-4 sm:p-5 rounded-sm bg-blue-500/[0.04] dark:bg-blue-500/[0.08] border border-blue-500/20 backdrop-blur-sm space-y-2.5 my-1">
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400">
                       <Zap className="size-3 fill-blue-500 text-blue-500" />
@@ -189,7 +190,7 @@ export default function BusinessAutomationServicePage() {
 
                   <Button
                     nativeButton={false}
-                    className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
                     render={<Link href="/contact-us" />}
                   >
                     Start Your Project
@@ -197,7 +198,7 @@ export default function BusinessAutomationServicePage() {
                   <Button
                     nativeButton={false}
                     variant="outline"
-                    className="w-full sm:w-auto px-8 py-6 rounded-full text-base font-semibold border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 shadow-sm transition-all hover:scale-105 cursor-pointer flex items-center justify-center"
+                    className="w-full sm:w-auto h-12 px-7 rounded-full text-sm sm:text-base font-semibold border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 shadow-sm transition-all hover:scale-105 cursor-pointer flex items-center justify-center"
                     render={<a href="#capabilities" />}
                   >
                     Explore Capabilities
@@ -212,8 +213,8 @@ export default function BusinessAutomationServicePage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative max-w-lg w-full lg:ml-auto"
               >
-                <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-20 blur-xl animate-pulse"></div>
-                <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl group">
+                <div className="absolute -inset-2 rounded-sm bg-gradient-to-r from-blue-600 to-indigo-600 opacity-20 blur-xl animate-pulse"></div>
+                <div className="relative rounded-sm border border-slate-200 dark:border-slate-800 bg-slate-900 overflow-hidden shadow-2xl group">
                   {/* Mock Browser Header */}
                   <div className="bg-slate-950/80 px-4 py-3 flex items-center gap-2 border-b border-slate-800">
                     <div className="w-3 h-3 rounded-full bg-rose-500"></div>
@@ -271,7 +272,7 @@ export default function BusinessAutomationServicePage() {
 
 
                 {/* Core Deliverables Included */}
-                <div className="mb-8 p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 shadow-sm text-left">
+                <div className="mb-8 p-5 rounded-sm bg-white dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 shadow-sm text-left">
                   <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-2">
                     <CheckCircle2 className="size-4 text-emerald-500" />
                     Key Deliverables Included
@@ -289,7 +290,7 @@ export default function BusinessAutomationServicePage() {
                 <Button
 
                   nativeButton={false}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-bold tracking-wide text-sm uppercase transition-all shadow-lg shadow-blue-600/20 group cursor-pointer"
+                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
                   render={<Link href="/contact-us" />}
                 >
                   Consult with our experts <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -316,8 +317,8 @@ export default function BusinessAutomationServicePage() {
                       </div>
 
                       {/* Content Card */}
-                      <div className="bg-white dark:bg-slate-900 rounded-2xl md:rounded-3xl p-8 md:p-10 border-[1.5px] border-slate-200 dark:border-slate-800 transition-all duration-500 flex-1 relative group-hover:border-blue-800/30 dark:group-hover:border-blue-500/30 shadow-sm hover:shadow-xl dark:hover:shadow-none">
-                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-900 dark:bg-blue-900/40 flex items-center justify-center mb-6">
+                      <div className="bg-white dark:bg-slate-900 rounded-sm p-8 md:p-10 border-[1.5px] border-slate-200 dark:border-slate-800 transition-all duration-500 flex-1 relative group-hover:border-blue-800/30 dark:group-hover:border-blue-500/30 shadow-sm hover:shadow-xl dark:hover:shadow-none">
+                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-sm bg-slate-900 dark:bg-blue-900/40 flex items-center justify-center mb-6">
                           <Icon className="w-5 h-5 md:w-6 md:h-6 text-white dark:text-blue-400" strokeWidth={2} />
                         </div>
                         <h4 className="text-xl md:text-2xl lg:text-3xl font-medium text-slate-900 dark:text-white mb-3 md:mb-4 tracking-tight">
@@ -353,10 +354,10 @@ export default function BusinessAutomationServicePage() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: (idx % 4) * 0.05 }}
                 key={idx}
-                className="group flex flex-col justify-between p-5 rounded-2xl border border-slate-200/60 dark:border-slate-900 bg-white dark:bg-slate-900/30 hover:border-blue-500/20 hover:shadow-lg dark:hover:shadow-none transition-all duration-300"
+                className="group flex flex-col justify-between p-5 rounded-sm border border-slate-200/60 dark:border-slate-900 bg-white dark:bg-slate-900/30 hover:border-blue-500/20 hover:shadow-lg dark:hover:shadow-none transition-all duration-300"
               >
                 <div className="flex items-center justify-between">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center p-2.5 ${tech.color}`}>
+                  <div className={`w-10 h-10 rounded-sm flex items-center justify-center p-2.5 ${tech.color}`}>
                     <tech.icon className="size-full" />
                   </div>
                   <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
@@ -376,68 +377,12 @@ export default function BusinessAutomationServicePage() {
           </div>
         </section>
 
-        {/* ===== DEVELOPMENT PROCESS SECTION ===== */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-slate-200/60 dark:border-slate-900">
-          <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">Our Process</h2>
-            <p className="text-slate-550 dark:text-slate-455 text-sm md:text-base leading-relaxed font-sans">
-              We employ an agile, milestone-driven framework that guarantees transparency and continuous delivery.
-            </p>
-          </div>
-
-          <div className="relative max-w-5xl mx-auto">
-            {/* Central Progress Line */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-4 bottom-4 w-1 bg-gradient-to-b from-blue-600 via-indigo-500 to-slate-200 dark:to-slate-800 rounded-full hidden md:block"></div>
-
-            <div className="space-y-12">
-              {processSteps.map((step, idx) => {
-                const isEven = idx % 2 === 0;
-                return (
-                  <motion.div
-                    initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.7, ease: "easeOut" }}
-                    key={idx}
-                    className={cn(
-                      "flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 relative w-full",
-                      isEven ? "md:flex-row" : "md:flex-row-reverse"
-                    )}
-                  >
-                    {/* Process Card */}
-                    <div className="w-full md:w-[45%] bg-white dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 hover:border-blue-500/30 hover:shadow-2xl dark:hover:shadow-none transition-all duration-300 relative overflow-hidden group">
-
-                      {/* Stylized background number */}
-                      <span className="absolute right-6 top-6 text-7xl font-extrabold text-slate-100 dark:text-slate-800/80 select-none group-hover:scale-110 transition-transform duration-500">
-                        {step.step}
-                      </span>
-
-                      <div className="relative z-10 text-left space-y-3">
-                        <div className="inline-flex items-center justify-center px-3 py-1 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wide">
-                          Phase {step.step}
-                        </div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                          {step.title}
-                        </h3>
-                        <p className="text-slate-555 dark:text-slate-400 text-sm leading-relaxed font-sans">
-                          {step.desc}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Central pulsing node marker */}
-                    <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full border-4 border-white dark:border-slate-950 bg-blue-600 z-20 shadow-md hidden md:block">
-                      <div className="w-full h-full rounded-full bg-blue-500 animate-ping opacity-60"></div>
-                    </div>
-
-                    {/* Spacer to balance flex layout */}
-                    <div className="w-full md:w-[45%] hidden md:block"></div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+        {/* ===== PROCESS SECTION ===== */}
+        <ProcessTimeline
+          steps={processSteps}
+          title="Our Process"
+          subtitle="We employ an agile, milestone-driven framework that guarantees transparency and continuous delivery."
+        />
 
         {/* ===== WHY INDUX SECTION ===== */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-slate-200/60 dark:border-slate-900">
@@ -460,7 +405,7 @@ export default function BusinessAutomationServicePage() {
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
                 <div className="space-y-2">
-                  <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-sm bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                     <Zap className="size-5" />
                   </div>
                   <h4 className="font-bold text-slate-800 dark:text-slate-200 text-sm">Real-Time Sync</h4>
@@ -468,7 +413,7 @@ export default function BusinessAutomationServicePage() {
                 </div>
 
                 <div className="space-y-2">
-                  <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-sm bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                     <Search className="size-5" />
                   </div>
                   <h4 className="font-bold text-slate-800 dark:text-slate-200 text-sm">Audit Trail Logs</h4>
@@ -483,7 +428,7 @@ export default function BusinessAutomationServicePage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl shadow-blue-500/5 bg-slate-900"
+              className="relative aspect-video rounded-sm overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl shadow-blue-500/5 bg-slate-900"
             >
               <Image
                 src="/images/unsplash/img-467d7612.webp"
@@ -508,7 +453,7 @@ export default function BusinessAutomationServicePage() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative bg-[#0F172A] text-white rounded-[2rem] p-8 md:p-12 overflow-hidden border border-slate-850 shadow-2xl"
+            className="relative bg-[#0F172A] text-white rounded-sm p-8 md:p-12 overflow-hidden border border-slate-850 shadow-2xl"
           >
             {/* High-tech Glowing Background Accents */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-gradient-to-r from-blue-600/20 to-indigo-600/20 blur-[100px] pointer-events-none"></div>
@@ -529,17 +474,15 @@ export default function BusinessAutomationServicePage() {
               </div>
 
               {/* Right Column: Button & footnote */}
-              <div className="flex flex-col items-center lg:items-end gap-3 w-full lg:w-auto flex-shrink-0">
+              <div className="flex flex-col items-center lg:items-end w-full lg:w-auto flex-shrink-0">
                 <Button
                   nativeButton={false}
-                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
                   render={<Link href="/contact-us" />}
                 >
                   Start Conversation <ArrowRight className="w-4 h-4" />
                 </Button>
-                <span className="text-xs text-slate-550 font-medium tracking-wide">
-                  Response within 24 hours
-                </span>
+
               </div>
 
             </div>

@@ -188,11 +188,11 @@ export default function IndustriesShowcase() {
                   transition={{ duration: 0.8, ease: "easeOut" }}
                   className="w-full lg:w-1/2"
                 >
-                  <div className="relative rounded-3xl bg-slate-100 p-4 shadow-xl shadow-slate-200/50 sm:p-6 lg:p-8">
+                  <div className="relative rounded-sm bg-slate-100 p-4 shadow-xl shadow-slate-200/50 sm:p-6 lg:p-8">
                     <motion.div 
                       whileHover={{ y: -5 }}
                       transition={{ type: "spring", stiffness: 300 }}
-                      className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+                      className="overflow-hidden rounded-sm border border-slate-200 bg-white shadow-sm"
                     >
                       <img 
                         src={industry.image} 
@@ -211,7 +211,7 @@ export default function IndustriesShowcase() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                  className="w-full rounded-3xl bg-white p-8 shadow-xl shadow-slate-200/50 lg:w-1/2 lg:p-12"
+                  className="w-full rounded-sm bg-white p-8 shadow-xl shadow-slate-200/50 lg:w-1/2 lg:p-12"
                 >
                   <div className={`mb-6 inline-flex items-center gap-2 rounded-full px-3 py-1 ${theme.bgLight}`}>
                     <Icon className={`h-3 w-3 ${theme.icon}`} />
@@ -265,7 +265,7 @@ export default function IndustriesShowcase() {
                   <motion.button 
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`flex items-center gap-2 rounded-lg px-6 py-3 font-semibold text-white transition-colors ${theme.bg} ${theme.buttonHover}`}
+                    className={`inline-flex items-center justify-center gap-2 rounded-full h-12 px-7 text-sm sm:text-base font-semibold text-white transition-colors cursor-pointer ${theme.bg} ${theme.buttonHover}`}
                   >
                     Explore Industry Solutions <ArrowRight className="h-4 w-4" />
                   </motion.button>
@@ -281,14 +281,14 @@ export default function IndustriesShowcase() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative mt-32 overflow-hidden rounded-[2.5rem] bg-blue-600 px-6 py-16 text-center sm:px-16"
+          className="relative mt-32 overflow-hidden rounded-sm bg-blue-600 px-6 py-16 text-center sm:px-16"
         >
           {/* Decorative background curves */}
           <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
           <div className="absolute -bottom-32 -right-20 h-80 w-80 rounded-full bg-black/10 blur-2xl" />
 
           <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center">
-            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20">
+            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-sm bg-white/10 backdrop-blur-sm border border-white/20">
               <Activity className="h-8 w-8 text-white" />
             </div>
             
@@ -304,7 +304,7 @@ export default function IndustriesShowcase() {
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center gap-2 rounded-full bg-white px-8 py-3.5 font-bold text-blue-600 shadow-lg transition-colors hover:bg-slate-50"
+                className="flex items-center justify-center gap-2 rounded-full bg-white h-12 px-7 text-sm sm:text-base font-semibold text-blue-600 shadow-lg transition-colors hover:bg-slate-50"
               >
                 Get in Touch <ArrowRight className="h-4 w-4" />
               </motion.button>
@@ -312,7 +312,7 @@ export default function IndustriesShowcase() {
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center gap-2 rounded-full border border-blue-400 bg-blue-600/50 px-8 py-3.5 font-bold text-white backdrop-blur-sm transition-colors hover:bg-blue-500"
+                className="flex items-center justify-center gap-2 rounded-full border border-blue-400 bg-blue-600/50 h-12 px-7 text-sm sm:text-base font-semibold text-white backdrop-blur-sm transition-colors hover:bg-blue-500"
               >
                 Explore Solutions <ArrowRight className="h-4 w-4" />
               </motion.button>

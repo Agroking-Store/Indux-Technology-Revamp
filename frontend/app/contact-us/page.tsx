@@ -74,9 +74,9 @@ export default function PremiumContact() {
               <motion.a
                 variants={fadeUp}
                 href="tel:+918421538753"
-                className="group p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-blue-500/40 transition-all flex items-center gap-3.5"
+                className="group p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-blue-500/40 transition-all flex items-center gap-3.5"
               >
-                <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <div className="w-11 h-11 rounded-sm bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
                   <Phone className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
@@ -90,9 +90,9 @@ export default function PremiumContact() {
               <motion.a
                 variants={fadeUp}
                 href="mailto:connect@induxtechnology.com"
-                className="group p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-blue-500/40 transition-all flex items-center gap-3.5"
+                className="group p-4 rounded-sm bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-blue-500/40 transition-all flex items-center gap-3.5"
               >
-                <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <div className="w-11 h-11 rounded-sm bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
                   <Mail className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
@@ -105,7 +105,7 @@ export default function PremiumContact() {
             </motion.div>
 
             {/* Map Frame */}
-            <motion.div variants={fadeUp} className="relative h-[240px] sm:h-[260px] w-full overflow-hidden rounded-2xl bg-slate-200 dark:bg-slate-900 shadow-sm border border-slate-200/80 dark:border-slate-800">
+            <motion.div variants={fadeUp} className="relative h-[240px] sm:h-[260px] w-full overflow-hidden rounded-sm bg-slate-200 dark:bg-slate-900 shadow-sm border border-slate-200/80 dark:border-slate-800">
               <iframe
                 src="https://maps.google.com/maps?q=Indux Technology&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 width="100%"
@@ -116,7 +116,7 @@ export default function PremiumContact() {
                 referrerPolicy="no-referrer-when-downgrade"
                 className="absolute inset-0 h-full w-full opacity-100"
               ></iframe>              
-              <div className="pointer-events-none absolute bottom-3 left-3 right-3 flex items-center gap-3 rounded-xl bg-white/95 dark:bg-slate-900/95 p-3 shadow-md backdrop-blur-md border border-slate-200/80 dark:border-slate-800">
+              <div className="pointer-events-none absolute bottom-3 left-3 right-3 flex items-center gap-3 rounded-sm bg-white/95 dark:bg-slate-900/95 p-3 shadow-md backdrop-blur-md border border-slate-200/80 dark:border-slate-800">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400">
                   <MapPin className="h-4 w-4" />
                 </div>
@@ -134,7 +134,7 @@ export default function PremiumContact() {
             animate="visible"
             className="w-full flex items-start"
           >
-            <div className="w-full rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 p-6 sm:p-8 lg:p-9 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/80 dark:border-slate-800 transition-colors duration-300">
+            <div className="w-full rounded-sm bg-white dark:bg-slate-900 p-6 sm:p-8 lg:p-9 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/80 dark:border-slate-800 transition-colors duration-300">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Send a Message</h2>
                 <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400">The more detail you share (goals, team size, deadlines), the more useful our first reply will be.</p>

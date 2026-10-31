@@ -71,7 +71,7 @@ export default function CareersPage() {
                 </p>
                 <a
                   href="#open-positions"
-                  className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] cursor-pointer w-max inline-flex items-center gap-3 group"
+                  className="mt-8 h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] cursor-pointer w-max inline-flex items-center gap-3 group"
                 >
                   View Open Positions <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </a>
@@ -86,7 +86,7 @@ export default function CareersPage() {
  <img width={800} height={600}
  src={heroImage}
                   alt="Team collaborating in a meeting at Indux Technology"
- className="rounded-[2.5rem] w-full h-72 sm:h-96 object-cover border-8 border-white dark:border-slate-900 shadow-2xl transition-transform duration-500 "
+ className="rounded-sm w-full h-72 sm:h-96 object-cover border-8 border-white dark:border-slate-900 shadow-2xl transition-transform duration-500 "
                 />
                 <span className="absolute -bottom-4 -left-4 flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-4.5 py-3 shadow-xl">
                   <span className="relative flex h-2 w-2">
@@ -179,7 +179,7 @@ export default function CareersPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className={`overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-md ${i % 2 === 1 ? 'mt-6' : ''}`}
+                  className={`overflow-hidden rounded-sm border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-md ${i % 2 === 1 ? 'mt-6' : ''}`}
                 >
  <img width={800} height={600}
  src={img.src}
@@ -219,7 +219,7 @@ export default function CareersPage() {
             {loading ? (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="rounded-[2rem] border border-slate-205 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 animate-pulse">
+                  <div key={i} className="rounded-sm border border-slate-205 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 animate-pulse">
                     <div className="h-5 bg-slate-100 dark:bg-slate-800 rounded w-3/4 mb-3" />
                     <div className="h-3 bg-slate-100 dark:bg-slate-800 rounded w-1/2 mb-5" />
                     <div className="h-3 bg-slate-100 dark:bg-slate-800 rounded w-full mb-2" />
@@ -231,7 +231,7 @@ export default function CareersPage() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-center py-20 rounded-[2rem] border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+                className="text-center py-20 rounded-sm border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
               >
                 <Briefcase className="w-12 h-12 text-slate-300 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-slate-850 dark:text-slate-200">
@@ -249,7 +249,7 @@ export default function CareersPage() {
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
                   >
-                    <div className="group flex flex-col rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 hover:border-blue-500 dark:hover:border-blue-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 ease-out h-full">
+                    <div className="group flex flex-col rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 hover:border-blue-500 dark:hover:border-blue-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 ease-out h-full">
                       <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-blue-600 transition-colors duration-300 leading-snug">
                         {job.title}
                       </h3>
@@ -289,7 +289,7 @@ export default function CareersPage() {
                         </div>
                         <Link
                           href={`/careers/${job._id}`}
-                          className="group/btn inline-flex items-center justify-center gap-1.5 px-5 py-2.5 text-xs font-bold text-blue-600 border border-blue-600 rounded-full bg-transparent hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-600/20 active:scale-[0.96] transition-all duration-300"
+                          className="group/btn inline-flex items-center justify-center gap-1.5 h-10 px-5 text-xs sm:text-sm font-semibold text-blue-600 border border-blue-600 rounded-full bg-transparent hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-600/20 active:scale-[0.96] transition-all duration-300"
                         >
                           <span>Apply Now</span> 
                           <ArrowRight className="w-3.5 h-3.5 transform group-hover/btn:translate-x-1 transition-transform duration-300" />
@@ -325,7 +325,7 @@ export default function CareersPage() {
               </p>
               <Link
                 href="/contact-us"
-                className="bg-white hover:bg-slate-50 text-blue-900 px-8 py-4 rounded-full font-bold tracking-wider text-sm uppercase transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 inline-flex items-center justify-center gap-2 group"
+                className="h-12 px-7 bg-white hover:bg-slate-50 text-blue-900 rounded-full text-sm sm:text-base font-semibold uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 inline-flex items-center justify-center gap-2 group"
               >
                 Get in Touch <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>

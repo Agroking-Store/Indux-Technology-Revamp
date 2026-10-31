@@ -38,7 +38,7 @@ export function SuccessModal({ open, onOpenChange, title = "Success!", descripti
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md text-center p-8 md:p-12 flex flex-col items-center justify-center border-none shadow-2xl bg-white dark:bg-slate-900 rounded-[2rem]">
+      <DialogContent className="sm:max-w-md text-center p-8 md:p-12 flex flex-col items-center justify-center border-none shadow-2xl bg-white dark:bg-slate-900 rounded-sm">
         <div className="w-24 h-24 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mb-6 shadow-inner ring-8 ring-green-50 dark:ring-green-900/10">
           <CheckCircle2 className="w-12 h-12" />
         </div>
@@ -52,7 +52,7 @@ export function SuccessModal({ open, onOpenChange, title = "Success!", descripti
           <Button 
             type="button" 
             onClick={() => onOpenChange(false)}
-            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-12 py-6 font-bold text-lg shadow-xl shadow-blue-600/20 cursor-pointer w-full sm:w-auto transition-all hover:scale-105"
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full h-12 px-7 text-sm sm:text-base font-semibold shadow-xl shadow-blue-600/20 cursor-pointer w-full sm:w-auto transition-all hover:scale-105"
           >
             Okay, awesome!
           </Button>

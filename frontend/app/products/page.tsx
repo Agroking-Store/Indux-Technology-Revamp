@@ -163,16 +163,16 @@ export default function ProductsZigzagShowcase() {
                     viewport={{ once: true, margin: "-100px" }}
                     className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${isEven ? "" : "lg:flex-row-reverse"}`}
                   >
- {/* Image Column */}
-                    <div className="w-full lg:w-1/2 relative">
-                      <div className="absolute -inset-4 rounded-[2.5rem] bg-blue-600/5 dark:bg-blue-600/10 blur-2xl"></div>
-<div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xl group aspect-[16/10] flex items-center justify-center p-3 sm:p-4">
+                     {/* Image Column */}
+                    <div className="w-full lg:w-1/2 relative group">
+                      <div className="absolute -inset-3 rounded-sm bg-blue-600/0 group-hover:bg-blue-600/15 dark:group-hover:bg-blue-600/25 blur-xl transition-all duration-500 pointer-events-none"></div>
+                      <div className="relative rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-lg group-hover:shadow-2xl group-hover:shadow-blue-500/20 group-hover:border-blue-500/40 dark:group-hover:border-blue-500/40 aspect-[16/10] flex items-center justify-center p-3 sm:p-4 transition-all duration-500">
                         <Image
                           src={imageSrc}
                           alt={project.title}
                           fill
                           sizes="(max-width: 768px) 100vw, 50vw"
-                          className="object-contain transition-all duration-700"
+                          className="object-contain transition-all duration-500 rounded-sm"
                           unoptimized={imageSrc.startsWith("http")}
                         />
                       </div>
@@ -215,7 +215,7 @@ export default function ProductsZigzagShowcase() {
 
                       <div className="flex flex-wrap items-center gap-3">
                         <Link href={`/products/${project.slug}`}>
-                          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer">
+                          <Button className="h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2">
                             Explore Details{" "}
                             <ArrowRight className="ml-2 size-5 group-hover:translate-x-1 transition-transform" />
                           </Button>
@@ -228,7 +228,7 @@ export default function ProductsZigzagShowcase() {
                           >
                             <Button
                               variant="outline"
-                              className="px-6 py-6 rounded-full font-semibold border-2 border-slate-200 dark:border-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all cursor-pointer"
+                              className="h-12 px-7 rounded-full text-sm sm:text-base font-semibold border-2 border-slate-200 dark:border-slate-800 hover:border-blue-600 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all cursor-pointer flex items-center justify-center gap-2"
                             >
                               Live Demo
                               <ExternalLink className="ml-2 size-4" />
@@ -249,7 +249,7 @@ export default function ProductsZigzagShowcase() {
               <Button
                 variant="outline"
                 onClick={() => setVisibleCount((v) => v + 3)}
-                className="rounded-full px-5 h-9 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium text-xs sm:text-sm cursor-pointer shadow-2xs transition-all hover:scale-[1.02]"
+                className="rounded-full px-5 h-10 text-xs sm:text-sm border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium text-xs sm:text-sm cursor-pointer shadow-2xs transition-all hover:scale-[1.02]"
               >
                 <Plus className="w-3.5 h-3.5 mr-1.5" /> Display More Solutions
               </Button>
