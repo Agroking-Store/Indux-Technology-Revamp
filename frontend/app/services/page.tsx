@@ -684,7 +684,7 @@ export default function ServicesPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
               {/* Step 1 */}
               <div className="bg-white dark:bg-slate-900 p-6 rounded-sm border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
-                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold mb-4 mx-auto md:absolute md:-top-5 md:left-1/2 md:-translate-x-1/2 border-4 border-slate-50 dark:border-slate-950 shadow-md">
+                <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold mb-4 mx-auto md:absolute md:-top-5 md:left-1/2 md:-translate-x-1/2 border-4 border-slate-50 dark:border-slate-950">
                   1
                 </div>
                 <h4 className="text-xl font-bold text-slate-900 dark:text-white text-center mb-2 mt-4 md:mt-6">Consultation</h4>
