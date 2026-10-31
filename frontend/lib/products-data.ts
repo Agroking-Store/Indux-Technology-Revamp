@@ -40,7 +40,7 @@ export const projects: Project[] = [
       "Indux CRM is an enterprise-grade solution designed to unify your sales, marketing, and support teams. By centralizing customer data, it eliminates silos and provides a 360-degree view of your customer journey, allowing for data-driven decisions at every level of your organization.",
     themeColor: "blue",
     icon: Sparkles,
-    image: "/induxcrm.webp",
+    image: "/indux-dashboard.png",
     stats: [
       { label: "Sales Growth", value: "+35%" },
       { label: "Lead Conversion", value: "3x Faster" },
@@ -134,7 +134,7 @@ export const projects: Project[] = [
       "JEM Soft bridges the gap between traditional insurance sales and digital efficiency. It empowers financial advisors to manage their entire portfolio, track commissions, and deliver professional presentations to clients, all from one secure web portal.",
     themeColor: "indigo",
     icon: ShieldCheck,
-    image: "/jemsoft.webp",
+    image: "/jem-dashboard.png",
     stats: [
       { label: "Policy Retention", value: "+25%" },
       { label: "Admin Time", value: "-15hrs/wk" },
@@ -228,7 +228,7 @@ export const projects: Project[] = [
       "Indux ERP is a comprehensive suite that manages every aspect of your enterprise. From supply chain and procurement to financial consolidation and HR, it provides the single source of truth required for large-scale operations.",
     themeColor: "blue",
     icon: BarChart3,
-    image: "/indux_erp.webp",
+    image: "/induxerp-dashboard.png",
     stats: [
       { label: "Op. Efficiency", value: "+40%" },
       { label: "Overhead Cost", value: "-20%" },
@@ -275,7 +275,7 @@ export const projects: Project[] = [
       "HRMS Suite digitalizes the employee lifecycle. It removes the friction from HR operations, offering automated payroll, self-service leave management, and performance tracking that employees actually enjoy using.",
     themeColor: "emerald",
     icon: Users,
-    image: "/hrms.webp",
+    image: "/hrms-dashboard.png",
     stats: [
       { label: "Payroll Accuracy", value: "100%" },
       { label: "HR Productivity", value: "+50%" },
@@ -369,7 +369,7 @@ export const projects: Project[] = [
       "Indux Solar delivers end-to-end photovoltaic rooftop solar installations for manufacturing plants, commercial complexes, and academic institutions. From structural engineering and feasibility assessments to grid-tie synchronization and live SCADA generation telemetry, we power industries sustainably.",
     themeColor: "emerald",
     icon: Sun,
-    image: "/indux-solar.webp",
+    image: "/indux-solar.jpg",
     stats: [
       { label: "Solar Capacity", value: "15+ MW" },
       { label: "Commercial Leads", value: "+210%" },
