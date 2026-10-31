@@ -542,14 +542,14 @@ export default function Home() {
               <div className="absolute left-[5%] lg:left-[7%] top-[76%] z-20 flex items-center gap-3">
                 <Link
                   href="/contact-us"
-                  className="inline-flex h-12 px-7 items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-sm sm:text-base font-semibold text-white shadow-lg shadow-blue-600/20 hover:scale-105 transition-all whitespace-nowrap"
+                  className="inline-flex h-12 px-7 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-sm sm:text-base font-semibold text-white shadow-lg shadow-blue-600/20 hover:scale-105 transition-all whitespace-nowrap"
                 >
                   Book a Free Consultation
                 </Link>
 
                 <Link
                   href="/services"
-                  className="inline-flex h-12 px-7 items-center justify-center gap-1.5 text-sm sm:text-base font-semibold text-blue-600 bg-transparent border-2 border-blue-600 hover:bg-blue-600 hover:text-white rounded-lg shadow-sm hover:shadow-lg hover:shadow-blue-600/20 hover:scale-105 transition-all whitespace-nowrap"
+                  className="inline-flex h-12 px-7 items-center justify-center gap-1.5 text-sm sm:text-base font-semibold text-blue-600 bg-transparent border-2 border-blue-600 hover:bg-blue-600 hover:text-white rounded-full shadow-sm hover:shadow-lg hover:shadow-blue-600/20 hover:scale-105 transition-all whitespace-nowrap"
                 >
                   Explore Our Solutions
                 </Link>
@@ -581,14 +581,14 @@ export default function Home() {
                 <div className="flex flex-col w-full max-w-xs gap-3 pt-2">
                   <Link
                     href="/contact-us"
-                    className="w-full inline-flex h-10 px-5 items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-blue-600/20 active:scale-[0.98] transition-all text-center whitespace-nowrap"
+                    className="w-full inline-flex h-10 px-5 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-blue-600/20 active:scale-[0.98] transition-all text-center whitespace-nowrap"
                   >
                     Book a Free Consultation
                   </Link>
 
                   <Link
                     href="/services"
-                    className="w-full inline-flex h-10 px-5 items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold text-[#080b2d] dark:text-white bg-transparent border-2 border-blue-600/60 hover:border-blue-600 hover:bg-blue-600/10 active:scale-[0.98] rounded-lg transition-all text-center whitespace-nowrap"
+                    className="w-full inline-flex h-10 px-5 items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold text-[#080b2d] dark:text-white bg-transparent border-2 border-blue-600/60 hover:border-blue-600 hover:bg-blue-600/10 active:scale-[0.98] rounded-full transition-all text-center whitespace-nowrap"
                   >
                     Explore Our Solutions →
                   </Link>
@@ -712,7 +712,7 @@ export default function Home() {
 
                 <div className="mt-6 sm:mt-8">
                   <Link href="/contact-us" className="w-full sm:w-auto">
-                    <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                    <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                       Connect With Us{" "}
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
@@ -877,7 +877,7 @@ export default function Home() {
                       {service.description}
                     </p>
                     <div className="mt-auto">
-                      <span className="inline-flex items-center text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 px-3.5 py-1.5 rounded-lg border border-blue-600/20 dark:border-blue-400/20 bg-blue-50/50 dark:bg-blue-950/30 group-hover:bg-white group-hover:text-blue-600 group-hover:border-white group-hover:shadow-md transition-all duration-300">
+                      <span className="inline-flex items-center text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 px-3.5 py-1.5 rounded-full border border-blue-600/20 dark:border-blue-400/20 bg-blue-50/50 dark:bg-blue-950/30 group-hover:bg-white group-hover:text-blue-600 group-hover:border-white group-hover:shadow-md transition-all duration-300">
                         Learn more{" "}
                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform text-blue-600 dark:text-blue-400 group-hover:text-blue-600" />
                       </span>
@@ -888,7 +888,7 @@ export default function Home() {
             </div>
             <div className="mt-12 sm:mt-16 flex justify-center w-full">
               <Link href="/services" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Services{" "}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -940,7 +940,7 @@ export default function Home() {
                 </ul>
 
                 <Link href="/contact-us" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                  <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                     Consult With Our Expertise{" "}
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -1167,7 +1167,7 @@ export default function Home() {
             {/* View All Button */}
             <div className="mt-12 sm:mt-16 text-center">
               <Link href="/products" className="inline-block">
-                <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Work{" "}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -1249,7 +1249,7 @@ export default function Home() {
                         href="https://www.google.com/search?sca_esv=590eb0aa4b74244e&hl=en-IN&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_8rvk6vr8yfTYT7skK3V3XFwpaMdTntxaRkoVitZ5oNvuSsJBuUECr7oGrWVEL7WbYUpLvB-GYmK1MIbvIMdk3etA_Thu6PRaHoPCDFquLsgpBZ0Hg%3D%3D&q=INDUX+TECHNOLOGY+Reviews&sa=X&ved=2ahUKEwjY9OHo7s6VAxVhzjgGHS8-DSYQ0bkNegQIJxAI&biw=1536&bih=730&dpr=1.25"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full sm:w-auto h-10 px-5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group"
+                        className="w-full sm:w-auto h-10 px-5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group"
                       >
                         Write Review{" "}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1360,7 +1360,7 @@ export default function Home() {
 
             <div className="mt-8 sm:mt-10 flex justify-center">
               <Link href="/blogs" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Blogs{" "}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>

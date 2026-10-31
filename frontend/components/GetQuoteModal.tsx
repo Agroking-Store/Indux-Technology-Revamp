@@ -145,7 +145,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
 
   // Standard Button style for the Homepage match
   const buttonStyle =
-    "bg-blue-600 hover:bg-blue-700 text-white h-12 px-7 rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer border-none";
+    "bg-blue-600 hover:bg-blue-700 text-white h-12 px-7 rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer border-none";
 
   const renderTrigger = () => {
     if (children && isValidElement(children)) {
@@ -167,7 +167,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
       // </button>
       <Button
         onClick={() => setOpen(true)}
-        className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
+        className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
       >
         Get Quote <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
       </Button>
@@ -525,7 +525,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer"
+                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer"
                 >
                   {isSubmitting ? (
                     <>

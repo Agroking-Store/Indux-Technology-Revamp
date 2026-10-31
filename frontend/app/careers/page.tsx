@@ -71,7 +71,7 @@ export default function CareersPage() {
                 </p>
                 <a
                   href="#open-positions"
-                  className="mt-8 h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] cursor-pointer w-max inline-flex items-center gap-3 group"
+                  className="mt-8 h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] cursor-pointer w-max inline-flex items-center gap-3 group"
                 >
                   View Open Positions <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </a>
@@ -289,7 +289,7 @@ export default function CareersPage() {
                         </div>
                         <Link
                           href={`/careers/${job._id}`}
-                          className="group/btn inline-flex items-center justify-center gap-1.5 h-10 px-5 text-xs sm:text-sm font-semibold text-blue-600 border border-blue-600 rounded-lg bg-transparent hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-600/20 active:scale-[0.96] transition-all duration-300"
+                          className="group/btn inline-flex items-center justify-center gap-1.5 h-10 px-5 text-xs sm:text-sm font-semibold text-blue-600 border border-blue-600 rounded-full bg-transparent hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-600/20 active:scale-[0.96] transition-all duration-300"
                         >
                           <span>Apply Now</span> 
                           <ArrowRight className="w-3.5 h-3.5 transform group-hover/btn:translate-x-1 transition-transform duration-300" />
@@ -325,7 +325,7 @@ export default function CareersPage() {
               </p>
               <Link
                 href="/contact-us"
-                className="h-12 px-7 bg-white hover:bg-slate-50 text-blue-900 rounded-lg text-sm sm:text-base font-semibold uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 inline-flex items-center justify-center gap-2 group"
+                className="h-12 px-7 bg-white hover:bg-slate-50 text-blue-900 rounded-full text-sm sm:text-base font-semibold uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 inline-flex items-center justify-center gap-2 group"
               >
                 Get in Touch <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>

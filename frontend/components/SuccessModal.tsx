@@ -52,7 +52,7 @@ export function SuccessModal({ open, onOpenChange, title = "Success!", descripti
           <Button 
             type="button" 
             onClick={() => onOpenChange(false)}
-            className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-12 px-7 text-sm sm:text-base font-semibold shadow-xl shadow-blue-600/20 cursor-pointer w-full sm:w-auto transition-all hover:scale-105"
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full h-12 px-7 text-sm sm:text-base font-semibold shadow-xl shadow-blue-600/20 cursor-pointer w-full sm:w-auto transition-all hover:scale-105"
           >
             Okay, awesome!
           </Button>

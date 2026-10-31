@@ -209,7 +209,7 @@ export default function CaseStudiesPage() {
                 <Button
                   onClick={() => setSearchQuery("")}
                   variant="outline"
-                  className="mt-4 rounded-lg cursor-pointer"
+                  className="mt-4 rounded-full cursor-pointer"
                 >
                   Clear Search
                 </Button>
@@ -371,7 +371,7 @@ export default function CaseStudiesPage() {
               </p>
               <div className="pt-2 flex justify-center">
                 <Link href="/contact-us">
-                  <Button className="h-12 px-7 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg text-sm sm:text-base shadow-xl shadow-blue-600/30 cursor-pointer group flex items-center justify-center">
+                  <Button className="h-12 px-7 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full text-sm sm:text-base shadow-xl shadow-blue-600/30 cursor-pointer group flex items-center justify-center">
                     Schedule a Discovery Session
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
