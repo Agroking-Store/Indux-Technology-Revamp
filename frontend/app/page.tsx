@@ -809,6 +809,7 @@ export default function Home() {
                   description:
                     "Tailored Customer Relationship Management systems to streamline sales, marketing, and support pipelines seamlessly.",
                   image: "/services/crm-solution-banner.webp",
+                  // image: "/indux_crm_img.png",
                   alt: "Custom CRM - Built Around Your Business",
                   link: "/services/crm",
                 },
@@ -1093,35 +1094,49 @@ export default function Home() {
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
               {[
                 {
                   title: "Indux CRM",
                   alt: "Indux CRM dashboard for managing customers and business operations",
                   category: "Business Intelligence",
-                  img: "/induxcrm.webp",
+                  img: "/indux-dashboard.png",
                   link: "/products/indux-crm",
                 },
                 {
                   title: "HRMS",
                   alt: "HRMS software dashboard for managing employee information and HR operations",
                   category: "Human Resources",
-                  img: "/hrms.webp",
+                  img: "/hrms-dashboard.png",
                   link: "/products/hrms-suite",
                 },
                 {
                   title: "Jemsoft",
                   alt: "Jemsoft business software solution by Indux Technology",
                   category: "Insurance ERP",
-                  img: "/jemsoft.webp",
+                  img: "/jem-dashboard.png",
                   link: "/products/jem-soft",
                 },
                 {
                   title: "InduxERP",
                   alt: "InduxERP dashboard for managing business processes and operations",
                   category: "Enterprise Software",
-                  img: "/indux_erp.webp",
+                  img: "/induxerp-dashboard.png",
                   link: "/products/indux-erp",
+                },
+                {
+                  title: "Sales Automation",
+                  alt: "Sales Automation suite by Indux Technology",
+                  category: "AI Marketing",
+                  img: "/salesautomation.webp",
+                  link: "/products/sales-automation",
+                },
+                {
+                  title: "Indux Solar",
+                  alt: "Indux Solar commercial and rooftop engineering solutions",
+                  category: "Clean Energy Engineering",
+                  img: "/indux-solar.jpg",
+                  link: "/products/indux-solar",
                 },
               ].map((project, idx) => (
                 <div
@@ -1131,14 +1146,13 @@ export default function Home() {
                 >
                   {/* Image Container */}
                   <div className="p-3 sm:p-4 md:p-6 pb-0">
-                    <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800">
-                      <img
+                    <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800">
+                      <Image
                         src={project.img}
                         alt={project.alt || project.title}
-                        width="800"
-                        height="600"
-                        loading="lazy"
-                        className="w-full h-full object-fill"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover transition-all duration-700"
                       />
                       <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10">
                         <span className="inline-block bg-[#0f2e4a]/90 backdrop-blur-sm text-white text-[10px] sm:text-xs font-semibold tracking-wide px-3 py-1.5 rounded-full">
