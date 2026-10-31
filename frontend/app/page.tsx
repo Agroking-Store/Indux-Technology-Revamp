@@ -128,7 +128,7 @@ const ReviewCard = ({
   return (
     <figure
       className={
-        "relative w-[280px] xs:w-[310px] sm:w-[350px] shrink-0 cursor-pointer overflow-hidden rounded-2xl border p-4 sm:p-6 border-slate-200 bg-white hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900/50 dark:hover:bg-slate-900 transition-colors"
+        "relative w-[280px] xs:w-[310px] sm:w-[350px] shrink-0 cursor-pointer overflow-hidden rounded-sm border p-4 sm:p-6 border-slate-200 bg-white hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900/50 dark:hover:bg-slate-900 transition-colors"
       }
     >
       <div className="flex flex-row items-center gap-3">
@@ -542,14 +542,14 @@ export default function Home() {
               <div className="absolute left-[5%] lg:left-[7%] top-[76%] z-20 flex items-center gap-3">
                 <Link
                   href="/contact-us"
-                  className="inline-flex h-10 lg:h-12 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 px-5 lg:px-7 text-xs lg:text-sm font-semibold text-white shadow-lg shadow-blue-600/20 hover:scale-105 transition-all whitespace-nowrap"
+                  className="inline-flex h-12 px-7 items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-sm sm:text-base font-semibold text-white shadow-lg shadow-blue-600/20 hover:scale-105 transition-all whitespace-nowrap"
                 >
                   Book a Free Consultation
                 </Link>
 
                 <Link
                   href="/services"
-                  className="inline-flex h-10 lg:h-12 items-center justify-center gap-1.5 px-5 lg:px-6 text-xs lg:text-sm font-semibold text-blue-600 bg-transparent border-2 border-blue-600 hover:bg-blue-600 hover:text-white rounded-full shadow-sm hover:shadow-lg hover:shadow-blue-600/20 hover:scale-105 transition-all whitespace-nowrap"
+                  className="inline-flex h-12 px-7 items-center justify-center gap-1.5 text-sm sm:text-base font-semibold text-blue-600 bg-transparent border-2 border-blue-600 hover:bg-blue-600 hover:text-white rounded-lg shadow-sm hover:shadow-lg hover:shadow-blue-600/20 hover:scale-105 transition-all whitespace-nowrap"
                 >
                   Explore Our Solutions
                 </Link>
@@ -581,14 +581,14 @@ export default function Home() {
                 <div className="flex flex-col w-full max-w-xs gap-3 pt-2">
                   <Link
                     href="/contact-us"
-                    className="w-full inline-flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 text-sm font-semibold shadow-md shadow-blue-600/20 active:scale-[0.98] transition-all text-center whitespace-nowrap"
+                    className="w-full inline-flex h-10 px-5 items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-blue-600/20 active:scale-[0.98] transition-all text-center whitespace-nowrap"
                   >
                     Book a Free Consultation
                   </Link>
 
                   <Link
                     href="/services"
-                    className="w-full inline-flex items-center justify-center gap-1.5 py-3 px-6 text-sm font-semibold text-[#080b2d] dark:text-white bg-transparent border-2 border-blue-600/60 hover:border-blue-600 hover:bg-blue-600/10 active:scale-[0.98] rounded-full transition-all text-center whitespace-nowrap"
+                    className="w-full inline-flex h-10 px-5 items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold text-[#080b2d] dark:text-white bg-transparent border-2 border-blue-600/60 hover:border-blue-600 hover:bg-blue-600/10 active:scale-[0.98] rounded-lg transition-all text-center whitespace-nowrap"
                   >
                     Explore Our Solutions →
                   </Link>
@@ -615,7 +615,7 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center">
               {/* Left Side: 3-Image Showcase Slider fitting cleanly inside the block */}
               <div className="relative w-full aspect-[1024/677] max-w-lg lg:max-w-none mx-auto flex flex-col justify-center">
-                <div className="relative w-full h-full rounded-2xl sm:rounded-[2.2rem] overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 group">
+                <div className="relative w-full h-full rounded-sm overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 group">
                   {[
                     {
                       src: "/about-slide-1.webp",
@@ -712,7 +712,7 @@ export default function Home() {
 
                 <div className="mt-6 sm:mt-8">
                   <Link href="/contact-us" className="w-full sm:w-auto">
-                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                    <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                       Connect With Us{" "}
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
@@ -856,10 +856,10 @@ export default function Home() {
                 <div
                   key={idx}
                   onClick={() => router.push(service.link)}
-                  className="group flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
+                  className="group flex flex-col bg-white dark:bg-slate-900 rounded-sm border border-slate-200 dark:border-slate-800 overflow-hidden hover:bg-blue-600 hover:border-blue-600 dark:hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2"
                 >
                   <div className="p-3 sm:p-4 h-48 sm:h-56 md:h-64">
-                    <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-2">
+                    <div className="relative w-full h-full rounded-sm overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-2">
                       <Image
                         src={service.image}
                         alt={service.alt}
@@ -877,7 +877,7 @@ export default function Home() {
                       {service.description}
                     </p>
                     <div className="mt-auto">
-                      <span className="inline-flex items-center text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 px-3.5 py-1.5 rounded-full border border-blue-600/20 dark:border-blue-400/20 bg-blue-50/50 dark:bg-blue-950/30 group-hover:bg-white group-hover:text-blue-600 group-hover:border-white group-hover:shadow-md transition-all duration-300">
+                      <span className="inline-flex items-center text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 px-3.5 py-1.5 rounded-lg border border-blue-600/20 dark:border-blue-400/20 bg-blue-50/50 dark:bg-blue-950/30 group-hover:bg-white group-hover:text-blue-600 group-hover:border-white group-hover:shadow-md transition-all duration-300">
                         Learn more{" "}
                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform text-blue-600 dark:text-blue-400 group-hover:text-blue-600" />
                       </span>
@@ -888,7 +888,7 @@ export default function Home() {
             </div>
             <div className="mt-12 sm:mt-16 flex justify-center w-full">
               <Link href="/services" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Services{" "}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -940,7 +940,7 @@ export default function Home() {
                 </ul>
 
                 <Link href="/contact-us" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                  <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                     Consult With Our Expertise{" "}
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -983,8 +983,8 @@ export default function Home() {
                       </div>
 
                       {/* Content Card */}
-                      <div className="bg-white dark:bg-slate-900 rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 border-[1.5px] border-slate-200 dark:border-slate-800 transition-all duration-500 flex-1 relative group-hover:border-blue-800/30 dark:group-hover:border-blue-500/30 w-full">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-900 dark:bg-blue-900/40 flex items-center justify-center mb-3 sm:mb-4">
+                      <div className="bg-white dark:bg-slate-900 rounded-sm p-5 sm:p-6 md:p-8 border-[1.5px] border-slate-200 dark:border-slate-800 transition-all duration-500 flex-1 relative group-hover:border-blue-800/30 dark:group-hover:border-blue-500/30 w-full">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-sm bg-slate-900 dark:bg-blue-900/40 flex items-center justify-center mb-3 sm:mb-4">
                           <Icon
                             className="w-5 h-5 md:w-6 md:h-6 text-white dark:text-blue-400"
                             strokeWidth={2}
@@ -1046,7 +1046,7 @@ export default function Home() {
               ].map((card, idx) => (
                 <div
                   key={idx}
-                  className="relative flex flex-col rounded-3xl overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 group"
+                  className="relative flex flex-col rounded-sm overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 group"
                 >
                   <div className="p-6 md:p-8 relative flex flex-col justify-between h-full min-h-[260px] sm:min-h-[290px] md:min-h-[310px]">
                     {/* Background Step Number - positioned inside card boundaries */}
@@ -1127,11 +1127,11 @@ export default function Home() {
                 <div
                   key={idx}
                   onClick={() => router.push(project.link)}
-                  className="group bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-500 cursor-pointer flex flex-col"
+                  className="group bg-white dark:bg-slate-900 rounded-sm border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-500 cursor-pointer flex flex-col"
                 >
                   {/* Image Container */}
                   <div className="p-3 sm:p-4 md:p-6 pb-0">
-                    <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800">
+                    <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-sm overflow-hidden bg-slate-100 dark:bg-slate-800">
                       <img
                         src={project.img}
                         alt={project.alt || project.title}
@@ -1167,7 +1167,7 @@ export default function Home() {
             {/* View All Button */}
             <div className="mt-12 sm:mt-16 text-center">
               <Link href="/products" className="inline-block">
-                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Work{" "}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -1195,7 +1195,7 @@ export default function Home() {
               {/* Left Side: Static Anchor */}
               <div className="w-full lg:w-5/12 flex flex-col gap-4 sm:gap-6">
                 {/* Trust Rating Card */}
-                <div className="mt-2 bg-[#0f2e4a] rounded-2xl sm:rounded-3xl p-6 sm:p-8 pb-8 sm:pb-10 shadow-2xl relative overflow-hidden">
+                <div className="mt-2 bg-[#0f2e4a] rounded-sm p-6 sm:p-8 pb-8 sm:pb-10 shadow-2xl relative overflow-hidden">
                   <div className="absolute top-0 right-0 p-4 opacity-10">
                     <svg
                       className="w-16 h-16 sm:w-24 sm:h-24 text-white transform translate-x-2 -translate-y-2"
@@ -1249,7 +1249,7 @@ export default function Home() {
                         href="https://www.google.com/search?sca_esv=590eb0aa4b74244e&hl=en-IN&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_8rvk6vr8yfTYT7skK3V3XFwpaMdTntxaRkoVitZ5oNvuSsJBuUECr7oGrWVEL7WbYUpLvB-GYmK1MIbvIMdk3etA_Thu6PRaHoPCDFquLsgpBZ0Hg%3D%3D&q=INDUX+TECHNOLOGY+Reviews&sa=X&ved=2ahUKEwjY9OHo7s6VAxVhzjgGHS8-DSYQ0bkNegQIJxAI&biw=1536&bih=730&dpr=1.25"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 text-sm sm:text-base rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group"
+                        className="w-full sm:w-auto h-10 px-5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group"
                       >
                         Write Review{" "}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1307,11 +1307,11 @@ export default function Home() {
                 <Link
                   key={blog._id || idx}
                   href={!blog.slug || blog.slug === "#" ? "/blogs" : `/blogs/${blog.slug}`}
-                  className="bg-[#153a5c] rounded-3xl overflow-hidden border border-white/5 hover:border-blue-400/30 transition-all shadow-xl group flex flex-col h-full"
+                  className="bg-[#153a5c] rounded-sm overflow-hidden border border-white/5 hover:border-blue-400/30 transition-all shadow-xl group flex flex-col h-full"
                 >
                   {/* Image */}
                   <div className="p-3">
-                    <div className="relative h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden bg-slate-800">
+                    <div className="relative h-48 sm:h-56 md:h-64 rounded-sm overflow-hidden bg-slate-800">
                       <img
                         src={
                           blog.featuredImage
@@ -1360,7 +1360,7 @@ export default function Home() {
 
             <div className="mt-8 sm:mt-10 flex justify-center">
               <Link href="/blogs" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
+                <Button className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer group">
                   View All Blogs{" "}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -1396,7 +1396,7 @@ export default function Home() {
 
               {/* Right Side: Image with Magic sparkles */}
               <div className="w-full lg:w-1/2 relative mt-8 lg:mt-0 max-w-lg mx-auto lg:max-w-none">
-                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl aspect-[4/5] md:aspect-[4/3] lg:aspect-square">
+                <div className="relative rounded-sm overflow-hidden shadow-2xl aspect-[4/5] md:aspect-[4/3] lg:aspect-square">
                   <Image
                     src="/contact-us.png"
                     alt="Contact Us Team"
@@ -1489,7 +1489,7 @@ export default function Home() {
                 return (
                   <div
                     key={index}
-                    className="border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden shadow-sm transition-all duration-300"
+                    className="border border-slate-200 dark:border-slate-800 rounded-sm bg-white dark:bg-slate-900 overflow-hidden shadow-sm transition-all duration-300"
                   >
                     <button
                       type="button"

@@ -145,7 +145,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
 
   // Standard Button style for the Homepage match
   const buttonStyle =
-    "bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium text-base transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer border-none";
+    "bg-blue-600 hover:bg-blue-700 text-white h-12 px-7 rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer border-none";
 
   const renderTrigger = () => {
     if (children && isValidElement(children)) {
@@ -167,7 +167,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
       // </button>
       <Button
         onClick={() => setOpen(true)}
-        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
+        className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group cursor-pointer flex items-center justify-center gap-2"
       >
         Get Quote <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
       </Button>
@@ -186,7 +186,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
       {renderTrigger()}
 
       <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogContent className="w-[95vw] max-w-[500px] md:max-w-[700px] lg:max-w-[800px] p-0 overflow-hidden bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-[2.5rem] shadow-2xl outline-none max-h-[95vh] flex flex-col">
+        <DialogContent className="w-[95vw] max-w-[500px] md:max-w-[700px] lg:max-w-[800px] p-0 overflow-hidden bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-sm shadow-2xl outline-none max-h-[95vh] flex flex-col">
           <div className="absolute top-0 left-0 w-full h-1.5 bg-blue-600"></div>
 
           <div className="relative bg-slate-50 dark:bg-slate-900/50 p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800">
@@ -217,7 +217,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
       <Input
         id="name"
         placeholder="Enter your full name"
-        className="rounded-xl h-11 bg-slate-50 dark:bg-slate-900 border-slate-200/60 dark:border-slate-800/60 focus-visible:ring-blue-600"
+        className="rounded-sm h-11 bg-slate-50 dark:bg-slate-900 border-slate-200/60 dark:border-slate-800/60 focus-visible:ring-blue-600"
         {...register("name")}
       />
       {errors.name && (
@@ -235,7 +235,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
       <Input
         id="companyName"
         placeholder="e.g. Acme Corp"
-        className="rounded-xl h-11 bg-slate-50 dark:bg-slate-900 border-slate-200/60 dark:border-slate-800/60 focus-visible:ring-blue-600"
+        className="rounded-sm h-11 bg-slate-50 dark:bg-slate-900 border-slate-200/60 dark:border-slate-800/60 focus-visible:ring-blue-600"
         {...register("companyName")}
       />
     </div>
@@ -255,7 +255,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
         id="workEmail"
         type="email"
         placeholder="name@company.com"
-        className="rounded-xl h-11 bg-slate-50 dark:bg-slate-900 border-slate-200/60 dark:border-slate-800/60 focus-visible:ring-blue-600"
+        className="rounded-sm h-11 bg-slate-50 dark:bg-slate-900 border-slate-200/60 dark:border-slate-800/60 focus-visible:ring-blue-600"
         {...register("workEmail")}
       />
       {errors.workEmail && (
@@ -277,7 +277,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
         render={({ field }) => {
           const FlagComponent = country ? (flags as any)[country] : null;
           return (
-            <div className="flex h-11 w-full rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm items-center transition-all duration-200 focus-within:ring-2 focus-within:ring-blue-500/20 dark:focus-within:ring-blue-500/30 focus-within:border-blue-500 dark:focus-within:border-blue-500">
+            <div className="flex h-11 w-full rounded-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm items-center transition-all duration-200 focus-within:ring-2 focus-within:ring-blue-500/20 dark:focus-within:ring-blue-500/30 focus-within:border-blue-500 dark:focus-within:border-blue-500">
               
               {/* Flag Section (Hover strictly scoped to this wrapper) */}
               <div
@@ -296,7 +296,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
                     e.stopPropagation();
                     setCountryOpen((prev) => !prev);
                   }}
-                  className="flex items-center justify-center px-3 h-full bg-slate-100/80 dark:bg-slate-800/80 border-r border-slate-200 dark:border-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 transition-colors cursor-pointer rounded-l-xl shrink-0"
+                  className="flex items-center justify-center px-3 h-full bg-slate-100/80 dark:bg-slate-800/80 border-r border-slate-200 dark:border-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 transition-colors cursor-pointer rounded-l-sm shrink-0"
                 >
                   {FlagComponent ? (
                     <FlagComponent
@@ -312,7 +312,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
                 {/* Custom Dropdown */}
                 {countryOpen && (
                   <div className="absolute left-0 top-full pt-1 z-50 w-72 before:absolute before:top-0 before:left-0 before:w-full before:h-2">
-                    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl shadow-slate-200/60 dark:shadow-slate-950/60 overflow-hidden">
+                    <div className="rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl shadow-slate-200/60 dark:shadow-slate-950/60 overflow-hidden">
                       {/* Search Bar */}
                       <div className="p-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
                         <input
@@ -320,7 +320,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
                           placeholder="Search country or code..."
                           value={countrySearch}
                           onChange={(e) => setCountrySearch(e.target.value)}
-                          className="w-full px-3 py-1.5 text-xs rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none focus:ring-1 focus:ring-blue-500"
+                          className="w-full px-3 py-1.5 text-xs rounded-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none focus:ring-1 focus:ring-blue-500"
                         />
                       </div>
 
@@ -441,7 +441,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
             e.stopPropagation();
             setServiceOpen((prev) => !prev);
           }}
-          className="flex h-11 w-full items-center justify-between rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/60 px-3 text-sm text-slate-900 dark:text-slate-100 shadow-sm cursor-pointer outline-none hover:bg-slate-100/60 dark:hover:bg-slate-800/50 transition-all focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+          className="flex h-11 w-full items-center justify-between rounded-sm bg-slate-50 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/60 px-3 text-sm text-slate-900 dark:text-slate-100 shadow-sm cursor-pointer outline-none hover:bg-slate-100/60 dark:hover:bg-slate-800/50 transition-all focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
         >
           {field.value ? (
             services.find((s) => s.value === field.value)?.label
@@ -456,7 +456,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
         {/* Custom Hover Dropdown */}
         {serviceOpen && (
           <div className="absolute left-0 top-full pt-1 z-50 w-full before:absolute before:top-0 before:left-0 before:w-full before:h-2">
-            <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl shadow-slate-200/60 dark:shadow-slate-950/60 overflow-hidden">
+            <div className="rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl shadow-slate-200/60 dark:shadow-slate-950/60 overflow-hidden">
               <div className="max-h-52 overflow-y-auto p-1 space-y-0.5">
                 {services.map((service) => {
                   const isSelected = service.value === field.value;
@@ -511,7 +511,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
                 <Textarea
                   id="message"
                   placeholder="Tell us about your project requirements..."
-                  className="rounded-xl bg-slate-50 dark:bg-slate-900 border-slate-200/60 dark:border-slate-800/60 focus-visible:ring-blue-600 min-h-[80px] resize-none"
+                  className="rounded-sm bg-slate-50 dark:bg-slate-900 border-slate-200/60 dark:border-slate-800/60 focus-visible:ring-blue-600 min-h-[80px] resize-none"
                   {...register("message")}
                 />
                 {errors.message && (
@@ -525,7 +525,7 @@ export function GetQuoteModal({ children }: { children?: React.ReactElement }) {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer"
+                  className="w-full sm:w-auto h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-600/20 group justify-center cursor-pointer"
                 >
                   {isSubmitting ? (
                     <>

@@ -145,7 +145,7 @@ export default function OurRecentWorksPage() {
               ].map((stat, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 shadow-sm backdrop-blur-xs text-center"
+                  className="p-4 rounded-sm bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 shadow-sm backdrop-blur-xs text-center"
                 >
                   <p className="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-400">
                     {stat.value}
@@ -171,7 +171,7 @@ export default function OurRecentWorksPage() {
                   <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                    className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                       isActive
                         ? "bg-blue-600 text-white shadow-md shadow-blue-500/25"
                         : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -301,7 +301,7 @@ export default function OurRecentWorksPage() {
 
                       {/* Metrics Card Row */}
                       {work.metrics && work.metrics.length > 0 && (
-                        <div className="flex flex-wrap items-center gap-3 p-3.5 rounded-2xl bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 mb-6">
+                        <div className="flex flex-wrap items-center gap-3 p-3.5 rounded-sm bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 mb-6">
                           <TrendingUp className="size-4 text-blue-600 dark:text-blue-400 shrink-0" />
                           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mr-1">
                             Key Impact:
@@ -340,7 +340,7 @@ export default function OurRecentWorksPage() {
                       <div className="flex flex-wrap items-center gap-3">
                         <Button
                           onClick={() => setActiveModalProject(work)}
-                          className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6 py-5 font-semibold text-sm transition-all shadow-md shadow-blue-500/20 cursor-pointer"
+                          className="h-10 px-5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs sm:text-sm font-semibold transition-all shadow-md shadow-blue-500/20 cursor-pointer inline-flex items-center justify-center"
                         >
                           View Details
                           <ChevronRight className="size-4 ml-1.5" />
@@ -353,7 +353,7 @@ export default function OurRecentWorksPage() {
                           >
                             <Button
                               variant="outline"
-                              className="rounded-xl px-5 py-5 font-semibold text-sm border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all cursor-pointer"
+                              className="h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all cursor-pointer inline-flex items-center justify-center"
                             >
                               Live Project
                               <ExternalLink className="size-4 ml-1.5" />
@@ -363,7 +363,7 @@ export default function OurRecentWorksPage() {
                         <GetQuoteModal>
                           <Button
                             variant="outline"
-                            className="rounded-xl px-6 py-5 font-semibold text-sm border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 cursor-pointer"
+                            className="h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 cursor-pointer inline-flex items-center justify-center"
                           >
                             Build Similar Project
                           </Button>
@@ -380,7 +380,7 @@ export default function OurRecentWorksPage() {
 
         {/* BOTTOM CALL TO ACTION */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 sm:mt-28 mb-16 sm:mb-24">
-          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-950 p-8 sm:p-14 lg:p-16 text-center text-white shadow-2xl border border-blue-500/20">
+          <div className="relative rounded-sm overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-950 p-8 sm:p-14 lg:p-16 text-center text-white shadow-2xl border border-blue-500/20">
             {/* Ambient Background Accents */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-blue-600/15 blur-[120px] pointer-events-none"></div>
             <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] opacity-15 bg-[size:24px_24px] pointer-events-none"></div>
@@ -402,14 +402,14 @@ export default function OurRecentWorksPage() {
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full max-w-xs sm:max-w-md mx-auto">
                 <GetQuoteModal>
-                  <Button className="w-full sm:w-56 h-12 sm:h-13 px-6 rounded-full font-semibold text-sm sm:text-base bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2">
+                  <Button className="w-full sm:w-auto h-12 px-7 rounded-lg font-semibold text-sm sm:text-base bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2">
                     Request a Quote <ArrowRight className="size-4 shrink-0 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </GetQuoteModal>
                 <Link href="/contact-us" className="w-full sm:w-auto">
                   <Button
                     variant="outline"
-                    className="w-full sm:w-56 h-12 sm:h-13 px-6 rounded-full font-semibold text-sm sm:text-base bg-white/5 hover:bg-white/10 text-white border-white/20 hover:border-white/40 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2 backdrop-blur-sm"
+                    className="w-full sm:w-auto h-12 px-7 rounded-lg font-semibold text-sm sm:text-base bg-white/5 hover:bg-white/10 text-white border-white/20 hover:border-white/40 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2 backdrop-blur-sm"
                   >
                     Contact Our Team <Mail className="size-4 shrink-0" />
                   </Button>
@@ -439,7 +439,7 @@ export default function OurRecentWorksPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="relative w-full max-w-4xl bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden z-10 max-h-[90vh] flex flex-col my-auto"
+              className="relative w-full max-w-4xl bg-white dark:bg-slate-900 rounded-sm shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden z-10 max-h-[90vh] flex flex-col my-auto"
             >
               {/* Header */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
@@ -502,7 +502,7 @@ export default function OurRecentWorksPage() {
                       {activeModalProject.highlights.map((h: string, idx: number) => (
                         <div
                           key={idx}
-                          className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800"
+                          className="flex items-start gap-2.5 p-3 rounded-sm bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800"
                         >
                           <CheckCircle2 className="size-4 text-blue-600 shrink-0 mt-0.5" />
                           <span className="text-xs sm:text-sm text-slate-700 dark:text-slate-200">
@@ -524,7 +524,7 @@ export default function OurRecentWorksPage() {
                       {activeModalProject.metrics.map((m: any, idx: number) => (
                         <div
                           key={idx}
-                          className="p-3.5 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/40 text-center"
+                          className="p-3.5 rounded-sm bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/40 text-center"
                         >
                           <p className="text-xl font-extrabold text-blue-600 dark:text-blue-400">
                             {m.value}
@@ -563,7 +563,7 @@ export default function OurRecentWorksPage() {
                 <Button
                   variant="outline"
                   onClick={() => setActiveModalProject(null)}
-                  className="rounded-xl px-5 text-sm cursor-pointer"
+                  className="rounded-lg h-10 px-5 text-xs sm:text-sm font-semibold cursor-pointer"
                 >
                   Close
                 </Button>
@@ -575,7 +575,7 @@ export default function OurRecentWorksPage() {
                   >
                     <Button
                       variant="outline"
-                      className="rounded-xl px-5 text-sm font-semibold border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all cursor-pointer"
+                      className="h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all cursor-pointer"
                     >
                       Visit Live Project
                       <ExternalLink className="size-4 ml-1.5" />
@@ -583,7 +583,7 @@ export default function OurRecentWorksPage() {
                   </a>
                 )}
                 <GetQuoteModal>
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-5 text-sm font-semibold cursor-pointer">
+                  <Button className="h-10 px-5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs sm:text-sm font-semibold cursor-pointer">
                     Start Similar Project
                   </Button>
                 </GetQuoteModal>

@@ -146,7 +146,7 @@ export default function PrivacyPolicy() {
 
             <section>
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">15. Contact Information</h2>
-              <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800">
+              <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-sm border border-slate-100 dark:border-slate-800">
                 <p className="font-bold text-slate-900 dark:text-white mb-2">Indux Technologies</p>
                 <p>No. 05, Geeta Paradise, Opp. Zensar, Kharadi, Pune, Maharashtra, India</p>
                 <p>Phone: +91 84215 38753</p>

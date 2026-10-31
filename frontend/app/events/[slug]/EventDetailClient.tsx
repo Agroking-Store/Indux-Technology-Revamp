@@ -7,6 +7,7 @@ import {
   Event,
   verifyPaymentSignature,
   cancelRegistration,
+  getFullImageUrl,
 } from "@/lib/api";
 import {
   Calendar,
@@ -372,14 +373,10 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
 
       {/* ===== HERO BANNER ===== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div className="relative h-[300px] md:h-[420px] rounded-3xl overflow-hidden shadow-xl border border-slate-200/40 dark:border-slate-800">
+        <div className="relative h-[300px] md:h-[420px] rounded-sm overflow-hidden shadow-xl border border-slate-200/40 dark:border-slate-800">
           <img width={800} height={600}
             src={
-              event.bannerImage
-                ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.bannerImage}`
-                : event.coverImage
-                  ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${event.coverImage}`
-                  : fallbackEventImages[0]
+              getFullImageUrl(event.bannerImage || event.coverImage) || fallbackEventImages[0]
             }
             alt={event.title}
             className="w-full h-full object-cover"
@@ -410,7 +407,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Left Side */}
         <div className="lg:col-span-2 space-y-12 text-left">
-          <div className="bg-white dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800 space-y-4">
+          <div className="bg-white dark:bg-slate-900/50 p-8 rounded-sm border border-slate-200/50 dark:border-slate-800 space-y-4">
             <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
               <FileText className="text-blue-600" /> About The Event
             </h3>
@@ -432,12 +429,12 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                 {event.speakers.map((speaker, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center gap-4 bg-white dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-200/50 dark:border-slate-800 hover:shadow-md transition"
+                    className="flex items-center gap-4 bg-white dark:bg-slate-900/50 p-5 rounded-sm border border-slate-200/50 dark:border-slate-800 hover:shadow-md transition"
                   >
                     <div className="size-14 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-650 overflow-hidden border">
                       {speaker.avatar ? (
                         <img width={800} height={600}
-                          src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${speaker.avatar}`}
+                          src={getFullImageUrl(speaker.avatar)}
                           alt={speaker.name}
                           className="w-full h-full object-cover"
                         />
@@ -475,7 +472,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                   <div key={idx} className="relative group">
                     <div className="absolute top-1 -left-[32px] size-4 rounded-full bg-blue-600 border-4 border-slate-50 dark:border-slate-950 group-hover:scale-115 transition" />
 
-                    <div className="bg-white dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-200/50 dark:border-slate-800">
+                    <div className="bg-white dark:bg-slate-900/50 p-5 rounded-sm border border-slate-200/50 dark:border-slate-800">
                       <span className="text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1">
                         <Clock size={12} /> {slot.time}
                       </span>
@@ -504,7 +501,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                 {event.faqs.map((faq, idx) => (
                   <div
                     key={idx}
-                    className="bg-white dark:bg-slate-900/50 rounded-2xl border border-slate-200/50 dark:border-slate-800 overflow-hidden"
+                    className="bg-white dark:bg-slate-900/50 rounded-sm border border-slate-200/50 dark:border-slate-800 overflow-hidden"
                   >
                     <button
                       onClick={() => toggleFaq(idx)}
@@ -540,7 +537,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
 
         {/* Right Side Sticky Panel */}
         <div className="space-y-6">
-          <div className="bg-white dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-200/50 dark:border-slate-800 space-y-4 text-left">
+          <div className="bg-white dark:bg-slate-900/50 p-6 rounded-sm border border-slate-200/50 dark:border-slate-800 space-y-4 text-left">
             <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
               Quick Details
             </h4>
@@ -613,7 +610,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-3xl border border-slate-200/50 dark:border-slate-800 shadow-xl space-y-4">
+          <div className="bg-white dark:bg-slate-900/60 p-6 rounded-sm border border-slate-200/50 dark:border-slate-800 shadow-xl space-y-4">
             {success ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -632,13 +629,13 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                     <strong>{event.title}</strong> was submitted successfully.
                   </p>
                 </div>
-                <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-sm border text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                   We sent a confirmation email copy to <strong>{email}</strong>.
                   Our organizing team will review details shortly.
                 </div>
                 <Button
                   onClick={() => router.push("/events")}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold"
+                  className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold"
                 >
                   Return to Feed
                 </Button>
@@ -658,7 +655,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                 <Button
                   onClick={() => router.push("/events")}
                   variant="outline"
-                  className="w-full rounded-full text-xs font-bold"
+                  className="w-full h-10 px-5 rounded-lg text-xs sm:text-sm font-semibold"
                 >
                   Explore Other Events
                 </Button>
@@ -690,7 +687,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                       required
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className={`mt-1 w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border ${formErrors.fullName ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white`}
+                      className={`mt-1 w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border ${formErrors.fullName ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white`}
                       placeholder="John Doe"
                     />
                     {formErrors.fullName && <p className="text-red-500 text-[10px] mt-1 px-1">{formErrors.fullName}</p>}
@@ -705,7 +702,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className={`mt-1 w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border ${formErrors.email ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white`}
+                      className={`mt-1 w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border ${formErrors.email ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white`}
                       placeholder="john@example.com"
                     />
                     {formErrors.email && <p className="text-red-500 text-[10px] mt-1 px-1">{formErrors.email}</p>}
@@ -717,7 +714,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                     </label>
                     <div className="relative mt-1">
                       {/* Main input row */}
-                      <div className={`flex h-10 w-full rounded-xl bg-slate-50 dark:bg-slate-900 border ${formErrors.phone ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} focus-within:ring-1 focus-within:ring-blue-600 focus-within:border-blue-500 transition-colors overflow-hidden items-center`}>
+                      <div className={`flex h-10 w-full rounded-sm bg-slate-50 dark:bg-slate-900 border ${formErrors.phone ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} focus-within:ring-1 focus-within:ring-blue-600 focus-within:border-blue-500 transition-colors overflow-hidden items-center`}>
                         {/* Country selector button */}
                         <button
                           type="button"
@@ -887,7 +884,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                             placeholder={
                               field.placeholder || `Enter ${field.label}`
                             }
-                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
+                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
                           />
                         )}
 
@@ -900,7 +897,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                               handleAnswerChange(field.name, e.target.value)
                             }
                             placeholder={field.placeholder || "Enter value"}
-                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
+                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
                           />
                         )}
 
@@ -915,7 +912,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                               field.placeholder || `Write ${field.label}`
                             }
                             rows={3}
-                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
+                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-500 text-slate-900 dark:text-white"
                           />
                         )}
 
@@ -926,7 +923,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                             onChange={(e) =>
                               handleAnswerChange(field.name, e.target.value)
                             }
-                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 text-slate-900 dark:text-white"
+                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-600 text-slate-900 dark:text-white"
                           >
                             <option value="">
                               {field.placeholder || "Select option"}
@@ -1000,7 +997,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                             onChange={(e) =>
                               handleAnswerChange(field.name, e.target.value)
                             }
-                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 text-slate-900 dark:text-white"
+                            className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 text-slate-900 dark:text-white"
                           />
                         )}
 
@@ -1011,7 +1008,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                               accept="image/*,application/pdf,.doc,.docx"
                               required={field.required && !uploadFile}
                               onChange={handleFileChange}
-                              className="block w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-1.5 file:px-3.5 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                              className="block w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-1.5 file:px-3.5 file:rounded-sm file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                             />
                             {uploadFile && (
                               <p className="text-[10px] text-emerald-600 font-bold">
@@ -1028,7 +1025,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                   <Button
                     type="submit"
                     disabled={registering}
-                    className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold shadow-lg shadow-blue-500/20 transition disabled:opacity-50 mt-6 cursor-pointer"
+                    className="w-full h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold shadow-lg shadow-blue-500/20 transition disabled:opacity-50 mt-6 cursor-pointer"
                   >
                     {registering
                       ? "Processing..."
@@ -1065,7 +1062,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative bg-white dark:bg-slate-900 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 text-center space-y-6 z-10"
+              className="relative bg-white dark:bg-slate-900 rounded-sm p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 text-center space-y-6 z-10"
             >
               <div className="size-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-full flex items-center justify-center mx-auto border border-blue-200/50">
                 <Sparkles size={32} />
@@ -1081,7 +1078,7 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                 </p>
               </div>
 
-              <div className="bg-slate-50 dark:bg-slate-950 p-5 rounded-2xl border border-slate-150 dark:border-slate-850 space-y-3.5 text-left text-sm">
+              <div className="bg-slate-50 dark:bg-slate-950 p-5 rounded-sm border border-slate-150 dark:border-slate-850 space-y-3.5 text-left text-sm">
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 font-bold text-xs uppercase tracking-wide">
                     Order ID
@@ -1112,13 +1109,13 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
                 <Button
                   onClick={handleCancelMockPayment}
                   variant="outline"
-                  className="flex-1 rounded-full py-6 font-bold cursor-pointer"
+                  className="flex-1 h-12 px-7 rounded-lg text-sm sm:text-base font-semibold cursor-pointer"
                 >
                   Cancel
                 </Button>
                 <Button
                   onClick={handleSimulatePaymentSuccess}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-full py-6 font-bold shadow-lg shadow-blue-500/20 cursor-pointer"
+                  className="flex-1 h-12 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-semibold shadow-lg shadow-blue-500/20 cursor-pointer"
                 >
                   Confirm Payment
                 </Button>

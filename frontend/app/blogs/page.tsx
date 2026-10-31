@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { getBlogs, Blog } from '@/lib/api';
+import { getBlogs, Blog, getFullImageUrl } from '@/lib/api';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, User, ArrowRight, Newspaper, Search, Clock } from 'lucide-react';
@@ -50,7 +50,7 @@ export default function BlogsPage() {
   const [subscribed, setSubscribed] = useState(false);
   const [subscribing, setSubscribing] = useState(false);
   
-  const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL + "/api/v1";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/v1`;
   useEffect(() => {
     getBlogs()
       .then(setBlogs)
@@ -192,7 +192,7 @@ export default function BlogsPage() {
                   placeholder="Search articles by title or keyword..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="block w-full pl-11 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600/50 focus:border-blue-500 transition-all text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 shadow-sm"
+                  className="block w-full pl-11 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600/50 focus:border-blue-500 transition-all text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 shadow-sm"
                 />
               </motion.div>
             </div>
@@ -216,7 +216,7 @@ export default function BlogsPage() {
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className="text-xs font-semibold px-5 py-2.5 rounded-full border transition-all duration-300 flex items-center gap-2 cursor-pointer hover:scale-103"
+                    className="text-xs font-semibold px-5 py-2.5 rounded-lg border transition-all duration-300 flex items-center gap-2 cursor-pointer hover:scale-103"
                     style={{
                       backgroundColor: activeCategory === cat ? '#2563eb' : 'transparent',
                       color: activeCategory === cat ? '#ffffff' : 'inherit',
@@ -243,7 +243,7 @@ export default function BlogsPage() {
           {loading ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden animate-pulse">
+                <div key={i} className="rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden animate-pulse">
                   <div className="h-48 bg-slate-100 dark:bg-slate-800" />
                   <div className="p-6">
                     <div className="h-4 bg-slate-100 dark:bg-slate-800 rounded w-1/3 mb-3" />
@@ -257,7 +257,7 @@ export default function BlogsPage() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center py-20 rounded-[2rem] border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+              className="text-center py-20 rounded-sm border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
             >
               <Newspaper className="w-12 h-12 text-slate-300 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-slate-850 dark:text-slate-200">
@@ -276,11 +276,11 @@ export default function BlogsPage() {
                 >
                   <Link
                     href={`/blogs/${featured.slug}`}
-                    className="group grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-xl dark:shadow-none transition-all duration-350 mb-12"
+                    className="group grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-xl dark:shadow-none transition-all duration-350 mb-12"
                   >
                     <div className="lg:col-span-7 overflow-hidden min-h-[300px] relative bg-slate-100 dark:bg-slate-850">
  <Image
- src={featured.featuredImage ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${featured.featuredImage}` : fallbackImages[0]}
+ src={getFullImageUrl(featured.featuredImage) || fallbackImages[0]}
                         alt={featured.title}
                         fill
                         priority={true}
@@ -332,11 +332,11 @@ export default function BlogsPage() {
                   >
                     <Link
                       href={`/blogs/${blog.slug}`}
-                      className="group flex flex-col rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-lg transition-all duration-300 h-full"
+                      className="group flex flex-col rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-lg transition-all duration-300 h-full"
                     >
                       <div className="overflow-hidden h-48 relative bg-slate-100 dark:bg-slate-850">
  <Image
- src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${blog.featuredImage}`}
+ src={getFullImageUrl(blog.featuredImage) || fallbackImages[i % fallbackImages.length]}
                           alt={blog.title}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
