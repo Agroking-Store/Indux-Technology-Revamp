@@ -137,7 +137,7 @@ export default function ProductDetailPage() {
               animate={{ opacity: 1, scale: 1 }}
               className="relative group"
             >
-              <div className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden aspect-[16/10] flex items-center justify-center p-3 sm:p-4">
+              <div className="relative rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden aspect-[16/10] flex items-center justify-center p-3 sm:p-4">
                 <img
                   width={800}
                   height={600}
@@ -195,7 +195,7 @@ export default function ProductDetailPage() {
 
 
             {product.tech && product.tech.length > 0 && (
-              <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="p-8 bg-white dark:bg-slate-900 rounded-sm border border-slate-200 dark:border-slate-800 shadow-sm">
                 <h4 className="font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
                   <Cpu className="text-blue-600 size-5" /> Built With Modern Tech
                 </h4>
