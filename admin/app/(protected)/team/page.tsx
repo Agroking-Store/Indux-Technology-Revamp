@@ -44,6 +44,11 @@ export default function TeamAdminPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('All');
   const [memberToDelete, setMemberToDelete] = useState<TeamMember | null>(null);
+  const [expandedBios, setExpandedBios] = useState<Record<string, boolean>>({});
+
+  const toggleBio = (id: string) => {
+    setExpandedBios((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const fetchMembers = useCallback(async () => {
     try {
@@ -159,15 +164,15 @@ export default function TeamAdminPage() {
         <Table>
           <TableHeader>
             <TableRow className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50">
-              <TableHead className="w-16">Photo</TableHead>
-              <TableHead>Member Details</TableHead>
-              <TableHead>Department & Role</TableHead>
-              <TableHead className="w-24 text-center">
+              <TableHead className="w-16 text-center">Photo</TableHead>
+              <TableHead className="min-w-[240px] max-w-[380px]">Member Details</TableHead>
+              <TableHead className="w-48 min-w-[160px]">Department & Role</TableHead>
+              <TableHead className="w-20 text-center">
                 <span className="inline-flex items-center gap-1">
                   <ArrowUpDown className="size-3" /> Order
                 </span>
               </TableHead>
-              <TableHead className="w-32">Status</TableHead>
+              <TableHead className="w-28 text-center">Status</TableHead>
               <TableHead className="w-24 text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -175,24 +180,24 @@ export default function TeamAdminPage() {
             {loading ? (
               Array.from({ length: 4 }).map((_, i) => (
                 <TableRow key={i}>
-                  <TableCell>
-                    <Skeleton className="size-12 rounded-xl" />
+                  <TableCell className="w-16 align-top">
+                    <Skeleton className="size-12 rounded-xl mx-auto" />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="min-w-[240px] max-w-[380px] align-top">
                     <Skeleton className="h-4 w-32 mb-2" />
                     <Skeleton className="h-3 w-48" />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="w-48 min-w-[160px] align-top">
                     <Skeleton className="h-4 w-24 mb-1" />
                     <Skeleton className="h-3 w-16" />
                   </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-4 w-12 mx-auto" />
+                  <TableCell className="w-20 text-center align-top">
+                    <Skeleton className="h-4 w-8 mx-auto" />
                   </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-6 w-20 rounded-full" />
+                  <TableCell className="w-28 text-center align-top">
+                    <Skeleton className="h-6 w-16 mx-auto rounded-full" />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="w-24 text-right align-top">
                     <Skeleton className="h-8 w-16 ml-auto" />
                   </TableCell>
                 </TableRow>
@@ -226,8 +231,8 @@ export default function TeamAdminPage() {
                   className="border-b border-slate-100 dark:border-slate-800/60 hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors"
                 >
                   {/* Photo Preview */}
-                  <TableCell>
-                    <div className="relative size-12 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0">
+                  <TableCell className="w-16 align-top">
+                    <div className="relative size-12 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0 mx-auto">
                       <Image
                         src={getAdminImageUrl(member.image)}
                         alt={member.name}
@@ -239,15 +244,32 @@ export default function TeamAdminPage() {
                   </TableCell>
 
                   {/* Name & Bio */}
-                  <TableCell>
-                    <div className="flex flex-col">
-                      <span className="font-bold text-slate-900 dark:text-white">
+                  <TableCell className="min-w-[240px] max-w-[380px] align-top whitespace-normal">
+                    <div className="flex flex-col min-w-0">
+                      <span className="font-bold text-slate-900 dark:text-white truncate">
                         {member.name}
                       </span>
                       {member.bio && (
-                        <span className="text-xs text-slate-500 line-clamp-1 mt-0.5">
-                          {member.bio}
-                        </span>
+                        <div className="mt-0.5">
+                          <p
+                            className={cn(
+                              "text-xs text-slate-500 dark:text-slate-400 break-words leading-relaxed",
+                              !expandedBios[member._id] && "line-clamp-2"
+                            )}
+                            title={member.bio}
+                          >
+                            {member.bio}
+                          </p>
+                          {member.bio.length > 90 && (
+                            <button
+                              type="button"
+                              onClick={() => toggleBio(member._id)}
+                              className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline mt-0.5 cursor-pointer inline-block"
+                            >
+                              {expandedBios[member._id] ? 'Show less' : 'Read more'}
+                            </button>
+                          )}
+                        </div>
                       )}
                       {/* Social icons indicator */}
                       <div className="flex items-center gap-2 mt-1.5 text-slate-400">
@@ -268,9 +290,9 @@ export default function TeamAdminPage() {
                   </TableCell>
 
                   {/* Role & Department */}
-                  <TableCell>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+                  <TableCell className="w-48 min-w-[160px] align-top">
+                    <div className="flex flex-col gap-1 min-w-0">
+                      <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 break-words">
                         {member.role}
                       </span>
                       <span className="inline-flex w-fit items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50">
@@ -280,12 +302,12 @@ export default function TeamAdminPage() {
                   </TableCell>
 
                   {/* Order */}
-                  <TableCell className="text-center font-mono text-xs font-bold text-slate-600 dark:text-slate-300">
+                  <TableCell className="w-20 text-center font-mono text-xs font-bold text-slate-600 dark:text-slate-300 align-top">
                     {member.order ?? 0}
                   </TableCell>
 
                   {/* Status Toggle */}
-                  <TableCell>
+                  <TableCell className="w-28 text-center align-top">
                     <button
                       type="button"
                       onClick={() => handleToggleStatus(member)}
@@ -309,7 +331,7 @@ export default function TeamAdminPage() {
                   </TableCell>
 
                   {/* Actions */}
-                  <TableCell className="text-right">
+                  <TableCell className="w-24 text-right align-top">
                     <div className="flex items-center justify-end gap-1.5">
                       <Link
                         href={`/team/${member._id}/edit`}
