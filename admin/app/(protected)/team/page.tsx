@@ -35,6 +35,12 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Button, buttonVariants } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 
@@ -44,6 +50,11 @@ export default function TeamAdminPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('All');
   const [memberToDelete, setMemberToDelete] = useState<TeamMember | null>(null);
+  const [expandedBios, setExpandedBios] = useState<Record<string, boolean>>({});
+
+  const toggleBio = (id: string) => {
+    setExpandedBios((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const fetchMembers = useCallback(async () => {
     try {
@@ -159,41 +170,41 @@ export default function TeamAdminPage() {
         <Table>
           <TableHeader>
             <TableRow className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50">
-              <TableHead className="w-16">Photo</TableHead>
-              <TableHead>Member Details</TableHead>
-              <TableHead>Department & Role</TableHead>
-              <TableHead className="w-24 text-center">
+              <TableHead className="w-16 text-center">Photo</TableHead>
+              <TableHead className="min-w-[240px] max-w-[380px]">Member Details</TableHead>
+              <TableHead className="w-48 min-w-[160px]">Department & Role</TableHead>
+              <TableHead className="w-20 text-center">
                 <span className="inline-flex items-center gap-1">
                   <ArrowUpDown className="size-3" /> Order
                 </span>
               </TableHead>
-              <TableHead className="w-32">Status</TableHead>
-              <TableHead className="w-24 text-right">Actions</TableHead>
+              <TableHead className="w-28 text-center">Status</TableHead>
+              <TableHead className="w-28 text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
               Array.from({ length: 4 }).map((_, i) => (
                 <TableRow key={i}>
-                  <TableCell>
-                    <Skeleton className="size-12 rounded-xl" />
+                  <TableCell className="w-16 align-top">
+                    <Skeleton className="size-12 rounded-xl mx-auto" />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="min-w-[240px] max-w-[380px] align-top">
                     <Skeleton className="h-4 w-32 mb-2" />
                     <Skeleton className="h-3 w-48" />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="w-48 min-w-[160px] align-top">
                     <Skeleton className="h-4 w-24 mb-1" />
                     <Skeleton className="h-3 w-16" />
                   </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-4 w-12 mx-auto" />
+                  <TableCell className="w-20 text-center align-top">
+                    <Skeleton className="h-4 w-8 mx-auto" />
                   </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-6 w-20 rounded-full" />
+                  <TableCell className="w-28 text-center align-top">
+                    <Skeleton className="h-6 w-16 mx-auto rounded-full" />
                   </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-8 w-16 ml-auto" />
+                  <TableCell className="w-28 text-right align-top">
+                    <Skeleton className="h-9 w-20 ml-auto" />
                   </TableCell>
                 </TableRow>
               ))
@@ -226,8 +237,8 @@ export default function TeamAdminPage() {
                   className="border-b border-slate-100 dark:border-slate-800/60 hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors"
                 >
                   {/* Photo Preview */}
-                  <TableCell>
-                    <div className="relative size-12 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0">
+                  <TableCell className="w-16 align-top">
+                    <div className="relative size-12 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0 mx-auto">
                       <Image
                         src={getAdminImageUrl(member.image)}
                         alt={member.name}
@@ -239,38 +250,85 @@ export default function TeamAdminPage() {
                   </TableCell>
 
                   {/* Name & Bio */}
-                  <TableCell>
-                    <div className="flex flex-col">
-                      <span className="font-bold text-slate-900 dark:text-white">
+                  <TableCell className="min-w-[240px] max-w-[380px] align-top whitespace-normal">
+                    <div className="flex flex-col min-w-0">
+                      <span className="font-bold text-slate-900 dark:text-white truncate">
                         {member.name}
                       </span>
                       {member.bio && (
-                        <span className="text-xs text-slate-500 line-clamp-1 mt-0.5">
-                          {member.bio}
-                        </span>
+                        <div className="mt-0.5">
+                          <p
+                            className={cn(
+                              "text-xs text-slate-500 dark:text-slate-400 break-words leading-relaxed",
+                              !expandedBios[member._id] && "line-clamp-2"
+                            )}
+                            title={member.bio}
+                          >
+                            {member.bio}
+                          </p>
+                          {member.bio.length > 90 && (
+                            <button
+                              type="button"
+                              onClick={() => toggleBio(member._id)}
+                              className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline mt-0.5 cursor-pointer inline-block"
+                            >
+                              {expandedBios[member._id] ? 'Show less' : 'Read more'}
+                            </button>
+                          )}
+                        </div>
                       )}
-                      {/* Social icons indicator */}
-                      <div className="flex items-center gap-2 mt-1.5 text-slate-400">
+                      {/* Social icons */}
+                      <div className="flex items-center gap-2 mt-2 text-slate-400">
                         {member.socialLinks?.linkedin && (
-                          <Globe className="size-3 hover:text-blue-500" />
+                          <a
+                            href={member.socialLinks.linkedin.startsWith('http') ? member.socialLinks.linkedin : `https://${member.socialLinks.linkedin}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors"
+                            title="LinkedIn Profile"
+                          >
+                            <Globe className="size-3.5" />
+                          </a>
                         )}
                         {member.socialLinks?.twitter && (
-                          <Share2 className="size-3 hover:text-sky-500" />
+                          <a
+                            href={member.socialLinks.twitter.startsWith('http') ? member.socialLinks.twitter : `https://${member.socialLinks.twitter}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-500 transition-colors"
+                            title="Twitter Profile"
+                          >
+                            <Share2 className="size-3.5" />
+                          </a>
                         )}
                         {member.socialLinks?.github && (
-                          <Link2 className="size-3 hover:text-slate-800 dark:hover:text-white" />
+                          <a
+                            href={member.socialLinks.github.startsWith('http') ? member.socialLinks.github : `https://${member.socialLinks.github}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors"
+                            title="GitHub Profile"
+                          >
+                            <Link2 className="size-3.5" />
+                          </a>
                         )}
                         {member.socialLinks?.email && (
-                          <Mail className="size-3 hover:text-emerald-500" />
+                          <a
+                            href={`mailto:${member.socialLinks.email}`}
+                            className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-emerald-500 transition-colors"
+                            title="Email Member"
+                          >
+                            <Mail className="size-3.5" />
+                          </a>
                         )}
                       </div>
                     </div>
                   </TableCell>
 
                   {/* Role & Department */}
-                  <TableCell>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+                  <TableCell className="w-48 min-w-[160px] align-top">
+                    <div className="flex flex-col gap-1 min-w-0">
+                      <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 break-words">
                         {member.role}
                       </span>
                       <span className="inline-flex w-fit items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50">
@@ -280,52 +338,79 @@ export default function TeamAdminPage() {
                   </TableCell>
 
                   {/* Order */}
-                  <TableCell className="text-center font-mono text-xs font-bold text-slate-600 dark:text-slate-300">
+                  <TableCell className="w-20 text-center font-mono text-xs font-bold text-slate-600 dark:text-slate-300 align-top">
                     {member.order ?? 0}
                   </TableCell>
 
                   {/* Status Toggle */}
-                  <TableCell>
-                    <button
-                      type="button"
-                      onClick={() => handleToggleStatus(member)}
-                      className={cn(
-                        'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer',
-                        member.status === 'Published'
-                          ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20'
-                          : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 hover:bg-amber-500/20'
-                      )}
-                    >
-                      {member.status === 'Published' ? (
-                        <>
-                          <Eye className="size-3" /> Live
-                        </>
-                      ) : (
-                        <>
-                          <EyeOff className="size-3" /> Hidden
-                        </>
-                      )}
-                    </button>
+                  <TableCell className="w-28 text-center align-top">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger
+                          render={
+                            <button
+                              type="button"
+                              onClick={() => handleToggleStatus(member)}
+                              className={cn(
+                                'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-xs',
+                                member.status === 'Published'
+                                  ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20'
+                                  : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 hover:bg-amber-500/20'
+                              )}
+                            >
+                              {member.status === 'Published' ? (
+                                <>
+                                  <Eye className="size-3.5" /> Live
+                                </>
+                              ) : (
+                                <>
+                                  <EyeOff className="size-3.5" /> Hidden
+                                </>
+                              )}
+                            </button>
+                          }
+                        />
+                        <TooltipContent>{member.status === 'Published' ? 'Click to Hide Member' : 'Click to Publish Member'}</TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </TableCell>
 
                   {/* Actions */}
-                  <TableCell className="text-right">
+                  <TableCell className="w-28 text-right align-top">
                     <div className="flex items-center justify-end gap-1.5">
-                      <Link
-                        href={`/team/${member._id}/edit`}
-                        className="p-2 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 transition-colors cursor-pointer"
-                        title="Edit Member"
-                      >
-                        <Edit2 className="size-4" />
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={() => setMemberToDelete(member)}
-                        className="p-2 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
-                        title="Delete Member"
-                      >
-                        <Trash2 className="size-4" />
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger
+                            render={
+                              <Link
+                                href={`/team/${member._id}/edit`}
+                                className={cn(
+                                  buttonVariants({ variant: "outline", size: "icon" }),
+                                  "h-9 w-9 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 hover:border-indigo-200 dark:hover:border-indigo-900 transition-colors shadow-sm"
+                                )}
+                              >
+                                <Edit2 className="size-4" />
+                              </Link>
+                            }
+                          />
+                          <TooltipContent>Edit Member</TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                          <TooltipTrigger
+                            render={
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                onClick={() => setMemberToDelete(member)}
+                                className="h-9 w-9 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:border-rose-200 dark:hover:border-rose-900 transition-colors shadow-sm"
+                              >
+                                <Trash2 className="size-4" />
+                              </Button>
+                            }
+                          />
+                          <TooltipContent>Delete Member</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
                   </TableCell>
                 </TableRow>

@@ -16,6 +16,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button, buttonVariants } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
@@ -117,7 +123,7 @@ export default function ProductsAdminPage() {
               <TableHead>Slug</TableHead>
               <TableHead>Theme</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead className="w-36 text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -189,47 +195,83 @@ export default function ProductsAdminPage() {
                       </span>
                     </TableCell>
                     <TableCell>
-                      <button
-                        onClick={() => handleToggleStatus(product._id, product.status)}
-                        className={cn(
-                          "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer",
-                          product.status === "Published"
-                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800"
-                            : "bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700"
-                        )}
-                        title="Click to toggle status"
-                      >
-                        {product.status === "Published" ? <Eye className="size-3.5" /> : <EyeOff className="size-3.5" />}
-                        {product.status}
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger
+                            render={
+                              <button
+                                onClick={() => handleToggleStatus(product._id, product.status)}
+                                className={cn(
+                                  "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-xs",
+                                  product.status === "Published"
+                                    ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20"
+                                    : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 hover:bg-amber-500/20"
+                                )}
+                              >
+                                {product.status === "Published" ? <Eye className="size-3.5" /> : <EyeOff className="size-3.5" />}
+                                {product.status}
+                              </button>
+                            }
+                          />
+                          <TooltipContent>{product.status === "Published" ? "Click to Move to Draft" : "Click to Publish"}</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </TableCell>
                     <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        {product.liveUrl && product.liveUrl.trim() && (
-                          <a
-                            href={product.liveUrl.startsWith('http') ? product.liveUrl.trim() : `https://${product.liveUrl.trim()}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"
-                            title="Visit Live URL"
-                          >
-                            <ExternalLink className="size-4" />
-                          </a>
-                        )}
-                        <Link
-                          href={`/products/${product._id}/edit`}
-                          className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"
-                          title="Edit Product"
-                        >
-                          <Edit2 className="size-4" />
-                        </Link>
-                        <button
-                          onClick={() => setProductToDelete(product)}
-                          className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/50 text-slate-600 hover:text-red-600 transition-colors cursor-pointer"
-                          title="Delete Product"
-                        >
-                          <Trash2 className="size-4" />
-                        </button>
+                      <div className="flex items-center justify-end gap-1.5">
+                        <TooltipProvider>
+                          {product.liveUrl && product.liveUrl.trim() && (
+                            <Tooltip>
+                              <TooltipTrigger
+                                render={
+                                  <a
+                                    href={product.liveUrl.startsWith('http') ? product.liveUrl.trim() : `https://${product.liveUrl.trim()}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={cn(
+                                      buttonVariants({ variant: "outline", size: "icon" }),
+                                      "h-9 w-9 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-blue-600 dark:text-blue-400 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:border-blue-200 dark:hover:border-blue-900 transition-colors shadow-sm"
+                                    )}
+                                  >
+                                    <ExternalLink className="size-4" />
+                                  </a>
+                                }
+                              />
+                              <TooltipContent>Visit Live URL</TooltipContent>
+                            </Tooltip>
+                          )}
+                          <Tooltip>
+                            <TooltipTrigger
+                              render={
+                                <Link
+                                  href={`/products/${product._id}/edit`}
+                                  className={cn(
+                                    buttonVariants({ variant: "outline", size: "icon" }),
+                                    "h-9 w-9 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 hover:border-indigo-200 dark:hover:border-indigo-900 transition-colors shadow-sm"
+                                  )}
+                                >
+                                  <Edit2 className="size-4" />
+                                </Link>
+                              }
+                            />
+                            <TooltipContent>Edit Product</TooltipContent>
+                          </Tooltip>
+                          <Tooltip>
+                            <TooltipTrigger
+                              render={
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  onClick={() => setProductToDelete(product)}
+                                  className="h-9 w-9 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:border-rose-200 dark:hover:border-rose-900 transition-colors shadow-sm"
+                                >
+                                  <Trash2 className="size-4" />
+                                </Button>
+                              }
+                            />
+                            <TooltipContent>Delete Product</TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </div>
                     </TableCell>
                   </TableRow>
