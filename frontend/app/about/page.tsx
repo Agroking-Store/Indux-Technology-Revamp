@@ -984,7 +984,7 @@ export default function AboutPage() {
             Let's discuss how we can build custom CRM, ERP, or web software around how your business works.
           </p>
           <Link href="/contact-us">
-            <Button className="h-12 px-7 rounded-full bg-white text-blue-600 hover:bg-blue-50 text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-xl">
+            <Button className="h-12 px-7 rounded-full bg-white text-blue-600 hover:bg-blue-50 text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-xl cursor-pointer">
               Book a free consultation
             </Button>
           </Link>
