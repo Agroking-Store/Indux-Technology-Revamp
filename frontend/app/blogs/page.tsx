@@ -278,14 +278,23 @@ export default function BlogsPage() {
                     href={`/blogs/${featured.slug}`}
                     className="group grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-xl dark:shadow-none transition-all duration-350 mb-12"
                   >
-                    <div className="lg:col-span-7 overflow-hidden min-h-[300px] relative bg-slate-100 dark:bg-slate-850">
- <Image
- src={getFullImageUrl(featured.featuredImage) || fallbackImages[0]}
+                    <div className="lg:col-span-7 overflow-hidden min-h-[300px] relative bg-slate-900/5 dark:bg-slate-850 flex items-center justify-center">
+                      {/* Ambient backdrop */}
+                      <Image
+                        src={getFullImageUrl(featured.featuredImage) || fallbackImages[0]}
+                        alt=""
+                        fill
+                        aria-hidden="true"
+                        className="object-cover blur-xl opacity-30 dark:opacity-20 scale-110 pointer-events-none"
+                      />
+                      {/* Uncropped crisp foreground */}
+                      <Image
+                        src={getFullImageUrl(featured.featuredImage) || fallbackImages[0]}
                         alt={featured.title}
                         fill
                         priority={true}
                         sizes="(max-width: 1024px) 100vw, 58vw"
- className="object-cover transition-transform duration-700 "
+                        className="relative z-10 object-contain transition-transform duration-700"
                       />
                     </div>
                     <div className="lg:col-span-5 p-8 sm:p-10 flex flex-col justify-center">
@@ -334,13 +343,22 @@ export default function BlogsPage() {
                       href={`/blogs/${blog.slug}`}
                       className="group flex flex-col rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-lg transition-all duration-300 h-full"
                     >
-                      <div className="overflow-hidden h-48 relative bg-slate-100 dark:bg-slate-850">
- <Image
- src={getFullImageUrl(blog.featuredImage) || fallbackImages[i % fallbackImages.length]}
+                      <div className="overflow-hidden h-52 relative bg-slate-900/5 dark:bg-slate-850 flex items-center justify-center">
+                        {/* Ambient backdrop */}
+                        <Image
+                          src={getFullImageUrl(blog.featuredImage) || fallbackImages[i % fallbackImages.length]}
+                          alt=""
+                          fill
+                          aria-hidden="true"
+                          className="object-cover blur-lg opacity-30 dark:opacity-20 scale-110 pointer-events-none"
+                        />
+                        {/* Uncropped crisp foreground */}
+                        <Image
+                          src={getFullImageUrl(blog.featuredImage) || fallbackImages[i % fallbackImages.length]}
                           alt={blog.title}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
- className="object-cover transition-transform duration-700 "
+                          className="relative z-10 object-contain transition-transform duration-700 p-1"
                         />
                       </div>
                       <div className="p-6 flex flex-col flex-1">

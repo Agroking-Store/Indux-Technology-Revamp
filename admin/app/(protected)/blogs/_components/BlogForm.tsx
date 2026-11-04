@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export const blogSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -66,6 +67,7 @@ export default function BlogForm({
   const [imagePreview, setImagePreview] = useState<string>(
     initialValues?.featuredImage || "",
   );
+  const [fitMode, setFitMode] = useState<"contain" | "cover">("contain");
 
   const {
     register,
@@ -407,11 +409,55 @@ export default function BlogForm({
             <div className="space-y-3">
               {/* ── Image Preview ── */}
               {imagePreview ? (
-                <div className="relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800">
+                <div className="relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-900/5 dark:bg-slate-900 flex items-center justify-center">
+                  {/* Ambient backdrop to eliminate empty space */}
+                  <img
+                    src={imagePreview}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 w-full h-full object-cover blur-xl opacity-35 dark:opacity-25 scale-110 pointer-events-none"
+                  />
+                  {/* Mode toggle */}
+                  {!isViewMode && (
+                    <div className="absolute top-2 left-2 z-20 flex items-center gap-1 bg-black/60 backdrop-blur-md rounded-md p-0.5 border border-white/20 shadow-sm">
+                      <button
+                        type="button"
+                        onClick={() => setFitMode("contain")}
+                        className={cn(
+                          "px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition",
+                          fitMode === "contain"
+                            ? "bg-white text-slate-900 shadow-xs"
+                            : "text-white/80 hover:text-white"
+                        )}
+                        title="Fit entire image without cropping"
+                      >
+                        Fit Full
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setFitMode("cover")}
+                        className={cn(
+                          "px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition",
+                          fitMode === "cover"
+                            ? "bg-white text-slate-900 shadow-xs"
+                            : "text-white/80 hover:text-white"
+                        )}
+                        title="Fill the entire box"
+                      >
+                        Fill Box
+                      </button>
+                    </div>
+                  )}
+
                   <img
                     src={imagePreview}
                     alt="Featured image preview"
-                    className="w-full h-44 object-cover rounded-xl"
+                    className={cn(
+                      "relative z-10 transition-all duration-200",
+                      fitMode === "contain"
+                        ? "w-full max-h-[340px] object-contain mx-auto block"
+                        : "w-full h-56 object-cover"
+                    )}
                     onError={(e) => {
                       console.error("Image failed to load:", imagePreview);
                       (e.target as HTMLImageElement).style.border =
@@ -432,7 +478,7 @@ export default function BlogForm({
                         setImagePreview("");
                         setValue("featuredImage", "");
                       }}
-                      className="absolute top-2 right-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2.5 py-1 rounded-lg cursor-pointer shadow transition"
+                      className="absolute top-2 right-2 z-20 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2.5 py-1 rounded-lg cursor-pointer shadow transition"
                     >
                       Remove
                     </button>
@@ -447,7 +493,7 @@ export default function BlogForm({
                   </span>
                   {!isViewMode && (
                     <span className="text-[10px] mt-1 opacity-60">
-                      Recommended: 1200 × 630 px
+                      Full image preserved without cropping
                     </span>
                   )}
                 </div>

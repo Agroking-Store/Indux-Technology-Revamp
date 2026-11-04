@@ -208,11 +208,19 @@ export default function BlogDetailClient({ blog, relatedBlogs = [] }: BlogDetail
               
  {/* Featured Image with shine overlay on hover */}
               {/* Responsive Featured Image */}
-              <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[21/10] max-h-[460px] rounded-sm overflow-hidden bg-slate-100 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800 shadow-sm">
+              <div className="relative w-full rounded-sm overflow-hidden bg-slate-900/5 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 shadow-sm flex items-center justify-center min-h-[240px] sm:min-h-[340px] max-h-[560px]">
+                {/* Ambient backdrop to eliminate empty space */}
+                <img
+                  src={getFullImageUrl(blog.featuredImage)}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover blur-xl opacity-35 dark:opacity-20 scale-110 pointer-events-none"
+                />
+                {/* Full uncropped image */}
                 <img
                   src={getFullImageUrl(blog.featuredImage)}
                   alt={blog.title}
-                  className="w-full h-full object-cover object-center"
+                  className="relative z-10 w-full h-auto max-h-[560px] object-contain object-center"
                   loading="eager"
                 />
               </div>
